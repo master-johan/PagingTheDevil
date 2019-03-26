@@ -11,14 +11,22 @@ namespace Paging_the_devil
 {
     class Player : Character
     {
+        Controller controller;
 
-        public Player(Texture2D tex, Vector2 pos, Rectangle rect) : base(tex, pos, rect)
+        public Player(Texture2D tex, Vector2 pos, Rectangle rect, Controller controller) : base(tex, pos, rect)
         {
+            this.controller = controller;
 
         }
 
         public override void Update()
         {
+
+            if (controller.HasLeftXThumbStick)
+            {
+                Pos.X += state.ThumbSticks.Left.X * 10.0f;
+                Pos.Y += state.ThumbSticks.Left.Y * 10.0f;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
                 pos.Y--;

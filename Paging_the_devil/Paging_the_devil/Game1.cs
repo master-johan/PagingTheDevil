@@ -15,6 +15,7 @@ namespace Paging_the_devil
 
         TextureManager textureManager;
         Player player;
+        Controller controller;
 
         public Game1()
         {
@@ -35,7 +36,8 @@ namespace Paging_the_devil
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             textureManager = new TextureManager(Content);
-            player = new Player(TextureManager.playerTextures[0], new Vector2(100, 100), new Rectangle(0, 0, 60, 280));
+            player = new Player(TextureManager.playerTextures[0], new Vector2(100, 100), new Rectangle(0, 0, 60, 280),new Controller(PlayerIndex.One));
+            controller = new Controller(GamePadCapabilities c, GamePadState gamePadState);
         }
 
         protected override void UnloadContent()
@@ -51,6 +53,7 @@ namespace Paging_the_devil
             // TODO: Add your update logic here
 
             player.Update();
+            controller.Update(gameTime);
 
             base.Update(gameTime);
         }
