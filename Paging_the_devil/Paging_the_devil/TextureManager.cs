@@ -16,6 +16,7 @@ namespace Paging_the_devil
         public TextureManager(ContentManager Content)
         {
             playerTextures.Add(Content.Load<Texture2D>(@"KnightSprite"));
+            playerTextures.Add(Content.Load<Texture2D>(@"Portal"));
         }
     }
 }

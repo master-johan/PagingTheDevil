@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Paging_the_devil
@@ -14,15 +9,22 @@ namespace Paging_the_devil
         protected Vector2 pos;
         protected Rectangle rect;
 
-        public GameObject(Texture2D tex, Vector2 pos, Rectangle rect)
+        
+
+        public GameObject(Texture2D tex, Vector2 pos)
         {
             this.tex = tex;
             this.pos = pos;
-            this.rect = rect;
         }
 
         public abstract void Update();
 
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        public Rectangle GetRect { get { return rect; } }
+
+        public Vector2 GetPos { get { return pos; } }
+
+        public Vector2 SetPos { set => pos = value; }
     }
 }
