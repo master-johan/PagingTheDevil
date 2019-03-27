@@ -8,34 +8,54 @@ using System.Threading.Tasks;
 
 namespace Paging_the_devil
 {
-    public class Controller
+    public enum ControllerIndex { one, two, three, four}
+    public  class Controller
     {
-       
-        GamePadCapabilities c = GamePad.GetCapabilities(PlayerIndex.One);
+        Player player;
+        ControllerIndex ctrlIdx;
+        public GamePadCapabilities c1 = GamePad.GetCapabilities(PlayerIndex.One);
+        public GamePadCapabilities c2 = GamePad.GetCapabilities(PlayerIndex.Two);
+        public GamePadCapabilities c3 = GamePad.GetCapabilities(PlayerIndex.Three);
+        public GamePadCapabilities c4 = GamePad.GetCapabilities(PlayerIndex.Four);
         GamePadState gamePadState;
 
-        public Controller(GamePadCapabilities c, GamePadState gamePadState)
+        public Controller()
         {
-            this.c = c;
-            this.gamePadState = gamePadState;
+
             
         }
 
-        public void Update(GameTime gameTime)
+        public void UpdateCtrlOne()
         {
 
-            
-            if (c.IsConnected)
-            {
-                gamePadState = GamePad.GetState(PlayerIndex.One);
+                ctrlIdx = ControllerIndex.one;
+                GamePadState state = GamePad.GetState(PlayerIndex.One);
 
 
-                if (c.GamePadType == GamePadType.GamePad)
+
+                if (c1.HasLeftXThumbStick)
                 {
-
+                    player.pos.X += state.ThumbSticks.Left.X * 10.0f;
+                    player.pos.Y -= state.ThumbSticks.Left.Y * 10.0f;
                 }
-                
 
+            
+        }
+
+        public void UpdateCtrlTwo()
+        {
+            if (c2.IsConnected)
+            {
+                ctrlIdx = ControllerIndex.two;
+                GamePadState state = GamePad.GetState(PlayerIndex.One);
+
+
+
+                if (c1.HasLeftXThumbStick)
+                {
+                    player.pos.X += state.ThumbSticks.Left.X * 10.0f;
+                    player.pos.Y -= state.ThumbSticks.Left.Y * 10.0f;
+                }
 
             }
         }

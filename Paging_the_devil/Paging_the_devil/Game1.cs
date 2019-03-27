@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System.Collections.Generic;
 
 namespace Paging_the_devil
 {
@@ -12,10 +12,15 @@ namespace Paging_the_devil
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Vector2 heroPos1;
+        Vector2 heroPos2;
         TextureManager textureManager;
-        Player player;
-        Controller controller;
+        Player player1;
+        Player player2;
+
+        private List<Player> playerList;
+        //Controller controller;
+
 
         public Game1()
         {
@@ -33,27 +38,57 @@ namespace Paging_the_devil
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            GameWindow();
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             textureManager = new TextureManager(Content);
-            player = new Player(TextureManager.playerTextures[0], new Vector2(100, 100), new Rectangle(0, 0, 60, 280),new Controller(PlayerIndex.One));
-            controller = new Controller(GamePadCapabilities c, GamePadState gamePadState);
+            heroPos1 = new Vector2(100, 100);
+            heroPos2 = new Vector2(200, 200);
+          
+            player1 = new Player(TextureManager.playerTextures[0], heroPos1, new Rectangle(0, 0, 60, 280) /*PlayerState.One*/);
+            player2 = new Player(TextureManager.playerTextures[0], heroPos2, new Rectangle(0, 0, 60, 280) /*PlayerState.Two*/);
+
+            //playerList = new List<Player>()
+            //{
+                
+            //}
+
         }
 
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
+     
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            //GamePadCapabilities c = GamePad.GetCapabilities(PlayerIndex.One);
+            // GamePadState gamePadState;
 
-            player.Update();
-            controller.Update(gameTime);
+            // TODO: Add your update logic here
+            //if (player1.currentPlayer == PlayerState.One)
+                player1.Update();
+
+
+            //if (player2.currentPlayer == PlayerState.Two)
+                player2.Update2();
+            
+
+
+
+
+
+            //if (c.IsConnected)
+            //{
+            //    GamePadState state = GamePad.GetState(PlayerIndex.One);
+
+            //    if (c.HasLeftXThumbStick)
+            //    {
+            //        heroPos.X += state.ThumbSticks.Left.X * 10.0f;
+            //        heroPos.Y += state.ThumbSticks.Left.Y * 10.0f;
+            //    }
+
+            //}
 
             base.Update(gameTime);
         }
@@ -64,9 +99,27 @@ namespace Paging_the_devil
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
+            //if (player1.playerOne)
+            //{
+            //    player1.Draw(spriteBatch);
+            //}
+
+            //if (player2.playerTwo)
+            //{
+            //    player2.Draw(spriteBatch);
+            //}
+
+            player1.Draw(spriteBatch);
+            player2.Draw(spriteBatch);
+
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+        public void GameWindow()
+        {
+            graphics.PreferredBackBufferWidth = 1000;
+            graphics.PreferredBackBufferHeight = 800;
+            graphics.ApplyChanges();
         }
     }
 }

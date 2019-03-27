@@ -9,44 +9,76 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Paging_the_devil
 {
+    public enum PlayerState { One, Two, Three, Four };
     class Player : Character
     {
+        public PlayerState currentPlayer;
         Controller controller;
+        //public bool playerOne;
+        //public bool playerTwo;
 
-        public Player(Texture2D tex, Vector2 pos, Rectangle rect, Controller controller) : base(tex, pos, rect)
+        public GamePadCapabilities c1 = GamePad.GetCapabilities(PlayerIndex.One);
+        public GamePadCapabilities c2 = GamePad.GetCapabilities(PlayerIndex.Two);
+
+        public Player(Texture2D tex, Vector2 pos, Rectangle rect) : base(tex, pos, rect)
         {
-            this.controller = controller;
 
+            //controller = new Controller();
         }
 
         public override void Update()
         {
+            //KONTROLL KLASS (TEST)
+            //if (currentPlayer == PlayerState.One)
+            //{
+            //    controller.UpdateCtrlOne();
+            //}
+            //if (currentPlayer == PlayerState.Two)
+            //{
+            //    controller.UpdateCtrlTwo();
+            //}
 
-            if (controller.HasLeftXThumbStick)
+            if (c1.IsConnected)
             {
-                Pos.X += state.ThumbSticks.Left.X * 10.0f;
-                Pos.Y += state.ThumbSticks.Left.Y * 10.0f;
+                currentPlayer = PlayerState.One;
+                GamePadState state = GamePad.GetState(PlayerIndex.One);
+
+                ////controller.UpdateCtrlOne();
+
+
+
+                if (c1.HasLeftXThumbStick)
+                {
+                    pos.X += state.ThumbSticks.Left.X * 10.0f;
+                    pos.Y -= state.ThumbSticks.Left.Y * 10.0f;
+                }
+
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+
+
+
+
+        }
+        public void Update2()
+        {
+            if (c2.IsConnected)
             {
-                pos.Y--;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                pos.X++;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                pos.Y++;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                pos.X--;
+                currentPlayer = PlayerState.Two;
+                GamePadState state = GamePad.GetState(PlayerIndex.Two);
+
+                //controller.UpdateCtrlTwo();
+
+                if (c2.HasLeftXThumbStick)
+                {
+                    pos.X += state.ThumbSticks.Left.X * 10.0f;
+                    pos.Y -= state.ThumbSticks.Left.Y * 10.0f;
+                }
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            //if(c1.IsConnected)
             spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
         }
     }
