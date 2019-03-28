@@ -42,6 +42,7 @@ namespace Paging_the_devil
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             GameWindow();
+            TextureManager.LoadTextures(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             heroPos1 = new Vector2(100, 100);
@@ -83,7 +84,7 @@ namespace Paging_the_devil
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            for (int i = 0; i < noPlayers/*controllerArray.Length*/; i++)
+            for (int i = 0; i < controllerArray.Length; i++)
             {
                 if (connectedC[i].IsConnected && playerConnected[i] == false)
                 {
