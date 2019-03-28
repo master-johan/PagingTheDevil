@@ -11,11 +11,13 @@ namespace Paging_the_devil
     class TextureManager
     {
       
-        public static List<Texture2D> playerTextures = new List<Texture2D>();
+        public static List<Texture2D> playerTextureList = new List<Texture2D>();
+        public static List<Texture2D> mageSpellList = new List<Texture2D>();
 
         public TextureManager(ContentManager Content)
         {
-            playerTextures.Add(Content.Load<Texture2D>(@"KnightSprite"));
+            playerTextureList.Add(Content.Load<Texture2D>(@"KnightSprite"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"redSquare"));
         }
     }
 }
