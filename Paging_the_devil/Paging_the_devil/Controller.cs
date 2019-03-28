@@ -37,6 +37,11 @@ namespace Paging_the_devil
         {
             return gamePadState.ThumbSticks.Left;
         }
+
+        public GamePadState GetPadState()
+        {
+            return gamePadState;
+        }
        
     }
 }

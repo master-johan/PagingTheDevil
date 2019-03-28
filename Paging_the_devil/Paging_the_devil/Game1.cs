@@ -14,7 +14,7 @@ namespace Paging_the_devil
         SpriteBatch spriteBatch;
         Vector2 heroPos1;
         Vector2 heroPos2;
-        TextureManager textureManager;
+     
         GamePadCapabilities[] connectedC;
         Controller[] controllerArray;
         Player[] playerArray;
@@ -44,7 +44,6 @@ namespace Paging_the_devil
             GameWindow();
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            textureManager = new TextureManager(Content);
             heroPos1 = new Vector2(100, 100);
             heroPos2 = new Vector2(200, 200);
 
@@ -84,11 +83,11 @@ namespace Paging_the_devil
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            for (int i = 0; i < controllerArray.Length; i++)
+            for (int i = 0; i < noPlayers/*controllerArray.Length*/; i++)
             {
                 if (connectedC[i].IsConnected && playerConnected[i] == false)
                 {
-                    playerArray[i] = new Player(TextureManager.playerTextures[0], heroPos1, new Rectangle(0, 0, 60, 280), i);
+                    playerArray[i] = new Player(TextureManager.playerTextureList[0], heroPos1, new Rectangle(0, 0, 60, 280), new Rectangle(0,0,10,10), i);
                     
 
                     playerConnected[i] = true;
@@ -105,6 +104,7 @@ namespace Paging_the_devil
             for (int i = 0; i < noPlayers; i++)
             {
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
+                playerArray[i].InputPadState(controllerArray[i].GetPadState());
             }
 
             base.Update(gameTime);
