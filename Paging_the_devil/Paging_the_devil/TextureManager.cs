@@ -17,6 +17,8 @@ namespace Paging_the_devil
         {
             playerTextures.Add(Content.Load<Texture2D>(@"KnightSprite"));
             playerTextures.Add(Content.Load<Texture2D>(@"Portal"));
+            playerTextures.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
+            playerTextures.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
         }
     }
 }

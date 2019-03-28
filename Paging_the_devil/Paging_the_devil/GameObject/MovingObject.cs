@@ -17,7 +17,6 @@ namespace Paging_the_devil
 
         public override void Update()
         {
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)

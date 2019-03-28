@@ -11,7 +11,6 @@ namespace Paging_the_devil
 {
     class Player : Character
     {
-
         public Player(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
             rect = new Rectangle((int)pos.X, (int)pos.Y, 59, 61);
@@ -42,7 +41,7 @@ namespace Paging_the_devil
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
-            //spriteBatch.Draw(tex, rect, Color.Black);
+            spriteBatch.Draw(tex, rect, Color.Black);
         }
     }
 }

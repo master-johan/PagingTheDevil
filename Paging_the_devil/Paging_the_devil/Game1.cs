@@ -11,12 +11,14 @@ namespace Paging_the_devil
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        int windowX, windowY;
 
         GameState currentGamestate;
         TextureManager textureManager;
         Player player;
         Portal portal;
         Vector2 portalPos, portalPos2, playerPos, playerPos2;
+        Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
         Rectangle portalHitbox;
 
         public Game1()
@@ -34,6 +36,12 @@ namespace Paging_the_devil
         {
             currentGamestate = GameState.RoomOne;
 
+            GameWindow();
+
+            WallTopPos = new Rectangle(0, 0, windowX, 20);
+            WallBottomPos = new Rectangle(0, windowY - 20, windowX, 20);
+            WallLeftPos = new Rectangle(0, 0, 20, windowY);
+            WallRightPos = new Rectangle(windowX - 20, 0, 20, windowY);
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -47,42 +55,30 @@ namespace Paging_the_devil
 
             player = new Player(TextureManager.playerTextures[0], playerPos);
             portal = new Portal(TextureManager.playerTextures[1], portalPos);
-                    
-           
+
+
         }
 
         protected override void UnloadContent()
         {
-          
+
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            player.Update();
 
             if (player.GetRect.Intersects(portal.GetRect))
             {
-                portal.SetPos = portalPos2;
-                player.SetPos = playerPos2;
+                portal.GetSetPos = portalPos2;
+                player.GetSetPos = playerPos2;
             }
 
-            player.Update();
+            Collision();
+
             portal.Update();
-
-
-            switch (currentGamestate)
-            {
-                case GameState.RoomOne:
-
-                    break;
-                case GameState.RoomTwo:
-                   
-                    break;
-                default:
-                    break;
-            }
-
 
             base.Update(gameTime);
         }
@@ -94,22 +90,54 @@ namespace Paging_the_devil
 
             portal.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            spriteBatch.Draw(TextureManager.playerTextures[2], WallTopPos, Color.White);
+            spriteBatch.Draw(TextureManager.playerTextures[2], WallBottomPos, Color.White);
+            spriteBatch.Draw(TextureManager.playerTextures[3], WallLeftPos, Color.White);
+            spriteBatch.Draw(TextureManager.playerTextures[3], WallRightPos, Color.White);
 
-            switch (currentGamestate)
-            {
-                case GameState.RoomOne:
 
-                    break;
-                case GameState.RoomTwo:
 
-                    //spriteBatch.Draw(TextureManager.playerTextures[1], Vector2.Zero, Color.Red);
-                    break;
-                default:
-                    break;
-            }
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+        private void GameWindow()
+        {
+            graphics.PreferredBackBufferHeight = windowY = 500;
+            graphics.PreferredBackBufferWidth = windowX = 1000;
+            graphics.ApplyChanges();
+        }
+        private void Collision()
+        {
+            if (player.GetRect.Intersects(WallTopPos))
+            {
+                Vector2 tempVector;
+                tempVector = player.GetSetPos;
+                tempVector.Y = tempVector.Y + 5;
+                player.GetSetPos = tempVector;
+            }
+            if (player.GetRect.Intersects(WallBottomPos))
+            {
+                Vector2 tempVector;
+                tempVector = player.GetSetPos;
+                tempVector.Y = tempVector.Y - 5;
+                player.GetSetPos = tempVector;
+            }
+            if (player.GetRect.Intersects(WallLeftPos))
+            {
+                Vector2 tempVector;
+                tempVector = player.GetSetPos;
+                tempVector.X = tempVector.X + 5;
+                player.GetSetPos = tempVector;
+            }
+            if (player.GetRect.Intersects(WallRightPos))
+            {
+                Vector2 tempVector;
+                tempVector = player.GetSetPos;
+                tempVector.X = tempVector.X - 5;
+                player.GetSetPos = tempVector;
+            }
+        }
+        
     }
 }

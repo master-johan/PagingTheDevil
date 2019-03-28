@@ -23,8 +23,7 @@ namespace Paging_the_devil
 
         public Rectangle GetRect { get { return rect; } }
 
-        public Vector2 GetPos { get { return pos; } }
-
-        public Vector2 SetPos { set => pos = value; }
+        public Vector2 GetSetPos { get { return pos; } set { pos = value; } }
+        
     }
 }
