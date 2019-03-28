@@ -15,11 +15,14 @@ namespace Paging_the_devil
         Vector2 heroPos1;
         Vector2 heroPos2;
         TextureManager textureManager;
-        Player player1;
-        Player player2;
+        GamePadCapabilities[] connectedC;
+        Controller[] controllerArray;
+        Player[] playerArray;
+        List<Controller> controllerList;
+        List<Player> playerList;
+        bool[] playerConnected;
+        int noPlayers;
 
-        private List<Player> playerList;
-        //Controller controller;
 
 
         public Game1()
@@ -44,14 +47,33 @@ namespace Paging_the_devil
             textureManager = new TextureManager(Content);
             heroPos1 = new Vector2(100, 100);
             heroPos2 = new Vector2(200, 200);
-          
-            player1 = new Player(TextureManager.playerTextures[0], heroPos1, new Rectangle(0, 0, 60, 280) /*PlayerState.One*/);
-            player2 = new Player(TextureManager.playerTextures[0], heroPos2, new Rectangle(0, 0, 60, 280) /*PlayerState.Two*/);
 
-            //playerList = new List<Player>()
-            //{
-                
-            //}
+            
+
+            playerList = new List<Player>();
+            playerArray = new Player[4];
+
+            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
+            controllerArray = new Controller[4];
+            controllerList = new List<Controller>();
+            playerConnected = new bool[4];
+
+            for (int i = 0; i < connectedC.Length; i++)
+            {
+                if (connectedC[i].IsConnected)
+                {
+                    PlayerIndex index = (PlayerIndex)i;
+
+                    controllerArray[i] = new Controller(index);
+
+                    noPlayers++;        
+                }
+
+                playerConnected[i] = false;
+
+            }
+
+            
 
         }
 
@@ -62,33 +84,28 @@ namespace Paging_the_devil
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //GamePadCapabilities c = GamePad.GetCapabilities(PlayerIndex.One);
-            // GamePadState gamePadState;
+            for (int i = 0; i < controllerArray.Length; i++)
+            {
+                if (connectedC[i].IsConnected && playerConnected[i] == false)
+                {
+                    playerArray[i] = new Player(TextureManager.playerTextures[0], heroPos1, new Rectangle(0, 0, 60, 280), i);
+                    
 
-            // TODO: Add your update logic here
-            //if (player1.currentPlayer == PlayerState.One)
-                player1.Update();
+                    playerConnected[i] = true;
 
+                }
+            }
 
-            //if (player2.currentPlayer == PlayerState.Two)
-                player2.Update2();
-            
+            for (int i = 0; i < noPlayers; i++)
+            {
+                controllerArray[i].Update();
+                playerArray[i].Update();
+            }
 
-
-
-
-
-            //if (c.IsConnected)
-            //{
-            //    GamePadState state = GamePad.GetState(PlayerIndex.One);
-
-            //    if (c.HasLeftXThumbStick)
-            //    {
-            //        heroPos.X += state.ThumbSticks.Left.X * 10.0f;
-            //        heroPos.Y += state.ThumbSticks.Left.Y * 10.0f;
-            //    }
-
-            //}
+            for (int i = 0; i < noPlayers; i++)
+            {
+                playerArray[i].InputDirection(controllerArray[i].GetDirection());
+            }
 
             base.Update(gameTime);
         }
@@ -99,18 +116,13 @@ namespace Paging_the_devil
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            //if (player1.playerOne)
-            //{
-            //    player1.Draw(spriteBatch);
-            //}
+       
 
-            //if (player2.playerTwo)
-            //{
-            //    player2.Draw(spriteBatch);
-            //}
-
-            player1.Draw(spriteBatch);
-            player2.Draw(spriteBatch);
+            for (int i = 0; i < noPlayers; i++)
+            {
+                playerArray[i].Draw(spriteBatch);
+            }
+            
 
             spriteBatch.End();
             base.Draw(gameTime);

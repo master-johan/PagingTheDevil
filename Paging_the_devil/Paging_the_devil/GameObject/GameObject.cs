@@ -13,6 +13,7 @@ namespace Paging_the_devil
         protected Texture2D tex;
         public Vector2 pos;
         protected Rectangle rect;
+        
 
         public GameObject(Texture2D tex, Vector2 pos, Rectangle rect)
         {
