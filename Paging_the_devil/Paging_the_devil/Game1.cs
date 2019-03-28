@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System.Collections.Generic;
 
 namespace Paging_the_devil
 {
@@ -12,9 +12,18 @@ namespace Paging_the_devil
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Vector2 heroPos1;
+        Vector2 heroPos2;
         TextureManager textureManager;
-        Player player;
+        GamePadCapabilities[] connectedC;
+        Controller[] controllerArray;
+        Player[] playerArray;
+        List<Controller> controllerList;
+        List<Player> playerList;
+        bool[] playerConnected;
+        int noPlayers;
+
+
 
         public Game1()
         {
@@ -32,25 +41,71 @@ namespace Paging_the_devil
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            GameWindow();
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             textureManager = new TextureManager(Content);
-            player = new Player(TextureManager.playerTextures[0], new Vector2(100, 100), new Rectangle(0, 0, 60, 280));
+            heroPos1 = new Vector2(100, 100);
+            heroPos2 = new Vector2(200, 200);
+
+            
+
+            playerList = new List<Player>();
+            playerArray = new Player[4];
+
+            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
+            controllerArray = new Controller[4];
+            controllerList = new List<Controller>();
+            playerConnected = new bool[4];
+
+            for (int i = 0; i < connectedC.Length; i++)
+            {
+                if (connectedC[i].IsConnected)
+                {
+                    PlayerIndex index = (PlayerIndex)i;
+
+                    controllerArray[i] = new Controller(index);
+
+                    noPlayers++;        
+                }
+
+                playerConnected[i] = false;
+
+            }
+
+            
+
         }
 
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
+     
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            for (int i = 0; i < controllerArray.Length; i++)
+            {
+                if (connectedC[i].IsConnected && playerConnected[i] == false)
+                {
+                    playerArray[i] = new Player(TextureManager.playerTextures[0], heroPos1, new Rectangle(0, 0, 60, 280), i);
+                    
 
-            player.Update();
+                    playerConnected[i] = true;
+
+                }
+            }
+
+            for (int i = 0; i < noPlayers; i++)
+            {
+                controllerArray[i].Update();
+                playerArray[i].Update();
+            }
+
+            for (int i = 0; i < noPlayers; i++)
+            {
+                playerArray[i].InputDirection(controllerArray[i].GetDirection());
+            }
 
             base.Update(gameTime);
         }
@@ -61,9 +116,22 @@ namespace Paging_the_devil
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
+       
+
+            for (int i = 0; i < noPlayers; i++)
+            {
+                playerArray[i].Draw(spriteBatch);
+            }
+            
+
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+        public void GameWindow()
+        {
+            graphics.PreferredBackBufferWidth = 1000;
+            graphics.PreferredBackBufferHeight = 800;
+            graphics.ApplyChanges();
         }
     }
 }

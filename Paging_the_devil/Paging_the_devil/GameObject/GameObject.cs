@@ -11,8 +11,9 @@ namespace Paging_the_devil
     public abstract class GameObject
     {
         protected Texture2D tex;
-        protected Vector2 pos;
+        public Vector2 pos;
         protected Rectangle rect;
+        
 
         public GameObject(Texture2D tex, Vector2 pos, Rectangle rect)
         {
@@ -24,5 +25,17 @@ namespace Paging_the_devil
         public abstract void Update();
 
         public abstract void Draw(SpriteBatch spriteBatch);
+
+        //public Vector2 Pos { get => pos; set => pos = value; }
+
+        public Vector2 GetPos
+        {
+
+            get
+            {
+                return pos;
+            }
+        
+        }
     }
 }

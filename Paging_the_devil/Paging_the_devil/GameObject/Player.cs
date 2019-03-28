@@ -9,37 +9,49 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Paging_the_devil
 {
+
     class Player : Character
     {
 
-        public Player(Texture2D tex, Vector2 pos, Rectangle rect) : base(tex, pos, rect)
-        {
+        Controller controller;
+        Vector2 direction;
+        int playerIndex;
+   
 
+       
+
+        public Player(Texture2D tex, Vector2 pos, Rectangle rect, int playerIndex) 
+            : base(tex, pos, rect)
+        {
+            this.playerIndex = playerIndex;
+            //controller = new Controller();
         }
 
         public override void Update()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                pos.Y--;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                pos.X++;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                pos.Y++;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                pos.X--;
-            }
+
+            pos.X += direction.X * 10.0f;
+            pos.Y -= direction.Y * 10.0f;
+
+
+               
+        
+
+
+
+
         }
+        
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            //if(c1.IsConnected)
             spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
+        }
+
+        public void InputDirection(Vector2 newDirection)
+        {
+            direction = newDirection;
         }
     }
 }
