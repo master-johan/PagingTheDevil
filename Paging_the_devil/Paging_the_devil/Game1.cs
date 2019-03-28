@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil
 {
@@ -45,8 +46,8 @@ namespace Paging_the_devil
             heroPos1 = new Vector2(100, 100);
             heroPos2 = new Vector2(200, 200);
           
-            player1 = new Player(TextureManager.playerTextures[0], heroPos1, new Rectangle(0, 0, 60, 280) /*PlayerState.One*/);
-            player2 = new Player(TextureManager.playerTextures[0], heroPos2, new Rectangle(0, 0, 60, 280) /*PlayerState.Two*/);
+            player1 = new Player(TextureManager.playerTextureList[0], heroPos1, new Rectangle(0, 0, 60, 280), new Rectangle(0,0,10,10) /*PlayerState.One*/);
+            player2 = new Player(TextureManager.playerTextureList[0], heroPos2, new Rectangle(0, 0, 60, 280), new Rectangle(0,0,10,10) /*PlayerState.Two*/);
 
             //playerList = new List<Player>()
             //{
