@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.GameObject
 {
     class Portal : GameObject
     {
-        
         public Portal(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);

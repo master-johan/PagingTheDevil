@@ -11,7 +11,7 @@ namespace Paging_the_devil.GameObject
     class Ability : GameObject
     {
         Player player;
-        public Ability(Texture2D tex, Vector2 pos, Rectangle rect, Player player) : base(tex, pos, rect)
+        public Ability(Texture2D tex, Vector2 pos, Rectangle rect, Player player) : base(tex, pos)
         {
             this.player = player;
         }

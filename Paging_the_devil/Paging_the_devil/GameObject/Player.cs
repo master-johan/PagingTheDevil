@@ -23,14 +23,9 @@ namespace Paging_the_devil
         int timer;
         List<Ability> abilityList;
         GamePadState currentPadState;
-        
 
-      
-
-       
-
-        public Player(Texture2D tex, Vector2 pos, Rectangle rect, Rectangle spellRect,int playerIndex) 
-            : base(tex, pos, rect)
+        public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex)
+            : base(tex, pos)
         {
             this.playerIndex = playerIndex;
             this.spellRect = spellRect;
@@ -46,9 +41,8 @@ namespace Paging_the_devil
         public override void Update()
         {
 
-            rect.X = (int)pos.X -30;
-            rect.Y = (int)pos.Y- 30;
-           
+            rect.X = (int)pos.X - 30;
+            rect.Y = (int)pos.Y - 30;
 
             slash = false;
             pos.X += direction.X * 10.0f;
@@ -68,31 +62,19 @@ namespace Paging_the_devil
             }
             if (currentPadState.IsButtonDown(Buttons.B))
             {
-
                 slash = true;
-
             }
 
             foreach (var A in abilityList)
             {
-
-
                 A.Update();
-
             }
 
             if (timer > 0)
             {
-
-
                 timer--;
-
             }
-
-
-
         }
-        
 
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -114,11 +96,9 @@ namespace Paging_the_devil
             direction = newDirection;
         }
 
-        public void InputPadState (GamePadState padState)
+        public void InputPadState(GamePadState padState)
         {
-
             currentPadState = padState;
-
         }
     }
 }

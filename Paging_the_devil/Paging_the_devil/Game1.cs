@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil
 {
@@ -59,33 +60,16 @@ namespace Paging_the_devil
             WallLeftPos = new Rectangle(0, 0, 20, windowY);
             WallRightPos = new Rectangle(windowX - 20, 0, 20, windowY);
 
-    
-
             portalPos = new Vector2(300, 430);
             portalRoom2 = new Vector2(300, -10);
             portalRoom3 = new Vector2(1300, 350);
             portalRoom4 = new Vector2(-10, 350);
             
-        
             playerPos = new Vector2(200, 400);
             playerPos2 = new Vector2(320, 100);
-
-
-            player = new Player(TextureManager.playerTextures[0], playerPos);
+            
             portal = new Portal(TextureManager.roomTextures[0], portalPos);
             portal2 = new Portal(TextureManager.roomTextures[0], portalRoom3);
-
-
-        }
-
-        protected override void UnloadContent()
-        {
-
-
-
-
-
-            
 
             playerList = new List<Player>();
             playerArray = new Player[4];
@@ -103,15 +87,19 @@ namespace Paging_the_devil
 
                     controllerArray[i] = new Controller(index);
 
-                    noPlayers++;        
+                    noPlayers++;
                 }
 
                 playerConnected[i] = false;
 
             }
 
-            
 
+        }
+
+        protected override void UnloadContent()
+        {
+            
         }
 
      
@@ -120,14 +108,13 @@ namespace Paging_the_devil
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            player.Update();
 
 
             for (int i = 0; i < controllerArray.Length; i++)
             {
                 if (connectedC[i].IsConnected && playerConnected[i] == false)
                 {
-                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100*i+50,100), new Rectangle(0, 0, 60, 280), new Rectangle(0,0,10,10), i);
+                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100*i+50,100), new Rectangle(0,0,10,10), i);
                     
 
                     playerConnected[i] = true;
@@ -151,7 +138,7 @@ namespace Paging_the_devil
             {
                 case Room.One:
                     
-                    if (player.GetRect.Intersects(portal.GetRect) && oldKeyboardState.IsKeyUp(Keys.Space) && keyboardState.IsKeyDown(Keys.Space))
+                    if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
                     {
                        
                         //portal.GetSetPos = portalRoom2;
@@ -160,12 +147,12 @@ namespace Paging_the_devil
 
                     break;
                 case Room.Two:
-                    if (player.GetRect.Intersects(portal.GetRect) && oldKeyboardState.IsKeyUp(Keys.Space) && keyboardState.IsKeyDown(Keys.Space))
+                    if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
                     {
                         portal.GetSetPos = portalPos;
                         currentRoom = Room.One;
                     }
-                    else if(player.GetRect.Intersects(portal2.GetRect) && oldKeyboardState.IsKeyUp(Keys.Space) && keyboardState.IsKeyDown(Keys.Space))
+                    else if (playerArray[0].GetRect.Intersects(portal2.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
                     {
                         portal2.GetSetPos = portalRoom3;
                         currentRoom = Room.Three;
@@ -173,16 +160,14 @@ namespace Paging_the_devil
                     }
                     break;
                 case Room.Three:
-                    if (player.GetRect.Intersects(portal.GetRect) && oldKeyboardState.IsKeyUp(Keys.Space) && keyboardState.IsKeyDown(Keys.Space))
+                    if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
                     {
-                        
                         currentRoom = Room.Two;
                     }
                     break;
                 default:
                     break;
             }
-
 
             Collision();
 
@@ -194,7 +179,6 @@ namespace Paging_the_devil
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-
 
             switch (currentRoom)
             {
@@ -214,17 +198,11 @@ namespace Paging_the_devil
                 default:
                     break;
             }
-            
-         
 
             spriteBatch.Draw(TextureManager.roomTextures[1], WallTopPos, Color.White);
             spriteBatch.Draw(TextureManager.roomTextures[1], WallBottomPos, Color.White);
             spriteBatch.Draw(TextureManager.roomTextures[2], WallLeftPos, Color.White);
             spriteBatch.Draw(TextureManager.roomTextures[2], WallRightPos, Color.White);
-
-
-
-       
 
             for (int i = 0; i < noPlayers; i++)
             {
@@ -245,36 +223,37 @@ namespace Paging_the_devil
         }
         private void Collision()
         {
-            if (player.GetRect.Intersects(WallTopPos))
+            for (int i = 0; i < noPlayers; i++)
             {
-                Vector2 tempVector;
-                tempVector = player.GetSetPos;
-                tempVector.Y = tempVector.Y + 5;
-                player.GetSetPos = tempVector;
-            }
-            if (player.GetRect.Intersects(WallBottomPos))
-            {
-                Vector2 tempVector;
-                tempVector = player.GetSetPos;
-                tempVector.Y = tempVector.Y - 5;
-                player.GetSetPos = tempVector;
-            }
-            if (player.GetRect.Intersects(WallLeftPos))
-            {
-                Vector2 tempVector;
-                tempVector = player.GetSetPos;
-                tempVector.X = tempVector.X + 5;
-                player.GetSetPos = tempVector;
-            }
-            if (player.GetRect.Intersects(WallRightPos))
-            {
-                Vector2 tempVector;
-                tempVector = player.GetSetPos;
-                tempVector.X = tempVector.X - 5;
-                player.GetSetPos = tempVector;
+                if (playerArray[i].GetRect.Intersects(WallTopPos))
+                {
+                    Vector2 tempVector;
+                    tempVector = playerArray[i].GetSetPos;
+                    tempVector.Y = tempVector.Y + 5;
+                    playerArray[i].GetSetPos = tempVector;
+                }
+                if (playerArray[i].GetRect.Intersects(WallBottomPos))
+                {
+                    Vector2 tempVector;
+                    tempVector = playerArray[i].GetSetPos;
+                    tempVector.Y = tempVector.Y - 5;
+                    playerArray[i].GetSetPos = tempVector;
+                }
+                if (playerArray[i].GetRect.Intersects(WallLeftPos))
+                {
+                    Vector2 tempVector;
+                    tempVector = playerArray[i].GetSetPos;
+                    tempVector.X = tempVector.X + 5;
+                    playerArray[i].GetSetPos = tempVector;
+                }
+                if (playerArray[i].GetRect.Intersects(WallRightPos))
+                {
+                    Vector2 tempVector;
+                    tempVector = playerArray[i].GetSetPos;
+                    tempVector.X = tempVector.X - 5;
+                    playerArray[i].GetSetPos = tempVector;
+                }
             }
         }
-        
-
     }
 }
