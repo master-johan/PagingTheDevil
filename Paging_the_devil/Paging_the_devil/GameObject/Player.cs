@@ -23,6 +23,7 @@ namespace Paging_the_devil
         int timer;
         List<Ability> abilityList;
         GamePadState currentPadState;
+        
 
       
 
@@ -33,15 +34,22 @@ namespace Paging_the_devil
         {
             this.playerIndex = playerIndex;
             this.spellRect = spellRect;
+            rect = new Rectangle((int)pos.X, (int)pos.Y, 59, 61);
             //controller = new Controller();
             abilityList = new List<Ability>();
             slash = false;
             shoot = false;
             timer = 0;
+
         }
 
         public override void Update()
         {
+
+            rect.X = (int)pos.X -30;
+            rect.Y = (int)pos.Y- 30;
+           
+
             slash = false;
             pos.X += direction.X * 10.0f;
             pos.Y -= direction.Y * 10.0f;
@@ -56,20 +64,29 @@ namespace Paging_the_devil
                     shoot = true;
                     timer = 60;
                 }
+
             }
             if (currentPadState.IsButtonDown(Buttons.B))
             {
+
                 slash = true;
+
             }
 
             foreach (var A in abilityList)
             {
+
+
                 A.Update();
+
             }
 
             if (timer > 0)
             {
+
+
                 timer--;
+
             }
 
 
@@ -81,6 +98,7 @@ namespace Paging_the_devil
         {
             //if(c1.IsConnected)
             spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
+
             if (slash)
             {
                 spriteBatch.Draw(tex, pos, Color.Black);

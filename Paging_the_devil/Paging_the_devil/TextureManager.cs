@@ -8,16 +8,24 @@ using System.Threading.Tasks;
 
 namespace Paging_the_devil
 {
+
     static class TextureManager
     {
-      
         public static List<Texture2D> playerTextureList = new List<Texture2D>();
         public static List<Texture2D> mageSpellList = new List<Texture2D>();
+        public static List<Texture2D> roomTextures = new List<Texture2D>();
 
         public static void LoadTextures(ContentManager Content)
         {
+            //Player
             playerTextureList.Add(Content.Load<Texture2D>(@"KnightSprite"));
             mageSpellList.Add(Content.Load<Texture2D>(@"redSquare"));
+
+            //Room
+            roomTextures.Add(Content.Load<Texture2D>(@"Portal"));
+            roomTextures.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
+            roomTextures.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
+
         }
     }
 }

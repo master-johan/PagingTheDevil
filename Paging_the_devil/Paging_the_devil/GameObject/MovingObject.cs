@@ -10,14 +10,13 @@ namespace Paging_the_devil.GameObject
 {
     class MovingObject : GameObject
     {
-        public MovingObject(Texture2D tex, Vector2 pos, Rectangle rect) : base(tex, pos, rect)
+        public MovingObject(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
 
         }
 
         public override void Update()
         {
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)

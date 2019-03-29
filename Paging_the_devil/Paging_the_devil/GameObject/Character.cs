@@ -10,7 +10,7 @@ namespace Paging_the_devil.GameObject
 {
     class Character : MovingObject
     {
-        public Character(Texture2D tex, Vector2 pos, Rectangle rect) : base(tex, pos, rect)
+        public Character(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
 
         }
