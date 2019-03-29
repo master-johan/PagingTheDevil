@@ -26,6 +26,7 @@
 /build:KnightSprite.png
 
 #begin Portal.bmp
+#begin redSquare.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -60,4 +61,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Horisontell vägg.bmp
+
+/build:redSquare.png
 

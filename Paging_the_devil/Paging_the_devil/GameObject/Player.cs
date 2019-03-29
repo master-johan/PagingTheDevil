@@ -6,42 +6,119 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil
 {
+
     class Player : Character
     {
-        public Player(Texture2D tex, Vector2 pos) : base(tex, pos)
+
+        Controller controller;
+        Vector2 direction;
+        int playerIndex;
+        Rectangle spellRect;
+        public bool shoot;
+        bool slash;
+        int timer;
+        List<Ability> abilityList;
+        GamePadState currentPadState;
+        
+
+      
+
+       
+
+        public Player(Texture2D tex, Vector2 pos, Rectangle rect, Rectangle spellRect,int playerIndex) 
+            : base(tex, pos, rect)
         {
+            this.playerIndex = playerIndex;
+            this.spellRect = spellRect;
             rect = new Rectangle((int)pos.X, (int)pos.Y, 59, 61);
+            //controller = new Controller();
+            abilityList = new List<Ability>();
+            slash = false;
+            shoot = false;
+            timer = 0;
+
         }
 
         public override void Update()
         {
+
             rect.X = (int)pos.X -30;
             rect.Y = (int)pos.Y- 30;
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+           
+
+            slash = false;
+            pos.X += direction.X * 10.0f;
+            pos.Y -= direction.Y * 10.0f;
+
+
+            if (currentPadState.IsButtonDown(Buttons.X))
             {
-                pos.Y= pos.Y-5;
+                if (timer == 0)
+                {
+                    Ability ability = new Ability(TextureManager.mageSpellList[0], pos, spellRect, this);
+                    abilityList.Add(ability);
+                    shoot = true;
+                    timer = 60;
+                }
+
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (currentPadState.IsButtonDown(Buttons.B))
             {
-                pos.X= pos.X +5;
+
+                slash = true;
+
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+
+            foreach (var A in abilityList)
             {
-                pos.Y = pos.Y + 5;
+
+
+                A.Update();
+
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+
+            if (timer > 0)
             {
-                pos.X = pos.X - 5;
+
+
+                timer--;
+
             }
+
+
+
         }
+        
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            //if(c1.IsConnected)
             spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
-            spriteBatch.Draw(tex, rect, Color.Black);
+
+            if (slash)
+            {
+                spriteBatch.Draw(tex, pos, Color.Black);
+            }
+            foreach (var a in abilityList)
+            {
+                a.Draw(spriteBatch);
+            }
+        }
+
+        public void InputDirection(Vector2 newDirection)
+        {
+            direction = newDirection;
+        }
+
+        public void InputPadState (GamePadState padState)
+        {
+
+            currentPadState = padState;
+
         }
     }
 }

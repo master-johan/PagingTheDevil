@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.GameObject
 {
     public abstract class GameObject
     {
         protected Texture2D tex;
-        protected Vector2 pos;
+        public Vector2 pos;
         protected Rectangle rect;
+        
 
         
 
@@ -21,9 +22,12 @@ namespace Paging_the_devil
 
         public abstract void Draw(SpriteBatch spriteBatch);
 
+
         public Rectangle GetRect { get { return rect; } }
 
         public Vector2 GetSetPos { get { return pos; } set { pos = value; } }
         
+
+
     }
 }

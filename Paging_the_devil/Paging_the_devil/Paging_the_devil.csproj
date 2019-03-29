@@ -41,6 +41,8 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controller.cs" />
+    <Compile Include="GameObject\Ability.cs" />
     <Compile Include="GameObject\Character.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject\GameObject.cs" />

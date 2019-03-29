@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System.Collections.Generic;
 
 namespace Paging_the_devil
 {
@@ -11,17 +11,26 @@ namespace Paging_the_devil
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
         int windowX, windowY;
 
         KeyboardState keyboardState, oldKeyboardState;
 
         Room currentRoom;
-        //TextureManager textureManager;
         Player player;
         Portal portal, portal2;
         Vector2 portalPos, portalRoom2, playerPos, playerPos2, portalRoom3, portalRoom4;
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
         Rectangle portalHitbox;
+        GamePadCapabilities[] connectedC;
+        Controller[] controllerArray;
+        Player[] playerArray;
+        List<Controller> controllerList;
+        List<Player> playerList;
+        bool[] playerConnected;
+        int noPlayers;
+
+
 
         public Game1()
         {
@@ -38,8 +47,10 @@ namespace Paging_the_devil
         {
 
 
+
             TextureManager.LoadTextures(Content);
             GameWindow();
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
             currentRoom = Room.One;
 
@@ -48,7 +59,7 @@ namespace Paging_the_devil
             WallLeftPos = new Rectangle(0, 0, 20, windowY);
             WallRightPos = new Rectangle(windowX - 20, 0, 20, windowY);
 
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+    
 
             portalPos = new Vector2(300, 430);
             portalRoom2 = new Vector2(300, -10);
@@ -70,7 +81,40 @@ namespace Paging_the_devil
         protected override void UnloadContent()
         {
 
+
+
+
+
+            
+
+            playerList = new List<Player>();
+            playerArray = new Player[4];
+
+            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
+            controllerArray = new Controller[4];
+            controllerList = new List<Controller>();
+            playerConnected = new bool[4];
+
+            for (int i = 0; i < connectedC.Length; i++)
+            {
+                if (connectedC[i].IsConnected)
+                {
+                    PlayerIndex index = (PlayerIndex)i;
+
+                    controllerArray[i] = new Controller(index);
+
+                    noPlayers++;        
+                }
+
+                playerConnected[i] = false;
+
+            }
+
+            
+
         }
+
+     
 
         protected override void Update(GameTime gameTime)
         {
@@ -78,8 +122,30 @@ namespace Paging_the_devil
                 Exit();
             player.Update();
 
-            keyboardState = Keyboard.GetState();
 
+            for (int i = 0; i < controllerArray.Length; i++)
+            {
+                if (connectedC[i].IsConnected && playerConnected[i] == false)
+                {
+                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100*i+50,100), new Rectangle(0, 0, 60, 280), new Rectangle(0,0,10,10), i);
+                    
+
+                    playerConnected[i] = true;
+
+                }
+            }
+
+            for (int i = 0; i < noPlayers; i++)
+            {
+                controllerArray[i].Update();
+                playerArray[i].Update();
+            }
+
+            for (int i = 0; i < noPlayers; i++)
+            {
+                playerArray[i].InputDirection(controllerArray[i].GetDirection());
+                playerArray[i].InputPadState(controllerArray[i].GetPadState());
+            }
 
             switch (currentRoom)
             {
@@ -117,7 +183,6 @@ namespace Paging_the_devil
                     break;
             }
 
-            oldKeyboardState = keyboardState;
 
             Collision();
 
@@ -129,6 +194,7 @@ namespace Paging_the_devil
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
+
 
             switch (currentRoom)
             {
@@ -151,8 +217,6 @@ namespace Paging_the_devil
             
          
 
-            
-            player.Draw(spriteBatch);
             spriteBatch.Draw(TextureManager.roomTextures[1], WallTopPos, Color.White);
             spriteBatch.Draw(TextureManager.roomTextures[1], WallBottomPos, Color.White);
             spriteBatch.Draw(TextureManager.roomTextures[2], WallLeftPos, Color.White);
@@ -160,10 +224,19 @@ namespace Paging_the_devil
 
 
 
+       
+
+            for (int i = 0; i < noPlayers; i++)
+            {
+                playerArray[i].Draw(spriteBatch);
+            }
+            
+
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
         private void GameWindow()
         {
             graphics.PreferredBackBufferHeight = windowY = 700;
@@ -202,5 +275,6 @@ namespace Paging_the_devil
             }
         }
         
+
     }
 }
