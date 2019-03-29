@@ -19,7 +19,7 @@ namespace Paging_the_devil
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, pos, Color.Blue);
-            //spriteBatch.Draw(tex, rect, Color.Black);
+            spriteBatch.Draw(tex, rect, Color.Black);
         }
 
         public override void Update()
