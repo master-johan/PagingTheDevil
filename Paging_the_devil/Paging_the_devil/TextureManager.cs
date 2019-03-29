@@ -19,7 +19,10 @@ namespace Paging_the_devil
         {
             //Player
             playerTextureList.Add(Content.Load<Texture2D>(@"KnightSprite"));
+
+            //Spells
             mageSpellList.Add(Content.Load<Texture2D>(@"redSquare"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"slash"));
 
             //Room
             roomTextures.Add(Content.Load<Texture2D>(@"Portal"));

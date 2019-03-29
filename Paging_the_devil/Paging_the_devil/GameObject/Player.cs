@@ -14,15 +14,23 @@ namespace Paging_the_devil
     class Player : Character
     {
 
-        Controller controller;
-        Vector2 direction;
+        float movementSpeed;
+        
         int playerIndex;
+        int fireballTimer;
+        int slashTimer;
+
         Rectangle spellRect;
+
         public bool shoot;
-        bool slash;
-        int timer;
+        public bool slash;
+
         List<Ability> abilityList;
+
         GamePadState currentPadState;
+
+        Vector2 spellDirection;
+        Vector2 lastInputDirection;
 
         public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex)
             : base(tex, pos)
@@ -34,35 +42,49 @@ namespace Paging_the_devil
             abilityList = new List<Ability>();
             slash = false;
             shoot = false;
-            timer = 0;
+            fireballTimer = 0;
+            slashTimer = 0;
 
+            movementSpeed = 2.0f;
         }
 
         public override void Update()
         {
-
             rect.X = (int)pos.X - 30;
             rect.Y = (int)pos.Y - 30;
 
             slash = false;
-            pos.X += direction.X * 10.0f;
-            pos.Y -= direction.Y * 10.0f;
+            pos.X += lastInputDirection.X * movementSpeed;
+            pos.Y -= lastInputDirection.Y * movementSpeed;
 
 
             if (currentPadState.IsButtonDown(Buttons.X))
             {
-                if (timer == 0)
+                if (fireballTimer == 0)
                 {
-                    Ability ability = new Ability(TextureManager.mageSpellList[0], pos, spellRect, this);
-                    abilityList.Add(ability);
-                    shoot = true;
-                    timer = 60;
+                    Shoot();
                 }
 
             }
             if (currentPadState.IsButtonDown(Buttons.B))
             {
-                slash = true;
+                if (slashTimer == 0)
+                {
+                    lastInputDirection.Normalize();
+                    //float xValue = lastInputDirection.X;
+                    //float yValue = lastInputDirection.Y;
+
+                    //float degreesX = 
+                    //float degreesY = 
+
+
+
+                    //if (slashDirection == 0)
+                    //{
+                    //    Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, lastInputDirection);
+                    //    slash = true;
+                    //}
+                }
             }
 
             foreach (var A in abilityList)
@@ -70,21 +92,28 @@ namespace Paging_the_devil
                 A.Update();
             }
 
-            if (timer > 0)
+            if (fireballTimer > 0)
             {
-                timer--;
+                fireballTimer--;
             }
+        }
+
+        private void Shoot()
+        {
+            spellDirection = lastInputDirection;
+            spellDirection.Normalize();
+            spellDirection.Y = -spellDirection.Y;
+            Ability ability = new Fireball(TextureManager.mageSpellList[0], pos, this, spellDirection);
+            abilityList.Add(ability);
+            shoot = true;
+            fireballTimer = 60;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             //if(c1.IsConnected)
             spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
-
-            if (slash)
-            {
-                spriteBatch.Draw(tex, pos, Color.Black);
-            }
+            
             foreach (var a in abilityList)
             {
                 a.Draw(spriteBatch);
@@ -93,7 +122,7 @@ namespace Paging_the_devil
 
         public void InputDirection(Vector2 newDirection)
         {
-            direction = newDirection;
+            lastInputDirection = newDirection;
         }
 
         public void InputPadState(GamePadState padState)
