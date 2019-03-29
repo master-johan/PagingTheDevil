@@ -57,6 +57,10 @@ namespace Paging_the_devil
                     timer = 60;
                 }
             }
+            if (currentPadState.IsButtonDown(Buttons.B))
+            {
+                slash = true;
+            }
 
             foreach (var A in abilityList)
             {

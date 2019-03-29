@@ -88,7 +88,7 @@ namespace Paging_the_devil
             {
                 if (connectedC[i].IsConnected && playerConnected[i] == false)
                 {
-                    playerArray[i] = new Player(TextureManager.playerTextureList[0], heroPos1, new Rectangle(0, 0, 60, 280), new Rectangle(0,0,10,10), i);
+                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100*i+50,100), new Rectangle(0, 0, 60, 280), new Rectangle(0,0,10,10), i);
                     
 
                     playerConnected[i] = true;
