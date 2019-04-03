@@ -22,8 +22,6 @@ namespace Paging_the_devil.GameObject
         int fireballTimer;
         int slashTimer;
 
-
-        Rectangle spellRect;
         Rectangle left, right, up, down;
         Rectangle drawRect;
 
@@ -82,7 +80,7 @@ namespace Paging_the_devil.GameObject
             hitboxBot.X = (int)pos.X - 28;
             hitboxBot.Y = (int)pos.Y + 25;
 
-            hitboxRight.X = (int)pos.X + 20 ;
+            hitboxRight.X = (int)pos.X + 20;
             hitboxRight.Y = (int)pos.Y - 28;
 
             if (currentPadState.IsButtonDown(Buttons.X))
@@ -204,7 +202,6 @@ namespace Paging_the_devil.GameObject
             currentPadState = padState;
         }
 
-
         public void LastInputDirection(Vector2 direction)
         {
             lastInputDirection = direction;
@@ -237,8 +234,8 @@ namespace Paging_the_devil.GameObject
                         drawRect = up;
                     }
                 }
-         }
-
+            }
+        }
         public Rectangle GetTopHitbox
         {
             get { return hitboxTop; }
