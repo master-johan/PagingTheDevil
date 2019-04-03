@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Paging_the_devil.GameObject
 {
-    class Portal : GameObject
+   public class Portal : GameObject
     {
         public Portal(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
