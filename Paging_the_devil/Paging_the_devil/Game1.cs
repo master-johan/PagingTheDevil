@@ -17,18 +17,13 @@ namespace Paging_the_devil
         int windowX, windowY;
         int nrOfPlayers;
 
-        KeyboardState keyboardState, oldKeyboardState;
-
         Room currentRoom;
-
-        Player player;
 
         Portal portal, portal2;
 
         Vector2 portalPos, portalRoom2, playerPos, playerPos2, portalRoom3, portalRoom4;
 
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
-        Rectangle portalHitbox;
 
         GamePadCapabilities[] connectedC;
 
