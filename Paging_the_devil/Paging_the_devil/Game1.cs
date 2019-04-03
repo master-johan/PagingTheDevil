@@ -30,8 +30,7 @@ namespace Paging_the_devil
         Controller[] controllerArray;
 
         Player[] playerArray;
-
-        List<Controller> controllerList;
+        
         List<Enemy> enemyList;
 
         bool[] playerConnected;
@@ -72,7 +71,6 @@ namespace Paging_the_devil
             portal2 = new Portal(TextureManager.rommTextureList[0], portalRoom3);
 
             enemyList = new List<Enemy>();
-            controllerList = new List<Controller>();
 
             connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
             controllerArray = new Controller[4];
