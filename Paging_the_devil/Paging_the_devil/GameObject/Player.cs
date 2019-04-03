@@ -25,7 +25,7 @@ namespace Paging_the_devil
         public bool shoot;
         public bool slash;
 
-        List<Ability> abilityList;
+        public List<Ability> abilityList;
 
         GamePadState currentPadState;
 

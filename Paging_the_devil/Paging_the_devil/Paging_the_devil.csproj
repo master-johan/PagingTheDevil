@@ -45,6 +45,7 @@
     <Compile Include="GameObject\Ability.cs" />
     <Compile Include="GameObject\Character.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameObject\Enemy.cs" />
     <Compile Include="GameObject\Fireball.cs" />
     <Compile Include="GameObject\GameObject.cs" />
     <Compile Include="GameObject\MovingObject.cs" />

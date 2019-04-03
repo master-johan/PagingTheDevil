@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Paging_the_devil.GameObject;
+using System;
 
 namespace Paging_the_devil
 {
@@ -14,25 +15,32 @@ namespace Paging_the_devil
         SpriteBatch spriteBatch;
 
         int windowX, windowY;
+        int nrOfPlayers;
 
         KeyboardState keyboardState, oldKeyboardState;
 
         Room currentRoom;
+
         Player player;
+
         Portal portal, portal2;
+
         Vector2 portalPos, portalRoom2, playerPos, playerPos2, portalRoom3, portalRoom4;
+
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
         Rectangle portalHitbox;
+
         GamePadCapabilities[] connectedC;
+
         Controller[] controllerArray;
+
         Player[] playerArray;
+
         List<Controller> controllerList;
-        List<Player> playerList;
+        List<Enemy> enemyList;
+
         bool[] playerConnected;
-        int noPlayers;
-
-
-
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -46,9 +54,6 @@ namespace Paging_the_devil
 
         protected override void LoadContent()
         {
-
-
-
             TextureManager.LoadTextures(Content);
             GameWindow();
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -68,16 +73,16 @@ namespace Paging_the_devil
             playerPos = new Vector2(200, 400);
             playerPos2 = new Vector2(320, 100);
             
-            portal = new Portal(TextureManager.roomTextures[0], portalPos);
-            portal2 = new Portal(TextureManager.roomTextures[0], portalRoom3);
+            portal = new Portal(TextureManager.rommTextureList[0], portalPos);
+            portal2 = new Portal(TextureManager.rommTextureList[0], portalRoom3);
 
-            playerList = new List<Player>();
-            playerArray = new Player[4];
+            enemyList = new List<Enemy>();
+            controllerList = new List<Controller>();
 
             connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
             controllerArray = new Controller[4];
-            controllerList = new List<Controller>();
             playerConnected = new bool[4];
+            playerArray = new Player[4];
 
             for (int i = 0; i < connectedC.Length; i++)
             {
@@ -87,22 +92,13 @@ namespace Paging_the_devil
 
                     controllerArray[i] = new Controller(index);
 
-                    noPlayers++;
+                    nrOfPlayers++;
                 }
 
                 playerConnected[i] = false;
 
             }
-
-
         }
-
-        protected override void UnloadContent()
-        {
-            
-        }
-
-     
 
         protected override void Update(GameTime gameTime)
         {
@@ -122,13 +118,13 @@ namespace Paging_the_devil
                 }
             }
 
-            for (int i = 0; i < noPlayers; i++)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
                 controllerArray[i].Update();
                 playerArray[i].Update();
             }
 
-            for (int i = 0; i < noPlayers; i++)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
                 playerArray[i].InputPadState(controllerArray[i].GetPadState());
@@ -140,9 +136,9 @@ namespace Paging_the_devil
                     
                     if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
                     {
-                       
                         //portal.GetSetPos = portalRoom2;
                         currentRoom = Room.Two;
+                        SpawnEnemy();
                     }
 
                     break;
@@ -151,28 +147,39 @@ namespace Paging_the_devil
                     {
                         portal.GetSetPos = portalPos;
                         currentRoom = Room.One;
+                        SpawnEnemy();
                     }
                     else if (playerArray[0].GetRect.Intersects(portal2.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
                     {
                         portal2.GetSetPos = portalRoom3;
                         currentRoom = Room.Three;
                         portal.GetSetPos = portalRoom4;
+                        SpawnEnemy();
                     }
                     break;
                 case Room.Three:
                     if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
                     {
                         currentRoom = Room.Two;
+                        SpawnEnemy();
                     }
                     break;
                 default:
                     break;
             }
 
+            foreach (var e in enemyList)
+            {
+                e.Update();
+            }
+
             Collision();
 
             portal.Update();
             portal2.Update();
+
+            DeleteAbilities();
+
             base.Update(gameTime);
         }
 
@@ -199,16 +206,20 @@ namespace Paging_the_devil
                     break;
             }
 
-            spriteBatch.Draw(TextureManager.roomTextures[1], WallTopPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextures[1], WallBottomPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextures[2], WallLeftPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextures[2], WallRightPos, Color.White);
+            spriteBatch.Draw(TextureManager.rommTextureList[1], WallTopPos, Color.White);
+            spriteBatch.Draw(TextureManager.rommTextureList[1], WallBottomPos, Color.White);
+            spriteBatch.Draw(TextureManager.rommTextureList[2], WallLeftPos, Color.White);
+            spriteBatch.Draw(TextureManager.rommTextureList[2], WallRightPos, Color.White);
 
-            for (int i = 0; i < noPlayers; i++)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerArray[i].Draw(spriteBatch);
             }
-            
+
+            foreach (var e in enemyList)
+            {
+                e.Draw(spriteBatch);
+            }
 
             spriteBatch.End();
 
@@ -223,7 +234,7 @@ namespace Paging_the_devil
         }
         private void Collision()
         {
-            for (int i = 0; i < noPlayers; i++)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
                 if (playerArray[i].GetRect.Intersects(WallTopPos))
                 {
@@ -254,6 +265,58 @@ namespace Paging_the_devil
                     playerArray[i].GetSetPos = tempVector;
                 }
             }
+        }
+        private void DeleteAbilities()
+        {
+            Ability toRemoveAbility = null;
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                foreach (var a in playerArray[i].abilityList)
+                {
+                    if (a.GetRect.Intersects(WallBottomPos) || a.pos.Y > windowY)
+                    {
+                        toRemoveAbility = a;
+                    }
+                    else if (a.GetRect.Intersects(WallLeftPos) || a.pos.X < 0)
+                    {
+                        toRemoveAbility = a;
+                    }
+                    else if (a.GetRect.Intersects(WallRightPos) || a.pos.X > windowX)
+                    {
+                        toRemoveAbility = a;
+                    }
+                    else if (a.GetRect.Intersects(WallTopPos) || a.pos.Y < 0)
+                    {
+                        toRemoveAbility = a;
+                    }
+                }
+
+                foreach (var a in playerArray[i].abilityList)
+                {
+                    foreach (var e in enemyList)
+                    {
+                        if (a.GetRect.Intersects(e.GetRect))
+                        {
+                            toRemoveAbility = a;
+                        }
+                    }
+                }
+
+                if (toRemoveAbility != null)
+                {
+                    playerArray[i].abilityList.Remove(toRemoveAbility);
+                }
+            }
+        }
+        private void SpawnEnemy()
+        {
+            Random rand = new Random();
+            int x = rand.Next((windowX / 2) + 20, windowX - TextureManager.enemyTextureList[0].Width - 20);
+            int y = rand.Next(20, windowY - TextureManager.enemyTextureList[0].Height - 20);
+
+            Enemy enemy = new Enemy(TextureManager.enemyTextureList[0], new Vector2(x, y));
+            enemyList.Add(enemy);
         }
     }
 }

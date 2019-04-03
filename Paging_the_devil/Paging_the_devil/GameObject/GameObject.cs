@@ -18,13 +18,9 @@ namespace Paging_the_devil.GameObject
         public abstract void Update();
 
         public abstract void Draw(SpriteBatch spriteBatch);
-
-
+        
         public Rectangle GetRect { get { return rect; } }
 
         public Vector2 GetSetPos { get { return pos; } set { pos = value; } }
-        
-
-
     }
 }
