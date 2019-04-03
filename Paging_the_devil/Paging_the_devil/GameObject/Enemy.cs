@@ -8,19 +8,15 @@ using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
-    class Ability : GameObject
+    class Enemy : Character
     {
-        protected Player player;
-        protected Vector2 direction;
-
-        public Ability(Texture2D tex, Vector2 pos, Player player, Vector2 direction) : base(tex, pos)
+        public Enemy(Texture2D tex, Vector2 pos) : base (tex, pos)
         {
-            this.player = player;
-            this.direction = direction;
+              
         }
         public override void Update()
         {
-            
+            rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

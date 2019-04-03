@@ -16,8 +16,9 @@ namespace Paging_the_devil
     //    return keyState.IsKeyDown(key) && oldKeyState.IsKeyUp(key);
     //}
 
-    public  class Controller
+    public class Controller
     {
+
            
         
 
@@ -25,21 +26,23 @@ namespace Paging_the_devil
        
         GamePadState gamePadState, oldPadState;
         
+
         public Controller(PlayerIndex playerIndex)
         {
             this.playerIndex = playerIndex;
-            
-        }
 
+        }
 
         public void Update()
         {
+
             oldPadState = gamePadState;
             gamePadState = GamePad.GetState(playerIndex);
 
            
 
             
+
         }
         
         public bool ButtonPressed(Buttons button)
@@ -57,10 +60,12 @@ namespace Paging_the_devil
         {
             return gamePadState;
         }
+
         public GamePadState GetOldPadState()
         {
             return oldPadState;
         }
        
+
     }
 }
