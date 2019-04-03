@@ -14,7 +14,7 @@ namespace Paging_the_devil.GameObject
     {
 
         float movementSpeed;
-        
+
         int playerIndex;
 
         Rectangle spellRect, hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
@@ -23,16 +23,19 @@ namespace Paging_the_devil.GameObject
         int slashTimer;
 
 
+        Rectangle spellRect;
+        Rectangle left, right, up, down;
+        Rectangle drawRect;
 
 
         public bool shoot;
-        public bool slash;
 
         public List<Ability> abilityList;
 
         GamePadState currentPadState;
 
         Vector2 spellDirection;
+        Vector2 inputDirection;
         Vector2 lastInputDirection;
 
         public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex)
@@ -47,12 +50,17 @@ namespace Paging_the_devil.GameObject
             hitboxRight = new Rectangle((int)pos.X - 49, (int)pos.Y, 10, 59);
             //controller = new Controller();
             abilityList = new List<Ability>();
-            slash = false;
             shoot = false;
             fireballTimer = 0;
             slashTimer = 0;
 
             movementSpeed = 2.0f;
+
+            right = new Rectangle(0, 140, 60, 70);
+            up = new Rectangle(0, 210, 60, 70);
+            left = new Rectangle(0, 70, 60, 70);
+            down = new Rectangle(0, 0, 60, 70);
+            drawRect = down;
         }
 
         public override void Update()
@@ -61,9 +69,9 @@ namespace Paging_the_devil.GameObject
             rect.Y = (int)pos.Y - 30;
 
 
-            slash = false;
-            pos.X += lastInputDirection.X * movementSpeed;
-            pos.Y -= lastInputDirection.Y * movementSpeed;
+            pos.X += inputDirection.X * movementSpeed;
+            pos.Y -= inputDirection.Y * movementSpeed;
+
 
             hitboxLeft.X = (int)pos.X - 30;
             hitboxLeft.Y = (int)pos.Y - 28;
@@ -91,51 +99,70 @@ namespace Paging_the_devil.GameObject
                 {
                     double slashDir = Math.Atan2(lastInputDirection.Y, lastInputDirection.X);
 
-                    float slashAngle = (float)MathHelper.ToDegrees((float)slashDir);
+                    float slashAngle = MathHelper.ToDegrees((float)slashDir);
+
+                    Vector2 meleeDirection;
 
                     if (slashAngle > 45 && slashAngle < 135) // up
                     {
-                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0,-1), slashAngle);
+                        meleeDirection = new Vector2(0, -1);
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
                         abilityList.Add(slashObject);
-                        slash = true;
-
                     }
 
-                    else if (slashAngle > 135 || slashAngle <-135) // left
+                    else if (slashAngle > 135 || slashAngle < -135) // left
                     {
-                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0, -1), slashAngle);
+                        meleeDirection = new Vector2(-1, 0);
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
                         abilityList.Add(slashObject);
-                        slash = true;
 
                     }
 
                     else if (slashAngle > -135 && slashAngle < -45) // down
                     {
-                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0, -1),slashAngle);
+                        meleeDirection = new Vector2(0, 1);
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
                         abilityList.Add(slashObject);
-                        slash = true;
 
                     }
 
-                    else if (slashAngle >-45 && slashAngle < 45) // right
+                    else if (slashAngle > -45 && slashAngle < 45) // right
                     {
-                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0, -1),slashAngle);
+                        meleeDirection = new Vector2(1, 0);
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
                         abilityList.Add(slashObject);
-                        slash = true;
 
                     }
+
+                    slashTimer = 20;
+
                 }
             }
 
             foreach (var A in abilityList)
             {
                 A.Update();
+                if (A == A as Slash)
+                {
+                    if (!(A as Slash).Active)
+                    {
+                        abilityList.Remove(A);
+                        break;
+                    }
+                }
             }
 
             if (fireballTimer > 0)
             {
                 fireballTimer--;
             }
+            if (slashTimer > 0)
+            {
+                slashTimer--;
+            }
+
+            GetDirection();
+
         }
 
         private void Shoot()
@@ -152,9 +179,11 @@ namespace Paging_the_devil.GameObject
         public override void Draw(SpriteBatch spriteBatch)
         {
             //if(c1.IsConnected)
-            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
+
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
 
             foreach (var A in abilityList)
+
             {
                 A.Draw(spriteBatch);
             }
@@ -167,13 +196,48 @@ namespace Paging_the_devil.GameObject
 
         public void InputDirection(Vector2 newDirection)
         {
-            lastInputDirection = newDirection;
+            inputDirection = newDirection;
         }
 
         public void InputPadState(GamePadState padState)
         {
             currentPadState = padState;
         }
+
+
+        public void LastInputDirection(Vector2 direction)
+        {
+            lastInputDirection = direction;
+        }
+
+        private void GetDirection()
+        {
+            if (inputDirection != Vector2.Zero)
+            {
+                if (Math.Abs(inputDirection.X) > Math.Abs(inputDirection.Y))
+                {
+                    if (inputDirection.X < 0)
+                    {
+                        drawRect = left;
+                    }
+                    else
+                    {
+                        drawRect = right;
+                    }
+                }
+                else
+                {
+                    if (inputDirection.Y < 0)
+                    {
+                        drawRect = down;
+                    }
+
+                    else
+                    {
+                        drawRect = up;
+                    }
+                }
+         }
 
         public Rectangle GetTopHitbox
         {
@@ -190,6 +254,7 @@ namespace Paging_the_devil.GameObject
         public Rectangle GetRightHitbox
         {
             get { return hitboxRight; }
+
         }
     }
 }
