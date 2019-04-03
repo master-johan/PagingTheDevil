@@ -84,7 +84,6 @@ namespace Paging_the_devil
                     PlayerIndex index = (PlayerIndex)i;
 
                     controllerArray[i] = new Controller(index);
-
                     nrOfPlayers++;
                 }
 
@@ -119,6 +118,10 @@ namespace Paging_the_devil
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
+                if (controllerArray[i].GetDirection() != Vector2.Zero)
+                {
+                    playerArray[i].LastInputDirection(controllerArray[i].GetDirection());
+                }
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
                 playerArray[i].InputPadState(controllerArray[i].GetPadState());
             }
