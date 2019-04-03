@@ -9,14 +9,22 @@ using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil
 {
+    //public static KeyboardState keyState, oldKeyState = Keyboard.GetState();
+    //public static MouseState mouseState, oldMouseState = Mouse.GetState();
+    //public static bool KeyPressed(Keys key)
+    //{
+    //    return keyState.IsKeyDown(key) && oldKeyState.IsKeyUp(key);
+    //}
 
     public  class Controller
     {
            
+        
+
         PlayerIndex playerIndex;
        
-        GamePadState gamePadState;
-
+        GamePadState gamePadState, oldPadState;
+        
         public Controller(PlayerIndex playerIndex)
         {
             this.playerIndex = playerIndex;
@@ -26,14 +34,21 @@ namespace Paging_the_devil
 
         public void Update()
         {
-
+            oldPadState = gamePadState;
             gamePadState = GamePad.GetState(playerIndex);
 
-            
+           
 
+            
+        }
+        
+        public bool ButtonPressed(Buttons button)
+        {
+            return gamePadState.IsButtonDown(button) && oldPadState.IsButtonUp(button);
         }
 
-       public Vector2 GetDirection()
+
+        public Vector2 GetDirection()
         {
             return gamePadState.ThumbSticks.Left;
         }
@@ -41,6 +56,10 @@ namespace Paging_the_devil
         public GamePadState GetPadState()
         {
             return gamePadState;
+        }
+        public GamePadState GetOldPadState()
+        {
+            return oldPadState;
         }
        
     }
