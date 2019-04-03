@@ -124,43 +124,44 @@ namespace Paging_the_devil
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
                 playerArray[i].InputPadState(controllerArray[i].GetPadState());
             }
-
-            switch (currentRoom)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
-                case Room.One:
-                    
-                    if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
-                    {
-                        //portal.GetSetPos = portalRoom2;
-                        currentRoom = Room.Two;
-                        SpawnEnemy();
-                    }
+                switch (currentRoom)
+                {
+                    case Room.One:
+                        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].GetPadState().IsButtonDown(Buttons.Y))
+                        {
+                            //portal.GetSetPos = portalRoom2;
+                            currentRoom = Room.Two;
+                            SpawnEnemy();
+                        }
 
-                    break;
-                case Room.Two:
-                    if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
-                    {
-                        portal.GetSetPos = portalPos;
-                        currentRoom = Room.One;
-                        SpawnEnemy();
-                    }
-                    else if (playerArray[0].GetRect.Intersects(portal2.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
-                    {
-                        portal2.GetSetPos = portalRoom3;
-                        currentRoom = Room.Three;
-                        portal.GetSetPos = portalRoom4;
-                        SpawnEnemy();
-                    }
-                    break;
-                case Room.Three:
-                    if (playerArray[0].GetRect.Intersects(portal.GetRect) && controllerArray[0].GetPadState().IsButtonDown(Buttons.Y))
-                    {
-                        currentRoom = Room.Two;
-                        SpawnEnemy();
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case Room.Two:
+                        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].GetPadState().IsButtonDown(Buttons.Y))
+                        {
+                            portal.GetSetPos = portalPos;
+                            currentRoom = Room.One;
+                            SpawnEnemy();
+                        }
+                        else if (playerArray[i].GetRect.Intersects(portal2.GetRect) && controllerArray[i].GetPadState().IsButtonDown(Buttons.Y))
+                        {
+                            portal2.GetSetPos = portalRoom3;
+                            currentRoom = Room.Three;
+                            portal.GetSetPos = portalRoom4;
+                            SpawnEnemy();
+                        }
+                        break;
+                    case Room.Three:
+                        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].GetPadState().IsButtonDown(Buttons.Y))
+                        {
+                            currentRoom = Room.Two;
+                            SpawnEnemy();
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
 
             foreach (var e in enemyList)
