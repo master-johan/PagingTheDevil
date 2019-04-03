@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Paging_the_devil.GameObject;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.GameObject
 {
 
     class Player : Character
@@ -23,7 +22,7 @@ namespace Paging_the_devil
         int fireballTimer;
         int slashTimer;
 
-        Rectangle spellRect;
+
 
 
         public bool shoot;
@@ -58,7 +57,6 @@ namespace Paging_the_devil
 
         public override void Update()
         {
-
             rect.X = (int)pos.X - 30;
             rect.Y = (int)pos.Y - 30;
 
@@ -126,19 +124,6 @@ namespace Paging_the_devil
                         slash = true;
 
                     }
-
-                    //float xValue = lastInputDirection.X;
-                    //float yValue = lastInputDirection.Y;
-
-                    //float degreesX = 
-                    //float degreesY = 
-
-
-
-                    //if (slashDirection == 0)
-                    //{
-                    //    
-                    //}
                 }
             }
 
@@ -169,19 +154,15 @@ namespace Paging_the_devil
             //if(c1.IsConnected)
             spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 60, 70), Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
 
+            foreach (var A in abilityList)
+            {
+                A.Draw(spriteBatch);
+            }
+
             spriteBatch.Draw(tex, hitboxLeft, Color.Black);
             spriteBatch.Draw(tex, hitboxRight, Color.Red);
             spriteBatch.Draw(tex, hitboxTop, Color.Blue);
             spriteBatch.Draw(tex, hitboxBot, Color.Yellow);
-            if (slash)
-            {
-                spriteBatch.Draw(tex, pos, Color.Black);
-            }
-
-            foreach (var a in abilityList)
-            {
-                a.Draw(spriteBatch);
-            }
         }
 
         public void InputDirection(Vector2 newDirection)

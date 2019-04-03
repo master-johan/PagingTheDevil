@@ -15,8 +15,6 @@ namespace Paging_the_devil
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        int windowX, windowY;
-
 
 
 
@@ -89,8 +87,8 @@ namespace Paging_the_devil
             playerPos2 = new Vector2(320, 100);
 
 
-            portal = new Gateway(TextureManager.roomTextures[0], portalPos);
-            portal2 = new Gateway(TextureManager.roomTextures[0], portalRoom3);
+            portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
+            portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
 
             
 
@@ -162,7 +160,7 @@ namespace Paging_the_devil
 
             for (int i = 0; i < room.GetWallList().Count; i++)
             {
-                for (int j = 0; j < noPlayers; j++)
+                for (int j = 0; j < nrOfPlayers; j++)
                 {
                     if (playerArray[j].GetBotHitbox.Intersects(room.GetWallList()[i].GetRect))
                     {
@@ -219,21 +217,23 @@ namespace Paging_the_devil
                     break;
                 default:
                     break;
-
-            foreach (var e in enemyList)
-            {
-                e.Update();
-
             }
 
-      
+                    foreach (var e in enemyList)
+                    {
+                        e.Update();
 
-            portal.Update();
-            portal2.Update();
+                    }
 
-            DeleteAbilities();
 
-            base.Update(gameTime);
+
+                    portal.Update();
+                    portal2.Update();
+
+                    DeleteAbilities();
+
+                    base.Update(gameTime);
+            
         }
 
         protected override void Draw(GameTime gameTime)
@@ -260,16 +260,12 @@ namespace Paging_the_devil
                     break;
             }
 
-
-            room.Draw(spriteBatch);
-
-
-
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerArray[i].Draw(spriteBatch);
             }
 
+            room.Draw(spriteBatch);
 
             foreach (var e in enemyList)
             {
@@ -291,21 +287,12 @@ namespace Paging_the_devil
             {
                 foreach (var a in playerArray[i].abilityList)
                 {
-                    if (a.GetRect.Intersects(WallBottomPos) || a.pos.Y > windowY)
+                    foreach (var w in room.GetWallList())
                     {
-                        toRemoveAbility = a;
-                    }
-                    else if (a.GetRect.Intersects(WallLeftPos) || a.pos.X < 0)
-                    {
-                        toRemoveAbility = a;
-                    }
-                    else if (a.GetRect.Intersects(WallRightPos) || a.pos.X > windowX)
-                    {
-                        toRemoveAbility = a;
-                    }
-                    else if (a.GetRect.Intersects(WallTopPos) || a.pos.Y < 0)
-                    {
-                        toRemoveAbility = a;
+                        if (a.GetRect.Intersects(w.GetRect) || a.pos.Y > room.WindowY || a.pos.X < 0 || a.pos.X > room.WindowX || a.pos.Y < 0)
+                        {
+                            toRemoveAbility = a;
+                        }
                     }
                 }
 
@@ -329,8 +316,8 @@ namespace Paging_the_devil
         private void SpawnEnemy()
         {
             Random rand = new Random();
-            int x = rand.Next((windowX / 2) + 20, windowX - TextureManager.enemyTextureList[0].Width - 20);
-            int y = rand.Next(20, windowY - TextureManager.enemyTextureList[0].Height - 20);
+            int x = rand.Next((room.WindowX / 2) + 20, room.WindowX - TextureManager.enemyTextureList[0].Width - 20);
+            int y = rand.Next(20, room.WindowY - TextureManager.enemyTextureList[0].Height - 20);
 
             Enemy enemy = new Enemy(TextureManager.enemyTextureList[0], new Vector2(x, y));
             enemyList.Add(enemy);
