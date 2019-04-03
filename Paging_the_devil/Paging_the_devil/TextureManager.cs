@@ -13,7 +13,7 @@ namespace Paging_the_devil
     {
         public static List<Texture2D> playerTextureList = new List<Texture2D>();
         public static List<Texture2D> mageSpellList = new List<Texture2D>();
-        public static List<Texture2D> rommTextureList = new List<Texture2D>();
+        public static List<Texture2D> roomTextureList = new List<Texture2D>();
         public static List<Texture2D> enemyTextureList = new List<Texture2D>();
 
         public static void LoadTextures(ContentManager Content)
@@ -26,9 +26,9 @@ namespace Paging_the_devil
             mageSpellList.Add(Content.Load<Texture2D>(@"slash"));
 
             //Room
-            rommTextureList.Add(Content.Load<Texture2D>(@"Portal"));
-            rommTextureList.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
-            rommTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
+            roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
+            roomTextureList.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
+            roomTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
 
             //Enemey
             enemyTextureList.Add(Content.Load<Texture2D>(@"Ghost"));

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Paging_the_devil.GameObject;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.GameObject
 {
 
     class Player : Character
@@ -17,12 +16,17 @@ namespace Paging_the_devil
         float movementSpeed;
 
         int playerIndex;
+
+        Rectangle spellRect, hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
+
         int fireballTimer;
         int slashTimer;
+
 
         Rectangle spellRect;
         Rectangle left, right, up, down;
         Rectangle drawRect;
+
 
         public bool shoot;
 
@@ -40,6 +44,10 @@ namespace Paging_the_devil
             this.playerIndex = playerIndex;
             this.spellRect = spellRect;
             rect = new Rectangle((int)pos.X, (int)pos.Y, 59, 61);
+            hitboxLeft = new Rectangle((int)pos.X, (int)pos.Y, 10, 59);
+            hitboxTop = new Rectangle((int)pos.X, (int)pos.Y + 5, 57, 10);
+            hitboxBot = new Rectangle((int)pos.X, (int)pos.Y - 56, 57, 10);
+            hitboxRight = new Rectangle((int)pos.X - 49, (int)pos.Y, 10, 59);
             //controller = new Controller();
             abilityList = new List<Ability>();
             shoot = false;
@@ -60,9 +68,22 @@ namespace Paging_the_devil
             rect.X = (int)pos.X - 30;
             rect.Y = (int)pos.Y - 30;
 
+
             pos.X += inputDirection.X * movementSpeed;
             pos.Y -= inputDirection.Y * movementSpeed;
 
+
+            hitboxLeft.X = (int)pos.X - 30;
+            hitboxLeft.Y = (int)pos.Y - 28;
+
+            hitboxTop.X = (int)pos.X - 28;
+            hitboxTop.Y = (int)pos.Y - 35;
+
+            hitboxBot.X = (int)pos.X - 28;
+            hitboxBot.Y = (int)pos.Y + 25;
+
+            hitboxRight.X = (int)pos.X + 20 ;
+            hitboxRight.Y = (int)pos.Y - 28;
 
             if (currentPadState.IsButtonDown(Buttons.X))
             {
@@ -112,7 +133,9 @@ namespace Paging_the_devil
                         abilityList.Add(slashObject);
 
                     }
+
                     slashTimer = 20;
+
                 }
             }
 
@@ -156,12 +179,19 @@ namespace Paging_the_devil
         public override void Draw(SpriteBatch spriteBatch)
         {
             //if(c1.IsConnected)
+
             spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
 
-            foreach (var a in abilityList)
+            foreach (var A in abilityList)
+
             {
-                a.Draw(spriteBatch);
+                A.Draw(spriteBatch);
             }
+
+            spriteBatch.Draw(tex, hitboxLeft, Color.Black);
+            spriteBatch.Draw(tex, hitboxRight, Color.Red);
+            spriteBatch.Draw(tex, hitboxTop, Color.Blue);
+            spriteBatch.Draw(tex, hitboxBot, Color.Yellow);
         }
 
         public void InputDirection(Vector2 newDirection)
@@ -173,6 +203,7 @@ namespace Paging_the_devil
         {
             currentPadState = padState;
         }
+
 
         public void LastInputDirection(Vector2 direction)
         {
@@ -206,7 +237,24 @@ namespace Paging_the_devil
                         drawRect = up;
                     }
                 }
-            }
+         }
+
+        public Rectangle GetTopHitbox
+        {
+            get { return hitboxTop; }
+        }
+        public Rectangle GetBotHitbox
+        {
+            get { return hitboxBot; }
+        }
+        public Rectangle GetLeftHitbox
+        {
+            get { return hitboxLeft; }
+        }
+        public Rectangle GetRightHitbox
+        {
+            get { return hitboxRight; }
+
         }
     }
 }
