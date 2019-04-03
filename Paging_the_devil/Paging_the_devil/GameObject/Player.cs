@@ -70,7 +70,42 @@ namespace Paging_the_devil
             {
                 if (slashTimer == 0)
                 {
-                    lastInputDirection.Normalize();
+                    double slashDir = Math.Atan2(lastInputDirection.Y, lastInputDirection.X);
+
+                    float slashAngle = (float)MathHelper.ToDegrees((float)slashDir);
+
+                    if (slashAngle > 45 && slashAngle < 135) // up
+                    {
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0,-1), slashAngle);
+                        abilityList.Add(slashObject);
+                        slash = true;
+
+                    }
+
+                    else if (slashAngle > 135 || slashAngle <-135) // left
+                    {
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0, -1), slashAngle);
+                        abilityList.Add(slashObject);
+                        slash = true;
+
+                    }
+
+                    else if (slashAngle > -135 && slashAngle < -45) // down
+                    {
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0, -1),slashAngle);
+                        abilityList.Add(slashObject);
+                        slash = true;
+
+                    }
+
+                    else if (slashAngle >-45 && slashAngle < 45) // right
+                    {
+                        Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, new Vector2(0, -1),slashAngle);
+                        abilityList.Add(slashObject);
+                        slash = true;
+
+                    }
+
                     //float xValue = lastInputDirection.X;
                     //float yValue = lastInputDirection.Y;
 
@@ -81,8 +116,7 @@ namespace Paging_the_devil
 
                     //if (slashDirection == 0)
                     //{
-                    //    Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, lastInputDirection);
-                    //    slash = true;
+                    //    
                     //}
                 }
             }
