@@ -35,6 +35,8 @@ namespace Paging_the_devil
         List<Enemy> enemyList;
 
         bool[] playerConnected;
+
+        // test commit
         
         public Game1()
         {
