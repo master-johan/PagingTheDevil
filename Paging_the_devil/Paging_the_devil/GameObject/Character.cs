@@ -10,6 +10,8 @@ namespace Paging_the_devil.GameObject
 {
     class Character : MovingObject
     {
+        protected float HealthPoints { get; set; }
+
         public Character(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
 
