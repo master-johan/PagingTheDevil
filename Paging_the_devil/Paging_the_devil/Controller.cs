@@ -18,10 +18,6 @@ namespace Paging_the_devil
 
     public class Controller
     {
-
-           
-        
-
         PlayerIndex playerIndex;
        
         GamePadState gamePadState, oldPadState;
@@ -38,11 +34,6 @@ namespace Paging_the_devil
 
             oldPadState = gamePadState;
             gamePadState = GamePad.GetState(playerIndex);
-
-           
-
-            
-
         }
         
         public bool ButtonPressed(Buttons button)

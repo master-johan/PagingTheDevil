@@ -35,11 +35,14 @@ namespace Paging_the_devil.GameObject
         Vector2 inputDirection;
         Vector2 lastInputDirection;
 
-        public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex)
+        Controller controller;
+
+        public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex, Controller controller)
             : base(tex, pos)
         {
             this.playerIndex = playerIndex;
             this.spellRect = spellRect;
+            this.controller = controller;
             GenerateRectangles(pos);
             //controller = new Controller();
             abilityList = new List<Ability>();
@@ -75,7 +78,7 @@ namespace Paging_the_devil.GameObject
 
             Hitboxes();
 
-            if (currentPadState.IsButtonDown(Buttons.X))
+            if (controller.ButtonPressed(Buttons.X))
             {
                 if (fireballTimer == 0)
                 {
@@ -83,7 +86,7 @@ namespace Paging_the_devil.GameObject
                 }
 
             }
-            if (currentPadState.IsButtonDown(Buttons.B))
+            if (controller.ButtonPressed(Buttons.B))
             {
                 if (slashTimer == 0)
                 {

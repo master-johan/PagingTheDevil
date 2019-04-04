@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Paging_the_devil.GameObject
 {
-    class MovingObject : GameObject
+    public class MovingObject : GameObject
     {
         public MovingObject(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
