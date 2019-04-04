@@ -15,6 +15,7 @@ namespace Paging_the_devil
         public static List<Texture2D> mageSpellList = new List<Texture2D>();
         public static List<Texture2D> roomTextureList = new List<Texture2D>();
         public static List<Texture2D> enemyTextureList = new List<Texture2D>();
+        public static List<Texture2D> menuTextureList = new List<Texture2D>();
 
         public static void LoadTextures(ContentManager Content)
         {
@@ -32,6 +33,15 @@ namespace Paging_the_devil
 
             //Enemey
             enemyTextureList.Add(Content.Load<Texture2D>(@"Ghost"));
+
+            //Menu
+            menuTextureList.Add(Content.Load<Texture2D>(@"PlayGameBTN"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"ControlsBTN"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"ExitGameBTN"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"SvartBak"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"PTDlogo"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"Pointer"));
+
         }
     }
 }
