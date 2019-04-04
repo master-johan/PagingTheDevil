@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Paging_the_devil
 {
-    public class Room
+    public class Rooma
     {
         public int WindowX { get; private set; }
         public int WindowY { get; private set; }
@@ -20,7 +20,7 @@ namespace Paging_the_devil
         Wall wallTop, wallBot, wallLeft, wallRight;
         List<Wall> wallList = new List<Wall>();
 
-        public Room(GraphicsDeviceManager graphics/*, Player[] playerArray*/)
+        public Rooma(GraphicsDeviceManager graphics/*, Player[] playerArray*/)
         {
             this.graphics = graphics;
 
