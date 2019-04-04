@@ -14,31 +14,28 @@ namespace Paging_the_devil
     {
         Game1 game;
         Button playBtn, exitBtn;
-        public int selectedBtn;
+        int selectedBtn;
         Pointer pointer;
         List<Button> buttonList = new List<Button>();
         GamePadState controller;
         Vector2 pointerPos;
 
-    
-
         States current, previous;
+
 
         public MenuManager(GraphicsDevice graphicsDevice, Game1 game)
         {
             this.game = game;
 
-          
+            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(400,300)));
+            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(400,500)));
             
-           
-            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(400,500)));
-            
-           
-            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(400,300)));
-
             pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
-            pointer = new Pointer(TextureManager.menuTextureList[5], pointerPos);
+            pointer = new Pointer(TextureManager.menuTextureList[5], pointerPos, buttonList);
+
             selectedBtn = 0;
+            buttonList[0].activeButton = true;
+            current = States.None;
         }
 
         public void Update(GameTime gameTime)
@@ -47,17 +44,18 @@ namespace Paging_the_devil
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
+
                     foreach (var b in buttonList)
                     {
                         b.Update();
                     }
-
+                    pointer.Update(gameTime);
                     
                     previous = current;
 
-                    if (controller.ThumbSticks.Left.Y < 0.5)
+                    if (controller.ThumbSticks.Left.Y > 0.5f)
                         current = States.GoingUp;
-                    else if (controller.ThumbSticks.Left.Y > -0.5)
+                    else if (controller.ThumbSticks.Left.Y < -0.5f)
                         current = States.GoingDown;
                     else
                         current = States.None;
@@ -66,13 +64,22 @@ namespace Paging_the_devil
                     {
                         if (current == States.GoingDown && previous != States.GoingDown && selectedBtn < (buttonList.Count -1))
                         {
-                            selectedBtn++;
-                            
+                            selectedBtn++;                      
                         }
-                        buttonList[i].activeButton = true;
+                        else if (current == States.GoingUp && previous != States.GoingUp && selectedBtn > 0)
+                        {
+                            selectedBtn--;
+
+                        }
+                            buttonList[i].activeButton = false;
+                            buttonList[selectedBtn].activeButton = true;  
                     }
 
-
+                    if(controller.IsButtonDown(Buttons.A))
+                    {
+                      if(buttonList[0].activeButton)  {GameManager.currentState = GameState.InGame;}
+                      else if (buttonList[1].activeButton){ game.Exit();}
+                    }
 
                     break;
                 case GameState.PlayerSelect:
@@ -96,8 +103,6 @@ namespace Paging_the_devil
                     {
                         b.Draw(spriteBatch);
                     }
-                    //playBtn.Draw(spriteBatch);
-                    //exitBtn.Draw(spriteBatch);
                     pointer.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:

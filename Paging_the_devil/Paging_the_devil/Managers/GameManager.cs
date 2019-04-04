@@ -55,7 +55,6 @@ namespace Paging_the_devil
 
             menuManager = new MenuManager(graphicsDevice, game);
             
-
             currentState = GameState.MainMenu;
             currentRoom = Room.One;
 
@@ -83,20 +82,7 @@ namespace Paging_the_devil
             playerConnected = new bool[4];
             playerArray = new Player[4];
 
-            for (int i = 0; i < connectedC.Length; i++)
-            {
-                if (connectedC[i].IsConnected)
-                {
-                    PlayerIndex index = (PlayerIndex)i;
-
-                    controllerArray[i] = new Controller(index);
-
-                    nrOfPlayers++;
-                }
-
-                playerConnected[i] = false;
-
-            }
+           ConnectController();
         }
 
         public void Update(GameTime gameTime)
@@ -104,27 +90,18 @@ namespace Paging_the_devil
             switch (currentState)
             {
                 case GameState.MainMenu:
-                    menuManager.Update(gameTime);
-                    break;
-                case GameState.PlayerSelect:
-                    break;
-                case GameState.InGame:
-
-                    for (int i = 0; i < controllerArray.Length; i++)
-                    {
-                        if (connectedC[i].IsConnected && playerConnected[i] == false)
-                        {
-                            playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i);
-
-
-                            playerConnected[i] = true;
-
-                        }
-                    }
                     if(nrOfPlayers >= 1)
                     {
                         menuManager.GetController(controllerArray[0].GetPadState());
                     }
+                    controllerArray[0].Update();
+                    menuManager.Update(gameTime);
+                    ConnectPlayer();
+                    break;
+                case GameState.PlayerSelect:
+                    break;
+                case GameState.InGame:
+            
                     for (int i = 0; i < nrOfPlayers; i++)
                     {
                         controllerArray[i].Update();
@@ -136,7 +113,6 @@ namespace Paging_the_devil
                         playerArray[i].InputDirection(controllerArray[i].GetDirection());
                         playerArray[i].InputPadState(controllerArray[i].GetPadState());
                     }
-
 
                     foreach (var e in enemyList)
                     {
@@ -184,17 +160,11 @@ namespace Paging_the_devil
                                     SpawnEnemy();
                                 }
 
-                                break;
-                       
+                                break;   
                         }
-
                     }
-
-                    
-                    break;
-                    
-            }
-           
+                    break;     
+            }    
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -242,11 +212,8 @@ namespace Paging_the_devil
                         e.Draw(spriteBatch);
                     }
 
-                    break;
-             
-            }
-            
-
+                    break;            
+            }  
         }
         private void GameWindow(GraphicsDeviceManager graphics)
         {
@@ -340,6 +307,40 @@ namespace Paging_the_devil
             Enemy enemy = new Enemy(TextureManager.enemyTextureList[0], new Vector2(x, y));
             enemyList.Add(enemy);
         }
+        private void ConnectController()
+        {
+             for (int i = 0; i < connectedC.Length; i++)
+             {
+                if (connectedC[i].IsConnected)
+                {
+                    PlayerIndex index = (PlayerIndex)i;
+
+                    controllerArray[i] = new Controller(index);
+
+                    nrOfPlayers++;
+                }
+
+                playerConnected[i] = false;
+
+             }
+
+
+        }
+        private void ConnectPlayer()
+        {
+                    for (int i = 0; i < controllerArray.Length; i++)
+                    {
+                        if (connectedC[i].IsConnected && playerConnected[i] == false)
+                        {
+                           playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i);
+
+
+                            playerConnected[i] = true;
+
+                        }
+                    }
+        }
 
     }
 }
+

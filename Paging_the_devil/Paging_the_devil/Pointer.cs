@@ -13,16 +13,24 @@ namespace Paging_the_devil
     {
         Texture2D tex;
         Vector2 pos;
+        List<Button> buttonList;
 
-        public Pointer(Texture2D tex, Vector2 pos)
+        public Pointer(Texture2D tex, Vector2 pos, List<Button> buttonList)
         {
             this.tex = tex;
             this.pos = pos;
+            this.buttonList = buttonList;
         }
             
         public void Update(GameTime gameTime)
         {
-
+            foreach (var b in buttonList)
+	        {
+                if (b.activeButton)
+	            {
+                    pos.Y = b.GetPos.Y;
+	            }
+	        }
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -23,37 +23,30 @@ namespace Paging_the_devil
         public bool isClicked;
         public bool activeButton;
 
-
         public Button(Texture2D newButtonTex, GraphicsDevice graphics, Vector2 buttonPos)
         {
             buttonTex = newButtonTex;
             buttonSize = new Vector2(newButtonTex.Width, newButtonTex.Height);
             this.buttonPos = buttonPos;
-            activeButton = true; 
-
         }
 
         public void Update()
         {
-
-            
             hitBox = new Rectangle((int)buttonPos.X, (int)buttonPos.Y, (int)buttonSize.X, (int)buttonSize.Y);
 
             if (activeButton)
             {
-                if (color.A == 255) down = false;
-                if (color.A == 0) down = true;
-                if (down) color.A += 3;
-                else color.A -= 3;
-                //if (Utility.mouseState.LeftButton == ButtonState.Pressed) isClicked = true;
-
-
-                if (color.A < 255)
-                {
-                    color.A += 3;
-                    isClicked = false;
-                }
+                if (color.R == 255) down = false;
+                if (color.R == 0) down = true;
+                if (down) color.R += 3; else color.R -= 3;
+              //if (Controller.Game == ButtonState.Pressed) isClicked = true;
             }
+            else if (color.R < 255)
+            {
+                    color.R += 3;
+                    isClicked = false;
+            }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -67,13 +60,6 @@ namespace Paging_the_devil
         }
 
         public Vector2 GetPos { get { return buttonPos; } }
-
-        //public bool ActiveBtn()
-        //{
-
-        
-        //    return true;
-        //}
 
     }
 }
