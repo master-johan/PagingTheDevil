@@ -193,6 +193,7 @@ namespace Paging_the_devil
 
                         //portal.GetSetPos = portalRoom2;
                         currentRoom = Roomba.Two;
+                        SpawnEnemy();
                     }
 
                     break;
@@ -201,7 +202,6 @@ namespace Paging_the_devil
                     {
                         portal.GetSetPos = portalPos;
                         currentRoom = Roomba.One;
-                        SpawnEnemy();
                     }
                     else if (playerArray[0].GetRect.Intersects(portal2.GetRect) && controllerArray[0].ButtonPressed(Buttons.Y))
                     {

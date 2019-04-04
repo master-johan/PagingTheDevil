@@ -12,11 +12,16 @@ namespace Paging_the_devil.GameObject
     {
         public Enemy(Texture2D tex, Vector2 pos) : base (tex, pos)
         {
-              
+            HealthPoints = 10;
         }
         public override void Update()
         {
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+
+            if (HealthPoints <= 0)
+            {
+                
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
