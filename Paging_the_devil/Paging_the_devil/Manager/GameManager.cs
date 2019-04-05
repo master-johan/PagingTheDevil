@@ -282,6 +282,7 @@ namespace Paging_the_devil
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X + 5;
                     playerArray[i].GetSetPos = tempVector;
+                    
                 }
                 if (playerArray[i].GetRect.Intersects(WallRightPos))
                 {
@@ -289,6 +290,7 @@ namespace Paging_the_devil
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X - 5;
                     playerArray[i].GetSetPos = tempVector;
+                    
                 }
             }
         }

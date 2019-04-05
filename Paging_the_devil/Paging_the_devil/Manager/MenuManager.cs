@@ -77,7 +77,7 @@ namespace Paging_the_devil
 
                     if(controller.IsButtonDown(Buttons.A))
                     {
-                      if(buttonList[0].activeButton)  {GameManager.currentState = GameState.PlayerSelect;} //Ändra till GameState.Ingame för att komma in i spelet direkt
+                      if(buttonList[0].activeButton)  {GameManager.currentState = GameState.InGame;} //Ändra till GameState.Ingame för att komma in i spelet direkt
                       else if (buttonList[1].activeButton){ game.Exit();}
                     }
 
