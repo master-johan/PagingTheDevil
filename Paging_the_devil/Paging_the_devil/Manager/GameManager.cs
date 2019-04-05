@@ -30,8 +30,6 @@ namespace Paging_the_devil
 
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
 
-        GamePadCapabilities[] connectedC;
-
         Controller[] controllerArray;
 
         Player[] playerArray;
@@ -62,8 +60,8 @@ namespace Paging_the_devil
 
             DecidingPosses();
             CreatingThings();
-
             ConnectController();
+
         }
 
         private void CreatingThings()
@@ -71,7 +69,6 @@ namespace Paging_the_devil
             portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
             portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
 
-            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
             controllerArray = new Controller[4];
             playerConnected = new bool[4];
             playerArray = new Player[4];
@@ -110,6 +107,9 @@ namespace Paging_the_devil
                     ConnectPlayer();
                     break;
                 case GameState.PlayerSelect:
+                    menuManager.Update(gameTime);
+                    ConnectController();
+                    ConnectPlayer();
                     break;
                 case GameState.InGame:
 
@@ -199,6 +199,11 @@ namespace Paging_the_devil
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
+                    menuManager.Draw(spriteBatch);
+                    if(controllerArray[0].isConnected())
+                    {
+                        
+                    }
                     break;
                 case GameState.InGame:
 
@@ -329,9 +334,10 @@ namespace Paging_the_devil
         }
         private void ConnectController()
         {
-            for (int i = 0; i < connectedC.Length; i++)
+            nrOfPlayers = 0;
+            for (int i = 0; i < GamePad.MaximumGamePadCount; i++)
             {
-                if (connectedC[i].IsConnected)
+                if (GamePad.GetState(i).IsConnected)
                 {
                     PlayerIndex index = (PlayerIndex)i;
 
@@ -341,15 +347,13 @@ namespace Paging_the_devil
                 }
 
                 playerConnected[i] = false;
-
             }
-
         }
         private void ConnectPlayer()
         {
             for (int i = 0; i < controllerArray.Length; i++)
             {
-                if (connectedC[i].IsConnected && playerConnected[i] == false)
+                if (GamePad.GetState(i).IsConnected && playerConnected[i] == false)
                 {
                     playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
                     
