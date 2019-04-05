@@ -21,17 +21,14 @@ namespace Paging_the_devil
         PlayerIndex playerIndex;
        
         GamePadState gamePadState, oldPadState;
-        
 
         public Controller(PlayerIndex playerIndex)
         {
             this.playerIndex = playerIndex;
-
         }
 
         public void Update()
         {
-
             oldPadState = gamePadState;
             gamePadState = GamePad.GetState(playerIndex);
         }
@@ -41,7 +38,11 @@ namespace Paging_the_devil
             return gamePadState.IsButtonDown(button) && oldPadState.IsButtonUp(button);
         }
 
-
+        public bool ButtonDown(Buttons button)
+        {
+            return gamePadState.IsButtonDown(button);
+        }
+        
         public Vector2 GetDirection()
         {
             return gamePadState.ThumbSticks.Left;
@@ -56,7 +57,5 @@ namespace Paging_the_devil
         {
             return oldPadState;
         }
-       
-
     }
 }

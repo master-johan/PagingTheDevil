@@ -12,7 +12,6 @@ namespace Paging_the_devil.GameObject
 
     class Player : Character
     {
-
         float movementSpeed;
 
         int playerIndex;
@@ -44,7 +43,21 @@ namespace Paging_the_devil.GameObject
             this.spellRect = spellRect;
             this.controller = controller;
             GenerateRectangles(pos);
-            //controller = new Controller();
+            DecidingValues();
+            DecidingSourceRect();
+            drawRect = down;
+        }
+
+        private void DecidingSourceRect()
+        {
+            right = new Rectangle(0, 140, 60, 70);
+            up = new Rectangle(0, 210, 60, 70);
+            left = new Rectangle(0, 70, 60, 70);
+            down = new Rectangle(0, 0, 60, 70);
+        }
+
+        private void DecidingValues()
+        {
             abilityList = new List<Ability>();
             shoot = false;
             fireballTimer = 0;
@@ -53,12 +66,6 @@ namespace Paging_the_devil.GameObject
             HealthPoints = 10;
 
             movementSpeed = 2.0f;
-
-            right = new Rectangle(0, 140, 60, 70);
-            up = new Rectangle(0, 210, 60, 70);
-            left = new Rectangle(0, 70, 60, 70);
-            down = new Rectangle(0, 0, 60, 70);
-            drawRect = down;
         }
 
         private void GenerateRectangles(Vector2 pos)
@@ -72,7 +79,6 @@ namespace Paging_the_devil.GameObject
 
         public override void Update()
         {
-
             pos.X += inputDirection.X * movementSpeed;
             pos.Y -= inputDirection.Y * movementSpeed;
 
@@ -91,12 +97,15 @@ namespace Paging_the_devil.GameObject
                 if (slashTimer == 0)
                 {
                     Slashes();
-
                 }
             }
-
             UpdateAbility();
+            ResetTimers();
+            GetDirection();
+        }
 
+        private void ResetTimers()
+        {
             if (fireballTimer > 0)
             {
                 fireballTimer--;
@@ -105,8 +114,6 @@ namespace Paging_the_devil.GameObject
             {
                 slashTimer--;
             }
-            GetDirection();
-
         }
 
         private void UpdateAbility()
@@ -136,29 +143,31 @@ namespace Paging_the_devil.GameObject
             if (slashAngle > 45 && slashAngle < 135) // up
             {
                 meleeDirection = new Vector2(0, -1);
-                Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
-                abilityList.Add(slashObject);
+                CreateSlash(meleeDirection);
+                
             }
             else if (slashAngle > 135 || slashAngle < -135) // left
             {
                 meleeDirection = new Vector2(-1, 0);
-                Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
-                abilityList.Add(slashObject);
+                CreateSlash(meleeDirection);
             }
             else if (slashAngle > -135 && slashAngle < -45) // down
             {
                 meleeDirection = new Vector2(0, 1);
-                Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
-                abilityList.Add(slashObject);
+                CreateSlash(meleeDirection);
 
             }
             else if (slashAngle > -45 && slashAngle < 45) // right
             {
                 meleeDirection = new Vector2(1, 0);
-                Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
-                abilityList.Add(slashObject);
+                CreateSlash(meleeDirection);
             }
             slashTimer = 20;
+        }
+        private void CreateSlash(Vector2 meleeDirection)
+        {
+            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
+            abilityList.Add(slashObject);
         }
 
         private void Hitboxes()

@@ -41,7 +41,6 @@ namespace Paging_the_devil
             menuTextureList.Add(Content.Load<Texture2D>(@"SvartBak"));
             menuTextureList.Add(Content.Load<Texture2D>(@"PTDlogo"));
             menuTextureList.Add(Content.Load<Texture2D>(@"Pointer"));
-
         }
     }
 }

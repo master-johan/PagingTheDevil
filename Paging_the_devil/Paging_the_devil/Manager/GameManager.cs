@@ -12,7 +12,7 @@ using Paging_the_devil.GameObject;
 namespace Paging_the_devil
 {
     public enum GameState { MainMenu, PlayerSelect, InGame }
-    enum Room { One, Two, Three }
+    enum RoomEnum { One, Two, Three }
 
     public class GameManager
     {
@@ -42,7 +42,7 @@ namespace Paging_the_devil
         bool[] playerConnected;
 
         public static GameState currentState;
-        Room currentRoom;
+        RoomEnum currentRoom;
 
 
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
@@ -53,10 +53,32 @@ namespace Paging_the_devil
             GameWindow(graphics);
 
             menuManager = new MenuManager(graphicsDevice, game);
-            
-            currentState = GameState.MainMenu;
-            currentRoom = Room.One;
 
+            enemyList = new List<Enemy>();
+            controllerList = new List<Controller>();
+
+            currentState = GameState.MainMenu;
+            currentRoom = RoomEnum.One;
+
+            DecidingPosses();
+            CreatingThings();
+
+            ConnectController();
+        }
+
+        private void CreatingThings()
+        {
+            portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
+            portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
+
+            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
+            controllerArray = new Controller[4];
+            playerConnected = new bool[4];
+            playerArray = new Player[4];
+        }
+
+        private void DecidingPosses()
+        {
             WallTopPos = new Rectangle(0, 0, windowX, 20);
             WallBottomPos = new Rectangle(0, windowY - 20, windowX, 20);
             WallLeftPos = new Rectangle(0, 0, 20, windowY);
@@ -69,19 +91,6 @@ namespace Paging_the_devil
 
             playerPos = new Vector2(200, 400);
             playerPos2 = new Vector2(320, 100);
-
-            portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
-            portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
-
-            enemyList = new List<Enemy>();
-            controllerList = new List<Controller>();
-
-            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
-            controllerArray = new Controller[4];
-            playerConnected = new bool[4];
-            playerArray = new Player[4];
-
-           ConnectController();
         }
 
         public void Update(GameTime gameTime)
@@ -89,38 +98,23 @@ namespace Paging_the_devil
             switch (currentState)
             {
                 case GameState.MainMenu:
-                    if(nrOfPlayers >= 1)
+                    if (nrOfPlayers >= 1)
                     {
                         menuManager.GetController(controllerArray[0].GetPadState());
                     }
-                    controllerArray[0].Update();
+                    if (controllerArray[0] != null)
+                    {
+                        controllerArray[0].Update();
+                    }
                     menuManager.Update(gameTime);
                     ConnectPlayer();
                     break;
                 case GameState.PlayerSelect:
                     break;
                 case GameState.InGame:
-            
-                    for (int i = 0; i < nrOfPlayers; i++)
-                    {
-                        controllerArray[i].Update();
-                        playerArray[i].Update();
-                    }
 
-                    for (int i = 0; i < nrOfPlayers; i++)
-                    {
-                        if (controllerArray[i].GetDirection() != Vector2.Zero)
-                        {
-                            playerArray[i].LastInputDirection(controllerArray[i].GetDirection());
-                        }
-                        playerArray[i].InputDirection(controllerArray[i].GetDirection());
-                        playerArray[i].InputPadState(controllerArray[i].GetPadState());
-                    }
-
-                    foreach (var e in enemyList)
-                    {
-                        e.Update();
-                    }
+                    UpdatePlayersDirection();
+                    UpdateCharacters();
 
                     Collision();
 
@@ -133,46 +127,72 @@ namespace Paging_the_devil
                     {
                         switch (currentRoom)
                         {
-                            case Room.One:
+                            case RoomEnum.One:
                                 if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
                                 {
-                                    currentRoom = Room.Two;
+                                    currentRoom = RoomEnum.Two;
                                     SpawnEnemy();
                                 }
 
                                 break;
-                            case Room.Two:
+                            case RoomEnum.Two:
                                 if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
                                 {
                                     portal.GetSetPos = portalPos;
-                                    currentRoom = Room.One;
+                                    currentRoom = RoomEnum.One;
                                     SpawnEnemy();
                                 }
                                 else if (playerArray[i].GetRect.Intersects(portal2.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
                                 {
                                     portal2.GetSetPos = portalRoom3;
-                                    currentRoom = Room.Three;
+                                    currentRoom = RoomEnum.Three;
                                     portal.GetSetPos = portalRoom4;
                                     SpawnEnemy();
                                 }
                                 break;
-                            case Room.Three:
+                            case RoomEnum.Three:
                                 if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
                                 {
-                                    currentRoom = Room.Two;
+                                    currentRoom = RoomEnum.Two;
                                     SpawnEnemy();
                                 }
 
-                                break;   
+                                break;
                         }
                     }
-                    break;     
-            }    
+                    break;
+            }
+        }
+
+        private void UpdateCharacters()
+        {
+            foreach (var e in enemyList)
+            {
+                e.Update();
+            }
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                controllerArray[i].Update();
+                playerArray[i].Update();
+            }
+        }
+
+        private void UpdatePlayersDirection()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                if (controllerArray[i].GetDirection() != Vector2.Zero)
+                {
+                    playerArray[i].LastInputDirection(controllerArray[i].GetDirection());
+                }
+                playerArray[i].InputDirection(controllerArray[i].GetDirection());
+                playerArray[i].InputPadState(controllerArray[i].GetPadState());
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
+
             switch (currentState)
             {
                 case GameState.MainMenu:
@@ -184,40 +204,49 @@ namespace Paging_the_devil
 
                     switch (currentRoom)
                     {
-                        case Room.One:
+                        case RoomEnum.One:
                             graphicsDevice.Clear(Color.CornflowerBlue);
                             portal.Draw(spriteBatch);
                             break;
-                        case Room.Two:
+                        case RoomEnum.Two:
                             graphicsDevice.Clear(Color.IndianRed);
                             portal2.Draw(spriteBatch);
                             portal.Draw(spriteBatch);
                             break;
-                        case Room.Three:
+                        case RoomEnum.Three:
                             graphicsDevice.Clear(Color.ForestGreen);
                             portal.Draw(spriteBatch);
                             break;
 
                     }
+                    DrawWalls(spriteBatch);
+                    DrawCharacters(spriteBatch);
 
-                    spriteBatch.Draw(TextureManager.roomTextureList[1], WallTopPos, Color.White);
-                    spriteBatch.Draw(TextureManager.roomTextureList[1], WallBottomPos, Color.White);
-                    spriteBatch.Draw(TextureManager.roomTextureList[2], WallLeftPos, Color.White);
-                    spriteBatch.Draw(TextureManager.roomTextureList[2], WallRightPos, Color.White);
-
-                    for (int i = 0; i < nrOfPlayers; i++)
-                    {
-                        playerArray[i].Draw(spriteBatch);
-                    }
-
-                    foreach (var e in enemyList)
-                    {
-                        e.Draw(spriteBatch);
-                    }
-
-                    break;            
-            }  
+                    break;
+            }
         }
+
+        private void DrawCharacters(SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                playerArray[i].Draw(spriteBatch);
+            }
+
+            foreach (var e in enemyList)
+            {
+                e.Draw(spriteBatch);
+            }
+        }
+
+        private void DrawWalls(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(TextureManager.roomTextureList[1], WallTopPos, Color.White);
+            spriteBatch.Draw(TextureManager.roomTextureList[1], WallBottomPos, Color.White);
+            spriteBatch.Draw(TextureManager.roomTextureList[2], WallLeftPos, Color.White);
+            spriteBatch.Draw(TextureManager.roomTextureList[2], WallRightPos, Color.White);
+        }
+
         private void GameWindow(GraphicsDeviceManager graphics)
         {
             graphics.PreferredBackBufferHeight = windowY = 700;
@@ -300,8 +329,8 @@ namespace Paging_the_devil
         }
         private void ConnectController()
         {
-             for (int i = 0; i < connectedC.Length; i++)
-             {
+            for (int i = 0; i < connectedC.Length; i++)
+            {
                 if (connectedC[i].IsConnected)
                 {
                     PlayerIndex index = (PlayerIndex)i;
@@ -313,23 +342,21 @@ namespace Paging_the_devil
 
                 playerConnected[i] = false;
 
-             }
-
+            }
 
         }
         private void ConnectPlayer()
         {
-                    for (int i = 0; i < controllerArray.Length; i++)
-                    {
-                        if (connectedC[i].IsConnected && playerConnected[i] == false)
-                        {
-                           playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
+            for (int i = 0; i < controllerArray.Length; i++)
+            {
+                if (connectedC[i].IsConnected && playerConnected[i] == false)
+                {
+                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
+                    
+                    playerConnected[i] = true;
 
-
-                            playerConnected[i] = true;
-
-                        }
-                    }
+                }
+            }
         }
 
     }

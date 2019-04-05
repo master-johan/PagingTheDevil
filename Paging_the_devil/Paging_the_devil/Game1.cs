@@ -15,7 +15,7 @@ namespace Paging_the_devil
 
         GameManager gameManager;
 
-        Rooma room;
+        Room room;
 
         public Game1()
         {
@@ -33,7 +33,7 @@ namespace Paging_the_devil
             TextureManager.LoadTextures(Content);
             gameManager = new GameManager(GraphicsDevice, graphics, this);
             
-            room = new Rooma(graphics);
+            room = new Room(graphics);
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
           
@@ -42,8 +42,6 @@ namespace Paging_the_devil
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            
             
             /*
             for (int i = 0; i < room.GetWallList().Count; i++)
@@ -70,9 +68,6 @@ namespace Paging_the_devil
             }*/
             gameManager.Update(gameTime);
         }
-        
-
-
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
@@ -82,6 +77,5 @@ namespace Paging_the_devil
 
             base.Draw(gameTime);
         }
-
     }
 }
