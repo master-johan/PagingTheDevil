@@ -20,11 +20,11 @@ namespace Paging_the_devil.GameObject
         public bool Active { get; private set; }
         public bool Hit { get; set; }
 
-        public Slash(Texture2D tex, Vector2 pos, Player player, Vector2 direction)
-            : base(tex, pos, player, direction)
+        public Slash(Texture2D tex, Vector2 pos, Vector2 direction)
+            : base(tex, pos, direction)
         {
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
-            slashPos = player.pos;
+            slashPos = pos;
             Hit = false;
 
             DirectionOfVectors();

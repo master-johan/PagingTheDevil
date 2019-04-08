@@ -367,6 +367,7 @@ namespace Paging_the_devil.Manager
                     if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
                     {
                         toRemoveAbility = a;
+                        (toRemoveAbility as Fireball).Active = false;
                     }
                 }
 
