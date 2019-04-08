@@ -12,13 +12,14 @@ namespace Paging_the_devil.GameObject
     public class Wall : StationaryObjects
     {
         Rectangle sourceRect;
-        
+        Rectangle top;
 
         public Wall(Texture2D tex, Vector2 pos, Rectangle sourceRect) : base(tex, pos)
         {
             this.sourceRect = sourceRect;
             pos.X = sourceRect.X;
             pos.Y = sourceRect.Y;
+            top = new Rectangle((int)pos.X, (int)pos.Y, sourceRect.Width, 2);
 
             rect = sourceRect;
         }

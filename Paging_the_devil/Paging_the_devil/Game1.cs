@@ -33,7 +33,7 @@ namespace Paging_the_devil
             TextureManager.LoadTextures(Content);
             gameManager = new GameManager(GraphicsDevice, graphics, this);
             
-            room = new Room(graphics);
+            //room = new Room(graphics);
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
           

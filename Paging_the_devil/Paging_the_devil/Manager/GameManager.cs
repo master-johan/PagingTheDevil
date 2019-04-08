@@ -38,11 +38,15 @@ namespace Paging_the_devil
 
         List<Controller> controllerList;
         List<Enemy> enemyList;
+        List<Room> roomList; 
 
         bool[] playerConnected;
 
         public static GameState currentState;
         RoomEnum currentRoom;
+
+        Room currentlyUsingRoom;
+
 
 
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
@@ -60,16 +64,26 @@ namespace Paging_the_devil
             currentState = GameState.MainMenu;
             currentRoom = RoomEnum.One;
 
-            DecidingPosses();
+            //DecidingPosses();
             CreatingThings();
 
             ConnectController();
+
+            SetWindowSize(graphics);
+            CreateRooms();
+        }
+
+        private static void SetWindowSize(GraphicsDeviceManager graphics)
+        {
+            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 1080;
+            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1920;
+            graphics.ApplyChanges();
         }
 
         private void CreatingThings()
         {
-            portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
-            portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
+            //portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
+            //portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
 
             connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
             controllerArray = new Controller[4];
@@ -118,47 +132,57 @@ namespace Paging_the_devil
 
                     Collision();
 
-                    portal.Update();
-                    portal2.Update();
+                    //portal.Update();
+                    //portal2.Update();
 
                     DeleteAbilities();
 
                     for (int i = 0; i < nrOfPlayers; i++)
                     {
-                        switch (currentRoom)
+                        for (int j = 0; j < currentlyUsingRoom.GetGatewayList().Count; j++)
                         {
-                            case RoomEnum.One:
-                                if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    currentRoom = RoomEnum.Two;
-                                    SpawnEnemy();
-                                }
-
-                                break;
-                            case RoomEnum.Two:
-                                if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    portal.GetSetPos = portalPos;
-                                    currentRoom = RoomEnum.One;
-                                    SpawnEnemy();
-                                }
-                                else if (playerArray[i].GetRect.Intersects(portal2.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    portal2.GetSetPos = portalRoom3;
-                                    currentRoom = RoomEnum.Three;
-                                    portal.GetSetPos = portalRoom4;
-                                    SpawnEnemy();
-                                }
-                                break;
-                            case RoomEnum.Three:
-                                if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    currentRoom = RoomEnum.Two;
-                                    SpawnEnemy();
-                                }
-
-                                break;
+                            if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetGatewayList()[j].GetRect)&& playerArray[i].Controller.ButtonPressed(Buttons.Y))
+                            {
+                                currentlyUsingRoom = roomList[1];
+                            }
                         }
+
+                        
+
+                        //switch (currentRoom)
+                        //{
+                        //    case RoomEnum.One:
+                        //        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
+                        //        {
+                        //            currentRoom = RoomEnum.Two;
+                        //            SpawnEnemy();
+                        //        }
+
+                        //        break;
+                        //    case RoomEnum.Two:
+                        //        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
+                        //        {
+                        //            portal.GetSetPos = portalPos;
+                        //            currentRoom = RoomEnum.One;
+                        //            SpawnEnemy();
+                        //        }
+                        //        else if (playerArray[i].GetRect.Intersects(portal2.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
+                        //        {
+                        //            portal2.GetSetPos = portalRoom3;
+                        //            currentRoom = RoomEnum.Three;
+                        //            portal.GetSetPos = portalRoom4;
+                        //            SpawnEnemy();
+                        //        }
+                        //        break;
+                        //    case RoomEnum.Three:
+                        //        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
+                        //        {
+                        //            currentRoom = RoomEnum.Two;
+                        //            SpawnEnemy();
+                        //        }
+
+                        //        break;
+                        //}
                     }
                     break;
             }
@@ -202,24 +226,25 @@ namespace Paging_the_devil
                     break;
                 case GameState.InGame:
 
-                    switch (currentRoom)
-                    {
-                        case RoomEnum.One:
-                            graphicsDevice.Clear(Color.CornflowerBlue);
-                            portal.Draw(spriteBatch);
-                            break;
-                        case RoomEnum.Two:
-                            graphicsDevice.Clear(Color.IndianRed);
-                            portal2.Draw(spriteBatch);
-                            portal.Draw(spriteBatch);
-                            break;
-                        case RoomEnum.Three:
-                            graphicsDevice.Clear(Color.ForestGreen);
-                            portal.Draw(spriteBatch);
-                            break;
+                    currentlyUsingRoom.Draw(spriteBatch);
+                    //switch (currentRoom)
+                    //{
+                    //    case RoomEnum.One:
+                    //        graphicsDevice.Clear(Color.CornflowerBlue);
+                    //        portal.Draw(spriteBatch);
+                    //        break;
+                    //    case RoomEnum.Two:
+                    //        graphicsDevice.Clear(Color.IndianRed);
+                    //        portal2.Draw(spriteBatch);
+                    //        portal.Draw(spriteBatch);
+                    //        break;
+                    //    case RoomEnum.Three:
+                    //        graphicsDevice.Clear(Color.ForestGreen);
+                    //        portal.Draw(spriteBatch);
+                    //        break;
 
-                    }
-                    DrawWalls(spriteBatch);
+                    //}
+                    //DrawWalls(spriteBatch);
                     DrawCharacters(spriteBatch);
 
                     break;
@@ -249,14 +274,21 @@ namespace Paging_the_devil
 
         private void GameWindow(GraphicsDeviceManager graphics)
         {
-            graphics.PreferredBackBufferHeight = windowY = 700;
-            graphics.PreferredBackBufferWidth = windowX = 1350;
+            graphics.PreferredBackBufferHeight = windowY = TextureManager.WindowSizeY;
+            graphics.PreferredBackBufferWidth = windowX = TextureManager.WindowSizeX;
             graphics.ApplyChanges();
         }
         private void Collision()
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
+                for (int j = 0; j < currentlyUsingRoom.GetWallList().Count; j++)
+                {
+                    if (true)
+                    {
+                        GamePad.
+                    }
+                }
                 if (playerArray[i].GetRect.Intersects(WallTopPos))
                 {
                     Vector2 tempVector;
@@ -295,10 +327,17 @@ namespace Paging_the_devil
             {
                 foreach (var a in playerArray[i].abilityList)
                 {
-                    if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
+                    foreach (var w in currentlyUsingRoom.GetWallList())
                     {
-                        toRemoveAbility = a;
+                        if (a.GetRect.Intersects(w.GetRect))
+                        {
+                            toRemoveAbility = a; 
+                        }
                     }
+                    //if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
+                    //{
+                    //    toRemoveAbility = a;
+                    //}
                 }
 
                 foreach (var a in playerArray[i].abilityList)
@@ -357,6 +396,26 @@ namespace Paging_the_devil
 
                 }
             }
+        }
+
+        private void CreateRooms()
+        {
+            roomList = new List<Room>();
+            Room room1, room2, room3;
+            room1 = new Room();
+            room2 = new Room();
+            room3 = new Room();
+
+            roomList.Add(room1);
+            roomList.Add(room2);
+            roomList.Add(room3);
+
+            roomList[0].CreateGateWays(2);
+            roomList[1].CreateGateWays(3);
+            roomList[1].CreateGateWays(2);
+            roomList[2].CreateGateWays(2);
+
+            currentlyUsingRoom = roomList[1];
         }
 
     }
