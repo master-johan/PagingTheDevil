@@ -13,15 +13,13 @@ namespace Paging_the_devil.GameObject
     class Player : Character
     {
         float movementSpeed;
-
-        int playerIndex;
-
-        Rectangle spellRect, hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
-
+        
         int fireballTimer;
         int slashTimer;
+        int playerIndex;
 
         Rectangle left, right, up, down;
+        Rectangle spellRect, hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
         Rectangle drawRect;
         
         public bool shoot;
@@ -90,8 +88,8 @@ namespace Paging_the_devil.GameObject
                 {
                     Shoot();
                 }
-
             }
+
             if (controller.ButtonPressed(Buttons.B))
             {
                 if (slashTimer == 0)
@@ -99,6 +97,7 @@ namespace Paging_the_devil.GameObject
                     Slashes();
                 }
             }
+
             UpdateAbility();
             ResetTimers();
             GetDirection();
@@ -144,26 +143,29 @@ namespace Paging_the_devil.GameObject
             {
                 meleeDirection = new Vector2(0, -1);
                 CreateSlash(meleeDirection);
-                
             }
+
             else if (slashAngle > 135 || slashAngle < -135) // left
             {
                 meleeDirection = new Vector2(-1, 0);
                 CreateSlash(meleeDirection);
             }
+
             else if (slashAngle > -135 && slashAngle < -45) // down
             {
                 meleeDirection = new Vector2(0, 1);
                 CreateSlash(meleeDirection);
-
             }
+
             else if (slashAngle > -45 && slashAngle < 45) // right
             {
                 meleeDirection = new Vector2(1, 0);
                 CreateSlash(meleeDirection);
             }
+
             slashTimer = 20;
         }
+
         private void CreateSlash(Vector2 meleeDirection)
         {
             Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
@@ -193,9 +195,12 @@ namespace Paging_the_devil.GameObject
             spellDirection = lastInputDirection;
             spellDirection.Normalize();
             spellDirection.Y = -spellDirection.Y;
+
             Ability ability = new Fireball(TextureManager.mageSpellList[0], pos, this, spellDirection);
             abilityList.Add(ability);
+
             shoot = true;
+
             fireballTimer = 60;
         }
 
@@ -206,7 +211,6 @@ namespace Paging_the_devil.GameObject
             spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
 
             foreach (var A in abilityList)
-
             {
                 A.Draw(spriteBatch);
             }
@@ -261,18 +265,22 @@ namespace Paging_the_devil.GameObject
                 }
             }
         }
+
         public Rectangle GetTopHitbox
         {
             get { return hitboxTop; }
         }
+
         public Rectangle GetBotHitbox
         {
             get { return hitboxBot; }
         }
+
         public Rectangle GetLeftHitbox
         {
             get { return hitboxLeft; }
         }
+
         public Rectangle GetRightHitbox
         {
             get { return hitboxRight; }

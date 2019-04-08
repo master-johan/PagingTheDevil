@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.Manager
 {
     enum States { GoingDown, GoingUp, None}
     public class MenuManager
