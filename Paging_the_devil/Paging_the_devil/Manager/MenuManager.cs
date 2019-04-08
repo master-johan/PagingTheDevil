@@ -9,11 +9,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Paging_the_devil.Manager
 {
-    enum States { GoingDown, GoingUp, None}
+    enum States { GoingDown, GoingUp, None }
     public class MenuManager
     {
         Game1 game;
-        Button playBtn, exitBtn;
         int selectedBtn;
         Pointer pointer;
         List<Button> buttonList = new List<Button>();
@@ -22,14 +21,13 @@ namespace Paging_the_devil.Manager
 
         States current, previous;
 
-
         public MenuManager(GraphicsDevice graphicsDevice, Game1 game)
         {
             this.game = game;
 
-            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(400,300)));
-            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(400,500)));
-            
+            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(400, 300)));
+            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(400, 500)));
+
             pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
             pointer = new Pointer(TextureManager.menuTextureList[5], pointerPos, buttonList);
 
@@ -40,7 +38,6 @@ namespace Paging_the_devil.Manager
 
         public void Update(GameTime gameTime)
         {
-            
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
@@ -50,7 +47,7 @@ namespace Paging_the_devil.Manager
                         b.Update();
                     }
                     pointer.Update(gameTime);
-                    
+
                     previous = current;
 
                     if (controller.ThumbSticks.Left.Y > 0.5f)
@@ -60,25 +57,11 @@ namespace Paging_the_devil.Manager
                     else
                         current = States.None;
 
-                    for (int i = 0; i < buttonList.Count; i++)
-                    {
-                        if (current == States.GoingDown && previous != States.GoingDown && selectedBtn < (buttonList.Count -1))
-                        {
-                            selectedBtn++;                      
-                        }
-                        else if (current == States.GoingUp && previous != States.GoingUp && selectedBtn > 0)
-                        {
-                            selectedBtn--;
+                    UpdateButtonChoise();
 
-                        }
-                            buttonList[i].activeButton = false;
-                            buttonList[selectedBtn].activeButton = true;  
-                    }
-
-                    if(controller.IsButtonDown(Buttons.A))
+                    if (controller.IsButtonDown(Buttons.A))
                     {
-                      if(buttonList[0].activeButton)  {GameManager.currentState = GameState.InGame;}
-                      else if (buttonList[1].activeButton){ game.Exit();}
+                        ButtonClick();
                     }
 
                     break;
@@ -87,12 +70,10 @@ namespace Paging_the_devil.Manager
                 case GameState.InGame:
                     break;
             }
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
@@ -111,19 +92,48 @@ namespace Paging_the_devil.Manager
                     break;
 
             }
-
         }
+        /// <summary>
+        /// Den här metoden hittar en kontroll.
+        /// </summary>
+        /// <param name="c"></param>
         public void GetController(GamePadState c)
         {
             controller = c;
         }
-
+        /// <summary>
+        /// Den här metoden uppdaterar vad som händer när man trycker på en knapp.
+        /// </summary>
         public void ButtonClick()
         {
-
-            if (exitBtn.isClicked == true)
+            if (buttonList[0].activeButton)
+            {
+                GameManager.currentState = GameState.InGame;
+            }
+            else if (buttonList[1].activeButton)
             {
                 game.Exit();
+            }
+        }
+        /// <summary>
+        /// Den här metoden uppdaterar vid byte av knappval.
+        /// </summary>
+        private void UpdateButtonChoise()
+        {
+            for (int i = 0; i < buttonList.Count; i++)
+            {
+                if (current == States.GoingDown && previous != States.GoingDown && selectedBtn < (buttonList.Count - 1))
+                {
+                    selectedBtn++;
+                }
+                else if (current == States.GoingUp && previous != States.GoingUp && selectedBtn > 0)
+                {
+                    selectedBtn--;
+
+                }
+
+                buttonList[i].activeButton = false;
+                buttonList[selectedBtn].activeButton = true;
             }
         }
     }

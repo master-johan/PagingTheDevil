@@ -65,7 +65,9 @@ namespace Paging_the_devil.Manager
 
             ConnectController();
         }
-
+        /// <summary>
+        /// Den här metoden anger värden till olika Arrays och skapar portaler.
+        /// </summary>
         private void CreatingThings()
         {
             portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
@@ -76,7 +78,9 @@ namespace Paging_the_devil.Manager
             playerConnected = new bool[4];
             playerArray = new Player[4];
         }
-
+        /// <summary>
+        /// Den här metoden sätter storlekar.
+        /// </summary>
         private void DecidingPosses()
         {
             WallTopPos = new Rectangle(0, 0, windowX, 20);
@@ -164,7 +168,9 @@ namespace Paging_the_devil.Manager
                     break;
             }
         }
-
+        /// <summary>
+        /// Den här metoden uppdaterar spelare samt enemies samt tar bort enemies vid död.
+        /// </summary>
         private void UpdateCharacters()
         {
             Enemy toRemoveEnemy = null;
@@ -188,6 +194,9 @@ namespace Paging_the_devil.Manager
             }
         }
 
+        /// <summary>
+        /// Den här metoden uppdaterar spelarens riktning samt senaste riktning.
+        /// </summary>
         private void UpdatePlayersDirection()
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -197,10 +206,11 @@ namespace Paging_the_devil.Manager
                     playerArray[i].LastInputDirection(controllerArray[i].GetDirection());
                 }
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
-                playerArray[i].InputPadState(controllerArray[i].GetPadState());
             }
         }
-        
+        /// <summary>
+        /// Den här metoden uppdaterar enemies interaktion med abilities
+        /// </summary>
         private void UpdateHealth()
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -269,7 +279,10 @@ namespace Paging_the_devil.Manager
                     break;
             }
         }
-
+        /// <summary>
+        /// Den här metoden ritar ut spelare samt enemies.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         private void DrawCharacters(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -282,7 +295,10 @@ namespace Paging_the_devil.Manager
                 e.Draw(spriteBatch);
             }
         }
-
+        /// <summary>
+        /// Den här metoden ritar ut väggarna.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         private void DrawWalls(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(TextureManager.roomTextureList[1], WallTopPos, Color.White);
@@ -290,13 +306,19 @@ namespace Paging_the_devil.Manager
             spriteBatch.Draw(TextureManager.roomTextureList[2], WallLeftPos, Color.White);
             spriteBatch.Draw(TextureManager.roomTextureList[2], WallRightPos, Color.White);
         }
-
+        /// <summary>
+        /// Den här metoden uppdaterar storleken på spelfönstret.
+        /// </summary>
+        /// <param name="graphics"></param>
         private void GameWindow(GraphicsDeviceManager graphics)
         {
             graphics.PreferredBackBufferHeight = windowY = 700;
             graphics.PreferredBackBufferWidth = windowX = 1350;
             graphics.ApplyChanges();
         }
+        /// <summary>
+        /// Den här metoden uppdaterar ifall en spelare kolliderar med väggar.
+        /// </summary>
         private void Collision()
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -331,6 +353,9 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
+        /// <summary>
+        /// Den här metoden tar bort abilities när de kommer utanför spelfönstret.
+        /// </summary>
         private void DeleteAbilities()
         {
             Ability toRemoveAbility = null;
@@ -362,6 +387,9 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
+        /// <summary>
+        /// Den här metoden skapar en enemy vid rumbyte.
+        /// </summary>
         private void SpawnEnemy()
         {
             Random rand = new Random();
@@ -371,6 +399,9 @@ namespace Paging_the_devil.Manager
             Enemy enemy = new Enemy(TextureManager.enemyTextureList[0], new Vector2(x, y));
             enemyList.Add(enemy);
         }
+        /// <summary>
+        /// Den här metoden ansluter en kontroll.
+        /// </summary>
         private void ConnectController()
         {
             for (int i = 0; i < connectedC.Length; i++)
@@ -383,12 +414,12 @@ namespace Paging_the_devil.Manager
 
                     nrOfPlayers++;
                 }
-
                 playerConnected[i] = false;
-
             }
-
         }
+        /// <summary>
+        /// Den här metoden skapar en spelare ifall en kontroller är ansluten.
+        /// </summary>
         private void ConnectPlayer()
         {
             for (int i = 0; i < controllerArray.Length; i++)
