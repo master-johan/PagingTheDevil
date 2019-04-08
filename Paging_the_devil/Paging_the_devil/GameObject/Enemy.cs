@@ -10,6 +10,7 @@ namespace Paging_the_devil.GameObject
 {
     class Enemy : Character
     {
+        public bool toRevome;
         public Enemy(Texture2D tex, Vector2 pos) : base (tex, pos)
         {
             HealthPoints = 10;
@@ -20,7 +21,11 @@ namespace Paging_the_devil.GameObject
 
             if (HealthPoints <= 0)
             {
-                
+                toRevome = true;
+            }
+            else
+            {
+                toRevome = false;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)

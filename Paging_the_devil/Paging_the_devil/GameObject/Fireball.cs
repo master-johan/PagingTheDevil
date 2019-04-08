@@ -16,6 +16,7 @@ namespace Paging_the_devil.GameObject
             : base(tex, pos, player, direction)
         {
             speed = 5;
+            Damage = 2;
         }
 
         public override void Update()

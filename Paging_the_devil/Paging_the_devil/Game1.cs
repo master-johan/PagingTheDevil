@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Paging_the_devil.GameObject;
 using System;
+using Paging_the_devil.Manager;
 
 namespace Paging_the_devil
 {

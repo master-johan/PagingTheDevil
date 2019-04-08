@@ -13,6 +13,8 @@ namespace Paging_the_devil.GameObject
         protected Player player;
         protected Vector2 direction;
 
+        public float Damage { get; set; }
+
         public Ability(Texture2D tex, Vector2 pos, Player player, Vector2 direction) : base(tex, pos)
         {
             this.player = player;

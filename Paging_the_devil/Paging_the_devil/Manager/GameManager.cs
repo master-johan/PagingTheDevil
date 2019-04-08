@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.Manager
 {
     public enum GameState { MainMenu, PlayerSelect, InGame }
     enum RoomEnum { One, Two, Three }
@@ -115,6 +115,7 @@ namespace Paging_the_devil
 
                     UpdatePlayersDirection();
                     UpdateCharacters();
+                    UpdateHealth();
 
                     Collision();
 
@@ -166,14 +167,24 @@ namespace Paging_the_devil
 
         private void UpdateCharacters()
         {
+            Enemy toRemoveEnemy = null;
             foreach (var e in enemyList)
             {
                 e.Update();
+                if (e.toRevome)
+                {
+                    toRemoveEnemy = e;
+                }
             }
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 controllerArray[i].Update();
                 playerArray[i].Update();
+
+            }
+            if (toRemoveEnemy != null)
+            {
+                enemyList.Remove(toRemoveEnemy);
             }
         }
 
@@ -187,6 +198,39 @@ namespace Paging_the_devil
                 }
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
                 playerArray[i].InputPadState(controllerArray[i].GetPadState());
+            }
+        }
+        
+        private void UpdateHealth()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                foreach (var e in enemyList)
+                {
+                    foreach (var a in playerArray[i].abilityList)
+                    {
+                        if (e.GetRect.Intersects(a.GetRect))
+                        {
+                            if ((a is Slash))
+                            {
+                                if (!(a as Slash).Hit)
+                                {
+                                    e.HealthPoints -= a.Damage;
+                                }
+                            }
+
+                            else
+                            {
+                                e.HealthPoints -= a.Damage;
+                            }
+
+                            if ((a is Slash))
+                            {
+                                (a as Slash).Hit = true;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -305,7 +349,7 @@ namespace Paging_the_devil
                 {
                     foreach (var e in enemyList)
                     {
-                        if (a.GetRect.Intersects(e.GetRect))
+                        if (a.GetRect.Intersects(e.GetRect) && !(a is Slash))
                         {
                             toRemoveAbility = a;
                         }
@@ -354,11 +398,9 @@ namespace Paging_the_devil
                     playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
                     
                     playerConnected[i] = true;
-
                 }
             }
         }
-
     }
 }
 
