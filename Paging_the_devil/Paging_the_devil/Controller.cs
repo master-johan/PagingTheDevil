@@ -21,6 +21,7 @@ namespace Paging_the_devil
         PlayerIndex playerIndex;
        
         GamePadState gamePadState, oldPadState;
+        static DateTime vibration;
 
         public Controller(PlayerIndex playerIndex)
         {
@@ -56,6 +57,11 @@ namespace Paging_the_devil
         public GamePadState GetOldPadState()
         {
             return oldPadState;
+        }
+
+        public void Vibration()
+        {
+            GamePad.SetVibration(playerIndex, 1f, 1f);
         }
     }
 }

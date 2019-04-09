@@ -329,6 +329,7 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.Y = tempVector.Y + 5;
                     playerArray[i].GetSetPos = tempVector;
+                    controllerArray[i].Vibration();
                 }
                 if (playerArray[i].GetRect.Intersects(WallBottomPos))
                 {
@@ -336,6 +337,7 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.Y = tempVector.Y - 5;
                     playerArray[i].GetSetPos = tempVector;
+                    controllerArray[i].Vibration();
                 }
                 if (playerArray[i].GetRect.Intersects(WallLeftPos))
                 {
@@ -343,6 +345,7 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X + 5;
                     playerArray[i].GetSetPos = tempVector;
+                    controllerArray[i].Vibration();
                 }
                 if (playerArray[i].GetRect.Intersects(WallRightPos))
                 {
@@ -350,6 +353,7 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X - 5;
                     playerArray[i].GetSetPos = tempVector;
+                    controllerArray[i].Vibration();
                 }
             }
         }

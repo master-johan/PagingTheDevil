@@ -21,6 +21,7 @@ namespace Paging_the_devil.GameObject
         Rectangle left, right, up, down;
         Rectangle spellRect, hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
         Rectangle drawRect;
+
         
         public bool shoot;
 
@@ -110,7 +111,7 @@ namespace Paging_the_devil.GameObject
             DrawDifferentRects();
         }
         /// <summary>
-        /// Den här metoden återställer timers.
+        /// Den här metoden återställer timers för spells
         /// </summary>
         private void ResetTimers()
         {
@@ -317,5 +318,8 @@ namespace Paging_the_devil.GameObject
             get { return hitboxRight; }
 
         }
+
+        //public Controller Controller { get; set; }
+       
     }
 }
