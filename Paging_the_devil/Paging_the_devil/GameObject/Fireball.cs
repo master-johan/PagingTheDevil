@@ -12,19 +12,19 @@ namespace Paging_the_devil.GameObject
     {
         int speed;
 
-        public Fireball(Texture2D tex, Vector2 pos, Player player, Vector2 direction) 
-            : base(tex, pos, player, direction)
+        public bool Active { get; set; }
+
+        public Fireball(Texture2D tex, Vector2 pos, Vector2 direction)
+            : base(tex, pos, direction)
         {
-            speed = 5;
+            speed = 7;
             Damage = 2;
+            Active = true;
         }
 
         public override void Update()
         {
-            if (player.shoot)
-            {
-                pos += direction * speed;
-            }
+            pos += direction * speed;
 
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
         }
