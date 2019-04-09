@@ -25,7 +25,6 @@ namespace Paging_the_devil.GameObject
         Rectangle drawRect;
         
         public bool shoot;
-
         public List<Ability> abilityList;
 
         GamePadState currentPadState;
@@ -77,8 +76,7 @@ namespace Paging_the_devil.GameObject
 
         public override void Update()
         {
-            pos.X += inputDirection.X * movementSpeed;
-            pos.Y -= inputDirection.Y * movementSpeed;
+            Movment();
 
             Hitboxes();
 
@@ -100,6 +98,31 @@ namespace Paging_the_devil.GameObject
             UpdateAbility();
             ResetTimers();
             GetDirection();
+        }
+
+        private void Movment()
+        {
+            if (UpMovementBlocked && inputDirection.Y >0)
+            {
+                inputDirection.Y = 0;
+               
+            }
+
+            if (DownMovementBlocked && inputDirection.Y<0)
+            {
+                inputDirection.Y = 0;
+            }
+
+            if (RightMovementBlocked && inputDirection.X >0)
+            {
+                inputDirection.X = 0;
+            }
+            if (LeftMovementBlocked && inputDirection.X <0)
+            {
+                inputDirection.X = 0;
+            }
+            pos.X += inputDirection.X * movementSpeed;
+            pos.Y -= inputDirection.Y * movementSpeed;
         }
 
         private void ResetTimers()
@@ -278,5 +301,9 @@ namespace Paging_the_devil.GameObject
         }
 
         public Controller Controller { get; set; }
+        public bool UpMovementBlocked { get; set; }
+        public bool DownMovementBlocked { get; set; }
+        public bool LeftMovementBlocked { get; set; }
+        public bool RightMovementBlocked { get; set; }
     }
 }

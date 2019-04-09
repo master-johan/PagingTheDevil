@@ -282,40 +282,82 @@ namespace Paging_the_devil
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
+                bool[,] boolArray = new bool[4, currentlyUsingRoom.GetWallList().Count];
+               
                 for (int j = 0; j < currentlyUsingRoom.GetWallList().Count; j++)
                 {
-                    if (true)
+                   
+                    if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxBot))
                     {
-                        GamePad.
+                         boolArray[0, j] = true;
+                    }
+                    else if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxTop))
+                    {
+                        boolArray[1, j] = true;
+                    }
+                    else if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxLeft))
+                    {
+                        boolArray[2, j] = true;
+                    }
+                    else if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxRight))
+                    {
+                        boolArray[3, j] = true; 
                     }
                 }
-                if (playerArray[i].GetRect.Intersects(WallTopPos))
+
+                bool[] blockedDirections = new bool[4];
+
+                for (int y = 0; y < boolArray.GetLength(0); y++)
                 {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.Y = tempVector.Y + 5;
-                    playerArray[i].GetSetPos = tempVector;
+                    bool isBlocked = false;
+                    for (int x = 0; x < boolArray.GetLength(1); x++)
+                    {
+                        if (boolArray[x,y])
+                        {
+                            isBlocked = true;
+                            break; 
+                        }
+                    }
+                    blockedDirections[y] = isBlocked;
                 }
-                if (playerArray[i].GetRect.Intersects(WallBottomPos))
+
+                for (int l = 0; l < blockedDirections.Length; l++)
                 {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.Y = tempVector.Y - 5;
-                    playerArray[i].GetSetPos = tempVector;
-                }
-                if (playerArray[i].GetRect.Intersects(WallLeftPos))
-                {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.X = tempVector.X + 5;
-                    playerArray[i].GetSetPos = tempVector;
-                }
-                if (playerArray[i].GetRect.Intersects(WallRightPos))
-                {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.X = tempVector.X - 5;
-                    playerArray[i].GetSetPos = tempVector;
+                    if (blockedDirections[0] == true)
+                    {
+                        playerArray[i].UpMovementBlocked = true;                       
+                    }
+                    else
+                    {
+                        playerArray[i].UpMovementBlocked = false;
+                    }
+
+                    if (blockedDirections[1] == true)
+                    {
+                        playerArray[i].DownMovementBlocked = true;
+                    }
+                    else
+                    {
+                        playerArray[i].DownMovementBlocked = false;
+                    }
+
+                    if (blockedDirections[2] == true)
+                    {
+                        playerArray[i].LeftMovementBlocked = true;
+                    }
+                    else
+                    {
+                        playerArray[i].LeftMovementBlocked = false;
+                    }
+
+                    if (blockedDirections[3] == true)
+                    {
+                        playerArray[i].RightMovementBlocked = true;
+                    }
+                    else
+                    {
+                        playerArray[i].RightMovementBlocked = false;
+                    }
                 }
             }
         }
@@ -415,7 +457,7 @@ namespace Paging_the_devil
             roomList[1].CreateGateWays(2);
             roomList[2].CreateGateWays(2);
 
-            currentlyUsingRoom = roomList[1];
+            currentlyUsingRoom = roomList[0];
         }
 
     }
