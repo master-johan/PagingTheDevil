@@ -18,13 +18,14 @@ namespace Paging_the_devil.GameObject
         Vector2 left, right, up, down;
 
         public bool Active { get; private set; }
+        public bool Hit { get; set; }
 
-        public Slash(Texture2D tex, Vector2 pos, Player player, Vector2 direction/* , float angle*/)
-            : base(tex, pos, player, direction)
+        public Slash(Texture2D tex, Vector2 pos, Vector2 direction)
+            : base(tex, pos, direction)
         {
-            //this.angle = angle;
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
-            slashPos = player.pos;
+            slashPos = pos;
+            Hit = false;
 
             DirectionOfVectors();
 
@@ -44,9 +45,15 @@ namespace Paging_the_devil.GameObject
             {
                 angle = MathHelper.ToRadians(-315);
             }
-            Active = true;
-
+            DecidingValues();
         }
+
+        private void DecidingValues()
+        {
+            Active = true;
+            Damage = 3;
+        }
+
         public override void Update()
         {
             angle -= 0.3f;
@@ -57,6 +64,27 @@ namespace Paging_the_devil.GameObject
                 angle < MathHelper.ToRadians(-405f) && direction == right)
             {
                 Active = false;
+            }
+            UpdateHitbox();
+        }
+
+        private void UpdateHitbox()
+        {
+            if (direction == down)
+            {
+                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y, tex.Height * 4, tex.Width + (tex.Width / 2));
+            }
+            else if (direction == up)
+            {
+                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y - tex.Width - (tex.Width/2), tex.Height * 4, tex.Width + (tex.Width / 2));
+            }
+            else if (direction == right)
+            {
+                rect = new Rectangle((int)pos.X, (int)pos.Y  - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
+            }
+            else if (direction == left)
+            {
+                rect = new Rectangle((int)pos.X - tex.Width - (tex.Width/2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
         }
 

@@ -32,7 +32,7 @@ namespace Paging_the_devil
             roomTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
 
             //Enemey
-            enemyTextureList.Add(Content.Load<Texture2D>(@"Ghost"));
+            enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));
 
             //Menu
             menuTextureList.Add(Content.Load<Texture2D>(@"PlayGameBTN"));
