@@ -229,11 +229,6 @@ namespace Paging_the_devil.GameObject
             {
                 A.Draw(spriteBatch);
             }
-
-            spriteBatch.Draw(tex, hitboxLeft, Color.Black);
-            spriteBatch.Draw(tex, hitboxRight, Color.Red);
-            spriteBatch.Draw(tex, hitboxTop, Color.Blue);
-            spriteBatch.Draw(tex, hitboxBot, Color.Yellow);
         }
         /// <summary>
         /// Den här metoden uppdaterar riktnngen.

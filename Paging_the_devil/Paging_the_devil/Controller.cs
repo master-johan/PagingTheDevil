@@ -9,13 +9,6 @@ using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil
 {
-    //public static KeyboardState keyState, oldKeyState = Keyboard.GetState();
-    //public static MouseState mouseState, oldMouseState = Mouse.GetState();
-    //public static bool KeyPressed(Keys key)
-    //{
-    //    return keyState.IsKeyDown(key) && oldKeyState.IsKeyUp(key);
-    //}
-
     public class Controller
     {
         PlayerIndex playerIndex;

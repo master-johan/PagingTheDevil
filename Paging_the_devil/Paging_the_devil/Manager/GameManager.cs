@@ -193,7 +193,6 @@ namespace Paging_the_devil.Manager
                 enemyList.Remove(toRemoveEnemy);
             }
         }
-
         /// <summary>
         /// Den här metoden uppdaterar spelarens riktning samt senaste riktning.
         /// </summary>
@@ -238,6 +237,20 @@ namespace Paging_the_devil.Manager
                             {
                                 (a as Slash).Hit = true;
                             }
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                for (int j = 0; j < enemyList.Count; j++)
+                {
+                    foreach (var a in enemyList[j].enemyAbilityList)
+                    {
+                        if (playerArray[i].GetRect.Intersects(a.GetRect))
+                        {
+                            playerArray[i].HealthPoints -= a.Damage;
                         }
                     }
                 }
@@ -354,11 +367,12 @@ namespace Paging_the_devil.Manager
             }
         }
         /// <summary>
-        /// Den här metoden tar bort abilities när de kommer utanför spelfönstret.
+        /// Den här metoden tar bort abilities när de kommer utanför spelfönstret samt vid träff av både enemy och player.
         /// </summary>
         private void DeleteAbilities()
         {
-            Ability toRemoveAbility = null;
+            Ability toRemovePlayerAbility = null;
+            Ability toRemoveEnemyAbility = null;
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
@@ -366,8 +380,8 @@ namespace Paging_the_devil.Manager
                 {
                     if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
                     {
-                        toRemoveAbility = a;
-                        (toRemoveAbility as Fireball).Active = false;
+                        toRemovePlayerAbility = a;
+                        (toRemovePlayerAbility as Fireball).Active = false;
                     }
                 }
 
@@ -377,14 +391,33 @@ namespace Paging_the_devil.Manager
                     {
                         if (a.GetRect.Intersects(e.GetRect) && !(a is Slash))
                         {
-                            toRemoveAbility = a;
+                            toRemovePlayerAbility = a;
                         }
                     }
                 }
 
-                if (toRemoveAbility != null)
+                if (toRemovePlayerAbility != null)
                 {
-                    playerArray[i].abilityList.Remove(toRemoveAbility);
+                    playerArray[i].abilityList.Remove(toRemovePlayerAbility);
+                }
+            }
+
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                for (int j = 0; j < nrOfPlayers; j++)
+                {
+                    foreach (var a in enemyList[i].enemyAbilityList)
+                    {
+                        if (playerArray[j].GetRect.Intersects(a.GetRect))
+                        {
+                            toRemoveEnemyAbility = a;
+                        }
+                    }
+                }
+
+                if (toRemoveEnemyAbility != null)
+                {
+                    enemyList[i].enemyAbilityList.Remove(toRemoveEnemyAbility);
                 }
             }
         }

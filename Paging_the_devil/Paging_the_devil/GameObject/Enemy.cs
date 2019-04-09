@@ -18,7 +18,7 @@ namespace Paging_the_devil.GameObject
 
         Ability fireball;
 
-        List<Ability> enemyAbilityList;
+        public List<Ability> enemyAbilityList;
 
         Random rand;
 
