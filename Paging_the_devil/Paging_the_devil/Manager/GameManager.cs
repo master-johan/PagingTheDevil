@@ -108,12 +108,13 @@ namespace Paging_the_devil.Manager
                         controllerArray[0].Update();
                     }
                     menuManager.Update(gameTime);
+                    ConnectController();
                     ConnectPlayer();
                     break;
                 case GameState.PlayerSelect:
-                    menuManager.Update(gameTime);
-                    ConnectController();
-                    ConnectPlayer();
+                    menuManager.Update(gameTime); // Denna ordning är fucking viktig
+                    ConnectController(); // Denna ordning är fucking viktig
+                    ConnectPlayer(); //Denna ordning är fucking viktig
                     break;
                 case GameState.InGame:
 
@@ -267,7 +268,7 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.PlayerSelect:
                     menuManager.Draw(spriteBatch);
-                    if(controllerArray[0].isConnected())
+                    if(controllerArray[0].IsConnected())
                     {
                         
                     }
@@ -453,7 +454,6 @@ namespace Paging_the_devil.Manager
                     PlayerIndex index = (PlayerIndex)i;
 
                     controllerArray[i] = new Controller(index);
-
                     nrOfPlayers++;
                 }
                 playerConnected[i] = false;
@@ -464,9 +464,9 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void ConnectPlayer()
         {
-            for (int i = 0; i < controllerArray.Length; i++)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (GamePad.GetState(i).IsConnected && playerConnected[i] == false)
+                if (controllerArray[i].IsConnected() && playerConnected[i] == false)
                 {
                     playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
                     

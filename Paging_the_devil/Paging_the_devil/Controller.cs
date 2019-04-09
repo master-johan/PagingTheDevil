@@ -20,7 +20,7 @@ namespace Paging_the_devil
             this.playerIndex = playerIndex;
         }
 
-        public bool isConnected()
+        public bool IsConnected()
         {
             gamePadState = GamePad.GetState(playerIndex);
             return gamePadState.IsConnected;
