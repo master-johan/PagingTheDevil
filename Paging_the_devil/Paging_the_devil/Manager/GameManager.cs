@@ -8,11 +8,12 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
+using Paging_the_devil.Manager;
 
 namespace Paging_the_devil
 {
     public enum GameState { MainMenu, PlayerSelect, InGame }
-    enum RoomEnum { One, Two, Three }
+
 
     public class GameManager
     {
@@ -21,7 +22,6 @@ namespace Paging_the_devil
 
         MenuManager menuManager;
         Game1 game;
-        Gateway portal, portal2;
 
         int nrOfPlayers;
         int windowX, windowY;
@@ -38,14 +38,16 @@ namespace Paging_the_devil
 
         List<Controller> controllerList;
         List<Enemy> enemyList;
-        List<Room> roomList; 
+
 
         bool[] playerConnected;
+        bool roomManagerCreated;
 
         public static GameState currentState;
-        RoomEnum currentRoom;
 
-        Room currentlyUsingRoom;
+        RoomManager roomManager;
+
+        
 
 
 
@@ -57,20 +59,18 @@ namespace Paging_the_devil
             GameWindow(graphics);
 
             menuManager = new MenuManager(graphicsDevice, game);
-
+            
             enemyList = new List<Enemy>();
             controllerList = new List<Controller>();
 
             currentState = GameState.MainMenu;
-            currentRoom = RoomEnum.One;
 
-            //DecidingPosses();
             CreatingThings();
 
             ConnectController();
 
             SetWindowSize(graphics);
-            CreateRooms();
+
         }
 
         private static void SetWindowSize(GraphicsDeviceManager graphics)
@@ -82,8 +82,7 @@ namespace Paging_the_devil
 
         private void CreatingThings()
         {
-            //portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
-            //portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
+
 
             connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
             controllerArray = new Controller[4];
@@ -124,66 +123,20 @@ namespace Paging_the_devil
                     ConnectPlayer();
                     break;
                 case GameState.PlayerSelect:
+
+                    
                     break;
                 case GameState.InGame:
+                    if (roomManager == null)
+                    {
+                        CreateRoomManager();
+                    }
 
                     UpdatePlayersDirection();
                     UpdateCharacters();
 
-                    Collision();
+                    roomManager.Update();
 
-                    //portal.Update();
-                    //portal2.Update();
-
-                    DeleteAbilities();
-
-                    for (int i = 0; i < nrOfPlayers; i++)
-                    {
-                        for (int j = 0; j < currentlyUsingRoom.GetGatewayList().Count; j++)
-                        {
-                            if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetGatewayList()[j].GetRect)&& playerArray[i].Controller.ButtonPressed(Buttons.Y))
-                            {
-                                currentlyUsingRoom = roomList[1];
-                            }
-                        }
-
-                        
-
-                        //switch (currentRoom)
-                        //{
-                        //    case RoomEnum.One:
-                        //        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                        //        {
-                        //            currentRoom = RoomEnum.Two;
-                        //            SpawnEnemy();
-                        //        }
-
-                        //        break;
-                        //    case RoomEnum.Two:
-                        //        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                        //        {
-                        //            portal.GetSetPos = portalPos;
-                        //            currentRoom = RoomEnum.One;
-                        //            SpawnEnemy();
-                        //        }
-                        //        else if (playerArray[i].GetRect.Intersects(portal2.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                        //        {
-                        //            portal2.GetSetPos = portalRoom3;
-                        //            currentRoom = RoomEnum.Three;
-                        //            portal.GetSetPos = portalRoom4;
-                        //            SpawnEnemy();
-                        //        }
-                        //        break;
-                        //    case RoomEnum.Three:
-                        //        if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                        //        {
-                        //            currentRoom = RoomEnum.Two;
-                        //            SpawnEnemy();
-                        //        }
-
-                        //        break;
-                        //}
-                    }
                     break;
             }
         }
@@ -223,30 +176,18 @@ namespace Paging_the_devil
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
+
+                    
                     break;
                 case GameState.InGame:
 
-                    currentlyUsingRoom.Draw(spriteBatch);
-                    //switch (currentRoom)
-                    //{
-                    //    case RoomEnum.One:
-                    //        graphicsDevice.Clear(Color.CornflowerBlue);
-                    //        portal.Draw(spriteBatch);
-                    //        break;
-                    //    case RoomEnum.Two:
-                    //        graphicsDevice.Clear(Color.IndianRed);
-                    //        portal2.Draw(spriteBatch);
-                    //        portal.Draw(spriteBatch);
-                    //        break;
-                    //    case RoomEnum.Three:
-                    //        graphicsDevice.Clear(Color.ForestGreen);
-                    //        portal.Draw(spriteBatch);
-                    //        break;
+                    if (roomManagerCreated)
+                    {
+                        roomManager.Draw(spriteBatch);
+                    }
 
-                    //}
-                    //DrawWalls(spriteBatch);
                     DrawCharacters(spriteBatch);
-
+               
                     break;
             }
         }
@@ -264,140 +205,13 @@ namespace Paging_the_devil
             }
         }
 
-        private void DrawWalls(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(TextureManager.roomTextureList[1], WallTopPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextureList[1], WallBottomPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextureList[2], WallLeftPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextureList[2], WallRightPos, Color.White);
-        }
-
         private void GameWindow(GraphicsDeviceManager graphics)
         {
             graphics.PreferredBackBufferHeight = windowY = TextureManager.WindowSizeY;
             graphics.PreferredBackBufferWidth = windowX = TextureManager.WindowSizeX;
             graphics.ApplyChanges();
         }
-        private void Collision()
-        {
-            for (int i = 0; i < nrOfPlayers; i++)
-            {
-                bool[,] boolArray = new bool[4, currentlyUsingRoom.GetWallList().Count];
-               
-                for (int j = 0; j < currentlyUsingRoom.GetWallList().Count; j++)
-                {
-                   
-                    if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxBot))
-                    {
-                         boolArray[0, j] = true;
-                    }
-                    else if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxTop))
-                    {
-                        boolArray[1, j] = true;
-                    }
-                    else if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxLeft))
-                    {
-                        boolArray[2, j] = true;
-                    }
-                    else if (playerArray[i].GetRect.Intersects(currentlyUsingRoom.GetWallList()[j].HitboxRight))
-                    {
-                        boolArray[3, j] = true; 
-                    }
-                }
 
-                bool[] blockedDirections = new bool[4];
-
-                for (int y = 0; y < boolArray.GetLength(0); y++)
-                {
-                    bool isBlocked = false;
-                    for (int x = 0; x < boolArray.GetLength(1); x++)
-                    {
-                        if (boolArray[x,y])
-                        {
-                            isBlocked = true;
-                            break; 
-                        }
-                    }
-                    blockedDirections[y] = isBlocked;
-                }
-
-                
-                    if (blockedDirections[0] == true)
-                    {
-                        playerArray[i].UpMovementBlocked = true;                       
-                    }
-                    else
-                    {
-                        playerArray[i].UpMovementBlocked = false;
-                    }
-
-                    if (blockedDirections[1] == true)
-                    {
-                        playerArray[i].DownMovementBlocked = true;
-                    }
-                    else
-                    {
-                        playerArray[i].DownMovementBlocked = false;
-                    }
-
-                    if (blockedDirections[2] == true)
-                    {
-                        playerArray[i].LeftMovementBlocked = true;
-                    }
-                    else
-                    {
-                        playerArray[i].LeftMovementBlocked = false;
-                    }
-
-                    if (blockedDirections[3] == true)
-                    {
-                        playerArray[i].RightMovementBlocked = true;
-                    }
-                    else
-                    {
-                        playerArray[i].RightMovementBlocked = false;
-                    }
-                
-            }
-        }
-        private void DeleteAbilities()
-        {
-            Ability toRemoveAbility = null;
-
-            for (int i = 0; i < nrOfPlayers; i++)
-            {
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    foreach (var w in currentlyUsingRoom.GetWallList())
-                    {
-                        if (a.GetRect.Intersects(w.GetRect))
-                        {
-                            toRemoveAbility = a; 
-                        }
-                    }
-                    //if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
-                    //{
-                    //    toRemoveAbility = a;
-                    //}
-                }
-
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    foreach (var e in enemyList)
-                    {
-                        if (a.GetRect.Intersects(e.GetRect))
-                        {
-                            toRemoveAbility = a;
-                        }
-                    }
-                }
-
-                if (toRemoveAbility != null)
-                {
-                    playerArray[i].abilityList.Remove(toRemoveAbility);
-                }
-            }
-        }
         private void SpawnEnemy()
         {
             Random rand = new Random();
@@ -439,24 +253,12 @@ namespace Paging_the_devil
             }
         }
 
-        private void CreateRooms()
+
+        public void CreateRoomManager()
         {
-            roomList = new List<Room>();
-            Room room1, room2, room3;
-            room1 = new Room();
-            room2 = new Room();
-            room3 = new Room();
+            roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList);
+            roomManagerCreated = true;
 
-            roomList.Add(room1);
-            roomList.Add(room2);
-            roomList.Add(room3);
-
-            roomList[0].CreateGateWays(2);
-            roomList[1].CreateGateWays(3);
-            roomList[1].CreateGateWays(2);
-            roomList[2].CreateGateWays(2);
-
-            currentlyUsingRoom = roomList[0];
         }
 
     }
