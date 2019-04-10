@@ -39,7 +39,6 @@ namespace Paging_the_devil
                 if (color.R == 255) down = false;
                 if (color.R == 0) down = true;
                 if (down) color.R += 3; else color.R -= 3;
-              //if (Controller.Game == ButtonState.Pressed) isClicked = true;
             }
             else if (color.R < 255)
             {
