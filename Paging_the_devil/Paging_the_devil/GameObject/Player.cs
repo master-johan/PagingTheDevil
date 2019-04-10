@@ -317,9 +317,6 @@ namespace Paging_the_devil.GameObject
         {
             get { return hitboxRight; }
 
-        }
-
-        //public Controller Controller { get; set; }
-       
+        }       
     }
 }
