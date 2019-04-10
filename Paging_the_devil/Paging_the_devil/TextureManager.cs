@@ -32,7 +32,7 @@ namespace Paging_the_devil
             roomTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
 
             //Enemey
-            enemyTextureList.Add(Content.Load<Texture2D>(@"Ghost"));
+            enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));
 
             //Menu
             menuTextureList.Add(Content.Load<Texture2D>(@"PlayGameBTN"));
@@ -41,6 +41,8 @@ namespace Paging_the_devil
             menuTextureList.Add(Content.Load<Texture2D>(@"SvartBak"));
             menuTextureList.Add(Content.Load<Texture2D>(@"PTDlogo"));
             menuTextureList.Add(Content.Load<Texture2D>(@"Pointer"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"PlayerSelectBG"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"ConnectPlayer"));
         }
     }
 }

@@ -65,7 +65,8 @@ namespace Paging_the_devil.Manager
                     }
 
                     break;
-                case GameState.PlayerSelect:
+                case GameState.PlayerSelect:   
+                    
                     break;
                 case GameState.InGame:
                     break;
@@ -87,6 +88,9 @@ namespace Paging_the_devil.Manager
                     pointer.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
+                    
+                    spriteBatch.Draw(TextureManager.menuTextureList[6], Vector2.Zero, Color.White);
+
                     break;
                 case GameState.InGame:
                     break;

@@ -22,18 +22,15 @@ namespace Paging_the_devil.GameObject
         Rectangle spellRect, hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
         Rectangle drawRect;
 
-        
-        public bool shoot;
-
         public List<Ability> abilityList;
-
-        GamePadState currentPadState;
 
         Vector2 spellDirection;
         Vector2 inputDirection;
         Vector2 lastInputDirection;
 
         Controller controller;
+
+        Ability ability;
 
         public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex, Controller controller)
             : base(tex, pos)
@@ -62,7 +59,6 @@ namespace Paging_the_devil.GameObject
         private void DecidingValues()
         {
             abilityList = new List<Ability>();
-            shoot = false;
             fireballTimer = 0;
             slashTimer = 0;
 
@@ -111,7 +107,7 @@ namespace Paging_the_devil.GameObject
             DrawDifferentRects();
         }
         /// <summary>
-        /// Den här metoden återställer timers för spells
+        /// Den här metoden återställer timers.
         /// </summary>
         private void ResetTimers()
         {
@@ -185,7 +181,7 @@ namespace Paging_the_devil.GameObject
         /// <param name="meleeDirection"></param>
         private void CreateSlash(Vector2 meleeDirection)
         {
-            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, this, meleeDirection);
+            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, meleeDirection);
             abilityList.Add(slashObject);
         }
         /// <summary>
@@ -217,10 +213,8 @@ namespace Paging_the_devil.GameObject
             spellDirection.Normalize();
             spellDirection.Y = -spellDirection.Y;
 
-            Ability ability = new Fireball(TextureManager.mageSpellList[0], pos, this, spellDirection);
+            ability = new Fireball(TextureManager.mageSpellList[0], pos, spellDirection);
             abilityList.Add(ability);
-
-            shoot = true;
 
             fireballTimer = 60;
         }
@@ -235,11 +229,6 @@ namespace Paging_the_devil.GameObject
             {
                 A.Draw(spriteBatch);
             }
-
-            spriteBatch.Draw(tex, hitboxLeft, Color.Black);
-            spriteBatch.Draw(tex, hitboxRight, Color.Red);
-            spriteBatch.Draw(tex, hitboxTop, Color.Blue);
-            spriteBatch.Draw(tex, hitboxBot, Color.Yellow);
         }
         /// <summary>
         /// Den här metoden uppdaterar riktnngen.
@@ -317,6 +306,6 @@ namespace Paging_the_devil.GameObject
         {
             get { return hitboxRight; }
 
-        }       
+        }
     }
 }

@@ -30,8 +30,6 @@ namespace Paging_the_devil.Manager
 
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
 
-        GamePadCapabilities[] connectedC;
-
         Controller[] controllerArray;
 
         Player[] playerArray;
@@ -62,8 +60,8 @@ namespace Paging_the_devil.Manager
 
             DecidingPosses();
             CreatingThings();
-
             ConnectController();
+
         }
         /// <summary>
         /// Den här metoden anger värden till olika Arrays och skapar portaler.
@@ -73,7 +71,6 @@ namespace Paging_the_devil.Manager
             portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
             portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
 
-            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
             controllerArray = new Controller[4];
             playerConnected = new bool[4];
             playerArray = new Player[4];
@@ -111,9 +108,13 @@ namespace Paging_the_devil.Manager
                         controllerArray[0].Update();
                     }
                     menuManager.Update(gameTime);
+                    ConnectController();
                     ConnectPlayer();
                     break;
                 case GameState.PlayerSelect:
+                    menuManager.Update(gameTime); // Denna ordning är fucking viktig
+                    ConnectController(); // Denna ordning är fucking viktig
+                    ConnectPlayer(); //Denna ordning är fucking viktig
                     break;
                 case GameState.InGame:
 
@@ -193,7 +194,6 @@ namespace Paging_the_devil.Manager
                 enemyList.Remove(toRemoveEnemy);
             }
         }
-
         /// <summary>
         /// Den här metoden uppdaterar spelarens riktning samt senaste riktning.
         /// </summary>
@@ -242,6 +242,20 @@ namespace Paging_the_devil.Manager
                     }
                 }
             }
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                for (int j = 0; j < enemyList.Count; j++)
+                {
+                    foreach (var a in enemyList[j].enemyAbilityList)
+                    {
+                        if (playerArray[i].GetRect.Intersects(a.GetRect))
+                        {
+                            playerArray[i].HealthPoints -= a.Damage;
+                        }
+                    }
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -253,6 +267,11 @@ namespace Paging_the_devil.Manager
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
+                    menuManager.Draw(spriteBatch);
+                    if(controllerArray[0].IsConnected())
+                    {
+                        
+                    }
                     break;
                 case GameState.InGame:
 
@@ -329,7 +348,6 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.Y = tempVector.Y + 5;
                     playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration();
                 }
                 if (playerArray[i].GetRect.Intersects(WallBottomPos))
                 {
@@ -337,7 +355,6 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.Y = tempVector.Y - 5;
                     playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration();
                 }
                 if (playerArray[i].GetRect.Intersects(WallLeftPos))
                 {
@@ -345,7 +362,7 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X + 5;
                     playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration();
+                    
                 }
                 if (playerArray[i].GetRect.Intersects(WallRightPos))
                 {
@@ -353,16 +370,17 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X - 5;
                     playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration();
+                    
                 }
             }
         }
         /// <summary>
-        /// Den här metoden tar bort abilities när de kommer utanför spelfönstret.
+        /// Den här metoden tar bort abilities när de kommer utanför spelfönstret samt vid träff av både enemy och player.
         /// </summary>
         private void DeleteAbilities()
         {
-            Ability toRemoveAbility = null;
+            Ability toRemovePlayerAbility = null;
+            Ability toRemoveEnemyAbility = null;
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
@@ -370,7 +388,8 @@ namespace Paging_the_devil.Manager
                 {
                     if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
                     {
-                        toRemoveAbility = a;
+                        toRemovePlayerAbility = a;
+                        (toRemovePlayerAbility as Fireball).Active = false;
                     }
                 }
 
@@ -380,14 +399,33 @@ namespace Paging_the_devil.Manager
                     {
                         if (a.GetRect.Intersects(e.GetRect) && !(a is Slash))
                         {
-                            toRemoveAbility = a;
+                            toRemovePlayerAbility = a;
                         }
                     }
                 }
 
-                if (toRemoveAbility != null)
+                if (toRemovePlayerAbility != null)
                 {
-                    playerArray[i].abilityList.Remove(toRemoveAbility);
+                    playerArray[i].abilityList.Remove(toRemovePlayerAbility);
+                }
+            }
+
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                for (int j = 0; j < nrOfPlayers; j++)
+                {
+                    foreach (var a in enemyList[i].enemyAbilityList)
+                    {
+                        if (playerArray[j].GetRect.Intersects(a.GetRect))
+                        {
+                            toRemoveEnemyAbility = a;
+                        }
+                    }
+                }
+
+                if (toRemoveEnemyAbility != null)
+                {
+                    enemyList[i].enemyAbilityList.Remove(toRemoveEnemyAbility);
                 }
             }
         }
@@ -408,14 +446,14 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void ConnectController()
         {
-            for (int i = 0; i < connectedC.Length; i++)
+            nrOfPlayers = 0;
+            for (int i = 0; i < GamePad.MaximumGamePadCount; i++)
             {
-                if (connectedC[i].IsConnected)
+                if (GamePad.GetState(i).IsConnected)
                 {
                     PlayerIndex index = (PlayerIndex)i;
 
                     controllerArray[i] = new Controller(index);
-
                     nrOfPlayers++;
                 }
                 playerConnected[i] = false;
@@ -426,9 +464,9 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void ConnectPlayer()
         {
-            for (int i = 0; i < controllerArray.Length; i++)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (connectedC[i].IsConnected && playerConnected[i] == false)
+                if (controllerArray[i].IsConnected() && playerConnected[i] == false)
                 {
                     playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
                     

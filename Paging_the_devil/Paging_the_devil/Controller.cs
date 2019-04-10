@@ -9,17 +9,21 @@ using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil
 {
-
     public class Controller
     {
         PlayerIndex playerIndex;
        
-        GamePadState gamePadState, oldPadState;
-        static DateTime vibration;
+        public GamePadState gamePadState, oldPadState;
 
         public Controller(PlayerIndex playerIndex)
         {
             this.playerIndex = playerIndex;
+        }
+
+        public bool IsConnected()
+        {
+            gamePadState = GamePad.GetState(playerIndex);
+            return gamePadState.IsConnected;
         }
 
         public void Update()
@@ -51,11 +55,6 @@ namespace Paging_the_devil
         public GamePadState GetOldPadState()
         {
             return oldPadState;
-        }
-
-        public void Vibration()
-        {
-            GamePad.SetVibration(playerIndex, 1f, 1f);
         }
     }
 }
