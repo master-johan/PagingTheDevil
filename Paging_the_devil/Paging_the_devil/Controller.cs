@@ -12,12 +12,15 @@ namespace Paging_the_devil
     public class Controller
     {
         PlayerIndex playerIndex;
+        static DateTime StartVibrate;
+        public bool Vibration { get; set; }
        
         public GamePadState gamePadState, oldPadState;
 
         public Controller(PlayerIndex playerIndex)
         {
             this.playerIndex = playerIndex;
+            
         }
 
         public bool IsConnected()
@@ -30,6 +33,7 @@ namespace Paging_the_devil
         {
             oldPadState = gamePadState;
             gamePadState = GamePad.GetState(playerIndex);
+            GetVibration();
         }
         
         public bool ButtonPressed(Buttons button)
@@ -55,6 +59,22 @@ namespace Paging_the_devil
         public GamePadState GetOldPadState()
         {
             return oldPadState;
+        }
+
+        public void GetVibration()
+        {
+            if (Vibration)
+            {
+                GamePad.SetVibration(playerIndex, 1f, 1f);
+                StartVibrate = DateTime.Now;
+            }
+            TimeSpan timePassed = DateTime.Now - StartVibrate;
+
+            if (timePassed.TotalSeconds >= 0.2)
+            {
+                GamePad.SetVibration(playerIndex, 0f, 0f);
+            }
+            
         }
     }
 }

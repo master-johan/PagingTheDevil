@@ -340,6 +340,7 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void Collision()
         {
+            //bool vibrate = false;
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 if (playerArray[i].GetRect.Intersects(WallTopPos))
@@ -348,31 +349,40 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.Y = tempVector.Y + 5;
                     playerArray[i].GetSetPos = tempVector;
+                    controllerArray[i].Vibration = true;
                 }
-                if (playerArray[i].GetRect.Intersects(WallBottomPos))
+
+                else if (playerArray[i].GetRect.Intersects(WallBottomPos))
                 {
                     Vector2 tempVector;
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.Y = tempVector.Y - 5;
                     playerArray[i].GetSetPos = tempVector;
+                    controllerArray[i].Vibration = true;
                 }
-                if (playerArray[i].GetRect.Intersects(WallLeftPos))
+                else if (playerArray[i].GetRect.Intersects(WallLeftPos))
                 {
                     Vector2 tempVector;
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X + 5;
                     playerArray[i].GetSetPos = tempVector;
-                    
+                    controllerArray[i].Vibration = true;
+
                 }
-                if (playerArray[i].GetRect.Intersects(WallRightPos))
+                else if (playerArray[i].GetRect.Intersects(WallRightPos))
                 {
                     Vector2 tempVector;
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X - 5;
                     playerArray[i].GetSetPos = tempVector;
-                    
+                    controllerArray[i].Vibration = true;
+                }
+                else
+                {   
+                   controllerArray[i].Vibration = false;            
                 }
             }
+           
         }
         /// <summary>
         /// Den här metoden tar bort abilities när de kommer utanför spelfönstret samt vid träff av både enemy och player.
