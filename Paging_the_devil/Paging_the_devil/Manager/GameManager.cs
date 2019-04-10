@@ -14,7 +14,7 @@ namespace Paging_the_devil.Manager
     public enum GameState { MainMenu, PlayerSelect, InGame }
     enum RoomEnum { One, Two, Three }
 
-    public class GameManager
+    class GameManager
     {
         GraphicsDevice graphicsDevice;
         GraphicsDeviceManager graphics;
@@ -34,14 +34,12 @@ namespace Paging_the_devil.Manager
 
         Player[] playerArray;
 
-        List<Controller> controllerList;
         List<Enemy> enemyList;
 
-        bool[] playerConnected;
+        bool[] connectedController;
 
         public static GameState currentState;
         RoomEnum currentRoom;
-
 
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
         {
@@ -50,17 +48,15 @@ namespace Paging_the_devil.Manager
             this.game = game;
             GameWindow(graphics);
 
-            menuManager = new MenuManager(graphicsDevice, game);
-
             enemyList = new List<Enemy>();
-            controllerList = new List<Controller>();
 
             currentState = GameState.MainMenu;
             currentRoom = RoomEnum.One;
 
             DecidingPosses();
             CreatingThings();
-            ConnectController();
+
+            menuManager = new MenuManager(graphicsDevice, game, controllerArray);
 
         }
         /// <summary>
@@ -72,7 +68,7 @@ namespace Paging_the_devil.Manager
             portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
 
             controllerArray = new Controller[4];
-            playerConnected = new bool[4];
+            connectedController = new bool[4];
             playerArray = new Player[4];
         }
         /// <summary>
@@ -99,22 +95,23 @@ namespace Paging_the_devil.Manager
             switch (currentState)
             {
                 case GameState.MainMenu:
-                    if (nrOfPlayers >= 1)
-                    {
-                        menuManager.GetController(controllerArray[0].GetPadState());
-                    }
+                    ConnectController();
                     if (controllerArray[0] != null)
                     {
+                        SendControllerToMenu();
                         controllerArray[0].Update();
+                        menuManager.Update(gameTime);
                     }
-                    menuManager.Update(gameTime);
-                    ConnectController();
-                    ConnectPlayer();
+                    DisconnectController();
                     break;
                 case GameState.PlayerSelect:
-                    menuManager.Update(gameTime); // Denna ordning är fucking viktig
-                    ConnectController(); // Denna ordning är fucking viktig
-                    ConnectPlayer(); //Denna ordning är fucking viktig
+
+                    ConnectController();
+                    UpdateController();
+                    SendPlayerToMenu();
+                    playerArray = menuManager.GetAndSendPlayerArray();
+                    menuManager.Update(gameTime);
+                    DisconnectController();
                     break;
                 case GameState.InGame:
 
@@ -257,6 +254,17 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
+        /// <summary>
+        /// Den här metoden uppdaterar kontrollerna.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        private void UpdateController()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                controllerArray[i].Update();
+            }
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -268,9 +276,9 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.PlayerSelect:
                     menuManager.Draw(spriteBatch);
-                    if(controllerArray[0].IsConnected())
+                    if (controllerArray[0].IsConnected())
                     {
-                        
+
                     }
                     break;
                 case GameState.InGame:
@@ -349,7 +357,7 @@ namespace Paging_the_devil.Manager
                     tempVector.Y = tempVector.Y + 5;
                     playerArray[i].GetSetPos = tempVector;
                 }
-                if (playerArray[i].GetRect.Intersects(WallBottomPos))
+                else if (playerArray[i].GetRect.Intersects(WallBottomPos))
                 {
                     Vector2 tempVector;
                     tempVector = playerArray[i].GetSetPos;
@@ -362,15 +370,15 @@ namespace Paging_the_devil.Manager
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X + 5;
                     playerArray[i].GetSetPos = tempVector;
-                    
+
                 }
-                if (playerArray[i].GetRect.Intersects(WallRightPos))
+                else if (playerArray[i].GetRect.Intersects(WallRightPos))
                 {
                     Vector2 tempVector;
                     tempVector = playerArray[i].GetSetPos;
                     tempVector.X = tempVector.X - 5;
                     playerArray[i].GetSetPos = tempVector;
-                    
+
                 }
             }
         }
@@ -446,33 +454,44 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void ConnectController()
         {
-            nrOfPlayers = 0;
             for (int i = 0; i < GamePad.MaximumGamePadCount; i++)
             {
-                if (GamePad.GetState(i).IsConnected)
+                if (GamePad.GetState(i).IsConnected && !connectedController[i])
                 {
                     PlayerIndex index = (PlayerIndex)i;
 
                     controllerArray[i] = new Controller(index);
                     nrOfPlayers++;
+                    connectedController[i] = true;
                 }
-                playerConnected[i] = false;
             }
         }
-        /// <summary>
-        /// Den här metoden skapar en spelare ifall en kontroller är ansluten.
-        /// </summary>
-        private void ConnectPlayer()
+
+        private void DisconnectController()
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (controllerArray[i].IsConnected() && playerConnected[i] == false)
+                if (!GamePad.GetState(i).IsConnected && connectedController[i])
                 {
-                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
-                    
-                    playerConnected[i] = true;
+                    controllerArray[i] = null;
+                    nrOfPlayers--;
+                    connectedController[i] = false;
                 }
             }
+        }
+        /// <summary>
+        /// Den här metoden uppdaterar menumanagerns controllerArray.
+        /// </summary>
+        private void SendControllerToMenu()
+        {
+            menuManager.GetController(controllerArray);
+        }
+        /// <summary>
+        /// Den här metoden uppdaterar menumanagerns playerArray.
+        /// </summary>
+        private void SendPlayerToMenu()
+        {
+            menuManager.GetPlayer(nrOfPlayers);
         }
     }
 }
