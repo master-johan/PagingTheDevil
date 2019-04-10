@@ -321,8 +321,7 @@ namespace Paging_the_devil
                     blockedDirections[y] = isBlocked;
                 }
 
-                for (int l = 0; l < blockedDirections.Length; l++)
-                {
+                
                     if (blockedDirections[0] == true)
                     {
                         playerArray[i].UpMovementBlocked = true;                       
@@ -358,7 +357,7 @@ namespace Paging_the_devil
                     {
                         playerArray[i].RightMovementBlocked = false;
                     }
-                }
+                
             }
         }
         private void DeleteAbilities()

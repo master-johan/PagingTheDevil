@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Button.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="Manager\LevelManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
     <Compile Include="Manager\GameManager.cs" />
     <Compile Include="GameObject\Ability.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="GameObject\Player.cs" />
     <Compile Include="GameObject\Gateway.cs" />
     <Compile Include="GameObject\Slash.cs" />
+    <Compile Include="Manager\RoomManager.cs" />
     <Compile Include="Pointer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
