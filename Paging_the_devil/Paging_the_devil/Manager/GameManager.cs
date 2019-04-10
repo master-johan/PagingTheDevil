@@ -56,7 +56,7 @@ namespace Paging_the_devil.Manager
             this.graphicsDevice = graphicsDevice;
             this.graphics = graphics;
             this.game = game;
-            GameWindow(graphics);
+            SetWindowSize(graphics);
 
 
             menuManager = new MenuManager(graphicsDevice, game);
@@ -83,7 +83,7 @@ namespace Paging_the_devil.Manager
         }
 
 
-        }
+        
         /// <summary>
         /// Den här metoden anger värden till olika Arrays och skapar portaler.
         /// </summary>

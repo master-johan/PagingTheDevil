@@ -29,7 +29,7 @@ namespace Paging_the_devil.GameObject
         Vector2 lastInputDirection;
 
 
-        Controller controller;
+
 
         Ability ability;
 
@@ -96,7 +96,7 @@ namespace Paging_the_devil.GameObject
             }
 
 
-            if (controller.ButtonPressed(Buttons.B))
+            if (Controller.ButtonPressed(Buttons.B))
 
             {
                 if (slashTimer == 0)
