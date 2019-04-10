@@ -10,12 +10,12 @@ using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
 using Paging_the_devil.Manager;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.Manager
 {
     public enum GameState { MainMenu, PlayerSelect, InGame }
 
 
-    public class GameManager
+    class GameManager
     {
         GraphicsDevice graphicsDevice;
         GraphicsDeviceManager graphics;
@@ -30,25 +30,25 @@ namespace Paging_the_devil
 
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
 
-        GamePadCapabilities[] connectedC;
-
         Controller[] controllerArray;
 
         Player[] playerArray;
 
-        List<Controller> controllerList;
         List<Enemy> enemyList;
+
 
 
         bool[] playerConnected;
         bool roomManagerCreated;
+
+        bool[] connectedController;
+
 
         public static GameState currentState;
 
         RoomManager roomManager;
 
         
-
 
 
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
@@ -58,14 +58,16 @@ namespace Paging_the_devil
             this.game = game;
             GameWindow(graphics);
 
+
             menuManager = new MenuManager(graphicsDevice, game);
             
+
             enemyList = new List<Enemy>();
-            controllerList = new List<Controller>();
 
             currentState = GameState.MainMenu;
 
             CreatingThings();
+
 
             ConnectController();
 
@@ -80,16 +82,22 @@ namespace Paging_the_devil
             graphics.ApplyChanges();
         }
 
+
+        }
+        /// <summary>
+        /// Den här metoden anger värden till olika Arrays och skapar portaler.
+        /// </summary>
         private void CreatingThings()
         {
 
 
-            connectedC = new GamePadCapabilities[4] { GamePad.GetCapabilities(PlayerIndex.One), GamePad.GetCapabilities(PlayerIndex.Two), GamePad.GetCapabilities(PlayerIndex.Three), GamePad.GetCapabilities(PlayerIndex.Four) };
             controllerArray = new Controller[4];
-            playerConnected = new bool[4];
+            connectedController = new bool[4];
             playerArray = new Player[4];
         }
-
+        /// <summary>
+        /// Den här metoden sätter storlekar.
+        /// </summary>
         private void DecidingPosses()
         {
             WallTopPos = new Rectangle(0, 0, windowX, 20);
@@ -111,20 +119,24 @@ namespace Paging_the_devil
             switch (currentState)
             {
                 case GameState.MainMenu:
-                    if (nrOfPlayers >= 1)
-                    {
-                        menuManager.GetController(controllerArray[0].GetPadState());
-                    }
+                    ConnectController();
                     if (controllerArray[0] != null)
                     {
+                        SendControllerToMenu();
                         controllerArray[0].Update();
+                        menuManager.Update(gameTime);
                     }
-                    menuManager.Update(gameTime);
-                    ConnectPlayer();
+                    DisconnectController();
                     break;
                 case GameState.PlayerSelect:
 
-                    
+                    ConnectController();
+                    UpdateController();
+                    SendPlayerToMenu();
+                    playerArray = menuManager.GetAndSendPlayerArray();
+                    menuManager.Update(gameTime);
+                    DisconnectController();
+
                     break;
                 case GameState.InGame:
                     if (roomManager == null)
@@ -134,26 +146,41 @@ namespace Paging_the_devil
 
                     UpdatePlayersDirection();
                     UpdateCharacters();
+                    UpdateHealth();
 
                     roomManager.Update();
 
                     break;
             }
         }
-
+        /// <summary>
+        /// Den här metoden uppdaterar spelare samt enemies samt tar bort enemies vid död.
+        /// </summary>
         private void UpdateCharacters()
         {
+            Enemy toRemoveEnemy = null;
             foreach (var e in enemyList)
             {
                 e.Update();
+                if (e.toRevome)
+                {
+                    toRemoveEnemy = e;
+                }
             }
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 controllerArray[i].Update();
                 playerArray[i].Update();
+
+            }
+            if (toRemoveEnemy != null)
+            {
+                enemyList.Remove(toRemoveEnemy);
             }
         }
-
+        /// <summary>
+        /// Den här metoden uppdaterar spelarens riktning samt senaste riktning.
+        /// </summary>
         private void UpdatePlayersDirection()
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -163,7 +190,66 @@ namespace Paging_the_devil
                     playerArray[i].LastInputDirection(controllerArray[i].GetDirection());
                 }
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
-                playerArray[i].InputPadState(controllerArray[i].GetPadState());
+            }
+        }
+        /// <summary>
+        /// Den här metoden uppdaterar enemies interaktion med abilities
+        /// </summary>
+        private void UpdateHealth()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                foreach (var e in enemyList)
+                {
+                    foreach (var a in playerArray[i].abilityList)
+                    {
+                        if (e.GetRect.Intersects(a.GetRect))
+                        {
+                            if ((a is Slash))
+                            {
+                                if (!(a as Slash).Hit)
+                                {
+                                    e.HealthPoints -= a.Damage;
+                                }
+                            }
+
+                            else
+                            {
+                                e.HealthPoints -= a.Damage;
+                            }
+
+                            if ((a is Slash))
+                            {
+                                (a as Slash).Hit = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                for (int j = 0; j < enemyList.Count; j++)
+                {
+                    foreach (var a in enemyList[j].enemyAbilityList)
+                    {
+                        if (playerArray[i].GetRect.Intersects(a.GetRect))
+                        {
+                            playerArray[i].HealthPoints -= a.Damage;
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Den här metoden uppdaterar kontrollerna.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        private void UpdateController()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                controllerArray[i].Update();
             }
         }
 
@@ -177,7 +263,8 @@ namespace Paging_the_devil
                     break;
                 case GameState.PlayerSelect:
 
-                    
+                    menuManager.Draw(spriteBatch);
+
                     break;
                 case GameState.InGame:
 
@@ -191,7 +278,10 @@ namespace Paging_the_devil
                     break;
             }
         }
-
+        /// <summary>
+        /// Den här metoden ritar ut spelare samt enemies.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         private void DrawCharacters(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -221,37 +311,37 @@ namespace Paging_the_devil
             Enemy enemy = new Enemy(TextureManager.enemyTextureList[0], new Vector2(x, y));
             enemyList.Add(enemy);
         }
+        /// <summary>
+        /// Den här metoden ansluter en kontroll.
+        /// </summary>
         private void ConnectController()
         {
-            for (int i = 0; i < connectedC.Length; i++)
+            for (int i = 0; i < GamePad.MaximumGamePadCount; i++)
             {
-                if (connectedC[i].IsConnected)
+                if (GamePad.GetState(i).IsConnected && !connectedController[i])
                 {
                     PlayerIndex index = (PlayerIndex)i;
 
                     controllerArray[i] = new Controller(index);
-
                     nrOfPlayers++;
+                    connectedController[i] = true;
                 }
-
-                playerConnected[i] = false;
-
             }
-
         }
-        private void ConnectPlayer()
+
+        private void DisconnectController()
         {
-            for (int i = 0; i < controllerArray.Length; i++)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (connectedC[i].IsConnected && playerConnected[i] == false)
+                if (!GamePad.GetState(i).IsConnected && connectedController[i])
                 {
-                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
-                    
-                    playerConnected[i] = true;
-
+                    controllerArray[i] = null;
+                    nrOfPlayers--;
+                    connectedController[i] = false;
                 }
             }
         }
+
 
 
         public void CreateRoomManager()
@@ -261,6 +351,20 @@ namespace Paging_the_devil
 
         }
 
+        /// <summary>
+        /// Den här metoden uppdaterar menumanagerns controllerArray.
+        /// </summary>
+        private void SendControllerToMenu()
+        {
+            menuManager.GetController(controllerArray);
+        }
+        /// <summary>
+        /// Den här metoden uppdaterar menumanagerns playerArray.
+        /// </summary>
+        private void SendPlayerToMenu()
+        {
+            menuManager.GetPlayer(nrOfPlayers);
+        }
     }
 }
 

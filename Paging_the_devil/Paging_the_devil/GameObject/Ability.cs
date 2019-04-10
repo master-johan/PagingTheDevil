@@ -10,12 +10,12 @@ namespace Paging_the_devil.GameObject
 {
     class Ability : GameObject
     {
-        protected Player player;
         protected Vector2 direction;
 
-        public Ability(Texture2D tex, Vector2 pos, Player player, Vector2 direction) : base(tex, pos)
+        public float Damage { get; set; }
+
+        public Ability(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos)
         {
-            this.player = player;
             this.direction = direction;
         }
         public override void Update()

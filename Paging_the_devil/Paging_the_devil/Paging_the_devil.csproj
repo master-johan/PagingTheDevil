@@ -56,7 +56,11 @@
     <Compile Include="GameObject\Player.cs" />
     <Compile Include="GameObject\Gateway.cs" />
     <Compile Include="GameObject\Slash.cs" />
+
     <Compile Include="Manager\RoomManager.cs" />
+
+    <Compile Include="Manager\PlayerSelectManager.cs" />
+
     <Compile Include="Pointer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

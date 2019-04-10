@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Paging_the_devil.GameObject;
 using System;
+using Paging_the_devil.Manager;
 
 namespace Paging_the_devil
 {
@@ -43,29 +44,6 @@ namespace Paging_the_devil
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
-            /*
-            for (int i = 0; i < room.GetWallList().Count; i++)
-            {
-                for (int j = 0; j < nrOfPlayers; j++)
-                {
-                    if (playerArray[j].GetBotHitbox.Intersects(room.GetWallList()[i].GetRect))
-                    {
-
-                    }
-                    else if (playerArray[j].GetTopHitbox.Intersects(room.GetWallList()[i].GetRect))
-                    {
-
-                    }
-                    else if (playerArray[j].GetLeftHitbox.Intersects(room.GetWallList()[i].GetRect))
-                    {
-
-                    }
-                    else if (playerArray[j].GetRightHitbox.Intersects(room.GetWallList()[i].GetRect))
-                    {
-
-                    }
-                }
-            }*/
             gameManager.Update(gameTime);
         }
         protected override void Draw(GameTime gameTime)

@@ -6,41 +6,47 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Paging_the_devil.GameObject;
 
-namespace Paging_the_devil
+namespace Paging_the_devil.Manager
 {
-    enum States { GoingDown, GoingUp, None}
-    public class MenuManager
+    enum States { GoingDown, GoingUp, None }
+    class MenuManager
     {
         Game1 game;
-        Button playBtn, exitBtn;
         int selectedBtn;
+        int nrOfPlayers;
         Pointer pointer;
         List<Button> buttonList = new List<Button>();
-        GamePadState controller;
         Vector2 pointerPos;
 
         States current, previous;
 
+        PlayerSelectManager playerSelectManager;
 
-        public MenuManager(GraphicsDevice graphicsDevice, Game1 game)
+        Controller[] controllerArray;
+
+        public MenuManager(GraphicsDevice graphicsDevice, Game1 game, Controller[] controllerArray)
         {
             this.game = game;
 
-            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(400,300)));
-            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(400,500)));
-            
+            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(400, 300)));
+            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(400, 500)));
+
             pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
             pointer = new Pointer(TextureManager.menuTextureList[5], pointerPos, buttonList);
 
             selectedBtn = 0;
             buttonList[0].activeButton = true;
             current = States.None;
+
+            this.controllerArray = controllerArray;
+
+            playerSelectManager = new PlayerSelectManager();
         }
 
         public void Update(GameTime gameTime)
         {
-            
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
@@ -49,50 +55,32 @@ namespace Paging_the_devil
                     {
                         b.Update();
                     }
+
                     pointer.Update(gameTime);
-                    
+
                     previous = current;
 
-                    if (controller.ThumbSticks.Left.Y > 0.5f)
-                        current = States.GoingUp;
-                    else if (controller.ThumbSticks.Left.Y < -0.5f)
-                        current = States.GoingDown;
-                    else
-                        current = States.None;
+                    MovingInMenu();
 
-                    for (int i = 0; i < buttonList.Count; i++)
+                    UpdateButtonChoise();
+
+                    if (controllerArray[0].ButtonPressed(Buttons.A))
                     {
-                        if (current == States.GoingDown && previous != States.GoingDown && selectedBtn < (buttonList.Count -1))
-                        {
-                            selectedBtn++;                      
-                        }
-                        else if (current == States.GoingUp && previous != States.GoingUp && selectedBtn > 0)
-                        {
-                            selectedBtn--;
-
-                        }
-                            buttonList[i].activeButton = false;
-                            buttonList[selectedBtn].activeButton = true;  
-                    }
-
-                    if(controller.IsButtonDown(Buttons.A))
-                    {
-                      if(buttonList[0].activeButton)  {GameManager.currentState = GameState.InGame;}
-                      else if (buttonList[1].activeButton){ game.Exit();}
+                        ButtonClick();
                     }
 
                     break;
                 case GameState.PlayerSelect:
-                    break;
-                case GameState.InGame:
+                    playerSelectManager.GetController(controllerArray);
+                    SendPlayerToPlayerSelect();
+                    playerSelectManager.Update();
                     break;
             }
-
         }
 
+        
         public void Draw(SpriteBatch spriteBatch)
         {
-
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
@@ -106,25 +94,94 @@ namespace Paging_the_devil
                     pointer.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
-                    break;
-                case GameState.InGame:
+                    playerSelectManager.Draw(spriteBatch);
                     break;
 
             }
-
         }
-        public void GetController(GamePadState c)
+        /// <summary>
+        /// Den här metoden gör att man kan röra sig i menyn
+        /// </summary>
+        private void MovingInMenu()
         {
-            controller = c;
+            if (controllerArray[0].gamePadState.ThumbSticks.Left.Y > 0.5f)
+            {
+                current = States.GoingUp;
+            }
+            else if (controllerArray[0].gamePadState.ThumbSticks.Left.Y < -0.5f)
+            {
+                current = States.GoingDown;
+            }
+            else
+            {
+                current = States.None;
+            }
         }
-
+        /// <summary>
+        /// Den här metoden uppdaterar vad som händer när man trycker på en knapp.
+        /// </summary>
         public void ButtonClick()
         {
-
-            if (exitBtn.isClicked == true)
+            if (buttonList[0].activeButton)
+            {
+                GameManager.currentState = GameState.PlayerSelect;
+            }
+            else if (buttonList[1].activeButton)
             {
                 game.Exit();
             }
+        }
+        /// <summary>
+        /// Den här metoden uppdaterar vid byte av knappval.
+        /// </summary>
+        private void UpdateButtonChoise()
+        {
+            for (int i = 0; i < buttonList.Count; i++)
+            {
+                if (current == States.GoingDown && previous != States.GoingDown && selectedBtn < (buttonList.Count - 1))
+                {
+                    selectedBtn++;
+                }
+                else if (current == States.GoingUp && previous != States.GoingUp && selectedBtn > 0)
+                {
+                    selectedBtn--;
+
+                }
+
+                buttonList[i].activeButton = false;
+                buttonList[selectedBtn].activeButton = true;
+            }
+        }
+        /// <summary>
+        /// Den här metoden får kontroller av GameManager
+        /// </summary>
+        /// <param name="controllerArray"></param>
+        public void GetController(Controller[] controllerArray)
+        {
+            this.controllerArray = controllerArray;
+        }
+        /// <summary>
+        /// Den här metoden får player av GameManager
+        /// </summary>
+        /// <param name="playerArray"></param>
+        public void GetPlayer(int nrOfPlayers)
+        {
+            this.nrOfPlayers = nrOfPlayers;
+        }
+        /// <summary>
+        /// Den här metoden skickar playerArray till PlayerSelect
+        /// </summary>
+        private void SendPlayerToPlayerSelect()
+        {
+            playerSelectManager.GetNrOfPlayers(nrOfPlayers);
+        }
+
+        public Player[] GetAndSendPlayerArray()
+        {
+            Player[] playerArray = playerSelectManager.GetPlayerArray();
+
+            return playerArray;
+
         }
     }
 }
