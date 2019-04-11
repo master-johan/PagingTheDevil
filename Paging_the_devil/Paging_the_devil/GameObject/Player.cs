@@ -27,10 +27,7 @@ namespace Paging_the_devil.GameObject
         Vector2 spellDirection;
         Vector2 inputDirection;
         Vector2 lastInputDirection;
-
-
-
-
+        
         Ability ability;
 
 
@@ -109,8 +106,9 @@ namespace Paging_the_devil.GameObject
             ResetTimers();
             DrawDifferentRects();
         }
-
-
+        /// <summary>
+        /// Den här metoden sköter spelarens rörelse.
+        /// </summary>
         private void Movment()
         {
             if (UpMovementBlocked && inputDirection.Y >0)
@@ -135,12 +133,9 @@ namespace Paging_the_devil.GameObject
             pos.X += inputDirection.X * movementSpeed;
             pos.Y -= inputDirection.Y * movementSpeed;
         }
-
-
         /// <summary>
         /// Den här metoden återställer timers.
         /// </summary>
-
         private void ResetTimers()
         {
             if (fireballTimer > 0)
@@ -250,18 +245,6 @@ namespace Paging_the_devil.GameObject
 
             fireballTimer = 60;
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            //if(c1.IsConnected)
-
-            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
-
-            foreach (var A in abilityList)
-            {
-                A.Draw(spriteBatch);
-            }
-        }
         /// <summary>
         /// Den här metoden uppdaterar riktnngen.
         /// </summary>
@@ -277,6 +260,17 @@ namespace Paging_the_devil.GameObject
         public void LastInputDirection(Vector2 direction)
         {
             lastInputDirection = direction;
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //if(c1.IsConnected)
+
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
+
+            foreach (var A in abilityList)
+            {
+                A.Draw(spriteBatch);
+            }
         }
         /// <summary>
         /// Den här metoden uppdaterar vilken bild som ska ritas ut beroende på hur man styr sin gubbe. 
