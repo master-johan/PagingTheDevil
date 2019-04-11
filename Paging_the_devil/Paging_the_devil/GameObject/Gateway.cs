@@ -10,6 +10,7 @@ namespace Paging_the_devil.GameObject
 {
     class Gateway : StationaryObjects
     {
+        public bool IsVisible { get; set; }
         public Gateway(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);

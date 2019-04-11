@@ -27,17 +27,16 @@ namespace Paging_the_devil.GameObject
         Vector2 spellDirection;
         Vector2 inputDirection;
         Vector2 lastInputDirection;
-
-        Controller controller;
-
+        
         Ability ability;
+
 
         public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex, Controller controller)
             : base(tex, pos)
         {
             this.playerIndex = playerIndex;
             this.spellRect = spellRect;
-            this.controller = controller;
+            this.Controller = controller;
             GenerateRectangles(pos);
             DecidingValues();
             DecidingSourceRect();
@@ -81,12 +80,11 @@ namespace Paging_the_devil.GameObject
 
         public override void Update()
         {
-            pos.X += inputDirection.X * movementSpeed;
-            pos.Y -= inputDirection.Y * movementSpeed;
+            Movment();
 
             Hitboxes();
 
-            if (controller.ButtonPressed(Buttons.X))
+            if (Controller.ButtonPressed(Buttons.X))
             {
                 if (fireballTimer == 0)
                 {
@@ -94,7 +92,9 @@ namespace Paging_the_devil.GameObject
                 }
             }
 
-            if (controller.ButtonPressed(Buttons.B))
+
+            if (Controller.ButtonPressed(Buttons.B))
+
             {
                 if (slashTimer == 0)
                 {
@@ -105,6 +105,33 @@ namespace Paging_the_devil.GameObject
             UpdateAbility();
             ResetTimers();
             DrawDifferentRects();
+        }
+        /// <summary>
+        /// Den här metoden sköter spelarens rörelse.
+        /// </summary>
+        private void Movment()
+        {
+            if (UpMovementBlocked && inputDirection.Y >0)
+            {
+                inputDirection.Y = 0;
+               
+            }
+
+            if (DownMovementBlocked && inputDirection.Y<0)
+            {
+                inputDirection.Y = 0;
+            }
+
+            if (RightMovementBlocked && inputDirection.X >0)
+            {
+                inputDirection.X = 0;
+            }
+            if (LeftMovementBlocked && inputDirection.X <0)
+            {
+                inputDirection.X = 0;
+            }
+            pos.X += inputDirection.X * movementSpeed;
+            pos.Y -= inputDirection.Y * movementSpeed;
         }
         /// <summary>
         /// Den här metoden återställer timers.
@@ -218,18 +245,6 @@ namespace Paging_the_devil.GameObject
 
             fireballTimer = 60;
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            //if(c1.IsConnected)
-
-            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
-
-            foreach (var A in abilityList)
-            {
-                A.Draw(spriteBatch);
-            }
-        }
         /// <summary>
         /// Den här metoden uppdaterar riktnngen.
         /// </summary>
@@ -245,6 +260,17 @@ namespace Paging_the_devil.GameObject
         public void LastInputDirection(Vector2 direction)
         {
             lastInputDirection = direction;
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //if(c1.IsConnected)
+
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
+
+            foreach (var A in abilityList)
+            {
+                A.Draw(spriteBatch);
+            }
         }
         /// <summary>
         /// Den här metoden uppdaterar vilken bild som ska ritas ut beroende på hur man styr sin gubbe. 
@@ -308,6 +334,10 @@ namespace Paging_the_devil.GameObject
 
         }
 
-       
+        public Controller Controller { get; set; }
+        public bool UpMovementBlocked { get; set; }
+        public bool DownMovementBlocked { get; set; }
+        public bool LeftMovementBlocked { get; set; }
+        public bool RightMovementBlocked { get; set; }
     }
 }

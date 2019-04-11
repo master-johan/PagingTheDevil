@@ -8,11 +8,12 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
+using Paging_the_devil.Manager;
 
 namespace Paging_the_devil.Manager
 {
     public enum GameState { MainMenu, PlayerSelect, InGame }
-    enum RoomEnum { One, Two, Three }
+
 
     class GameManager
     {
@@ -22,7 +23,6 @@ namespace Paging_the_devil.Manager
         MenuManager menuManager;
         HUDManager HUD;
         Game1 game;
-        Gateway portal, portal2;
 
         int nrOfPlayers;
         int windowX, windowY;
@@ -37,61 +37,70 @@ namespace Paging_the_devil.Manager
 
         List<Enemy> enemyList;
 
+
+
+        bool[] playerConnected;
+        bool roomManagerCreated;
+
         bool[] connectedController;
 
+
         public static GameState currentState;
-        RoomEnum currentRoom;
+
+        RoomManager roomManager;
+        LevelManager levelManager;
+
+        
+
 
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
         {
             this.graphicsDevice = graphicsDevice;
             this.graphics = graphics;
             this.game = game;
-            GameWindow(graphics);
+            SetWindowSize(graphics);
+
+
+            menuManager = new MenuManager(graphicsDevice, game);
+            levelManager = new LevelManager();
+            
 
             enemyList = new List<Enemy>();
 
             currentState = GameState.MainMenu;
-            currentRoom = RoomEnum.One;
 
-            DecidingPosses();
             CreatingThings();
 
             menuManager = new MenuManager(graphicsDevice, game, controllerArray);
             HUD = new HUDManager(graphicsDevice);
 
+            ConnectController();
+
+            SetWindowSize(graphics);
+
         }
+
+        private static void SetWindowSize(GraphicsDeviceManager graphics)
+        {
+            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 1080;
+            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1920;
+            graphics.ApplyChanges();
+        }
+
+
+        
         /// <summary>
         /// Den här metoden anger värden till olika Arrays och skapar portaler.
         /// </summary>
         private void CreatingThings()
         {
-            portal = new Gateway(TextureManager.roomTextureList[0], portalPos);
-            portal2 = new Gateway(TextureManager.roomTextureList[0], portalRoom3);
+
 
             controllerArray = new Controller[4];
             connectedController = new bool[4];
             playerArray = new Player[4];
         }
-        /// <summary>
-        /// Den här metoden sätter storlekar.
-        /// </summary>
-        private void DecidingPosses()
-        {
-            WallTopPos = new Rectangle(0, 0, windowX, 20);
-            WallBottomPos = new Rectangle(0, windowY - 20, windowX, 20);
-            WallLeftPos = new Rectangle(0, 0, 20, windowY);
-            WallRightPos = new Rectangle(windowX - 20, 0, 20, windowY);
-
-            portalPos = new Vector2(300, 430);
-            portalRoom2 = new Vector2(300, -10);
-            portalRoom3 = new Vector2(1300, 350);
-            portalRoom4 = new Vector2(-10, 350);
-
-            playerPos = new Vector2(200, 400);
-            playerPos2 = new Vector2(320, 100);
-        }
-
+        
         public void Update(GameTime gameTime)
         {
             switch (currentState)
@@ -114,58 +123,21 @@ namespace Paging_the_devil.Manager
                     playerArray = menuManager.GetAndSendPlayerArray();
                     menuManager.Update(gameTime);
                     DisconnectController();
+
                     break;
                 case GameState.InGame:
                     HUD.GetNrOfPlayersToHud(nrOfPlayers);
                     HUD.Update();
+                    if (roomManager == null)
+                    {
+                        CreateRoomManager();
+                    }
                     UpdatePlayersDirection();
                     UpdateCharacters();
                     UpdateHealth();
 
-                    Collision();
+                    roomManager.Update();
 
-                    portal.Update();
-                    portal2.Update();
-
-                    DeleteAbilities();
-
-                    for (int i = 0; i < nrOfPlayers; i++)
-                    {
-                        switch (currentRoom)
-                        {
-                            case RoomEnum.One:
-                                if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    currentRoom = RoomEnum.Two;
-                                    SpawnEnemy();
-                                }
-
-                                break;
-                            case RoomEnum.Two:
-                                if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    portal.GetSetPos = portalPos;
-                                    currentRoom = RoomEnum.One;
-                                    SpawnEnemy();
-                                }
-                                else if (playerArray[i].GetRect.Intersects(portal2.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    portal2.GetSetPos = portalRoom3;
-                                    currentRoom = RoomEnum.Three;
-                                    portal.GetSetPos = portalRoom4;
-                                    SpawnEnemy();
-                                }
-                                break;
-                            case RoomEnum.Three:
-                                if (playerArray[i].GetRect.Intersects(portal.GetRect) && controllerArray[i].ButtonPressed(Buttons.Y))
-                                {
-                                    currentRoom = RoomEnum.Two;
-                                    SpawnEnemy();
-                                }
-
-                                break;
-                        }
-                    }
                     break;
             }
         }
@@ -278,35 +250,22 @@ namespace Paging_the_devil.Manager
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
-                    menuManager.Draw(spriteBatch);
-                    if (controllerArray[0].IsConnected())
-                    {
 
-                    }
+                    menuManager.Draw(spriteBatch);
+
                     break;
                 case GameState.InGame:
 
-                    switch (currentRoom)
+                    if (roomManagerCreated)
                     {
-                        case RoomEnum.One:
-                            graphicsDevice.Clear(Color.CornflowerBlue);
-                            portal.Draw(spriteBatch);
-                            break;
-                        case RoomEnum.Two:
-                            graphicsDevice.Clear(Color.IndianRed);
-                            portal2.Draw(spriteBatch);
-                            portal.Draw(spriteBatch);
-                            break;
-                        case RoomEnum.Three:
-                            graphicsDevice.Clear(Color.ForestGreen);
-                            portal.Draw(spriteBatch);
-                            break;
-
+                        roomManager.Draw(spriteBatch);
                     }
                     DrawWalls(spriteBatch);
                     HUD.Draw(spriteBatch);
                     DrawCharacters(spriteBatch);
 
+                    DrawCharacters(spriteBatch);
+               
                     break;
             }
         }
@@ -326,133 +285,7 @@ namespace Paging_the_devil.Manager
                 e.Draw(spriteBatch);
             }
         }
-        /// <summary>
-        /// Den här metoden ritar ut väggarna.
-        /// </summary>
-        /// <param name="spriteBatch"></param>
-        private void DrawWalls(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(TextureManager.roomTextureList[1], WallTopPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextureList[1], WallBottomPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextureList[2], WallLeftPos, Color.White);
-            spriteBatch.Draw(TextureManager.roomTextureList[2], WallRightPos, Color.White);
-        }
-        /// <summary>
-        /// Den här metoden uppdaterar storleken på spelfönstret.
-        /// </summary>
-        /// <param name="graphics"></param>
-        private void GameWindow(GraphicsDeviceManager graphics)
-        {
-            graphics.PreferredBackBufferHeight = windowY = TextureManager.WindowSizeY = 1080;
-            graphics.PreferredBackBufferWidth = windowX = TextureManager.WindowSizeX = 1920;
-            graphics.ApplyChanges();
-        }
-        /// <summary>
-        /// Den här metoden uppdaterar ifall en spelare kolliderar med väggar.
-        /// </summary>
-        private void Collision()
-        {
-            //bool vibrate = false;
-            for (int i = 0; i < nrOfPlayers; i++)
-            {
-                if (playerArray[i].GetRect.Intersects(WallTopPos))
-                {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.Y = tempVector.Y + 5;
-                    playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration = true;
-                }
-                else if (playerArray[i].GetRect.Intersects(WallBottomPos))
-                {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.Y = tempVector.Y - 5;
-                    playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration = true;
-                }
-                else if (playerArray[i].GetRect.Intersects(WallLeftPos))
-                {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.X = tempVector.X + 5;
-                    playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration = true;
 
-                }
-                else if (playerArray[i].GetRect.Intersects(WallRightPos))
-                {
-                    Vector2 tempVector;
-                    tempVector = playerArray[i].GetSetPos;
-                    tempVector.X = tempVector.X - 5;
-                    playerArray[i].GetSetPos = tempVector;
-                    controllerArray[i].Vibration = true;
-                }
-                else
-                {   
-                   controllerArray[i].Vibration = false;
-                }
-            }
-           
-        }
-        /// <summary>
-        /// Den här metoden tar bort abilities när de kommer utanför spelfönstret samt vid träff av både enemy och player.
-        /// </summary>
-        private void DeleteAbilities()
-        {
-            Ability toRemovePlayerAbility = null;
-            Ability toRemoveEnemyAbility = null;
-
-            for (int i = 0; i < nrOfPlayers; i++)
-            {
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
-                    {
-                        toRemovePlayerAbility = a;
-                        (toRemovePlayerAbility as Fireball).Active = false;
-                    }
-                }
-
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    foreach (var e in enemyList)
-                    {
-                        if (a.GetRect.Intersects(e.GetRect) && !(a is Slash))
-                        {
-                            toRemovePlayerAbility = a;
-                        }
-                    }
-                }
-
-                if (toRemovePlayerAbility != null)
-                {
-                    playerArray[i].abilityList.Remove(toRemovePlayerAbility);
-                }
-            }
-
-            for (int i = 0; i < enemyList.Count; i++)
-            {
-                for (int j = 0; j < nrOfPlayers; j++)
-                {
-                    foreach (var a in enemyList[i].enemyAbilityList)
-                    {
-                        if (playerArray[j].GetRect.Intersects(a.GetRect))
-                        {
-                            toRemoveEnemyAbility = a;
-                        }
-                    }
-                }
-
-                if (toRemoveEnemyAbility != null)
-                {
-                    enemyList[i].enemyAbilityList.Remove(toRemoveEnemyAbility);
-                }
-            }
-        }
-        /// <summary>
-        /// Den här metoden skapar en enemy vid rumbyte.
-        /// </summary>
         private void SpawnEnemy()
         {
             Random rand = new Random();
@@ -492,6 +325,16 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
+
+
+
+        public void CreateRoomManager()
+        {
+            roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList, levelManager);
+            roomManagerCreated = true;
+
+        }
+
         /// <summary>
         /// Den här metoden uppdaterar menumanagerns controllerArray.
         /// </summary>
