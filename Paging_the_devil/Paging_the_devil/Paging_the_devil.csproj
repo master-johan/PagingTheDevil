@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Button.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="Manager\HUDManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
     <Compile Include="Manager\GameManager.cs" />
     <Compile Include="GameObject\Ability.cs" />
