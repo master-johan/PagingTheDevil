@@ -61,6 +61,7 @@ namespace Paging_the_devil.Manager
             {
                 if (controllerArray[0].ButtonPressed(Buttons.Start))
                 {
+                    
                     GameManager.currentState = GameState.InGame;
                 }
             }

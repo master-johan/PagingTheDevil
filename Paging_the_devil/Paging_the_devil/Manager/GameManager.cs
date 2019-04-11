@@ -20,6 +20,7 @@ namespace Paging_the_devil.Manager
         GraphicsDeviceManager graphics;
 
         MenuManager menuManager;
+        HUDManager HUD;
         Game1 game;
         Gateway portal, portal2;
 
@@ -57,6 +58,7 @@ namespace Paging_the_devil.Manager
             CreatingThings();
 
             menuManager = new MenuManager(graphicsDevice, game, controllerArray);
+            HUD = new HUDManager(graphicsDevice);
 
         }
         /// <summary>
@@ -114,7 +116,8 @@ namespace Paging_the_devil.Manager
                     DisconnectController();
                     break;
                 case GameState.InGame:
-
+                    HUD.GetNrOfPlayersToHud(nrOfPlayers);
+                    HUD.Update();
                     UpdatePlayersDirection();
                     UpdateCharacters();
                     UpdateHealth();
@@ -301,6 +304,7 @@ namespace Paging_the_devil.Manager
 
                     }
                     DrawWalls(spriteBatch);
+                    HUD.Draw(spriteBatch);
                     DrawCharacters(spriteBatch);
 
                     break;
@@ -339,8 +343,8 @@ namespace Paging_the_devil.Manager
         /// <param name="graphics"></param>
         private void GameWindow(GraphicsDeviceManager graphics)
         {
-            graphics.PreferredBackBufferHeight = windowY = 700;
-            graphics.PreferredBackBufferWidth = windowX = 1350;
+            graphics.PreferredBackBufferHeight = windowY = TextureManager.WindowSizeY = 1080;
+            graphics.PreferredBackBufferWidth = windowX = TextureManager.WindowSizeX = 1920;
             graphics.ApplyChanges();
         }
         /// <summary>

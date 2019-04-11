@@ -23,8 +23,7 @@ namespace Paging_the_devil
         public Room(GraphicsDeviceManager graphics/*, Player[] playerArray*/)
         {
             this.graphics = graphics;
-
-            GameWindow();
+            
             DecidePos();
             AddToList();
         }
@@ -55,12 +54,6 @@ namespace Paging_the_devil
             wallList.Add(wallBot = new Wall(TextureManager.roomTextureList[1], Vector2.Zero, WallBottomPos));
             wallList.Add(wallLeft = new Wall(TextureManager.roomTextureList[2], Vector2.Zero, WallLeftPos));
             wallList.Add(wallRight = new Wall(TextureManager.roomTextureList[2], Vector2.Zero, WallRightPos));
-        }
-        public void GameWindow()
-        {
-            graphics.PreferredBackBufferHeight = WindowY = 700;
-            graphics.PreferredBackBufferWidth = WindowX = 1350;
-            graphics.ApplyChanges();
         }
         public List<Wall> GetWallList()
         {
