@@ -26,7 +26,7 @@ namespace Paging_the_devil.Manager
 
         Controller[] controllerArray;
 
-        public MenuManager(GraphicsDevice graphicsDevice, Game1 game, Controller[] controllerArray)
+        public MenuManager(GraphicsDevice graphicsDevice, Game1 game)
         {
             this.game = game;
 
@@ -40,7 +40,6 @@ namespace Paging_the_devil.Manager
             buttonList[0].activeButton = true;
             current = States.None;
 
-            this.controllerArray = controllerArray;
 
             playerSelectManager = new PlayerSelectManager();
         }

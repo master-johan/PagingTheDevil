@@ -28,16 +28,18 @@ namespace Paging_the_devil.GameObject
         Vector2 inputDirection;
         Vector2 lastInputDirection;
 
-        Controller controller;
+
+
 
         Ability ability;
+
 
         public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex, Controller controller)
             : base(tex, pos)
         {
             this.playerIndex = playerIndex;
             this.spellRect = spellRect;
-            this.controller = controller;
+            this.Controller = controller;
             GenerateRectangles(pos);
             DecidingValues();
             DecidingSourceRect();
@@ -64,7 +66,7 @@ namespace Paging_the_devil.GameObject
 
             HealthPoints = 10;
 
-            movementSpeed = 2.0f;
+            movementSpeed = 5.0f;
         }
         /// <summary>
         /// Den här metoden generar hitboxes.
@@ -81,12 +83,11 @@ namespace Paging_the_devil.GameObject
 
         public override void Update()
         {
-            pos.X += inputDirection.X * movementSpeed;
-            pos.Y -= inputDirection.Y * movementSpeed;
+            Movment();
 
             Hitboxes();
 
-            if (controller.ButtonPressed(Buttons.X))
+            if (Controller.ButtonPressed(Buttons.X))
             {
                 if (fireballTimer == 0)
                 {
@@ -94,7 +95,9 @@ namespace Paging_the_devil.GameObject
                 }
             }
 
-            if (controller.ButtonPressed(Buttons.B))
+
+            if (Controller.ButtonPressed(Buttons.B))
+
             {
                 if (slashTimer == 0)
                 {
@@ -106,9 +109,38 @@ namespace Paging_the_devil.GameObject
             ResetTimers();
             DrawDifferentRects();
         }
+
+
+        private void Movment()
+        {
+            if (UpMovementBlocked && inputDirection.Y >0)
+            {
+                inputDirection.Y = 0;
+               
+            }
+
+            if (DownMovementBlocked && inputDirection.Y<0)
+            {
+                inputDirection.Y = 0;
+            }
+
+            if (RightMovementBlocked && inputDirection.X >0)
+            {
+                inputDirection.X = 0;
+            }
+            if (LeftMovementBlocked && inputDirection.X <0)
+            {
+                inputDirection.X = 0;
+            }
+            pos.X += inputDirection.X * movementSpeed;
+            pos.Y -= inputDirection.Y * movementSpeed;
+        }
+
+
         /// <summary>
         /// Den här metoden återställer timers.
         /// </summary>
+
         private void ResetTimers()
         {
             if (fireballTimer > 0)
@@ -307,5 +339,11 @@ namespace Paging_the_devil.GameObject
             get { return hitboxRight; }
 
         }
+
+        public Controller Controller { get; set; }
+        public bool UpMovementBlocked { get; set; }
+        public bool DownMovementBlocked { get; set; }
+        public bool LeftMovementBlocked { get; set; }
+        public bool RightMovementBlocked { get; set; }
     }
 }
