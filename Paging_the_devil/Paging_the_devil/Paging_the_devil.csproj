@@ -42,7 +42,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Button.cs" />
-    <Compile Include="Controller.cs" />
+    <Compile Include="Controller.cs" /
+    <Compile Include="GameObject\HUD.cs" />
+    <Compile Include="Manager\HUDManager.cs" />
     <Compile Include="Manager\LevelManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
     <Compile Include="Manager\GameManager.cs" />

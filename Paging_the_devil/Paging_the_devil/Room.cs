@@ -77,7 +77,6 @@ namespace Paging_the_devil
             wallList.Add(wallLeft = new Wall(TextureManager.roomTextureList[2], Vector2.Zero, WallLeftPos));
             wallList.Add(wallRight = new Wall(TextureManager.roomTextureList[2], Vector2.Zero, WallRightPos));
         }
-      
         public List<Wall> GetWallList()
         {
             return wallList;

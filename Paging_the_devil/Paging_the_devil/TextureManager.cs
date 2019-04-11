@@ -16,6 +16,11 @@ namespace Paging_the_devil
         public static List<Texture2D> roomTextureList = new List<Texture2D>();
         public static List<Texture2D> enemyTextureList = new List<Texture2D>();
         public static List<Texture2D> menuTextureList = new List<Texture2D>();
+        public static List<Texture2D> hudTextureList = new List<Texture2D>();
+
+        public static int WindowSizeY;
+        public static int WindowSizeX;
+
 
         public static int WindowSizeY;
         public static int WindowSizeX;
@@ -47,7 +52,12 @@ namespace Paging_the_devil
             menuTextureList.Add(Content.Load<Texture2D>(@"Pointer"));
             menuTextureList.Add(Content.Load<Texture2D>(@"PlayerSelectBG"));
             menuTextureList.Add(Content.Load<Texture2D>(@"ConnectPlayer"));
-
+            //HUD
+            hudTextureList.Add(Content.Load<Texture2D>(@"Abtn"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"Bbtn"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"Xbtn"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"Ybtn"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"HudBG"));
         }
     }
 }

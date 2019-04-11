@@ -21,6 +21,7 @@ namespace Paging_the_devil.Manager
         GraphicsDeviceManager graphics;
 
         MenuManager menuManager;
+        HUDManager HUD;
         Game1 game;
 
         int nrOfPlayers;
@@ -70,6 +71,8 @@ namespace Paging_the_devil.Manager
 
             CreatingThings();
 
+            menuManager = new MenuManager(graphicsDevice, game, controllerArray);
+            HUD = new HUDManager(graphicsDevice);
 
             ConnectController();
 
@@ -123,11 +126,12 @@ namespace Paging_the_devil.Manager
 
                     break;
                 case GameState.InGame:
+                    HUD.GetNrOfPlayersToHud(nrOfPlayers);
+                    HUD.Update();
                     if (roomManager == null)
                     {
                         CreateRoomManager();
                     }
-
                     UpdatePlayersDirection();
                     UpdateCharacters();
                     UpdateHealth();
@@ -256,6 +260,9 @@ namespace Paging_the_devil.Manager
                     {
                         roomManager.Draw(spriteBatch);
                     }
+                    DrawWalls(spriteBatch);
+                    HUD.Draw(spriteBatch);
+                    DrawCharacters(spriteBatch);
 
                     DrawCharacters(spriteBatch);
                
@@ -277,13 +284,6 @@ namespace Paging_the_devil.Manager
             {
                 e.Draw(spriteBatch);
             }
-        }
-
-        private void GameWindow(GraphicsDeviceManager graphics)
-        {
-            graphics.PreferredBackBufferHeight = windowY = TextureManager.WindowSizeY;
-            graphics.PreferredBackBufferWidth = windowX = TextureManager.WindowSizeX;
-            graphics.ApplyChanges();
         }
 
         private void SpawnEnemy()
