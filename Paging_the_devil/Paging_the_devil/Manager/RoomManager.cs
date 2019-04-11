@@ -422,12 +422,14 @@ namespace Paging_the_devil.Manager
         {
             int tempX = RoomCoordinateX;
             int tempY = RoomCoordinateY;
+            Vector2 temp = Vector2.Zero;
 
             if (playerArray[0].GetRect.Intersects(gatewaySouth.GetRect) && gatewaySouth.IsVisible)
             {
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateY += 1;
+                    temp = new Vector2(TextureManager.WindowSizeX / 2, 50);
                 }
             }
             else if (playerArray[0].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
@@ -435,6 +437,7 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateY -= 1;
+                    temp = new Vector2(TextureManager.WindowSizeX / 2, TextureManager.WindowSizeY - 50);
                 }
             }
             else if (playerArray[0].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
@@ -442,6 +445,7 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateX += 1;
+                    temp = new Vector2(50, TextureManager.WindowSizeY / 2);
                 }
             }
             else if (playerArray[0].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
@@ -449,12 +453,18 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateX -= 1;
+
+                    temp = new Vector2(TextureManager.WindowSizeX - 50, TextureManager.WindowSizeY / 2);
                 }
             }
             if (RoomCoordinateX != tempX || RoomCoordinateY != tempY)
             {
                 currentRoom = currentLevel[RoomCoordinateX, RoomCoordinateY];
                 ShowGateways();
+                for (int i = 0; i < nrOfPlayers; i++)
+                {
+                    playerArray[i].pos = temp;
+                }
             }
         }
     }
