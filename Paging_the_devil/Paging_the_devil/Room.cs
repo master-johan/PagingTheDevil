@@ -20,10 +20,17 @@ namespace Paging_the_devil
         List<Wall> wallList = new List<Wall>();
         List<Gateway> gateWayList = new List<Gateway>();
         Color color;
+        public bool AllowedRoom { get; set; }
+        public bool StartRoom { get; set; }
+        bool bossRoom;
 
-        public Room(Color color/*, Player[] playerArray*/)
+        public Room(Color color, bool allowedRoom, bool startRoom, bool bossRoom)
         {
-            this.color = color; 
+            this.color = color;
+            this.AllowedRoom = allowedRoom;
+            this.StartRoom = startRoom;
+            this.bossRoom = bossRoom;
+
             WindowX = TextureManager.WindowSizeX;
             WindowY = TextureManager.WindowSizeY;
             DecidePos();

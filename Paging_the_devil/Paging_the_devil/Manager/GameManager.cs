@@ -47,6 +47,7 @@ namespace Paging_the_devil.Manager
         public static GameState currentState;
 
         RoomManager roomManager;
+        LevelManager levelManager;
 
         
 
@@ -60,6 +61,7 @@ namespace Paging_the_devil.Manager
 
 
             menuManager = new MenuManager(graphicsDevice, game);
+            levelManager = new LevelManager();
             
 
             enemyList = new List<Enemy>();
@@ -95,25 +97,7 @@ namespace Paging_the_devil.Manager
             connectedController = new bool[4];
             playerArray = new Player[4];
         }
-        /// <summary>
-        /// Den här metoden sätter storlekar.
-        /// </summary>
-        private void DecidingPosses()
-        {
-            WallTopPos = new Rectangle(0, 0, windowX, 20);
-            WallBottomPos = new Rectangle(0, windowY - 20, windowX, 20);
-            WallLeftPos = new Rectangle(0, 0, 20, windowY);
-            WallRightPos = new Rectangle(windowX - 20, 0, 20, windowY);
-
-            portalPos = new Vector2(300, 430);
-            portalRoom2 = new Vector2(300, -10);
-            portalRoom3 = new Vector2(1300, 350);
-            portalRoom4 = new Vector2(-10, 350);
-
-            playerPos = new Vector2(200, 400);
-            playerPos2 = new Vector2(320, 100);
-        }
-
+        
         public void Update(GameTime gameTime)
         {
             switch (currentState)
@@ -346,7 +330,7 @@ namespace Paging_the_devil.Manager
 
         public void CreateRoomManager()
         {
-            roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList);
+            roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList, levelManager);
             roomManagerCreated = true;
 
         }

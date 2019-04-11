@@ -66,7 +66,7 @@ namespace Paging_the_devil.GameObject
 
             HealthPoints = 10;
 
-            movementSpeed = 2.0f;
+            movementSpeed = 5.0f;
         }
         /// <summary>
         /// Den här metoden generar hitboxes.
