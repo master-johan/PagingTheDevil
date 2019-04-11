@@ -21,10 +21,6 @@ namespace Paging_the_devil
         public static int WindowSizeY;
         public static int WindowSizeX;
 
-
-        public static int WindowSizeY;
-        public static int WindowSizeX;
-
         public static void LoadTextures(ContentManager Content)
         {
             //Player

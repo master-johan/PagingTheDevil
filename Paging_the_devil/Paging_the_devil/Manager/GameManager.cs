@@ -71,7 +71,7 @@ namespace Paging_the_devil.Manager
 
             CreatingThings();
 
-            menuManager = new MenuManager(graphicsDevice, game, controllerArray);
+            menuManager = new MenuManager(graphicsDevice, game);
             HUD = new HUDManager(graphicsDevice);
 
             ConnectController();
@@ -260,7 +260,6 @@ namespace Paging_the_devil.Manager
                     {
                         roomManager.Draw(spriteBatch);
                     }
-                    DrawWalls(spriteBatch);
                     HUD.Draw(spriteBatch);
                     DrawCharacters(spriteBatch);
 
