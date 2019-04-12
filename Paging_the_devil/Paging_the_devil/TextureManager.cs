@@ -53,7 +53,7 @@ namespace Paging_the_devil
             hudTextureList.Add(Content.Load<Texture2D>(@"Bbtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"Xbtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"Ybtn"));
-            hudTextureList.Add(Content.Load<Texture2D>(@"HudBG"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"HUDtest"));
         }
     }
 }
