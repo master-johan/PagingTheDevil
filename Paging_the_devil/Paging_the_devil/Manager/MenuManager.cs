@@ -182,5 +182,10 @@ namespace Paging_the_devil.Manager
             return playerArray;
 
         }
+        public HUDManager HudManagerSend()
+        {
+            HUDManager hud = playerSelectManager.getHudmanager();
+            return hud;
+        }
     }
 }

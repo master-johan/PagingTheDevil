@@ -11,39 +11,49 @@ namespace Paging_the_devil.Manager
 {
     class HUDManager
     {
-        GraphicsDevice graphicsDevice;
+
         int nrOfPlayers;
-        HUD[] playerHudArray;
+        public HUD[] playerHudArray { get; set; }
         HUD textBoxHud;
         Vector2 pos;
-        
-       
+        Player[] playerArray;
 
-        public HUDManager(GraphicsDevice graphicsDevice)
+
+
+
+        public HUDManager(Player[] playerArray, int nrOfPlayers)
         {
-            this.graphicsDevice = graphicsDevice;
-
+            this.playerArray = playerArray;
+            this.nrOfPlayers = nrOfPlayers;
             playerHudArray = new HUD[4];
-            
+
+            CreateHUDs();
         }
 
         public void Update()
         {
+            //for (int i = 0; i < nrOfPlayers; i++)
+            //{
+            //    pos.X = TextureManager.WindowSizeX / 5 * i ;
+            //    pos.Y = 0;
+
+            //    if(i > 1)
+            //    {
+            //        pos.X = TextureManager.WindowSizeX / 5 * (i + 1);
+            //    }
+
+            //    playerHudArray[i] = new HUD(graphicsDevice, pos,p);
+            //}
+
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                pos.X = TextureManager.WindowSizeX / 5 * i ;
-                pos.Y = 0;
-
-                if(i > 1)
-                {
-                    pos.X = TextureManager.WindowSizeX / 5 * (i + 1);
-                }
-
-                playerHudArray[i] = new HUD(graphicsDevice, pos);
+                playerHudArray[i].Update();
             }
+
+
         }
 
-        public void Draw (SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
@@ -55,6 +65,23 @@ namespace Paging_the_devil.Manager
         public void GetNrOfPlayersToHud(int nrOfPlayers)
         {
             this.nrOfPlayers = nrOfPlayers;
+        }
+
+        private void CreateHUDs()
+        {
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                pos = new Vector2(TextureManager.WindowSizeX / 5 * i, 0);
+
+                if (i > 1)
+                {
+                    pos.X = TextureManager.WindowSizeX / 5 * (i + 1);
+                }
+
+                playerHudArray[i] = new HUD(pos, playerArray[i]);
+            }
+
         }
     }
 }

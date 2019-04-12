@@ -21,7 +21,7 @@ namespace Paging_the_devil.Manager
         GraphicsDeviceManager graphics;
 
         MenuManager menuManager;
-        HUDManager HUD;
+        public HUDManager HUDManager { get; set; }
         Game1 game;
 
         int nrOfPlayers;
@@ -33,6 +33,7 @@ namespace Paging_the_devil.Manager
         List<Enemy> enemyList;
         
         bool roomManagerCreated;
+        bool hUDManagerCreated;
 
         bool[] connectedController;
 
@@ -59,7 +60,7 @@ namespace Paging_the_devil.Manager
             CreatingThings();
 
             menuManager = new MenuManager(graphicsDevice, game);
-            HUD = new HUDManager(graphicsDevice);
+            
 
             ConnectController();
 
@@ -112,12 +113,31 @@ namespace Paging_the_devil.Manager
 
                     break;
                 case GameState.InGame:
-                    HUD.GetNrOfPlayersToHud(nrOfPlayers);
-                    HUD.Update();
+                    if (HUDManager == null)
+                    {
+                        GetHUDManager();
+                    }
                     if (roomManager == null)
                     {
                         CreateRoomManager();
                     }
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    {
+                        for (int i = 0; i < nrOfPlayers; i++)
+                        {
+                            playerArray[i].HealthPoints -=0.5f;
+                        }
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.S))
+                    {
+                        for (int i = 0; i < nrOfPlayers; i++)
+                        {
+                            playerArray[i].HealthPoints += 0.5f;
+                        }
+                    }
+
+                    HUDManager.Update();
                     UpdatePlayersDirection();
                     UpdateCharacters();
                     UpdateHealth();
@@ -245,7 +265,13 @@ namespace Paging_the_devil.Manager
                     {
                         roomManager.Draw(spriteBatch);
                     }
-                    HUD.Draw(spriteBatch);
+                    if (hUDManagerCreated)
+                    {
+                        HUDManager.Draw(spriteBatch);
+                    }
+
+                  
+                    
                     DrawCharacters(spriteBatch);
 
                     DrawCharacters(spriteBatch);
@@ -331,6 +357,12 @@ namespace Paging_the_devil.Manager
         private void SendPlayerToMenu()
         {
             menuManager.GetPlayer(nrOfPlayers);
+        }
+
+        private void GetHUDManager()
+        {
+            hUDManagerCreated = true;
+            HUDManager = menuManager.HudManagerSend();
         }
     }
 }
