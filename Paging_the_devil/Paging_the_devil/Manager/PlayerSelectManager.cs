@@ -46,7 +46,7 @@ namespace Paging_the_devil.Manager
                     characterSelected[i] = true;
                     connectedController[i] = false;
                     controllerArray[i] = new Controller((PlayerIndex) i);
-                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 100), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
+                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 200), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
 
                 }
                 else if (controllerArray[i].IsConnected())
