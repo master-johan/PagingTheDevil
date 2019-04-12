@@ -64,7 +64,7 @@ namespace Paging_the_devil.GameObject
 
             HealthPoints = 10;
 
-            movementSpeed = 3.0f;
+            movementSpeed = 2.0f;
         }
         /// <summary>
         /// Den här metoden generar hitboxes.
@@ -81,7 +81,7 @@ namespace Paging_the_devil.GameObject
 
         public override void Update()
         {
-            Movement();
+            Movment();
 
             Hitboxes();
 
@@ -110,7 +110,7 @@ namespace Paging_the_devil.GameObject
         /// <summary>
         /// Den här metoden sköter spelarens rörelse.
         /// </summary>
-        private void Movement()
+        private void Movment()
         {
             if (UpMovementBlocked && inputDirection.Y >0)
             {
@@ -156,7 +156,7 @@ namespace Paging_the_devil.GameObject
             foreach (var A in abilityList)
             {
                 A.Update();
-                if (A is Slash)
+                if (A == A as Slash)
                 {
                     if (!(A as Slash).Active)
                     {

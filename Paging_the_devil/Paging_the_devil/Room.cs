@@ -19,10 +19,11 @@ namespace Paging_the_devil
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
         Wall wallTop, wallBot, wallLeft, wallRight;
         List<Wall> wallList = new List<Wall>();
+        List<Gateway> gateWayList = new List<Gateway>();
         Color color;
         public bool AllowedRoom { get; set; }
         public bool StartRoom { get; set; }
-        public bool bossRoom { get; set; }
+        bool bossRoom;
 
         public Room(Color color, bool allowedRoom, bool startRoom, bool bossRoom)
         {
@@ -49,6 +50,17 @@ namespace Paging_the_devil
             {
                 wallList[i].Draw(spriteBatch);
             }
+
+            if (gateWayList.Count > 0)
+            {
+                foreach (var g in gateWayList)
+                {
+                    g.Draw(spriteBatch);
+                }
+            }
+
+            
+
         }
 
         private void DecidePos()
@@ -69,6 +81,38 @@ namespace Paging_the_devil
         public List<Wall> GetWallList()
         {
             return wallList;
+        }
+
+        /// <summary>
+        /// dir reprecents direction. 0 = North, 1= South, 2 = West, 3 = East.
+        /// </summary>
+        /// <param name="dir"></param>
+        public void CreateGateWays(int dir)
+        {
+            if (dir >=0 && dir <=3)
+            {
+                if (dir == 0)
+                {
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[0].GetRect.Width / 2, wallList[0].GetRect.Y)));
+                }
+                else if (dir == 1)
+                {
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[1].GetRect.Width / 2, wallList[1].GetRect.Y - 25)));
+                }
+                else if (dir == 2)
+                {
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[2].GetRect.X, wallList[2].GetRect.Height/2)));
+                }
+                else if (dir == 3)
+                {
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[3].GetRect.X- 25, wallList[3].GetRect.Height / 2)));
+                }
+            }
+        }
+
+        public List<Gateway> GetGatewayList()
+        {
+            return gateWayList;
         }
     }
 }
