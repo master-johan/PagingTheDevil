@@ -65,7 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="GameObject\StationaryObjects.cs" />
-    <Compile Include="TextureManager.cs" />
+    <Compile Include="Manager\TextureManager.cs" />
     <Compile Include="GameObject\Wall.cs" />
   </ItemGroup>
   <ItemGroup>
