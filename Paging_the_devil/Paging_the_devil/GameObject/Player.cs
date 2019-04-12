@@ -14,29 +14,26 @@ namespace Paging_the_devil.GameObject
     class Player : Character
     {
         float movementSpeed;
-        
-        int fireballTimer;
         int slashTimer;
         int playerIndex;
 
         Rectangle left, right, up, down;
-        Rectangle spellRect, hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
-        Rectangle drawRect;
+        Rectangle hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
+        protected Rectangle drawRect;
 
         public List<Ability> abilityList;
 
-        Vector2 spellDirection;
-        Vector2 inputDirection;
-        Vector2 lastInputDirection;
+        protected Vector2 spellDirection;
+        protected Vector2 inputDirection;
+        protected Vector2 lastInputDirection;
         
-        Ability ability;
+        protected Ability ability;
 
 
-        public Player(Texture2D tex, Vector2 pos, Rectangle spellRect, int playerIndex, Controller controller)
+        public Player(Texture2D tex, Vector2 pos, int playerIndex, Controller controller)
             : base(tex, pos)
         {
             this.playerIndex = playerIndex;
-            this.spellRect = spellRect;
             this.Controller = controller;
             GenerateRectangles(pos);
             DecidingValues();
@@ -59,7 +56,6 @@ namespace Paging_the_devil.GameObject
         private void DecidingValues()
         {
             abilityList = new List<Ability>();
-            fireballTimer = 0;
             slashTimer = 0;
 
             HealthPoints = 100f;
@@ -84,15 +80,6 @@ namespace Paging_the_devil.GameObject
             Movment();
 
             Hitboxes();
-
-            if (Controller.ButtonPressed(Buttons.X))
-            {
-                if (fireballTimer == 0)
-                {
-                    ShootFireball();
-                }
-            }
-
 
             if (Controller.ButtonPressed(Buttons.B))
 
@@ -139,10 +126,6 @@ namespace Paging_the_devil.GameObject
         /// </summary>
         private void ResetTimers()
         {
-            if (fireballTimer > 0)
-            {
-                fireballTimer--;
-            }
             if (slashTimer > 0)
             {
                 slashTimer--;
@@ -233,21 +216,6 @@ namespace Paging_the_devil.GameObject
             hitboxRight.Y = (int)pos.Y - 28;
         }
         /// <summary>
-        /// Den här metoden skapar fireballs.
-        /// </summary>
-        private void ShootFireball()
-        {
-            spellDirection = lastInputDirection;
-            spellDirection.Normalize();
-            spellDirection.Y = -spellDirection.Y;
-
-            ability = new Fireball(TextureManager.mageSpellList[0], pos, spellDirection);
-            abilityList.Add(ability);
-
-            fireballTimer = 60;
-        }
-
-        /// <summary>
         /// Den här metoden uppdaterar riktnngen.
         /// </summary>
         /// <param name="newDirection"></param>
@@ -263,10 +231,9 @@ namespace Paging_the_devil.GameObject
         {
             lastInputDirection = direction;
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //if(c1.IsConnected)
-
             spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
 
             foreach (var A in abilityList)

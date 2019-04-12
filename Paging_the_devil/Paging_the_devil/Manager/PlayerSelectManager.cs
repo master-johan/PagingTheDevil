@@ -19,15 +19,27 @@ namespace Paging_the_devil.Manager
         Player[] playerArray;
 
         Rectangle[] playerRectArray;
+        Rectangle drawKnightRect;
 
         int nrOfPlayers;
+        int[] characterChosen;
 
         bool[] playerConnected;
         bool[] characterSelected;
         bool[] connectedController;
 
+        Texture2D barbarianTex;
+        Texture2D knightTex;
+
         public PlayerSelectManager()
         {
+            characterChosen = new int[4];
+
+            for (int i = 0; i < characterChosen.Length; i++)
+            {
+                characterChosen[i] = 0;
+            }
+
             playerRectArray = new Rectangle[4];
 
             characterSelected = new bool[4];
@@ -36,7 +48,10 @@ namespace Paging_the_devil.Manager
 
             playerArray = new Player[4];
 
+            drawKnightRect = new Rectangle(0, 0, 60, 70);
+
             DecidingRectangles();
+            DecidingTextureArray();
         }
 
         public void Update()
@@ -47,22 +62,63 @@ namespace Paging_the_devil.Manager
                 {
                     characterSelected[i] = true;
                     connectedController[i] = false;
-                    controllerArray[i] = new Controller((PlayerIndex) i);
-                    playerArray[i] = new Player(TextureManager.playerTextureList[0], new Vector2(100 * i + 50, 200), new Rectangle(0, 0, 10, 10), i, controllerArray[i]);
-
+                    controllerArray[i] = new Controller((PlayerIndex)i);
                 }
                 else if (controllerArray[i].IsConnected())
                 {
                     connectedController[i] = true;
                 }
-
             }
 
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                if (characterSelected[i])
+                {
+                    if (controllerArray[i].ButtonPressed(Buttons.DPadLeft))
+                    {
+                        if (characterChosen[i] == 0)
+                        {
+                            characterChosen[i] = 3;
+                        }
+                        else
+                        {
+                            characterChosen[i]--;
+                        }
+                    }
+                    else if (controllerArray[i].ButtonPressed(Buttons.DPadRight))
+                    {
+                        if (characterChosen[i] == 3)
+                        {
+                            characterChosen[i] = 0;
+                        }
+                        else
+                        {
+                            characterChosen[i]++;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                if (controllerArray[i].ButtonPressed(Buttons.A))
+                {
+                    if (characterChosen[i] == 0)
+                    {
+                        playerArray[i] = new Knight(knightTex, new Vector2(100 * i + 50, 100), i, controllerArray[i]);
+                    }
+                    else if (characterChosen[i] == 1)
+                    {
+                        playerArray[i] = new Barbarian(barbarianTex, new Vector2(100 * i + 50, 100), i, controllerArray[i]);
+                    }
+                }
+            }
 
             if (controllerArray[0] != null)
             {
                 if (controllerArray[0].ButtonPressed(Buttons.Start))
                 {
+
                     HUDManager = new HUDManager(playerArray,nrOfPlayers);
                     
                     GameManager.currentState = GameState.InGame;
@@ -80,7 +136,15 @@ namespace Paging_the_devil.Manager
             {
                 if (characterSelected[i])
                 {
-                    spriteBatch.Draw(TextureManager.playerTextureList[0], playerRectArray[i], Color.White);
+                    if (characterChosen[i] == 0)
+                    {
+                        spriteBatch.Draw(knightTex, playerRectArray[i], drawKnightRect, Color.White);
+                    }
+                    else if (characterChosen[i] == 1)
+                    {
+                        spriteBatch.Draw(barbarianTex, playerRectArray[i], drawKnightRect, Color.White);
+                    }
+                    
                 }
                 else if (connectedController[i])
                 {
@@ -91,11 +155,16 @@ namespace Paging_the_devil.Manager
 
         private void DecidingRectangles()
         {
-            playerRectArray[0] = new Rectangle(50, 200, 200, 100);
-            playerRectArray[1] = new Rectangle(350, 200, 200, 100);
-            playerRectArray[2] = new Rectangle(650, 200, 200, 100);
-            playerRectArray[3] = new Rectangle(950, 200, 200, 100);
+            playerRectArray[0] = new Rectangle(50, 200, 200, 150);
+            playerRectArray[1] = new Rectangle(350, 200, 200, 150);
+            playerRectArray[2] = new Rectangle(650, 200, 200, 150);
+            playerRectArray[3] = new Rectangle(950, 200, 200, 150);
+        }
 
+        private void DecidingTextureArray()
+        {
+            knightTex = TextureManager.playerTextureList[0];
+            barbarianTex = TextureManager.playerTextureList[1];
         }
 
         public void GetController(Controller[] controllerArray)
