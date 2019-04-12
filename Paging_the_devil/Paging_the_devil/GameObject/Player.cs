@@ -62,7 +62,7 @@ namespace Paging_the_devil.GameObject
             fireballTimer = 0;
             slashTimer = 0;
 
-            HealthPoints = 10;
+            HealthPoints = 100f;
 
             movementSpeed = 6.0f;
         }

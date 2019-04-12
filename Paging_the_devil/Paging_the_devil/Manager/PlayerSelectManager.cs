@@ -13,6 +13,8 @@ namespace Paging_the_devil.Manager
     class PlayerSelectManager
     {
 
+        HUDManager HUDManager;
+
         Controller[] controllerArray;
         Player[] playerArray;
 
@@ -61,6 +63,7 @@ namespace Paging_the_devil.Manager
             {
                 if (controllerArray[0].ButtonPressed(Buttons.Start))
                 {
+                    HUDManager = new HUDManager(playerArray,nrOfPlayers);
                     
                     GameManager.currentState = GameState.InGame;
                 }
@@ -108,6 +111,10 @@ namespace Paging_the_devil.Manager
         public Player[] GetPlayerArray()
         {
             return playerArray;
+        }
+        public HUDManager getHudmanager()
+        {
+            return HUDManager;
         }
     }
 }
