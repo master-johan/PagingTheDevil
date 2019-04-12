@@ -25,33 +25,21 @@ namespace Paging_the_devil.Manager
         Game1 game;
 
         int nrOfPlayers;
-        int windowX, windowY;
-
-        Vector2 portalPos, portalRoom2, playerPos, playerPos2, portalRoom3, portalRoom4;
-
-        Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
 
         Controller[] controllerArray;
 
         Player[] playerArray;
 
         List<Enemy> enemyList;
-
-
-
-        bool[] playerConnected;
+        
         bool roomManagerCreated;
 
         bool[] connectedController;
-
 
         public static GameState currentState;
 
         RoomManager roomManager;
         LevelManager levelManager;
-
-        
-
 
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
         {
@@ -59,7 +47,6 @@ namespace Paging_the_devil.Manager
             this.graphics = graphics;
             this.game = game;
             SetWindowSize(graphics);
-
 
             menuManager = new MenuManager(graphicsDevice, game);
             levelManager = new LevelManager();
@@ -79,23 +66,21 @@ namespace Paging_the_devil.Manager
             SetWindowSize(graphics);
 
         }
-
+        /// <summary>
+        /// Den här metoden sätter fönstrets storlek
+        /// </summary>
+        /// <param name="graphics"></param>
         private static void SetWindowSize(GraphicsDeviceManager graphics)
         {
-            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 1080;
-            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1920;
+            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 768;
+            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1366;
             graphics.ApplyChanges();
         }
-
-
-        
         /// <summary>
         /// Den här metoden anger värden till olika Arrays och skapar portaler.
         /// </summary>
         private void CreatingThings()
         {
-
-
             controllerArray = new Controller[4];
             connectedController = new bool[4];
             playerArray = new Player[4];
@@ -243,7 +228,6 @@ namespace Paging_the_devil.Manager
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             switch (currentState)
             {
                 case GameState.MainMenu:
@@ -288,8 +272,8 @@ namespace Paging_the_devil.Manager
         private void SpawnEnemy()
         {
             Random rand = new Random();
-            int x = rand.Next((windowX / 2) + 20, windowX - TextureManager.enemyTextureList[0].Width - 20);
-            int y = rand.Next(20, windowY - TextureManager.enemyTextureList[0].Height - 20);
+            int x = rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
+            int y = rand.Next(20, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 20);
 
             Enemy enemy = new Enemy(TextureManager.enemyTextureList[0], new Vector2(x, y));
             enemyList.Add(enemy);
@@ -324,16 +308,15 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
-
-
-
+        /// <summary>
+        /// Den här metoden skapar en roomManager
+        /// </summary>
         public void CreateRoomManager()
         {
             roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList, levelManager);
             roomManagerCreated = true;
 
         }
-
         /// <summary>
         /// Den här metoden uppdaterar menumanagerns controllerArray.
         /// </summary>
