@@ -75,6 +75,7 @@ namespace Paging_the_devil.Manager
             graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 1080;
             graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1920;
             graphics.ApplyChanges();
+            TextureManager.GameWindowStartY = 135;
         }
         /// <summary>
         /// Den här metoden anger värden till olika Arrays och skapar portaler.

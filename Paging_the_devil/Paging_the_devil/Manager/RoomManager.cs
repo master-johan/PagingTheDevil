@@ -227,10 +227,18 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void DeclareGateways()
         {
-            gatewayNorth = new Gateway(TextureManager.roomTextureList[0], new Vector2(TextureManager.WindowSizeX / 2, 0));
-            gatewaySouth = new Gateway(TextureManager.roomTextureList[0], new Vector2(TextureManager.WindowSizeX / 2, TextureManager.WindowSizeY - 50));
-            gatewayWest = new Gateway(TextureManager.roomTextureList[0], new Vector2(0, TextureManager.WindowSizeY / 2 - 25));
-            gatewayEast = new Gateway(TextureManager.roomTextureList[0], new Vector2(TextureManager.WindowSizeX - 25, TextureManager.WindowSizeY / 2 - 25));
+            int halfPortalSize = TextureManager.roomTextureList[0].Height / 2;
+
+            Vector2 north = new Vector2(currentRoom.GetWallList()[0].GetRect.Width / 2 - halfPortalSize, currentRoom.GetWallList()[0].GetRect.Y);
+            Vector2 south = new Vector2(currentRoom.GetWallList()[1].GetRect.Width / 2 - halfPortalSize, currentRoom.GetWallList()[1].GetRect.Y - halfPortalSize);
+            Vector2 west = new Vector2(currentRoom.GetWallList()[2].GetRect.X , currentRoom.GetWallList()[2].GetRect.Height/ 2);
+            Vector2 east = new Vector2(currentRoom.GetWallList()[3].GetRect.X - halfPortalSize, currentRoom.GetWallList()[3].GetRect.Height / 2);
+
+
+            gatewayNorth = new Gateway(TextureManager.roomTextureList[0], north);
+            gatewaySouth = new Gateway(TextureManager.roomTextureList[0], south);
+            gatewayWest = new Gateway(TextureManager.roomTextureList[0], west);
+            gatewayEast = new Gateway(TextureManager.roomTextureList[0], east);
         }
         /// <summary>
         /// Den här metoden räknar på vilken gateway som ska visas.
@@ -447,7 +455,7 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateY += 1;
-                    temp = new Vector2(TextureManager.WindowSizeX / 2, 50);
+                    temp = new Vector2(gatewayNorth.pos.X + TextureManager.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureManager.roomTextureList[0].Height / 2 + 25);
                 }
             }
             else if (playerArray[0].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
@@ -455,7 +463,7 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateY -= 1;
-                    temp = new Vector2(TextureManager.WindowSizeX / 2, TextureManager.WindowSizeY - 50);
+                    temp = new Vector2(gatewaySouth.pos.X + TextureManager.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureManager.roomTextureList[0].Height / 2 - 25);
                 }
             }
             else if (playerArray[0].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
@@ -463,7 +471,7 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateX += 1;
-                    temp = new Vector2(50, TextureManager.WindowSizeY / 2);
+                    temp = new Vector2(gatewayWest.pos.X + TextureManager.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureManager.roomTextureList[0].Height / 2);
                 }
             }
             else if (playerArray[0].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
@@ -471,8 +479,7 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
                 {
                     RoomCoordinateX -= 1;
-
-                    temp = new Vector2(TextureManager.WindowSizeX - 50, TextureManager.WindowSizeY / 2);
+                    temp = new Vector2(gatewayEast.pos.X + TextureManager.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureManager.roomTextureList[0].Height / 2);
                 }
             }
             if (RoomCoordinateX != tempX || RoomCoordinateY != tempY)
