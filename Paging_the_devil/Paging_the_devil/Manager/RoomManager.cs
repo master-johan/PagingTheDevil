@@ -51,13 +51,6 @@ namespace Paging_the_devil.Manager
             CollisionWithWall();
             DeleteAbilities();
             GoIntoGateway();
-            //for (int i = 0; i < nrOfPlayers; i++)
-            //{
-            //    if(playerArray[i].GetRect.Intersects(currentRoom.GetGatewayList()[0].GetRect) && playerArray[i].Controller.ButtonPressed(Buttons.Y))
-            //    {
-            //        currentRoom = roomList[1];
-            //    }
-            //}
 
         }
 
@@ -84,7 +77,9 @@ namespace Paging_the_devil.Manager
 
         }
 
-
+        /// <summary>
+        /// Den här metoden hanterar kollisionen mellan spelare och väggar.
+        /// </summary>
         private void CollisionWithWall()
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -167,7 +162,9 @@ namespace Paging_the_devil.Manager
 
             }
         }
-
+        /// <summary>
+        /// Den här metoden tar bort abilities vid interaktion med enemies.
+        /// </summary>
         private void DeleteAbilities()
         {
             Ability toRemoveAbility = null;
@@ -206,7 +203,9 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
-
+        /// <summary>
+        /// Den här metoden hämtar vilket rum som är startrummet.
+        /// </summary>
         private void GetStaringRoom()
         {
 
@@ -223,7 +222,9 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
-
+        /// <summary>
+        /// Den här metoden deklarerar var positionen på gatewaysen ska vara.
+        /// </summary>
         private void DeclareGateways()
         {
             gatewayNorth = new Gateway(TextureManager.roomTextureList[0], new Vector2(TextureManager.WindowSizeX / 2, 0));
@@ -231,11 +232,15 @@ namespace Paging_the_devil.Manager
             gatewayWest = new Gateway(TextureManager.roomTextureList[0], new Vector2(0, TextureManager.WindowSizeY / 2 - 25));
             gatewayEast = new Gateway(TextureManager.roomTextureList[0], new Vector2(TextureManager.WindowSizeX - 25, TextureManager.WindowSizeY / 2 - 25));
         }
-
+        /// <summary>
+        /// Den här metoden räknar på vilken gateway som ska visas.
+        /// </summary>
         private void ShowGateways()
         {
+            //Ifall man står i x0 koordinat.
             if (RoomCoordinateX == 0)
             {
+                //Ifall man står i y0 och x0 koordinat.
                 if (RoomCoordinateY == 0)
                 {
                     if (currentLevel[RoomCoordinateX,RoomCoordinateY + 1].AllowedRoom)
@@ -247,6 +252,7 @@ namespace Paging_the_devil.Manager
                         gatewaySouth.IsVisible = false;
                     }
                 }
+                //ifall man står i x0 och y4 koordnat.
                 else if (RoomCoordinateY == 4)
                 {
                     if (currentLevel[RoomCoordinateX, RoomCoordinateY - 1].AllowedRoom)
@@ -258,6 +264,7 @@ namespace Paging_the_devil.Manager
                         gatewayNorth.IsVisible = false;
                     }
                 }
+                //Ifall man står i x0 och y1,y2,y3 koordinat.
                 else
                 {
                     if (currentLevel[RoomCoordinateX, RoomCoordinateY + 1].AllowedRoom)
@@ -287,8 +294,10 @@ namespace Paging_the_devil.Manager
                     gatewayEast.IsVisible = false;
                 }
             }
+            //Ifall man står i x4 koordinat.
             else if (RoomCoordinateX == 4)
             {
+                //Ifall man står i x4 och y0 koordinat.
                 if (RoomCoordinateY == 0)
                 {
                     if (currentLevel[RoomCoordinateX,RoomCoordinateY + 1].AllowedRoom)
@@ -300,6 +309,7 @@ namespace Paging_the_devil.Manager
                         gatewaySouth.IsVisible = false;
                     }
                 }
+                //Ifall man står i x4 och y4 koordinat.
                 else if (RoomCoordinateY == 4)
                 {
                     if (currentLevel[RoomCoordinateX, RoomCoordinateY - 1].AllowedRoom)
@@ -311,6 +321,7 @@ namespace Paging_the_devil.Manager
                         gatewayNorth.IsVisible = false;
                     }
                 }
+                //Ifall man står i x4 och y1,y2,y3 koordinat.
                 else
                 {
                     if (currentLevel[RoomCoordinateX, RoomCoordinateY - 1].AllowedRoom)
@@ -340,8 +351,10 @@ namespace Paging_the_devil.Manager
                     gatewayWest.IsVisible = false;
                 }
             }
+            //Ifall man står i x1,x2,x3 koordinat.
             else
             {
+                //Ifall man står i x1,x2,x3 och y0 koordinat.
                 if (RoomCoordinateY == 0)
                 {
                     if (currentLevel[RoomCoordinateX, RoomCoordinateY + 1].AllowedRoom)
@@ -353,6 +366,7 @@ namespace Paging_the_devil.Manager
                         gatewaySouth.IsVisible = false;
                     }
                 }
+                //Ifall man står i x1,x2,x3 och y4 koordinat.
                 else if (RoomCoordinateY == 4)
                 {
                     if (currentLevel[RoomCoordinateX,RoomCoordinateY - 1].AllowedRoom)
@@ -366,6 +380,7 @@ namespace Paging_the_devil.Manager
                 }
                 else
                 {
+                    //Ifall man står i x1,x2,x3 och y1,y2,y3 koordinat
                     if (currentLevel[RoomCoordinateX, RoomCoordinateY - 1].AllowedRoom)
                     {
                         gatewayNorth.IsVisible = true;
@@ -400,6 +415,7 @@ namespace Paging_the_devil.Manager
                     gatewayEast.IsVisible = false;
                 }
             }
+            //Ifall man står i ytterkanten ska vissa gateways inte visas.
             if (RoomCoordinateX == 0)
             {
                 gatewayWest.IsVisible = false;
@@ -417,7 +433,9 @@ namespace Paging_the_devil.Manager
                 gatewaySouth.IsVisible = false;
             }
         }
-
+        /// <summary>
+        /// Den här metoden sköter vilken gateway man går in i.
+        /// </summary>
         private void GoIntoGateway()
         {
             int tempX = RoomCoordinateX;
