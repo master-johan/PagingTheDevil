@@ -26,6 +26,7 @@ namespace Paging_the_devil.Manager
         {
             //Player
             playerTextureList.Add(Content.Load<Texture2D>(@"KnightSprite"));
+            playerTextureList.Add(Content.Load<Texture2D>(@"BarbarianSpritesheet"));
 
             //Spells
             mageSpellList.Add(Content.Load<Texture2D>(@"redSquare"));
