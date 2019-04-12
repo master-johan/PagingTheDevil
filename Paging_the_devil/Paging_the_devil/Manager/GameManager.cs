@@ -72,8 +72,8 @@ namespace Paging_the_devil.Manager
         /// <param name="graphics"></param>
         private static void SetWindowSize(GraphicsDeviceManager graphics)
         {
-            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 768;
-            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1366;
+            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 1080;
+            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1920;
             graphics.ApplyChanges();
         }
         /// <summary>
