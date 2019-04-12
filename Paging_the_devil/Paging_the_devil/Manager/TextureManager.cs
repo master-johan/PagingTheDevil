@@ -20,6 +20,7 @@ namespace Paging_the_devil.Manager
 
         public static int WindowSizeY;
         public static int WindowSizeX;
+        public static int GameWindowStartY;
 
         public static void LoadTextures(ContentManager Content)
         {

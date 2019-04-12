@@ -60,7 +60,7 @@ namespace Paging_the_devil.GameObject
 
             HealthPoints = 10;
 
-            movementSpeed = 2.0f;
+            movementSpeed = 6.0f;
         }
         /// <summary>
         /// Den här metoden generar hitboxes.
@@ -215,10 +215,6 @@ namespace Paging_the_devil.GameObject
             hitboxRight.X = (int)pos.X + 20;
             hitboxRight.Y = (int)pos.Y - 28;
         }
-        /// <summary>
-        /// Den här metoden skapar fireballs.
-        /// </summary>
-        
         /// <summary>
         /// Den här metoden uppdaterar riktnngen.
         /// </summary>

@@ -18,6 +18,7 @@ namespace Paging_the_devil
 
         Rectangle WallTopPos, WallLeftPos, WallRightPos, WallBottomPos;
         Wall wallTop, wallBot, wallLeft, wallRight;
+        Vector2 roomFloor;
         List<Wall> wallList = new List<Wall>();
         List<Gateway> gateWayList = new List<Gateway>();
         Color color;
@@ -32,6 +33,8 @@ namespace Paging_the_devil
             this.StartRoom = startRoom;
             this.bossRoom = bossRoom;
 
+            roomFloor = new Vector2(0, TextureManager.GameWindowStartY);
+
             WindowX = TextureManager.WindowSizeX;
             WindowY = TextureManager.WindowSizeY;
             DecidePos();
@@ -45,7 +48,7 @@ namespace Paging_the_devil
         public void Draw(SpriteBatch spriteBatch)
         {
 
-            spriteBatch.Draw(TextureManager.roomTextureList[3], Vector2.Zero, color);
+            spriteBatch.Draw(TextureManager.roomTextureList[3], roomFloor, color);
             for (int i = 0; i < wallList.Count; i++)
             {
                 wallList[i].Draw(spriteBatch);
@@ -65,10 +68,10 @@ namespace Paging_the_devil
 
         private void DecidePos()
         {
-            WallTopPos = new Rectangle(0, 0, WindowX, 20);
+            WallTopPos = new Rectangle(0, TextureManager.GameWindowStartY, WindowX, 20);
             WallBottomPos = new Rectangle(0, WindowY - 20, WindowX, 20);
-            WallLeftPos = new Rectangle(0, 0, 20, WindowY);
-            WallRightPos = new Rectangle(WindowX - 20, 0, 20, WindowY);
+            WallLeftPos = new Rectangle(0, TextureManager.GameWindowStartY, 20, WindowY);
+            WallRightPos = new Rectangle(WindowX - 20, TextureManager.GameWindowStartY, 20, WindowY);
         }
 
         private void AddToList()
