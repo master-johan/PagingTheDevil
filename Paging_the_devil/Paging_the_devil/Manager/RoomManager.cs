@@ -15,7 +15,7 @@ namespace Paging_the_devil.Manager
         int nrOfPlayers;
         Player[] playerArray;
 
-        Room currentRoom;
+        public Room CurrentRoom { get; set; }
 
         Room[,] currentLevel;
 
@@ -49,14 +49,14 @@ namespace Paging_the_devil.Manager
         public void Update()
         {
             CollisionWithWall();
-            DeleteAbilities();
             GoIntoGateway();
+
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            currentRoom.Draw(spriteBatch);
+            CurrentRoom.Draw(spriteBatch);
 
             if (gatewayEast.IsVisible)
             {
@@ -84,24 +84,24 @@ namespace Paging_the_devil.Manager
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                bool[,] boolArray = new bool[4, currentRoom.GetWallList().Count];
+                bool[,] boolArray = new bool[4, CurrentRoom.GetWallList().Count];
 
-                for (int j = 0; j < currentRoom.GetWallList().Count; j++)
+                for (int j = 0; j < CurrentRoom.GetWallList().Count; j++)
                 {
 
-                    if (playerArray[i].GetRect.Intersects(currentRoom.GetWallList()[j].HitboxBot))
+                    if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxBot))
                     {
                         boolArray[0, j] = true;
                     }
-                    else if (playerArray[i].GetRect.Intersects(currentRoom.GetWallList()[j].HitboxTop))
+                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxTop))
                     {
                         boolArray[1, j] = true;
                     }
-                    else if (playerArray[i].GetRect.Intersects(currentRoom.GetWallList()[j].HitboxLeft))
+                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxLeft))
                     {
                         boolArray[2, j] = true;
                     }
-                    else if (playerArray[i].GetRect.Intersects(currentRoom.GetWallList()[j].HitboxRight))
+                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxRight))
                     {
                         boolArray[3, j] = true;
                     }
@@ -163,47 +163,6 @@ namespace Paging_the_devil.Manager
             }
         }
         /// <summary>
-        /// Den här metoden tar bort abilities vid interaktion med enemies.
-        /// </summary>
-        private void DeleteAbilities()
-        {
-            Ability toRemoveAbility = null;
-
-            for (int i = 0; i < nrOfPlayers; i++)
-            {
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    foreach (var w in currentRoom.GetWallList())
-                    {
-                        if (a.GetRect.Intersects(w.GetRect))
-                        {
-                            toRemoveAbility = a;
-                        }
-                    }
-                    //if (a.pos.Y > windowY || a.pos.X < 0 || a.pos.X > windowX || a.pos.Y < 0)
-                    //{
-                    //    toRemoveAbility = a;
-                    //}
-                }
-
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    foreach (var e in enemyList)
-                    {
-                        if (a.GetRect.Intersects(e.GetRect))
-                        {
-                            toRemoveAbility = a;
-                        }
-                    }
-                }
-
-                if (toRemoveAbility != null)
-                {
-                    playerArray[i].abilityList.Remove(toRemoveAbility);
-                }
-            }
-        }
-        /// <summary>
         /// Den här metoden hämtar vilket rum som är startrummet.
         /// </summary>
         private void GetStaringRoom()
@@ -215,7 +174,7 @@ namespace Paging_the_devil.Manager
                 {
                     if (currentLevel[x, y].StartRoom)
                     {
-                        currentRoom = currentLevel[x, y];
+                        CurrentRoom = currentLevel[x, y];
                         RoomCoordinateX = x;
                         RoomCoordinateY = y;
                     }
@@ -229,10 +188,10 @@ namespace Paging_the_devil.Manager
         {
             int halfPortalSize = TextureManager.roomTextureList[0].Height / 2;
 
-            Vector2 north = new Vector2(currentRoom.GetWallList()[0].GetRect.Width / 2 - halfPortalSize, currentRoom.GetWallList()[0].GetRect.Y);
-            Vector2 south = new Vector2(currentRoom.GetWallList()[1].GetRect.Width / 2 - halfPortalSize, currentRoom.GetWallList()[1].GetRect.Y - halfPortalSize);
-            Vector2 west = new Vector2(currentRoom.GetWallList()[2].GetRect.X , currentRoom.GetWallList()[2].GetRect.Height/ 2);
-            Vector2 east = new Vector2(currentRoom.GetWallList()[3].GetRect.X - halfPortalSize, currentRoom.GetWallList()[3].GetRect.Height / 2);
+            Vector2 north = new Vector2(CurrentRoom.GetWallList()[0].GetRect.Width / 2 - halfPortalSize, CurrentRoom.GetWallList()[0].GetRect.Y);
+            Vector2 south = new Vector2(CurrentRoom.GetWallList()[1].GetRect.Width / 2 - halfPortalSize, CurrentRoom.GetWallList()[1].GetRect.Y - halfPortalSize);
+            Vector2 west = new Vector2(CurrentRoom.GetWallList()[2].GetRect.X , CurrentRoom.GetWallList()[2].GetRect.Height/ 2);
+            Vector2 east = new Vector2(CurrentRoom.GetWallList()[3].GetRect.X - halfPortalSize, CurrentRoom.GetWallList()[3].GetRect.Height / 2);
 
 
             gatewayNorth = new Gateway(TextureManager.roomTextureList[0], north);
@@ -484,13 +443,20 @@ namespace Paging_the_devil.Manager
             }
             if (RoomCoordinateX != tempX || RoomCoordinateY != tempY)
             {
-                currentRoom = currentLevel[RoomCoordinateX, RoomCoordinateY];
+                CurrentRoom = currentLevel[RoomCoordinateX, RoomCoordinateY];
                 ShowGateways();
                 for (int i = 0; i < nrOfPlayers; i++)
                 {
                     playerArray[i].pos = temp;
                 }
+
+                SpawnEnemies();
             }
+        }
+
+        private void SpawnEnemies()
+        {
+            enemyList.Add(new Enemy(TextureManager.enemyTextureList[0], new Vector2(500, 500)));
         }
     }
 }
