@@ -174,7 +174,7 @@ namespace Paging_the_devil.Manager
             Enemy toRemoveEnemy = null;
             foreach (var e in enemyList)
             {
-                e.Update();
+                e.Update(gameTime);
                 if (e.toRevome)
                 {
                     toRemoveEnemy = e;

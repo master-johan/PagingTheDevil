@@ -54,7 +54,7 @@ namespace Paging_the_devil.Manager
 
             playerArray = new Player[4];
 
-            drawKnightRect = new Rectangle(0, 0, 60, 70);
+            drawKnightRect = new Rectangle(0, 0, 50, 60);
 
             DecidingRectangles();
             DecidingTextureArray();
