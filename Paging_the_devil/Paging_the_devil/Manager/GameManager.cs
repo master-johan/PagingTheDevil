@@ -156,7 +156,7 @@ namespace Paging_the_devil.Manager
 
                     HUDManager.Update();
                     UpdatePlayersDirection();
-                    UpdateCharacters();
+                    UpdateCharacters(gameTime);
                     //UpdateHealth();
                     //DeleteAbilities();
                     
@@ -169,7 +169,7 @@ namespace Paging_the_devil.Manager
         /// <summary>
         /// Den här metoden uppdaterar spelare samt enemies samt tar bort enemies vid död.
         /// </summary>
-        private void UpdateCharacters()
+        private void UpdateCharacters(GameTime gameTime)
         {
             Enemy toRemoveEnemy = null;
             foreach (var e in enemyList)
@@ -183,7 +183,7 @@ namespace Paging_the_devil.Manager
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 controllerArray[i].Update();
-                playerArray[i].Update();
+                playerArray[i].Update(gameTime);
 
             }
             if (toRemoveEnemy != null)

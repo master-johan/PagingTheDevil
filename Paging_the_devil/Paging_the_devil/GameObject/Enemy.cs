@@ -35,7 +35,7 @@ namespace Paging_the_devil.GameObject
 
             rand = new Random();
         }
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
             Dead();

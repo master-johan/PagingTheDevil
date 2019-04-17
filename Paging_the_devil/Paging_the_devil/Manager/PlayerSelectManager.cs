@@ -31,6 +31,8 @@ namespace Paging_the_devil.Manager
 
         Texture2D barbarianTex;
         Texture2D knightTex;
+        Texture2D druidTex;
+        Texture2D rangerTex;
 
         PlayerSelectBackground playerSelectBackground;
 
@@ -119,6 +121,14 @@ namespace Paging_the_devil.Manager
                     {
                         playerArray[i] = new Barbarian(barbarianTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
                     }
+                    else if (characterChosen[i] == 2)
+                    {
+                        playerArray[i] = new Druid(druidTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
+                    }
+                    else if (characterChosen[i] == 3)
+                    {
+                        playerArray[i] = new Ranger(rangerTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
+                    }
                 }
             }
 
@@ -154,7 +164,14 @@ namespace Paging_the_devil.Manager
                     {
                         spriteBatch.Draw(barbarianTex, playerRectArray[i], drawKnightRect, Color.White);
                     }
-                    
+                    else if (characterChosen[i] == 2)
+                    {
+                        spriteBatch.Draw(druidTex, playerRectArray[i], drawKnightRect, Color.White);
+                    }
+                    else if (characterChosen[i] == 3)
+                    {
+                        spriteBatch.Draw(rangerTex, playerRectArray[i], drawKnightRect, Color.White);
+                    }
                 }
                 else if (connectedController[i])
                 {
@@ -180,6 +197,8 @@ namespace Paging_the_devil.Manager
         {
             knightTex = TextureManager.playerTextureList[0];
             barbarianTex = TextureManager.playerTextureList[1];
+            druidTex = TextureManager.playerTextureList[2];
+            rangerTex = TextureManager.playerTextureList[3];
         }
 
         public void GetController(Controller[] controllerArray)

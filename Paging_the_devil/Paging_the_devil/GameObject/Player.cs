@@ -16,6 +16,9 @@ namespace Paging_the_devil.GameObject
         float movementSpeed;
         int slashTimer;
         int playerIndex;
+        int frame;
+
+        double timer, interval;
 
         Rectangle left, right, up, down;
         Rectangle hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
@@ -29,12 +32,16 @@ namespace Paging_the_devil.GameObject
         
         protected Ability ability;
 
+        bool angleRight;
+        bool angleLeft;
+        bool angleUp;
+        bool angleDown;
 
-        public Player(Texture2D tex, Vector2 pos, int playerIndex, Controller controller)
+        public Player(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller)
             : base(tex, pos)
         {
             this.playerIndex = playerIndex;
-            this.Controller = controller;
+            this.Controller = Controller;
             GenerateRectangles(pos);
             DecidingValues();
             DecidingSourceRect();
@@ -45,10 +52,10 @@ namespace Paging_the_devil.GameObject
         /// </summary>
         private void DecidingSourceRect()
         {
-            right = new Rectangle(0, 140, 60, 70);
-            up = new Rectangle(0, 210, 60, 70);
-            left = new Rectangle(0, 70, 60, 70);
-            down = new Rectangle(0, 0, 60, 70);
+            right = new Rectangle(0, 390, 50, 60);
+            up = new Rectangle(0, 195, 50, 60);
+            left = new Rectangle(0, 650, 50, 60);
+            down = new Rectangle(0, 0, 50, 60);
         }
         /// <summary>
         /// Den här metoden bestämmer värde.
@@ -60,7 +67,12 @@ namespace Paging_the_devil.GameObject
 
             HealthPoints = 100f;
 
-            movementSpeed = 6.0f;
+            movementSpeed = 3.0f;
+            interval = 200;
+            angleUp = true;
+            angleDown = true;
+            angleRight = true;
+            angleLeft = true;
         }
         /// <summary>
         /// Den här metoden generar hitboxes.
@@ -75,7 +87,7 @@ namespace Paging_the_devil.GameObject
             hitboxRight = new Rectangle((int)pos.X - 49, (int)pos.Y, 10, 59);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             Movment();
 
@@ -92,7 +104,7 @@ namespace Paging_the_devil.GameObject
 
             UpdateAbility();
             ResetTimers();
-            DrawDifferentRects();
+            DrawDifferentRects(gameTime);
         }
         /// <summary>
         /// Den här metoden sköter spelarens rörelse.
@@ -244,35 +256,79 @@ namespace Paging_the_devil.GameObject
         /// <summary>
         /// Den här metoden uppdaterar vilken bild som ska ritas ut beroende på hur man styr sin gubbe. 
         /// </summary>
-        private void DrawDifferentRects()
+        private void DrawDifferentRects(GameTime gameTime)
         {
+            timer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             if (inputDirection != Vector2.Zero)
             {
                 if (Math.Abs(inputDirection.X) > Math.Abs(inputDirection.Y))
                 {
                     if (inputDirection.X < 0)
                     {
-                        drawRect = left;
+                        if (angleLeft)
+                        {
+                            drawRect = left;
+                            angleLeft = false;
+                            angleDown = true;
+                            angleRight = true;
+                            angleUp = true;
+                        }
+                        Animation(left);
                     }
                     else
                     {
-                        drawRect = right;
+                        if (angleRight)
+                        {
+                            drawRect = right;
+                            angleLeft = true;
+                            angleDown = true;
+                            angleRight = false;
+                            angleUp = true;
+                        }
+                        Animation(right);
                     }
                 }
                 else
                 {
                     if (inputDirection.Y < 0)
                     {
-                        drawRect = down;
+                        if (angleDown)
+                        {
+                            drawRect = down;
+                            angleLeft = true;
+                            angleDown = false;
+                            angleRight = true;
+                            angleUp = true;
+                        }
+                        Animation(down);
                     }
 
                     else
                     {
-                        drawRect = up;
+                        if (angleUp)
+                        {
+                            drawRect = up;
+                            angleLeft = true;
+                            angleDown = true;
+                            angleRight = true;
+                            angleUp = false;
+                        }
+                        Animation(up);
                     }
                 }
             }
         }
+
+        private void Animation(Rectangle rect)
+        {
+            if (timer <= 0)
+            {
+                timer = interval; frame++;
+                drawRect.Y = rect.Y + (frame % 3) * 60 + (5 * (frame % 3));
+            }
+        }
+
         /// <summary>
         /// Den här metoden returnerar hitboxen i norr.
         /// </summary>

@@ -19,7 +19,7 @@ namespace Paging_the_devil.GameObject
             fireballTimer = 0;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             if (Controller.ButtonPressed(Buttons.X))
             {
@@ -34,7 +34,7 @@ namespace Paging_the_devil.GameObject
                 fireballTimer--;
             }
 
-            base.Update();
+            base.Update(gameTime);
 
         }
         private void ShootFireball()
