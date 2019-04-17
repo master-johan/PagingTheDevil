@@ -17,6 +17,7 @@ namespace Paging_the_devil.Manager
         public static List<Texture2D> enemyTextureList = new List<Texture2D>();
         public static List<Texture2D> menuTextureList = new List<Texture2D>();
         public static List<Texture2D> hudTextureList = new List<Texture2D>();
+        public static List<Texture2D> playerSelectBackgroundList = new List<Texture2D>();
 
         public static int WindowSizeY;
         public static int WindowSizeX;
@@ -56,6 +57,16 @@ namespace Paging_the_devil.Manager
             hudTextureList.Add(Content.Load<Texture2D>(@"Xbtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"Ybtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"HUDtest"));
+            //PlayerSelectBackground bilder
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Background"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Clouds"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Cloud2"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"MountRight"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"MountLeft"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"TwoMount"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Cloud3"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Bird"));
+            playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Walls"));
         }
     }
 }

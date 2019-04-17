@@ -31,6 +31,8 @@ namespace Paging_the_devil.Manager
         Texture2D barbarianTex;
         Texture2D knightTex;
 
+        PlayerSelectBackground playerSelectBackground;
+
         public PlayerSelectManager()
         {
             characterChosen = new int[4];
@@ -52,10 +54,14 @@ namespace Paging_the_devil.Manager
 
             DecidingRectangles();
             DecidingTextureArray();
+
+            playerSelectBackground = new PlayerSelectBackground();
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
+            playerSelectBackground.Update(gameTime);
+
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 if (controllerArray[i].ButtonPressed(Buttons.Y))
@@ -130,7 +136,9 @@ namespace Paging_the_devil.Manager
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.GraphicsDevice.Clear(Color.DarkGray);
+            
             spriteBatch.Draw(TextureManager.menuTextureList[3], Vector2.Zero, Color.White);
+            playerSelectBackground.Draw(spriteBatch);
 
             for (int i = 0; i < nrOfPlayers; i++)
             {

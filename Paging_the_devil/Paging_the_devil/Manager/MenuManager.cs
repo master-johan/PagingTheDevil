@@ -72,7 +72,7 @@ namespace Paging_the_devil.Manager
                 case GameState.PlayerSelect:
                     PlayerSelectManager.GetController(controllerArray);
                     SendPlayerToPlayerSelect();
-                    PlayerSelectManager.Update();
+                    PlayerSelectManager.Update(gameTime);
                     break;
             }
         }
