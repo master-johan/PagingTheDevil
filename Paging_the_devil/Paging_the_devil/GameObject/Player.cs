@@ -18,7 +18,8 @@ namespace Paging_the_devil.GameObject
         int playerIndex;
         int frame;
 
-        double timer, interval;
+        double timer;
+        double interval;
 
         Rectangle left, right, up, down;
         Rectangle hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
@@ -36,6 +37,7 @@ namespace Paging_the_devil.GameObject
         bool angleLeft;
         bool angleUp;
         bool angleDown;
+
 
         public Player(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller)
             : base(tex, pos)
@@ -148,6 +150,7 @@ namespace Paging_the_devil.GameObject
         /// </summary>
         private void UpdateAbility()
         {
+            Ability toRemove = null;
             foreach (var A in abilityList)
             {
                 A.Update();
@@ -155,10 +158,20 @@ namespace Paging_the_devil.GameObject
                 {
                     if (!(A as Slash).Active)
                     {
-                        abilityList.Remove(A);
-                        break;
+                        toRemove = A;
                     }
                 }
+                if (A is Trap)
+                {
+                    if ((A as Trap).timePassed.TotalSeconds > 5)
+                    {
+                        toRemove = A;
+                    }
+                }
+            }
+            if (toRemove != null)
+            {
+                abilityList.Remove(toRemove);
             }
         }
         /// <summary>
@@ -319,7 +332,10 @@ namespace Paging_the_devil.GameObject
                 }
             }
         }
-
+        /// <summary>
+        /// Den här metoden animerar karaktärerna
+        /// </summary>
+        /// <param name="rect"></param>
         private void Animation(Rectangle rect)
         {
             if (timer <= 0)
@@ -328,7 +344,6 @@ namespace Paging_the_devil.GameObject
                 drawRect.Y = rect.Y + (frame % 3) * 60 + (5 * (frame % 3));
             }
         }
-
         /// <summary>
         /// Den här metoden returnerar hitboxen i norr.
         /// </summary>

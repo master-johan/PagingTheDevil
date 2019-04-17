@@ -14,8 +14,12 @@ namespace Paging_the_devil.GameObject
         public bool toRevome;
         bool left;
         bool right;
+        public bool hitBySlowTrap { get; set; }
 
         int shootTimer;
+        public int MovementSpeed { get; set; }
+        public int BaseMoveSpeed { get; set; }
+        public double TrapTimer { get; set; }
 
         Ability fireball;
 
@@ -34,6 +38,9 @@ namespace Paging_the_devil.GameObject
             enemyAbilityList = new List<Ability>();
 
             rand = new Random();
+
+            MovementSpeed = 4;
+            BaseMoveSpeed = MovementSpeed;
         }
         public override void Update(GameTime gameTime)
         {
@@ -50,6 +57,15 @@ namespace Paging_the_devil.GameObject
             if (shootTimer > 0)
             {
                 shootTimer--;
+            }
+
+            if (hitBySlowTrap)
+            {
+                TrapTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                TrapTimer = 5;
             }
         }
 
@@ -93,11 +109,11 @@ namespace Paging_the_devil.GameObject
             }
             if (right)
             {
-                pos.X += 4;
+                pos.X += MovementSpeed;
             }
             else if(left)
             {
-                pos.X -= 4;
+                pos.X -= MovementSpeed;
             }
         }
         /// <summary>

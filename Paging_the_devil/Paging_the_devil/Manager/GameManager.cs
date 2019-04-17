@@ -150,8 +150,6 @@ namespace Paging_the_devil.Manager
                     foreach (var e in enemyList)
                     {
                         CheckEnemiesAbilites(e.enemyAbilityList);
-                        
-                       
                     }
 
                     HUDManager.Update();
@@ -179,6 +177,11 @@ namespace Paging_the_devil.Manager
                 {
                     toRemoveEnemy = e;
                 }
+                if (e.TrapTimer < 0)
+                {
+                    e.hitBySlowTrap = false;
+                    e.MovementSpeed = e.BaseMoveSpeed;
+                }
             }
             for (int i = 0; i < nrOfPlayers; i++)
             {
@@ -203,55 +206,6 @@ namespace Paging_the_devil.Manager
                     playerArray[i].LastInputDirection(controllerArray[i].GetDirection());
                 }
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
-            }
-        }
-        /// <summary>
-        /// Den här metoden uppdaterar enemies interaktion med abilities
-        /// </summary>
-        private void UpdateHealth()
-        {
-            for (int i = 0; i < nrOfPlayers; i++)
-            {
-                foreach (var e in enemyList)
-                {
-                    foreach (var a in playerArray[i].abilityList)
-                    {
-                        if (e.GetRect.Intersects(a.GetRect))
-                        {
-                            if ((a is Slash))
-                            {
-                                if (!(a as Slash).Hit)
-                                {
-                                    e.HealthPoints -= a.Damage;
-                                }
-                            }
-
-                            else
-                            {
-                                e.HealthPoints -= a.Damage;
-                            }
-
-                            if ((a is Slash))
-                            {
-                                (a as Slash).Hit = true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            for (int i = 0; i < nrOfPlayers; i++)
-            {
-                for (int j = 0; j < enemyList.Count; j++)
-                {
-                    foreach (var a in enemyList[j].enemyAbilityList)
-                    {
-                        if (playerArray[i].GetRect.Intersects(a.GetRect))
-                        {
-                            playerArray[i].HealthPoints -= a.Damage;
-                        }
-                    }
-                }
             }
         }
         /// <summary>
@@ -452,6 +406,12 @@ namespace Paging_the_devil.Manager
                         {
                             e.HealthPoints -= a.Damage;
                             toRemove = a; 
+                        }
+
+                        if (a is Trap)
+                        {
+                            e.hitBySlowTrap = true;
+                            e.MovementSpeed -= 2;
                         }
                     }
                 }

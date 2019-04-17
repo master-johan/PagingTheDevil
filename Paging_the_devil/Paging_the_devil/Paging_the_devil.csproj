@@ -48,6 +48,7 @@
     <Compile Include="GameObject\HUD.cs" />
     <Compile Include="GameObject\Knight.cs" />
     <Compile Include="GameObject\Ranger.cs" />
+    <Compile Include="GameObject\Trap.cs" />
     <Compile Include="Manager\HUDManager.cs" />
     <Compile Include="Manager\LevelManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
