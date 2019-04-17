@@ -19,6 +19,7 @@ namespace Paging_the_devil.Manager
         Player[] playerArray;
 
         Rectangle[] playerRectArray;
+        Rectangle[] pressYRectArray;
         Rectangle drawKnightRect;
 
         int nrOfPlayers;
@@ -43,6 +44,7 @@ namespace Paging_the_devil.Manager
             }
 
             playerRectArray = new Rectangle[4];
+            pressYRectArray = new Rectangle[4];
 
             characterSelected = new bool[4];
             connectedController = new bool[4];
@@ -156,17 +158,22 @@ namespace Paging_the_devil.Manager
                 }
                 else if (connectedController[i])
                 {
-                    spriteBatch.Draw(TextureManager.menuTextureList[7], playerRectArray[i], Color.White);
+                    spriteBatch.Draw(TextureManager.menuTextureList[7], pressYRectArray[i], Color.White);
                 }
             }
         }
 
         private void DecidingRectangles()
         {
-            playerRectArray[0] = new Rectangle(50, 200, 200, 150);
-            playerRectArray[1] = new Rectangle(350, 200, 200, 150);
-            playerRectArray[2] = new Rectangle(650, 200, 200, 150);
-            playerRectArray[3] = new Rectangle(950, 200, 200, 150);
+            playerRectArray[0] = new Rectangle(210, 726, 100, 110);
+            playerRectArray[1] = new Rectangle(565, 775, 100, 110);
+            playerRectArray[2] = new Rectangle(1268, 775, 100, 110);
+            playerRectArray[3] = new Rectangle(1617, 726, 100, 110);
+
+            pressYRectArray[0] = new Rectangle(160, 686, 200, 150);
+            pressYRectArray[1] = new Rectangle(515, 735, 200, 150);
+            pressYRectArray[2] = new Rectangle(1218, 735, 200, 150);
+            pressYRectArray[3] = new Rectangle(1577, 686, 200, 150);
         }
 
         private void DecidingTextureArray()
