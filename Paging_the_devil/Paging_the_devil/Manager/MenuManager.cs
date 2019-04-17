@@ -22,7 +22,7 @@ namespace Paging_the_devil.Manager
 
         States current, previous;
 
-        PlayerSelectManager playerSelectManager;
+        public PlayerSelectManager PlayerSelectManager { get; set; }
 
         Controller[] controllerArray;
 
@@ -41,7 +41,7 @@ namespace Paging_the_devil.Manager
             current = States.None;
 
 
-            playerSelectManager = new PlayerSelectManager();
+            PlayerSelectManager = new PlayerSelectManager();
         }
 
         public void Update(GameTime gameTime)
@@ -70,9 +70,9 @@ namespace Paging_the_devil.Manager
 
                     break;
                 case GameState.PlayerSelect:
-                    playerSelectManager.GetController(controllerArray);
+                    PlayerSelectManager.GetController(controllerArray);
                     SendPlayerToPlayerSelect();
-                    playerSelectManager.Update();
+                    PlayerSelectManager.Update();
                     break;
             }
         }
@@ -93,7 +93,7 @@ namespace Paging_the_devil.Manager
                     pointer.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
-                    playerSelectManager.Draw(spriteBatch);
+                    PlayerSelectManager.Draw(spriteBatch);
                     break;
 
             }
@@ -172,20 +172,8 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void SendPlayerToPlayerSelect()
         {
-            playerSelectManager.GetNrOfPlayers(nrOfPlayers);
+            PlayerSelectManager.GetNrOfPlayers(nrOfPlayers);
         }
 
-        public Player[] GetAndSendPlayerArray()
-        {
-            Player[] playerArray = playerSelectManager.GetPlayerArray();
-
-            return playerArray;
-
-        }
-        public HUDManager HudManagerSend()
-        {
-            HUDManager hud = playerSelectManager.getHudmanager();
-            return hud;
-        }
     }
 }

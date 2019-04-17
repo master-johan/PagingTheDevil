@@ -105,11 +105,11 @@ namespace Paging_the_devil.Manager
                 {
                     if (characterChosen[i] == 0)
                     {
-                        playerArray[i] = new Knight(knightTex, new Vector2(100 * i + 50, 100), i, controllerArray[i]);
+                        playerArray[i] = new Knight(knightTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
                     }
                     else if (characterChosen[i] == 1)
                     {
-                        playerArray[i] = new Barbarian(barbarianTex, new Vector2(100 * i + 50, 100), i, controllerArray[i]);
+                        playerArray[i] = new Barbarian(barbarianTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
                     }
                 }
             }
@@ -181,7 +181,7 @@ namespace Paging_the_devil.Manager
         {
             return playerArray;
         }
-        public HUDManager getHudmanager()
+        public HUDManager GetHudManager()
         {
             return HUDManager;
         }

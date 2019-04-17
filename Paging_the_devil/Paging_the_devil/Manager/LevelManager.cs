@@ -58,10 +58,8 @@ namespace Paging_the_devil.Manager
                     {
                         CurrentLevel[x, y] = bossRoom;
                     }
-
                 }
             }
-
         }
     }
 }

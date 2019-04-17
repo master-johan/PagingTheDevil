@@ -42,6 +42,8 @@ namespace Paging_the_devil.Manager
         RoomManager roomManager;
         LevelManager levelManager;
 
+        Room currentRoom;
+
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
         {
             this.graphicsDevice = graphicsDevice;
@@ -107,7 +109,7 @@ namespace Paging_the_devil.Manager
                     ConnectController();
                     UpdateController();
                     SendPlayerToMenu();
-                    playerArray = menuManager.GetAndSendPlayerArray();
+                    playerArray = menuManager.PlayerSelectManager.GetPlayerArray();
                     menuManager.Update(gameTime);
                     DisconnectController();
 
@@ -115,11 +117,14 @@ namespace Paging_the_devil.Manager
                 case GameState.InGame:
                     if (HUDManager == null)
                     {
-                        GetHUDManager();
+                        HUDManager = menuManager.PlayerSelectManager.GetHudManager();
+                        hUDManagerCreated = true; 
+                        
                     }
                     if (roomManager == null)
                     {
                         CreateRoomManager();
+                        currentRoom = roomManager.CurrentRoom;
                     }
 
                     if (Keyboard.GetState().IsKeyDown(Keys.A))
@@ -137,10 +142,24 @@ namespace Paging_the_devil.Manager
                         }
                     }
 
+                    for (int i = 0; i < nrOfPlayers; i++)
+                    {
+                        CheckPlayerAbilites(playerArray[i].abilityList);
+                    }
+
+                    foreach (var e in enemyList)
+                    {
+                        CheckEnemiesAbilites(e.enemyAbilityList);
+                        
+                       
+                    }
+
                     HUDManager.Update();
                     UpdatePlayersDirection();
                     UpdateCharacters();
-                    UpdateHealth();
+                    //UpdateHealth();
+                    //DeleteAbilities();
+                    
 
                     roomManager.Update();
 
@@ -359,10 +378,131 @@ namespace Paging_the_devil.Manager
             menuManager.GetPlayer(nrOfPlayers);
         }
 
-        private void GetHUDManager()
+        /// <summary>
+        /// Den här metoden tar bort abilities vid interaktion med enemies.
+        /// </summary>
+        private void DeleteAbilities()
         {
-            hUDManagerCreated = true;
-            HUDManager = menuManager.HudManagerSend();
+            Ability toRemoveAbility = null;
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                foreach (var a in playerArray[i].abilityList)
+                {
+                    foreach (var w in currentRoom.GetWallList())
+                    {
+                        if (a.GetRect.Intersects(w.GetRect))
+                        {
+                            toRemoveAbility = a;
+                        }
+                    }
+                }
+
+                foreach (var a in playerArray[i].abilityList)
+                {
+                    foreach (var e in enemyList)
+                    {
+                        if (a.GetRect.Intersects(e.GetRect))
+                        {
+                            toRemoveAbility = a;
+                        }
+                    }
+                }
+
+                foreach (var e in enemyList)
+                {
+                    foreach (var a in e.enemyAbilityList)
+                    {
+                        if (a.GetRect.Intersects(playerArray[i].GetRect))
+                        {
+                            toRemoveAbility = a;
+                        }
+                    }
+                }
+
+                if (toRemoveAbility != null)
+                {
+                    playerArray[i].abilityList.Remove(toRemoveAbility);
+                }
+
+                
+            }
+
+            
+        }
+
+        private void CheckPlayerAbilites (List<Ability> abilityList)
+        {
+            Ability toRemove = null; 
+            foreach (var a in abilityList)
+            {
+                foreach (var e in enemyList)
+                {
+                    if (a.GetRect.Intersects(e.GetRect))
+                    {
+                        if ((a is Slash))
+                        {
+                            if (!(a as Slash).Hit)
+                            {
+                                e.HealthPoints -= a.Damage;
+                            }
+                            (a as Slash).Hit = true;
+                        }
+                        else
+                        {
+                            e.HealthPoints -= a.Damage;
+                            toRemove = a; 
+                        }
+                    }
+                }
+
+                foreach (var w in currentRoom.GetWallList())
+                {
+                    if(a.GetRect.Intersects(w.GetRect))
+                    {
+                        toRemove = a; 
+                    }
+                }
+            }
+            if (toRemove!= null)
+            {
+                abilityList.Remove(toRemove);
+            }
+        }
+
+        private void CheckEnemiesAbilites (List<Ability> abilityList)
+        {
+            Ability toRemove = null;
+
+
+            foreach (var a in abilityList)
+            {
+                for (int i = 0; i < nrOfPlayers; i++)
+                {
+                    if (a.GetRect.Intersects(playerArray[i].GetRect))
+                    {
+                        playerArray[i].HealthPoints -= a.Damage;
+                        toRemove = a;
+                    }
+                }
+
+                foreach (var w in currentRoom.GetWallList())
+                {
+                    if (a.GetRect.Intersects(w.GetRect))
+                    {
+
+                        toRemove = a; 
+
+                    }
+                }
+            }
+
+            if(toRemove != null)
+            {
+                abilityList.Remove(toRemove);
+            }
+
+
         }
     }
 }
