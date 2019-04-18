@@ -440,3 +440,9 @@
 /processorParam:TextureFormat=Color
 /build:KnightSpriteSheet.png
 
+#begin ThemeSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:ThemeSong.mp3
+

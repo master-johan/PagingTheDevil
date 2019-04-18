@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
 using Paging_the_devil.Manager;
+using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
@@ -43,7 +44,7 @@ namespace Paging_the_devil.Manager
         LevelManager levelManager;
 
         Room currentRoom;
-
+        
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
         {
             this.graphicsDevice = graphicsDevice;
@@ -58,6 +59,7 @@ namespace Paging_the_devil.Manager
             enemyList = new List<Enemy>();
 
             currentState = GameState.MainMenu;
+            MediaPlayer.Play(SoundManager.BgMusicList[0]);
 
             CreatingThings();
 

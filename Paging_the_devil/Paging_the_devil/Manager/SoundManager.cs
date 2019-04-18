@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
+
+namespace Paging_the_devil.Manager
+{
+    class SoundManager
+    {
+        public static List<Song> BgMusicList;
+        public static List<SoundEffect> SoundEffectList;
+
+        public static void LoadSound(ContentManager Content)
+        {
+            BgMusicList = new List<Song>();
+            SoundEffectList = new List<SoundEffect>();
+
+            BgMusicList.Add( Content.Load<Song>("ThemeSong"));
+        }
+    }
+}
