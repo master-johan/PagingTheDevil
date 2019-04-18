@@ -446,3 +446,15 @@
 /processorParam:Quality=Best
 /build:ThemeSong.mp3
 
+#begin AltSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:AltSong.mp3
+
+#begin BossFightSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BossFightSong.mp3
+

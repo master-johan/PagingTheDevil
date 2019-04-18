@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Paging_the_devil.GameObject;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
@@ -138,7 +139,7 @@ namespace Paging_the_devil.Manager
                 {
 
                     HUDManager = new HUDManager(playerArray,nrOfPlayers);
-                    
+                    MediaPlayer.Play(SoundManager.BgMusicList[1]);
                     GameManager.currentState = GameState.InGame;
                 }
             }
