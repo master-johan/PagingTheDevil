@@ -1,15 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Paging_the_devil.Manager;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Paging_the_devil
 {
-    class PlayerSelectBackground
+    class MainMenuBackground
     {
         List<Vector2> cloudOneTex, cloudTwoTex, cloudThreeTex, birdTex;
         int cloudOneSpacing, cloudTwoSpacing, cloudThreeSpacing, birdSpacing;
@@ -17,11 +17,11 @@ namespace Paging_the_devil
 
         double timer, interval;
 
-        float cloudOneSpeed, cloudTwoSpeed, cloudThreeSpeed, birdSpeed;
+        float cloudOneSpeed, cloudTwoSpeed, cloudThreeSpeed;
         Rectangle Size;
         Rectangle srcRect;
 
-        public PlayerSelectBackground()
+        public MainMenuBackground()
         {
             Size = new Rectangle(0, 0, TextureManager.WindowSizeX, TextureManager.WindowSizeY);
             srcRect = new Rectangle(0, 0, 94, 92);
@@ -29,7 +29,7 @@ namespace Paging_the_devil
             InitializeCloudOne();
             InitializeCloudTwo();
             InitializeCloudThree();
-            InitializeBird();
+
         }
 
         public void Update(GameTime gameTime)
@@ -39,10 +39,6 @@ namespace Paging_the_devil
             UpdateMidClouds();
 
             UpdateLowClouds();
-
-            BirdAnimation(gameTime);
-
-            UpdateBird();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -63,17 +59,6 @@ namespace Paging_the_devil
             {
                 spriteBatch.Draw(TextureManager.playerSelectBackgroundList[6], v, Color.White);
             }
-
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[4], Size, Color.White);
-
-            foreach (Vector2 v in birdTex)
-            {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[7], v, srcRect, Color.White);
-            }
-
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[3], Size, Color.White);
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[5], Size, Color.White);
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[8], Size, Color.White);
         }
 
         private void InitializeCloudOne()
@@ -107,17 +92,6 @@ namespace Paging_the_devil
             for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
             {
                 cloudThreeTex.Add(new Vector2(i * cloudTwoSpacing - 500, 230));
-            }
-        }
-        private void InitializeBird()
-        {
-            birdTex = new List<Vector2>();
-            birdSpacing = TextureManager.WindowSizeX * 2;
-            birdSpeed = 2f;
-
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
-            {
-                birdTex.Add(new Vector2(i * birdSpacing, 650));
             }
         }
 
@@ -175,35 +149,6 @@ namespace Paging_the_devil
 
                     cloudThreeTex[i] = new Vector2(cloudThreeTex[j].X + cloudThreeSpacing - 1, cloudThreeTex[i].Y);
                 }
-            }
-        }
-        private void UpdateBird()
-        {
-            for (int i = 0; i < birdTex.Count; i++)
-            {
-                birdTex[i] = new Vector2(birdTex[i].X + birdSpeed, birdTex[i].Y);
-
-                if (birdTex[i].X >= birdSpacing)
-                {
-                    int j = i - 1;
-
-                    if (j < 0)
-                    {
-                        j = birdTex.Count - 1;
-                    }
-                    birdTex[i] = new Vector2(birdTex[j].X - birdSpacing, birdTex[i].Y);
-                }
-            }
-        }
-
-        public void BirdAnimation(GameTime gameTime)
-        {
-            timer -= (float)gameTime.ElapsedGameTime.TotalDays;
-
-            if (timer <= 0)
-            {
-                timer = interval; frame++;
-                srcRect.X = (frame % 9) * 100;
             }
         }
     }

@@ -39,7 +39,7 @@ namespace Paging_the_devil.Manager
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
-            roomTextureList.Add(Content.Load<Texture2D>(@"floorTexture"));
+            roomTextureList.Add(Content.Load<Texture2D>(@"FloorPNG"));
 
             //Enemey
             enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));
