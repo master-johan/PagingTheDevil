@@ -32,9 +32,11 @@ namespace Paging_the_devil.Manager
             playerTextureList.Add(Content.Load<Texture2D>(@"RangerSpriteSheet"));
 
             //Spells
-            mageSpellList.Add(Content.Load<Texture2D>(@"redSquare"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Fireball"));
             mageSpellList.Add(Content.Load<Texture2D>(@"slash"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Trap"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"HealHarm"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Arrow"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
