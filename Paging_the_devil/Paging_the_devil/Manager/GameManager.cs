@@ -149,7 +149,7 @@ namespace Paging_the_devil.Manager
 
                     for (int i = 0; i < nrOfPlayers; i++)
                     {
-                        CheckPlayerAbilites(playerArray[i].abilityList);
+                        CheckPlayerAbilites(playerArray[i].abilityList, playerArray[i]);
                     }
 
                     foreach (var e in enemyList)
@@ -359,16 +359,16 @@ namespace Paging_the_devil.Manager
                     }
                 }
 
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    foreach (var e in enemyList)
-                    {
-                        if (a.GetRect.Intersects(e.GetRect))
-                        {
-                            toRemoveAbility = a;
-                        }
-                    }
-                }
+                //foreach (var a in playerArray[i].abilityList)
+                //{
+                //    foreach (var e in enemyList)
+                //    {
+                //        if (a.GetRect.Intersects(e.GetRect))
+                //        {
+                //            toRemoveAbility = a;
+                //        }
+                //    }
+                //}
 
                 foreach (var e in enemyList)
                 {
@@ -392,7 +392,7 @@ namespace Paging_the_devil.Manager
             
         }
 
-        private void CheckPlayerAbilites (List<Ability> abilityList)
+        private void CheckPlayerAbilites (List<Ability> abilityList, Player player)
         {
             Ability toRemove = null; 
             foreach (var a in abilityList)
@@ -420,8 +420,35 @@ namespace Paging_the_devil.Manager
                             e.hitBySlowTrap = true;
                             e.MovementSpeed -= 2;
                         }
+
+                        if (a is Healharm)
+                        {
+                            (a as Healharm).character = e;
+                            
+                        }
+
+                        if( a is Arrow)
+                        {
+                            e.HealthPoints -= a.Damage;
+                            toRemove = a;
+                        }
                     }
                 }
+
+                for (int i = 0; i < nrOfPlayers; i++)
+                {
+                    if (a.GetRect.Intersects(playerArray[i].GetRect))
+                    {
+                        if (a is Healharm)
+                        {
+                            if (playerArray[i] != player)
+                            {
+                                (a as Healharm).character = playerArray[i];
+                            }
+                        }
+                    }
+                }
+
 
                 foreach (var w in currentRoom.GetWallList())
                 {

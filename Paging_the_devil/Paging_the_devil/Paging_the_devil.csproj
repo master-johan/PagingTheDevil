@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Button.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="GameObject\Arrow.cs" />
     <Compile Include="GameObject\Barbarian.cs" />
     <Compile Include="GameObject\Druid.cs" />
+    <Compile Include="GameObject\Healharm.cs" />
     <Compile Include="GameObject\HUD.cs" />
     <Compile Include="GameObject\Knight.cs" />
     <Compile Include="GameObject\Ranger.cs" />
