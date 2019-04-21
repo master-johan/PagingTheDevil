@@ -36,7 +36,7 @@ namespace Paging_the_devil.Manager
             {
                 string row = map[y];
                 Room emptyRoom = new Room(Color.Black, false, false, false);
-                Room startRoom = new Room(Color.Yellow, true, true, false);
+                Room startRoom = new Room(Color.LightGray, true, true, false);
                 Room standardRoom = new Room(Color.Gray, true, false, false);
                 Room bossRoom = new Room(Color.Blue, true, false, true);
 

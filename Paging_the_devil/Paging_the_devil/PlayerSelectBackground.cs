@@ -23,7 +23,7 @@ namespace Paging_the_devil
 
         public PlayerSelectBackground()
         {
-            Size = new Rectangle(0, 0, 1920, 1080);
+            Size = new Rectangle(0, 0, TextureManager.WindowSizeX, TextureManager.WindowSizeY);
             srcRect = new Rectangle(0, 0, 94, 92);
 
             InitializeCloudOne();

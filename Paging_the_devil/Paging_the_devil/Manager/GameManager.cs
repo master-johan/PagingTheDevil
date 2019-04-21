@@ -59,6 +59,7 @@ namespace Paging_the_devil.Manager
             enemyList = new List<Enemy>();
 
             currentState = GameState.MainMenu;
+            MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(SoundManager.BgMusicList[0]);
 
             CreatingThings();
@@ -97,6 +98,7 @@ namespace Paging_the_devil.Manager
             switch (currentState)
             {
                 case GameState.MainMenu:
+                    
                     ConnectController();
                     if (controllerArray[0] != null)
                     {
@@ -117,6 +119,7 @@ namespace Paging_the_devil.Manager
 
                     break;
                 case GameState.InGame:
+                    
                     if (HUDManager == null)
                     {
                         HUDManager = menuManager.PlayerSelectManager.GetHudManager();
@@ -157,11 +160,13 @@ namespace Paging_the_devil.Manager
                     HUDManager.Update();
                     UpdatePlayersDirection();
                     UpdateCharacters(gameTime);
+                   
                     //UpdateHealth();
                     //DeleteAbilities();
-                    
+
 
                     roomManager.Update();
+                    
 
                     break;
             }

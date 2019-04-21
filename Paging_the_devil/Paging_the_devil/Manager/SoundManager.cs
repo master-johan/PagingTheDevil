@@ -21,6 +21,8 @@ namespace Paging_the_devil.Manager
             SoundEffectList = new List<SoundEffect>();
 
             BgMusicList.Add( Content.Load<Song>("ThemeSong"));
+            BgMusicList.Add(Content.Load<Song>("AltSong"));
+            BgMusicList.Add(Content.Load<Song>("BossFightSong"));
         }
     }
 }
