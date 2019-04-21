@@ -139,7 +139,7 @@ namespace Paging_the_devil.Manager
                 {
 
                     HUDManager = new HUDManager(playerArray,nrOfPlayers);
-                    MediaPlayer.Play(SoundManager.BgMusicList[1]);
+                    MediaPlayer.Play(SoundManager.BgMusicList[2]);
                     GameManager.currentState = GameState.InGame;
                 }
             }

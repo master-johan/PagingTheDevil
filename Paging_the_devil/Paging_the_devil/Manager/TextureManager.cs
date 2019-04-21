@@ -34,12 +34,13 @@ namespace Paging_the_devil.Manager
             //Spells
             mageSpellList.Add(Content.Load<Texture2D>(@"redSquare"));
             mageSpellList.Add(Content.Load<Texture2D>(@"slash"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Trap"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
-            roomTextureList.Add(Content.Load<Texture2D>(@"FloorPNG"));
+            roomTextureList.Add(Content.Load<Texture2D>(@"FloorPNG1"));
 
             //Enemey
             enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));
