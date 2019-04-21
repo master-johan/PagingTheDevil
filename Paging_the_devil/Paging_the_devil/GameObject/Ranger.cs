@@ -21,8 +21,8 @@ namespace Paging_the_devil.GameObject
         {
             if (Controller.ButtonPressed(Buttons.X))
             {
-                ability = new Trap(TextureManager.hudTextureList[0], pos, new Vector2(0, 0));
-                abilityList.Add(ability);
+                ability1 = new Trap(TextureManager.hudTextureList[0], pos, new Vector2(0, 0));
+                abilityList.Add(ability1);
             }
             base.Update(gameTime);
         }

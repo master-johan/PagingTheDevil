@@ -43,8 +43,8 @@ namespace Paging_the_devil.GameObject
             spellDirection.Normalize();
             spellDirection.Y = -spellDirection.Y;
 
-            ability = new Fireball(TextureManager.mageSpellList[0], pos, spellDirection);
-            abilityList.Add(ability);
+            ability1 = new Fireball(TextureManager.mageSpellList[0], pos, spellDirection);
+            abilityList.Add(ability1);
 
             fireballTimer = 60;
         }

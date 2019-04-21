@@ -27,25 +27,59 @@ namespace Paging_the_devil.GameObject
             slashPos = pos;
             Hit = false;
 
+            Vector2 meleeDirection = DecideDirectionOfSlash(direction);
+
+
             DirectionOfVectors();
 
-            if (direction == up)
+            if (meleeDirection == up)
             {
                 angle = MathHelper.ToRadians(-45f);
             }
-            else if (direction == left)
+            else if (meleeDirection == left)
             {
                 angle = MathHelper.ToRadians(-135);
             }
-            else if (direction == down)
+            else if (meleeDirection == down)
             {
                 angle = MathHelper.ToRadians(-225);
             }
-            else if (direction == right)
+            else if (meleeDirection == right)
             {
                 angle = MathHelper.ToRadians(-315);
             }
             DecidingValues();
+        }
+
+        private Vector2 DecideDirectionOfSlash(Vector2 direction)
+        {
+            double slashDir = Math.Atan2(direction.Y, direction.X);
+
+            float slashAngle = MathHelper.ToDegrees((float)slashDir);
+
+            Vector2 meleeDirection = Vector2.Zero;
+
+            if (slashAngle > 45 && slashAngle < 135) // up
+            {
+                meleeDirection = new Vector2(0, -1);
+            }
+
+            else if (slashAngle > 135 || slashAngle < -135) // left
+            {
+                meleeDirection = new Vector2(-1, 0);
+            }
+
+            else if (slashAngle > -135 && slashAngle < -45) // down
+            {
+                meleeDirection = new Vector2(0, 1);
+            }
+
+            else if (slashAngle > -45 && slashAngle < 45) // right
+            {
+                meleeDirection = new Vector2(1, 0);
+            }
+            return meleeDirection;
+
         }
 
         private void DecidingValues()

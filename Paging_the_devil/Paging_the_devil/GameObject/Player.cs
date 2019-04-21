@@ -31,7 +31,9 @@ namespace Paging_the_devil.GameObject
         protected Vector2 inputDirection;
         protected Vector2 lastInputDirection;
         
-        protected Ability ability;
+        protected Ability ability1;
+        protected Ability ability2;
+        protected Ability ability3;
 
         bool angleRight;
         bool angleLeft;
@@ -96,11 +98,12 @@ namespace Paging_the_devil.GameObject
             Hitboxes();
 
             if (Controller.ButtonPressed(Buttons.B))
-
             {
                 if (slashTimer == 0)
                 {
-                    Slashes();
+
+                    abilityList.Add(ability1);
+                    slashTimer = 20;
                 }
             }
 
@@ -183,31 +186,28 @@ namespace Paging_the_devil.GameObject
 
             float slashAngle = MathHelper.ToDegrees((float)slashDir);
 
-            Vector2 meleeDirection;
+            Vector2 meleeDirection = Vector2.Zero;
 
             if (slashAngle > 45 && slashAngle < 135) // up
             {
                 meleeDirection = new Vector2(0, -1);
-                CreateSlash(meleeDirection);
             }
 
             else if (slashAngle > 135 || slashAngle < -135) // left
             {
                 meleeDirection = new Vector2(-1, 0);
-                CreateSlash(meleeDirection);
             }
 
             else if (slashAngle > -135 && slashAngle < -45) // down
             {
                 meleeDirection = new Vector2(0, 1);
-                CreateSlash(meleeDirection);
             }
 
             else if (slashAngle > -45 && slashAngle < 45) // right
             {
                 meleeDirection = new Vector2(1, 0);
-                CreateSlash(meleeDirection);
             }
+            CreateSlash(meleeDirection);
 
             slashTimer = 20;
         }
@@ -217,7 +217,7 @@ namespace Paging_the_devil.GameObject
         /// <param name="meleeDirection"></param>
         private void CreateSlash(Vector2 meleeDirection)
         {
-            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, meleeDirection);
+            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             abilityList.Add(slashObject);
         }
         /// <summary>
