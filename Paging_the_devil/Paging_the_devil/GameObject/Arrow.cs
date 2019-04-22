@@ -19,8 +19,8 @@ namespace Paging_the_devil.GameObject
         public Arrow(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
-            speed = 7;
-            Damage = 2;
+            speed = ValueBank.ArrowSpeed;
+            Damage = ValueBank.ArrowDmg;
             rotation = Math.Atan2(direction.Y, direction.X);
             rect = new Rectangle((int)pos.X, (int)pos.Y, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
             origin = new Vector2(TextureManager.mageSpellList[4].Width / 2, TextureManager.mageSpellList[4].Height / 2);

@@ -33,6 +33,7 @@ namespace Paging_the_devil
         {
             TextureManager.LoadTextures(Content);
             SoundManager.LoadSound(Content);
+            ValueBank.Values();
             gameManager = new GameManager(GraphicsDevice, graphics, this);
             
             //room = new Room(graphics);

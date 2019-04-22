@@ -29,17 +29,17 @@ namespace Paging_the_devil.GameObject
 
         public Enemy(Texture2D tex, Vector2 pos) : base (tex, pos)
         {
-            HealthPoints = 10;
+            HealthPoints = ValueBank.SmallDevilHealth;
             left = true;
             right = false;
 
-            shootTimer = 60;
+            shootTimer = ValueBank.SmallDevilShootTimer;
 
             enemyAbilityList = new List<Ability>();
 
             rand = new Random();
 
-            MovementSpeed = 4;
+            MovementSpeed = ValueBank.SmallDevilMoveSpeed;
             BaseMoveSpeed = MovementSpeed;
         }
         public override void Update(GameTime gameTime)
@@ -65,7 +65,7 @@ namespace Paging_the_devil.GameObject
             }
             else
             {
-                TrapTimer = 5;
+                TrapTimer = ValueBank.TrapTimer;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Paging_the_devil.GameObject
 
                 fireball = new Fireball(TextureManager.mageSpellList[0], pos, dir);
                 enemyAbilityList.Add(fireball);
-                shootTimer = 60;
+                shootTimer = ValueBank.SmallDevilShootTimer;
             }
         }
     }
