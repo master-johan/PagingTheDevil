@@ -36,7 +36,7 @@ namespace Paging_the_devil.Manager
             mageSpellList.Add(Content.Load<Texture2D>(@"slash"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Trap"));
             mageSpellList.Add(Content.Load<Texture2D>(@"HealHarm"));
-            mageSpellList.Add(Content.Load<Texture2D>(@"ArrowPNG"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Arrow"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
