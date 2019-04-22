@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Paging_the_devil.GameObject
         public Healharm(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
-            speed = 7;
+            speed = ValueBank.HealHarmSpeed;
             Active = false;
             IsTicking = false;
             dateTime = DateTime.Now;
@@ -65,9 +66,9 @@ namespace Paging_the_devil.GameObject
             }
             TimeSpan timePassed = DateTime.Now - dateTime;
 
-            if (timePassed.TotalSeconds >= 4)
+            if (timePassed.TotalSeconds >= ValueBank.HealHarmTimer)
             {
-                character.HealthPoints -= 2;
+                character.HealthPoints -= ValueBank.HealHarmDmg;
                 IsTicking = true;
             }
             else
@@ -85,9 +86,9 @@ namespace Paging_the_devil.GameObject
             }
             TimeSpan timePassed = DateTime.Now - dateTime;
 
-            if (timePassed.TotalSeconds >= 4)
+            if (timePassed.TotalSeconds >= ValueBank.HealHarmTimer)
             {
-                character.HealthPoints += 5;
+                character.HealthPoints += ValueBank.HealHarmHeal;
             }
         }
 

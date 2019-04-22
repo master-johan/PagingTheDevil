@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace Paging_the_devil.GameObject
         public Fireball(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
-            speed = 7;
-            Damage = 2;
+            speed = ValueBank.FireballSpeed;
+            Damage = ValueBank.FireballDmg;
             Active = true;
         }
 
