@@ -14,6 +14,7 @@ namespace Paging_the_devil.GameObject
         int speed;
         Vector2 origin;
         double rotation;
+        Rectangle srsRect;
 
 
         public Arrow(Texture2D tex, Vector2 pos, Vector2 direction)
@@ -24,6 +25,7 @@ namespace Paging_the_devil.GameObject
             rotation = Math.Atan2(direction.Y, direction.X);
             rect = new Rectangle((int)pos.X, (int)pos.Y, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
             origin = new Vector2(TextureManager.mageSpellList[4].Width / 2, TextureManager.mageSpellList[4].Height / 2);
+            srsRect = new Rectangle(0, 0, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
         }
 
         public override void Update()
@@ -35,7 +37,7 @@ namespace Paging_the_devil.GameObject
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, rect, Color.White, (float)rotation, origin, 1f, SpriteEffects.None, 1f);
+            spriteBatch.Draw(tex, pos, srsRect, Color.White, (float)rotation, origin, 1f, SpriteEffects.None, 1f);          
         }
     }
 }

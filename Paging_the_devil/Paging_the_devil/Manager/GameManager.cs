@@ -131,6 +131,7 @@ namespace Paging_the_devil.Manager
                         CreateRoomManager();
                         currentRoom = roomManager.CurrentRoom;
                     }
+                    
 
                     if (Keyboard.GetState().IsKeyDown(Keys.A))
                     {
@@ -241,6 +242,7 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.InGame:
 
+                    
                     if (roomManagerCreated)
                     {
                         roomManager.Draw(spriteBatch);
@@ -249,9 +251,9 @@ namespace Paging_the_devil.Manager
                     {
                         HUDManager.Draw(spriteBatch);
                     }
+                    spriteBatch.Draw(TextureManager.mageSpellList[4], new Rectangle(100, 100, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height), Color.White);
 
-                  
-                    
+
                     DrawCharacters(spriteBatch);
 
                     DrawCharacters(spriteBatch);
