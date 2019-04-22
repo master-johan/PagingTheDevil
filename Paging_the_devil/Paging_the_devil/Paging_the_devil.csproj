@@ -46,6 +46,9 @@
     <Compile Include="GameObject\Arrow.cs" />
     <Compile Include="GameObject\Barbarian.cs" />
     <Compile Include="GameObject\Druid.cs" />
+    <Compile Include="GameObject\EnemyFolder\Enemy.cs" />
+    <Compile Include="GameObject\EnemyFolder\Slime.cs" />
+    <Compile Include="GameObject\EnemyFolder\SmallDevil.cs" />
     <Compile Include="GameObject\Healharm.cs" />
     <Compile Include="GameObject\HUD.cs" />
     <Compile Include="GameObject\Knight.cs" />
@@ -59,7 +62,6 @@
     <Compile Include="GameObject\Ability.cs" />
     <Compile Include="GameObject\Character.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="GameObject\Enemy.cs" />
     <Compile Include="GameObject\Fireball.cs" />
     <Compile Include="GameObject\GameObject.cs" />
     <Compile Include="GameObject\MovingObject.cs" />

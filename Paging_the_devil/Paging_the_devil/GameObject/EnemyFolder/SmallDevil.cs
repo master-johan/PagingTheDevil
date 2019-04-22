@@ -1,108 +1,53 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 
-namespace Paging_the_devil.GameObject
+namespace Paging_the_devil.GameObject.EnemyFolder
 {
-    class Enemy : Character
+    class SmallDevil : Enemy
     {
-        public bool toRevome;
-        bool left;
-        bool right;
-        public bool hitBySlowTrap { get; set; }
-
-        int shootTimer;
-        public int MovementSpeed { get; set; }
-        public int BaseMoveSpeed { get; set; }
-        public double TrapTimer { get; set; }
 
         Ability fireball;
-
-        public List<Ability> enemyAbilityList;
-
-        Random rand;
-
-        public Enemy(Texture2D tex, Vector2 pos) : base (tex, pos)
+        public SmallDevil(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
             HealthPoints = ValueBank.SmallDevilHealth;
+            shootTimer = ValueBank.SmallDevilShootTimer;
             left = true;
             right = false;
-
-            shootTimer = ValueBank.SmallDevilShootTimer;
-
-            enemyAbilityList = new List<Ability>();
 
             rand = new Random();
 
             MovementSpeed = ValueBank.SmallDevilMoveSpeed;
             BaseMoveSpeed = MovementSpeed;
-        }
-        public override void Update(GameTime gameTime)
-        {
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
-            Dead();
-            Movement();
-            ShootFireball();
-
-            foreach (var e in enemyAbilityList)
-            {
-                e.Update();
-            }
-
-            if (shootTimer > 0)
-            {
-                shootTimer--;
-            }
-
-            if (hitBySlowTrap)
-            {
-                TrapTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            }
-            else
-            {
-                TrapTimer = ValueBank.TrapTimer;
-            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
             spriteBatch.Draw(tex, pos, Color.White);
-            foreach (var e in enemyAbilityList)
-            {
-                e.Draw(spriteBatch);
-            }
         }
 
-        /// <summary>
-        /// Den här metoden sköter vad som händer vid död.
-        /// </summary>
-        private void Dead()
-        {
-            if (HealthPoints <= 0)
-            {
-                toRevome = true;
-            }
-            else
-            {
-                toRevome = false;
-            }
+        public override void Update(GameTime gameTime)
+        {    
+            Movement();
+            ShootFireball();
+            base.Update(gameTime);
         }
-        /// <summary>
-        /// Den här metoden sköter rörelsen.
-        /// </summary>
-        private void Movement()
+
+        protected override void Movement()
         {
             if (pos.X < 100)
             {
                 right = true;
                 left = false;
             }
-            else if(pos.X > 1000)
+            else if (pos.X > 1000)
             {
                 right = false;
                 left = true;
@@ -111,11 +56,12 @@ namespace Paging_the_devil.GameObject
             {
                 pos.X += MovementSpeed;
             }
-            else if(left)
+            else if (left)
             {
                 pos.X -= MovementSpeed;
             }
         }
+
         /// <summary>
         /// Den här metoden skjuter fireballs.
         /// </summary>
