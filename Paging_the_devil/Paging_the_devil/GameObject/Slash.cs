@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Paging_the_devil.GameObject
 
         Vector2 slashPos;
         Vector2 left, right, up, down;
+        Vector2 meleeDirection;
 
         public bool Active { get; private set; }
         public bool Hit { get; set; }
@@ -26,8 +28,10 @@ namespace Paging_the_devil.GameObject
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
             slashPos = pos;
             Hit = false;
+            coolDownTime = 20; 
+            meleeDirection = DecideDirectionOfSlash(direction);
 
-            Vector2 meleeDirection = DecideDirectionOfSlash(direction);
+            btnTexture = TextureManager.hudTextureList[5];
 
 
             DirectionOfVectors();
@@ -92,10 +96,10 @@ namespace Paging_the_devil.GameObject
         {
             angle -= 0.3f;
 
-            if (angle < MathHelper.ToRadians(-135f) && direction == up ||
-                angle < MathHelper.ToRadians(-225f) && direction == left ||
-                angle < MathHelper.ToRadians(-315f) && direction == down ||
-                angle < MathHelper.ToRadians(-405f) && direction == right)
+            if (angle < MathHelper.ToRadians(-135f) && meleeDirection == up ||
+                angle < MathHelper.ToRadians(-225f) && meleeDirection == left ||
+                angle < MathHelper.ToRadians(-315f) && meleeDirection == down ||
+                angle < MathHelper.ToRadians(-405f) && meleeDirection == right)
             {
                 Active = false;
             }

@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
+
+namespace Paging_the_devil.GameObject
+{
+    class HUDButton : GameObject
+    {
+        Rectangle rect;
+        Rectangle coolDownRect;
+        Ability ability;
+        Vector2 abilityTexturePos;
+        int currentTimer;
+        int maxTimer;
+
+        public HUDButton(Texture2D tex, Vector2 pos, Rectangle rect, Ability ability) : base(tex, pos)
+        {
+            this.rect = rect;
+            this.ability = ability;
+            abilityTexturePos = new Vector2(pos.X + 5, pos.Y + 5);
+            maxTimer = ability.coolDownTime;
+            coolDownRect = rect; 
+        }
+
+        public override void Update()
+        {
+            if (currentTimer >0)
+            {
+                float procent = (float)currentTimer / (float)maxTimer;
+                double height = procent * rect.Height;
+                coolDownRect.Height = (int)height;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(tex, rect, Color.White);
+            spriteBatch.Draw(ability.btnTexture, abilityTexturePos, Color.White);
+            if (currentTimer >0 )
+            {
+                spriteBatch.Draw(TextureManager.mageSpellList[0],
+                                 abilityTexturePos,
+                                 coolDownRect,
+                                 Color.White,
+                                 MathHelper.ToRadians(180f),
+                                 new Vector2(40, 40),
+                                 1,
+                                 SpriteEffects.None,
+                                 1);
+            }
+
+        }
+
+        public void GetCooldownTimer(int timer)
+        {
+            currentTimer = timer; 
+        }
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,22 +12,31 @@ namespace Paging_the_devil.GameObject
     class Fireball : Ability
     {
         int speed;
+        Vector2 spellDirection;
 
         public bool Active { get; set; }
 
         public Fireball(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
+            spellDirection = direction;
+            spellDirection.Normalize();
+            spellDirection.Y = -spellDirection.Y;
             speed = 7;
             Damage = 2;
             Active = true;
+            coolDownTime = 60;
+
+            btnTexture = TextureManager.hudTextureList[5];
         }
 
         public override void Update()
         {
-            pos += direction * speed;
+            pos += spellDirection * speed;
 
-            rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+            rect.X = (int)pos.X;
+            rect.Y = (int)pos.Y;
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)

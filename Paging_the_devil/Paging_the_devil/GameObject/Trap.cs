@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace Paging_the_devil.GameObject
         {
             Damage = 2;
             dateTime = DateTime.Now;
+            coolDownTime = 40;
+            btnTexture = TextureManager.hudTextureList[5];
         }
 
         public override void Update()
