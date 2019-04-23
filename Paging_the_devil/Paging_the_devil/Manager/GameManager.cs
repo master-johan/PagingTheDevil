@@ -439,11 +439,7 @@ namespace Paging_the_devil.Manager
 
                         }
 
-                        if (a is Arrow)
-                        {
-                            e.HealthPoints -= a.Damage;
-                            toRemove = a;
-                        }
+                      
                     }
                 }
 
