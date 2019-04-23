@@ -15,6 +15,7 @@ namespace Paging_the_devil.Manager
         public static float BarbarianHealth;
         public static float KnightHealth;
         public static float SmallDevilHealth;
+        public static float SlimeHealth;
 
         public static int ArrowDmg;
         public static int TrapDmg;
@@ -33,6 +34,7 @@ namespace Paging_the_devil.Manager
         public static int SmallDevilShootTimer;
 
         public static int SmallDevilMoveSpeed;
+        public static float SlimeSpeed;
 
 
         public static void Values()
@@ -45,6 +47,7 @@ namespace Paging_the_devil.Manager
 
             //Enemy Health
             SmallDevilHealth = 10;
+            SlimeHealth = 20;
 
             //Ability Dmg
             ArrowDmg = 2;
@@ -70,7 +73,7 @@ namespace Paging_the_devil.Manager
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4;
-        
+            SlimeSpeed = 1f;
         }
 
 
