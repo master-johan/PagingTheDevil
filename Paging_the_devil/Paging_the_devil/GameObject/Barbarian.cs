@@ -13,10 +13,12 @@ namespace Paging_the_devil.GameObject
     class Barbarian : Player
     {
         int fireballTimer;
-
+        
         public Barbarian(Texture2D tex, Vector2 pos, int playerIndex, Controller controller) : base(tex, pos, playerIndex, controller)
         {
             fireballTimer = 0;
+            HealthPoints = ValueBank.BarbarianHealth;
+            maxHealthPoints = HealthPoints;
         }
 
         public override void Update(GameTime gameTime)

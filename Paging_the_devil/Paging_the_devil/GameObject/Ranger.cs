@@ -17,6 +17,8 @@ namespace Paging_the_devil.GameObject
         public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
             arrowTimer = 0;
+            HealthPoints = ValueBank.RangerHealth;
+            maxHealthPoints = HealthPoints;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

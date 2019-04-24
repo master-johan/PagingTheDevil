@@ -35,18 +35,17 @@ namespace Paging_the_devil.GameObject
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
             timePassed = DateTime.Now - dateTime;
 
-            if (character!= null)
+            if (character != null)
             {
                 if (character is Enemy)
                 {
                     Active = true;
-                    DmgOverTime();
                 }
 
                 if (character is Player)
                 {
                     Active = true;
-                    HealOverTime();                        
+                    HealOverTime();                    
                 }
             }
         }
@@ -59,17 +58,18 @@ namespace Paging_the_devil.GameObject
             }
         }
 
-        private void DmgOverTime()
+        public void DmgOverTime(Enemy enemy)
         {
+            character = enemy;
             if (Active)
             {              
                 dateTime = DateTime.Now;
             }
             TimeSpan timePassed = DateTime.Now - dateTime;
 
-            if (timePassed.TotalSeconds >= ValueBank.HealHarmTimer)
+            if (timePassed.TotalSeconds <= ValueBank.HealHarmTimer)
             {
-                character.HealthPoints -= ValueBank.HealHarmDmg;
+                enemy.HealthPoints -= ValueBank.HealHarmDmg;
                 IsTicking = true;
             }
             else

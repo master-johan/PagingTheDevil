@@ -431,15 +431,14 @@ namespace Paging_the_devil.Manager
                         {
                             e.hitBySlowTrap = true;
                             e.MovementSpeed -= 2;
+                            //ValueBank.SlimeSpeed -= 0.5f;
                         }
 
                         if (a is Healharm)
                         {
-                            (a as Healharm).character = e;
-
+                            (a as Healharm).Active = true;
+                            (a as Healharm).DmgOverTime(e);
                         }
-
-                      
                     }
                 }
 
