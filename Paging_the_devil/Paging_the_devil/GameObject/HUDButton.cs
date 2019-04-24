@@ -13,6 +13,7 @@ namespace Paging_the_devil.GameObject
     {
         Rectangle rect;
         Rectangle coolDownRect;
+        Rectangle coolDownSrcRect;
         Ability ability;
         Vector2 abilityTexturePos;
         int currentTimer;
@@ -24,7 +25,9 @@ namespace Paging_the_devil.GameObject
             this.ability = ability;
             abilityTexturePos = new Vector2(pos.X + 5, pos.Y + 5);
             maxTimer = ability.coolDownTime;
-            coolDownRect = rect; 
+            coolDownRect = rect;
+            coolDownRect.X = 0;
+            coolDownRect.Y = 0;
         }
 
         public override void Update()
@@ -43,7 +46,7 @@ namespace Paging_the_devil.GameObject
             spriteBatch.Draw(ability.btnTexture, abilityTexturePos, Color.White);
             if (currentTimer >0 )
             {
-                spriteBatch.Draw(TextureManager.hudTextureList[1],
+                spriteBatch.Draw(TextureManager.hudTextureList[6],
                                  new Vector2(rect.X +2 ,rect.Y + 5),
                                  coolDownRect,
                                  Color.White,
