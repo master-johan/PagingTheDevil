@@ -33,6 +33,10 @@ namespace Paging_the_devil.Manager
         int RoomCoordinateX;
         int RoomCoordinateY;
 
+        bool[,] enemiesSpawned;
+
+        Random rand;
+
         public RoomManager(Player[] playerArray, int nrOfPlayers, List<Enemy> enemyList, LevelManager levelManager)
         {
             this.playerArray = playerArray;
@@ -44,14 +48,16 @@ namespace Paging_the_devil.Manager
             GetStaringRoom();
             DeclareGateways();
             ShowGateways();
+            enemiesSpawned = new bool[5, 5];
 
+            rand = new Random();
         }
 
         public void Update()
         {
             CollisionWithWall();
             GoIntoGateway();
-
+            AddEnemiesToRoom();
 
         }
 
@@ -412,7 +418,7 @@ namespace Paging_the_devil.Manager
 
             if (playerArray[0].GetRect.Intersects(gatewaySouth.GetRect) && gatewaySouth.IsVisible)
             {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateY += 1;
                     temp = new Vector2(gatewayNorth.pos.X + TextureManager.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureManager.roomTextureList[0].Height / 2 + 25);
@@ -420,7 +426,7 @@ namespace Paging_the_devil.Manager
             }
             else if (playerArray[0].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
             {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateY -= 1;
                     temp = new Vector2(gatewaySouth.pos.X + TextureManager.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureManager.roomTextureList[0].Height / 2 - 25);
@@ -428,7 +434,7 @@ namespace Paging_the_devil.Manager
             }
             else if (playerArray[0].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
             {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateX += 1;
                     temp = new Vector2(gatewayWest.pos.X + TextureManager.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureManager.roomTextureList[0].Height / 2);
@@ -436,7 +442,7 @@ namespace Paging_the_devil.Manager
             }
             else if (playerArray[0].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
             {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y))
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateX -= 1;
                     temp = new Vector2(gatewayEast.pos.X + TextureManager.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureManager.roomTextureList[0].Height / 2);
@@ -451,18 +457,38 @@ namespace Paging_the_devil.Manager
                     playerArray[i].pos = temp;
                 }
 
-                SpawnEnemies();
+               
             }
         }
 
-        private void SpawnEnemies()
+        private void SpawnSmallRedDevil()
         {
-            Random rand = new Random();
+            int x = rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
+            int y = rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
+            enemyList.Add(new SmallDevil(TextureManager.enemyTextureList[0], new Vector2(x, y)));
+        }
+        private void SpawnSlime()
+        {
             int x = rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
             int y = rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
 
-            enemyList.Add(new SmallDevil(TextureManager.enemyTextureList[0], new Vector2(500, 500)));
             enemyList.Add(new Slime(TextureManager.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
+        }
+        private void AddEnemiesToRoom()
+        {
+            if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    SpawnSmallRedDevil();
+                }
+                enemiesSpawned[3, 1] = true;
+            }
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
+            {
+                SpawnSlime();
+                enemiesSpawned[2, 1] = true;
+            }
         }
     }
 }
