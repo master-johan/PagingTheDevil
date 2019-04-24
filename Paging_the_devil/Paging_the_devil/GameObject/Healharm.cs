@@ -30,6 +30,8 @@ namespace Paging_the_devil.GameObject
             IsTicking = false;
             dateTime = DateTime.Now;
             btnTexture = TextureManager.hudTextureList[5];
+            coolDownTime = 40;
+
         }
 
         public override void Update()
