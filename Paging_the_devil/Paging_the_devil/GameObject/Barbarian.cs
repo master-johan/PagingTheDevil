@@ -12,43 +12,37 @@ namespace Paging_the_devil.GameObject
 {
     class Barbarian : Player
     {
-        int fireballTimer;
-        
+
+    
+
         public Barbarian(Texture2D tex, Vector2 pos, int playerIndex, Controller controller) : base(tex, pos, playerIndex, controller)
         {
-            fireballTimer = 0;
-            HealthPoints = ValueBank.BarbarianHealth;
-            maxHealthPoints = HealthPoints;
+            Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability2 = new Fireball(TextureManager.mageSpellList[0], pos, lastInputDirection);
+            Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+
         }
 
-        public override void Update(GameTime gameTime)
+        protected override Ability CastAbility1()
         {
-            if (Controller.ButtonPressed(Buttons.X))
-            {
-                if (fireballTimer == 0)
-                {
-                    ShootFireball();
-                }
-            }
-
-            if (fireballTimer > 0)
-            {
-                fireballTimer--;
-            }
-
-            base.Update(gameTime);
-
+            Ability ability = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability1CooldownTimer = ability.coolDownTime;
+            return ability;
         }
-        private void ShootFireball()
+
+        protected override Ability CastAbility2()
         {
-            spellDirection = lastInputDirection;
-            spellDirection.Normalize();
-            spellDirection.Y = -spellDirection.Y;
-
-            ability = new Fireball(TextureManager.mageSpellList[0], pos, spellDirection);
-            abilityList.Add(ability);
-
-            fireballTimer = 60;
+            Ability ability = new Fireball(TextureManager.mageSpellList[0], pos, lastInputDirection);
+            Ability2CooldownTimer = ability.coolDownTime;
+            return ability;
         }
+
+        protected override Ability CastAbility3()
+        {
+            Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability3CooldownTimer = ability.coolDownTime;
+            return ability;
+        }
+
     }
 }

@@ -15,22 +15,25 @@ namespace Paging_the_devil.GameObject
         Vector2 origin;
         double rotation;
         Rectangle srsRect;
+        Vector2 spellDirection;
 
 
         public Arrow(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
+            spellDirection = GetSpellDirection(direction);
             speed = ValueBank.ArrowSpeed;
             Damage = ValueBank.ArrowDmg;
-            rotation = Math.Atan2(direction.Y, direction.X);
+            rotation = Math.Atan2(spellDirection.Y, spellDirection.X);
             rect = new Rectangle((int)pos.X, (int)pos.Y, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
             origin = new Vector2(TextureManager.mageSpellList[4].Width / 2, TextureManager.mageSpellList[4].Height / 2);
             srsRect = new Rectangle(0, 0, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
+            btnTexture = TextureManager.hudTextureList[5];
         }
 
         public override void Update()
         {
-            pos += direction * speed;
+            pos += spellDirection * speed;
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
         }
