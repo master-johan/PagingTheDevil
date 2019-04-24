@@ -20,8 +20,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             left = true;
             right = false;
 
-            rand = new Random();
-
             MovementSpeed = ValueBank.SmallDevilMoveSpeed;
             BaseMoveSpeed = MovementSpeed;
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
@@ -69,11 +67,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             if (shootTimer == 0)
             {
-                double x = rand.NextDouble();
-                double y = rand.NextDouble();
+                double x = ValueBank.rand.NextDouble();
+                double y = ValueBank.rand.NextDouble();
 
-                int minusOrNotX = rand.Next(0, 2);
-                int minusOrNotY = rand.Next(0, 2);
+                int minusOrNotX = ValueBank.rand.Next(0, 2);
+                int minusOrNotY = ValueBank.rand.Next(0, 2);
 
                 if (minusOrNotX == 0)
                 {

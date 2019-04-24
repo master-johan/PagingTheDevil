@@ -288,15 +288,6 @@ namespace Paging_the_devil.Manager
             }
         }
 
-        private void SpawnEnemy()
-        {
-            Random rand = new Random();
-            int x = rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
-            int y = rand.Next(20, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 20);
-
-            Enemy enemy = new Enemy(TextureManager.enemyTextureList[0], new Vector2(x, y));
-            enemyList.Add(enemy);
-        }
         /// <summary>
         /// Den här metoden ansluter en kontroll.
         /// </summary>

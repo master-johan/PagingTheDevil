@@ -35,7 +35,6 @@ namespace Paging_the_devil.Manager
 
         bool[,] enemiesSpawned;
 
-        Random rand;
 
         public RoomManager(Player[] playerArray, int nrOfPlayers, List<Enemy> enemyList, LevelManager levelManager)
         {
@@ -49,8 +48,6 @@ namespace Paging_the_devil.Manager
             DeclareGateways();
             ShowGateways();
             enemiesSpawned = new bool[5, 5];
-
-            rand = new Random();
         }
 
         public void Update()
@@ -463,14 +460,14 @@ namespace Paging_the_devil.Manager
 
         private void SpawnSmallRedDevil()
         {
-            int x = rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
-            int y = rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
+            int x = ValueBank.rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
+            int y = ValueBank.rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
             enemyList.Add(new SmallDevil(TextureManager.enemyTextureList[0], new Vector2(x, y)));
         }
         private void SpawnSlime()
         {
-            int x = rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
-            int y = rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
+            int x = ValueBank.rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
+            int y = ValueBank.rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
 
             enemyList.Add(new Slime(TextureManager.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
         }

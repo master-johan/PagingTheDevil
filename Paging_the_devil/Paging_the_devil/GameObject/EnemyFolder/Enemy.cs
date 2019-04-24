@@ -27,7 +27,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
         public List<Ability> enemyAbilityList;
 
-        protected Random rand;
 
         public Enemy(Texture2D tex, Vector2 pos) : base(tex, pos)
         {

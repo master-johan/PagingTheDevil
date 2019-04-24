@@ -36,9 +36,14 @@ namespace Paging_the_devil.Manager
         public static int SmallDevilMoveSpeed;
         public static float SlimeSpeed;
 
+        public static Random rand;
+
 
         public static void Values()
         {
+
+            //Random
+            rand = new Random();
             //Character Health
             BarbarianHealth = 150f;
             KnightHealth = 200f;
