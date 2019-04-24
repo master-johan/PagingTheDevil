@@ -17,10 +17,19 @@ namespace Paging_the_devil.GameObject
 
         public Barbarian(Texture2D tex, Vector2 pos, int playerIndex, Controller controller) : base(tex, pos, playerIndex, controller)
         {
+
+            HealthPoints = ValueBank.BarbarianHealth;
+            maxHealthPoints = HealthPoints;
+
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             Ability2 = new Fireball(TextureManager.mageSpellList[0], pos, lastInputDirection);
             Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
 
+        }
+
+        public override void Update()
+        {
+            base.Update();
         }
 
         protected override Ability CastAbility1()
