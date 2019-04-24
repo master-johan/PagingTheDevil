@@ -64,6 +64,8 @@ namespace Paging_the_devil.Manager
             hudTextureList.Add(Content.Load<Texture2D>(@"Ybtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"HUDtest"));
             hudTextureList.Add(Content.Load<Texture2D>(@"slashBtn"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"CooldownTex"));
+
             //PlayerSelectBackground bilder
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Background"));
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Clouds"));
