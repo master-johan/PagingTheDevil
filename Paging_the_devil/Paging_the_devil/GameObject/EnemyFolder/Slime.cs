@@ -67,11 +67,13 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         }
         protected override void Movement()
         {
-            if (targetPlayer != null)
+            if (targetPlayer != null && !targetPlayer.Dead)
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
+
             }
+            
             else
             {
                 direction = new Vector2(-1, 0);

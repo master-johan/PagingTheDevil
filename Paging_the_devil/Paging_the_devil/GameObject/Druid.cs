@@ -16,6 +16,9 @@ namespace Paging_the_devil.GameObject
 
         public Druid(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
+            HealthPoints = ValueBank.DruidHealth;
+            maxHealthPoints = HealthPoints;
+
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             Ability2 = new Healharm(TextureManager.mageSpellList[3], pos, lastInputDirection);
             Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
@@ -40,6 +43,7 @@ namespace Paging_the_devil.GameObject
             Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
+
         }
         public override void Update(GameTime gameTime)
         {

@@ -17,9 +17,14 @@ namespace Paging_the_devil.GameObject
         public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
 
+
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             Ability2 = new Arrow(TextureManager.mageSpellList[4], pos, lastInputDirection);
             Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+
+            HealthPoints = ValueBank.RangerHealth;
+            maxHealthPoints = HealthPoints;
+
         }
 
         protected override Ability CastAbility1()

@@ -12,6 +12,7 @@ namespace Paging_the_devil.GameObject
 {
     class Barbarian : Player
     {
+
     
 
         public Barbarian(Texture2D tex, Vector2 pos, int playerIndex, Controller controller) : base(tex, pos, playerIndex, controller)
@@ -19,6 +20,7 @@ namespace Paging_the_devil.GameObject
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             Ability2 = new Fireball(TextureManager.mageSpellList[0], pos, lastInputDirection);
             Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+
         }
 
         protected override Ability CastAbility1()

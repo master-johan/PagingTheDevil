@@ -14,6 +14,7 @@ namespace Paging_the_devil.GameObject
     class Player : Character
     {
         float movementSpeed;
+        protected float maxHealthPoints;
         int slashTimer;
         int playerIndex;
         int frame;
@@ -44,6 +45,7 @@ namespace Paging_the_devil.GameObject
         bool angleLeft;
         bool angleUp;
         bool angleDown;
+        public bool Dead { get; set; }
 
 
         public Player(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller)
@@ -74,7 +76,8 @@ namespace Paging_the_devil.GameObject
             abilityList = new List<Ability>();
             slashTimer = 0;
 
-            HealthPoints = 100f;
+            //HealthPoints = 100f;
+            //maxHealthPoints = HealthPoints;
 
             movementSpeed = 10f;
             interval = 200;
@@ -116,7 +119,14 @@ namespace Paging_the_devil.GameObject
             }
 
             UpdateAbility();
+
             DecreseCooldownTimers();
+
+            ResetTimers();
+            IfHealthIsZero();
+            IfHealthIsFull();
+            Revive();
+
             DrawDifferentRects(gameTime);
         }
         /// <summary>
@@ -124,27 +134,31 @@ namespace Paging_the_devil.GameObject
         /// </summary>
         private void Movment()
         {
-            if (UpMovementBlocked && inputDirection.Y >0)
+            if (UpMovementBlocked && inputDirection.Y > 0)
             {
                 inputDirection.Y = 0;
-               
+
             }
 
-            if (DownMovementBlocked && inputDirection.Y<0)
+            if (DownMovementBlocked && inputDirection.Y < 0)
             {
                 inputDirection.Y = 0;
             }
 
-            if (RightMovementBlocked && inputDirection.X >0)
+            if (RightMovementBlocked && inputDirection.X > 0)
             {
                 inputDirection.X = 0;
             }
-            if (LeftMovementBlocked && inputDirection.X <0)
+            if (LeftMovementBlocked && inputDirection.X < 0)
             {
                 inputDirection.X = 0;
             }
-            pos.X += inputDirection.X * movementSpeed;
-            pos.Y -= inputDirection.Y * movementSpeed;
+            if (!Dead)
+            {
+                pos.X += inputDirection.X * movementSpeed;
+                pos.Y -= inputDirection.Y * movementSpeed;                
+            }
+            
         }
         /// <summary>
         /// Den här metoden återställer timers.
@@ -287,66 +301,70 @@ namespace Paging_the_devil.GameObject
         /// </summary>
         private void DrawDifferentRects(GameTime gameTime)
         {
-            timer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (inputDirection != Vector2.Zero)
+            if(!Dead)
             {
-                if (Math.Abs(inputDirection.X) > Math.Abs(inputDirection.Y))
-                {
-                    if (inputDirection.X < 0)
-                    {
-                        if (angleLeft)
-                        {
-                            drawRect = left;
-                            angleLeft = false;
-                            angleDown = true;
-                            angleRight = true;
-                            angleUp = true;
-                        }
-                        PlayerAnimation(left);
-                    }
-                    else
-                    {
-                        if (angleRight)
-                        {
-                            drawRect = right;
-                            angleLeft = true;
-                            angleDown = true;
-                            angleRight = false;
-                            angleUp = true;
-                        }
-                        PlayerAnimation(right);
-                    }
-                }
-                else
-                {
-                    if (inputDirection.Y < 0)
-                    {
-                        if (angleDown)
-                        {
-                            drawRect = down;
-                            angleLeft = true;
-                            angleDown = false;
-                            angleRight = true;
-                            angleUp = true;
-                        }
-                        PlayerAnimation(down);
-                    }
+                timer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
+                if (inputDirection != Vector2.Zero)
+                {
+                    if (Math.Abs(inputDirection.X) > Math.Abs(inputDirection.Y))
+                    {
+                        if (inputDirection.X < 0)
+                        {
+                            if (angleLeft)
+                            {
+                                drawRect = left;
+                                angleLeft = false;
+                                angleDown = true;
+                                angleRight = true;
+                                angleUp = true;
+                            }
+                            PlayerAnimation(left);
+                        }
+                        else
+                        {
+                            if (angleRight)
+                            {
+                                drawRect = right;
+                                angleLeft = true;
+                                angleDown = true;
+                                angleRight = false;
+                                angleUp = true;
+                            }
+                            PlayerAnimation(right);
+                        }
+                    }
                     else
                     {
-                        if (angleUp)
+                        if (inputDirection.Y < 0)
                         {
-                            drawRect = up;
-                            angleLeft = true;
-                            angleDown = true;
-                            angleRight = true;
-                            angleUp = false;
+                            if (angleDown)
+                            {
+                                drawRect = down;
+                                angleLeft = true;
+                                angleDown = false;
+                                angleRight = true;
+                                angleUp = true;
+                            }
+                            PlayerAnimation(down);
                         }
-                        PlayerAnimation(up);
+
+                        else
+                        {
+                            if (angleUp)
+                            {
+                                drawRect = up;
+                                angleLeft = true;
+                                angleDown = true;
+                                angleRight = true;
+                                angleUp = false;
+                            }
+                            PlayerAnimation(up);
+                        }
                     }
                 }
             }
+            
         }
         /// <summary>
         /// Den här metoden animerar karaktärerna
@@ -388,6 +406,33 @@ namespace Paging_the_devil.GameObject
         {
             get { return hitboxRight; }
 
+        }
+        public void IfHealthIsZero()
+        {
+            if(HealthPoints <= 0)
+            {
+                HealthPoints = 0;
+                Dead = true;
+
+                if(Dead)
+                {
+                    //Lägg in en död spelare här eller nåt snyggt
+                }
+            }
+        }
+        public void IfHealthIsFull()
+        {
+            if(HealthPoints >= maxHealthPoints)
+            {
+                HealthPoints = maxHealthPoints;
+            }
+        }
+        public void Revive()
+        {
+            if(HealthPoints > 0)
+            {
+                Dead = false;
+            }
         }
 
         protected virtual Ability CastAbility1()

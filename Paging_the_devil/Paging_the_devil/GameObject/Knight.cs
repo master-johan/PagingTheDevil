@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace Paging_the_devil.GameObject
 
         public Knight(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base (tex, pos, playerIndex, Controller)
         {
+            HealthPoints = ValueBank.KnightHealth;
+            maxHealthPoints = HealthPoints;
+
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             Ability2 = new Fireball(TextureManager.mageSpellList[0], pos, lastInputDirection);
             Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
@@ -41,6 +45,7 @@ namespace Paging_the_devil.GameObject
             Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
+
         }
     }
 }
