@@ -108,19 +108,19 @@ namespace Paging_the_devil.GameObject
 
         private void UpdateHitbox()
         {
-            if (direction == down)
+            if (meleeDirection == down)
             {
                 rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y, tex.Height * 4, tex.Width + (tex.Width / 2));
             }
-            else if (direction == up)
+            else if (meleeDirection == up)
             {
                 rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y - tex.Width - (tex.Width/2), tex.Height * 4, tex.Width + (tex.Width / 2));
             }
-            else if (direction == right)
+            else if (meleeDirection == right)
             {
                 rect = new Rectangle((int)pos.X, (int)pos.Y  - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
-            else if (direction == left)
+            else if (meleeDirection == left)
             {
                 rect = new Rectangle((int)pos.X - tex.Width - (tex.Width/2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }

@@ -193,40 +193,40 @@ namespace Paging_the_devil.GameObject
                 abilityList.Remove(toRemove);
             }
         }
-        /// <summary>
-        /// Den här metoden skapar slashes beroende på vinklar.
-        /// </summary>
-        private void Slashes()
-        {
-            double slashDir = Math.Atan2(lastInputDirection.Y, lastInputDirection.X);
+        ///// <summary>
+        ///// Den här metoden skapar slashes beroende på vinklar.
+        ///// </summary>
+        //private void Slashes()
+        //{
+        //    double slashDir = Math.Atan2(lastInputDirection.Y, lastInputDirection.X);
 
-            float slashAngle = MathHelper.ToDegrees((float)slashDir);
+        //    float slashAngle = MathHelper.ToDegrees((float)slashDir);
 
-            Vector2 meleeDirection = Vector2.Zero;
+        //    Vector2 meleeDirection = Vector2.Zero;
 
-            if (slashAngle > 45 && slashAngle < 135) // up
-            {
-                meleeDirection = new Vector2(0, -1);
-            }
+        //    if (slashAngle > 45 && slashAngle < 135) // up
+        //    {
+        //        meleeDirection = new Vector2(0, -1);
+        //    }
 
-            else if (slashAngle > 135 || slashAngle < -135) // left
-            {
-                meleeDirection = new Vector2(-1, 0);
-            }
+        //    else if (slashAngle > 135 || slashAngle < -135) // left
+        //    {
+        //        meleeDirection = new Vector2(-1, 0);
+        //    }
 
-            else if (slashAngle > -135 && slashAngle < -45) // down
-            {
-                meleeDirection = new Vector2(0, 1);
-            }
+        //    else if (slashAngle > -135 && slashAngle < -45) // down
+        //    {
+        //        meleeDirection = new Vector2(0, 1);
+        //    }
 
-            else if (slashAngle > -45 && slashAngle < 45) // right
-            {
-                meleeDirection = new Vector2(1, 0);
-            }
-            CreateSlash(meleeDirection);
+        //    else if (slashAngle > -45 && slashAngle < 45) // right
+        //    {
+        //        meleeDirection = new Vector2(1, 0);
+        //    }
+        //    CreateSlash(meleeDirection);
 
-            slashTimer = 20;
-        }
+        //    slashTimer = 20;
+        //}
         /// <summary>
         /// Den här metoden skapar slashes.
         /// </summary>

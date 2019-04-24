@@ -14,6 +14,8 @@ namespace Paging_the_devil.GameObject
     {
         int speed;
         DateTime dateTime;
+
+        Vector2 spellDirection; 
         public TimeSpan timePassed { get; set; }
         public Character character { get; set; }
         public bool Active { get; set; }
@@ -22,15 +24,17 @@ namespace Paging_the_devil.GameObject
         public Healharm(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
+            spellDirection = GetSpellDirection(direction);
             speed = ValueBank.HealHarmSpeed;
             Active = false;
             IsTicking = false;
             dateTime = DateTime.Now;
+            btnTexture = TextureManager.hudTextureList[5];
         }
 
         public override void Update()
         {
-            pos += direction * speed;
+            pos += spellDirection * speed;
 
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
             timePassed = DateTime.Now - dateTime;

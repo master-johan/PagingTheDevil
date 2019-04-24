@@ -20,11 +20,7 @@ namespace Paging_the_devil.GameObject
             : base(tex, pos, direction)
         {
 
-            spellDirection = direction;
-            spellDirection.Normalize();
-            spellDirection.Y = -spellDirection.Y;
-
-
+            spellDirection = GetSpellDirection(direction);
             speed = ValueBank.FireballSpeed;
             Damage = ValueBank.FireballDmg;
 

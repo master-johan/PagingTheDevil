@@ -29,5 +29,14 @@ namespace Paging_the_devil.GameObject
         {
             spriteBatch.Draw(tex, pos, Color.White);
         }
+
+        protected Vector2 GetSpellDirection(Vector2 direction)
+        {
+            Vector2 spellDirection;
+            spellDirection = direction;
+            spellDirection.Normalize();
+            spellDirection.Y = -spellDirection.Y;
+            return spellDirection;
+        }
     }
 }
