@@ -14,6 +14,7 @@ namespace Paging_the_devil.GameObject
     class Player : Character
     {
         float movementSpeed;
+        float rotation;
         protected float maxHealthPoints;
         int slashTimer;
         int playerIndex;
@@ -57,6 +58,7 @@ namespace Paging_the_devil.GameObject
             DecidingValues();
             DecidingSourceRect();
             drawRect = down;
+            rotation = 0;
         }
         /// <summary>
         /// Den här metoden bestämmer sourcerektanglar.
@@ -105,17 +107,28 @@ namespace Paging_the_devil.GameObject
 
             Hitboxes();
 
-            if (Controller.ButtonPressed(Buttons.X) && Ability1CooldownTimer <= 0)
+            if(!Dead)
             {
-                abilityList.Add(CastAbility1());
+                if (Controller.ButtonPressed(Buttons.X) && Ability1CooldownTimer <= 0)
+                {
+                    abilityList.Add(CastAbility1());
+                }
+                if (Controller.ButtonPressed(Buttons.A) && Ability2CooldownTimer <= 0)
+                {
+                    abilityList.Add(CastAbility2());
+                }
+                if (Controller.ButtonPressed(Buttons.B) && Ability3CooldownTimer <= 0)
+                {
+                    abilityList.Add(CastAbility3());
+                }
             }
-            if (Controller.ButtonPressed(Buttons.A) && Ability2CooldownTimer <= 0)
+            if(Dead)
             {
-                abilityList.Add(CastAbility2());
+                rotation = MathHelper.ToRadians(90);
             }
-            if (Controller.ButtonPressed(Buttons.B) && Ability3CooldownTimer <= 0)
+            else
             {
-                abilityList.Add(CastAbility3());
+                rotation = 0;
             }
 
             UpdateAbility();
@@ -287,7 +300,8 @@ namespace Paging_the_devil.GameObject
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(30, 35), 1, SpriteEffects.None, 1);
+
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(30, 35), 1, SpriteEffects.None, 1);
 
             foreach (var A in abilityList)
             {
