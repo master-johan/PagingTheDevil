@@ -35,7 +35,7 @@ namespace Paging_the_devil.Manager
         List<Enemy> enemyList;
 
         bool roomManagerCreated;
-        bool hUDManagerCreated;
+        bool hudManagerCreated;
 
         bool[] connectedController;
 
@@ -124,7 +124,7 @@ namespace Paging_the_devil.Manager
                     if (HUDManager == null)
                     {
                         HUDManager = menuManager.PlayerSelectManager.GetHudManager();
-                        hUDManagerCreated = true;
+                        hudManagerCreated = true;
 
                     }
                     if (roomManager == null)
@@ -257,7 +257,7 @@ namespace Paging_the_devil.Manager
                     {
                         roomManager.Draw(spriteBatch);
                     }
-                    if (hUDManagerCreated)
+                    if (hudManagerCreated)
                     {
                         HUDManager.Draw(spriteBatch);
                     }
