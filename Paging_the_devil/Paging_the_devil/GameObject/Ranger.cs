@@ -16,50 +16,44 @@ namespace Paging_the_devil.GameObject
 
         public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
-            arrowTimer = 0;
+
+
+            Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability2 = new Arrow(TextureManager.mageSpellList[4], pos, lastInputDirection);
+            Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+
             HealthPoints = ValueBank.RangerHealth;
             maxHealthPoints = HealthPoints;
+
+        }
+
+        protected override Ability CastAbility1()
+        {
+            Ability ability = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability1CooldownTimer = ability.coolDownTime;
+            return ability;
+        }
+
+        protected override Ability CastAbility2()
+        {
+            Ability ability = new Arrow(TextureManager.mageSpellList[4], pos, lastInputDirection);
+            Ability2CooldownTimer = ability.coolDownTime;
+            return ability;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
         }
 
-        public override void Update(GameTime gameTime)
+        protected override Ability CastAbility3()
         {
-            if (Controller.ButtonPressed(Buttons.X))
-            {
-                ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
-                abilityList.Add(ability);
-            }
-            if (Controller.ButtonPressed(Buttons.A))
-           
-             {
-                 if (arrowTimer == 0)
-                 {
-                        ShootArrow();
-                 }
-             }
 
-             if (arrowTimer > 0)
-             {
-                    arrowTimer--;
-             }
-              
-            base.Update(gameTime);
-        }
+            Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability3CooldownTimer = ability.coolDownTime;
+            return ability;
 
-        private void ShootArrow()
-        {
-            spellDirection = lastInputDirection;
-            spellDirection.Normalize();
-            spellDirection.Y = -spellDirection.Y;
-
-            ability = new Arrow(TextureManager.mageSpellList[4], pos, spellDirection);
-            abilityList.Add(ability);
-
-            arrowTimer = 60;
         }
     }
 }

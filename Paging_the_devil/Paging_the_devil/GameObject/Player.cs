@@ -18,6 +18,9 @@ namespace Paging_the_devil.GameObject
         int slashTimer;
         int playerIndex;
         int frame;
+        public int Ability1CooldownTimer { get; protected set; }
+        public int Ability2CooldownTimer { get; protected set; }
+        public int Ability3CooldownTimer { get; protected set; }
 
         double timer;
         double interval;
@@ -32,7 +35,11 @@ namespace Paging_the_devil.GameObject
         protected Vector2 inputDirection;
         protected Vector2 lastInputDirection;
         
-        protected Ability ability;
+        public Ability Ability1 { get; protected set; }
+        public Ability Ability2 { get; protected set; }
+        public Ability Ability3 { get; protected set; }
+
+
 
         bool angleRight;
         bool angleLeft;
@@ -98,20 +105,28 @@ namespace Paging_the_devil.GameObject
 
             Hitboxes();
 
-            if (Controller.ButtonPressed(Buttons.B))
-
+            if (Controller.ButtonPressed(Buttons.X) && Ability1CooldownTimer <= 0)
             {
-                if (slashTimer == 0)
-                {
-                    Slashes();
-                }
+                abilityList.Add(CastAbility1());
+            }
+            if (Controller.ButtonPressed(Buttons.A) && Ability2CooldownTimer <= 0)
+            {
+                abilityList.Add(CastAbility2());
+            }
+            if (Controller.ButtonPressed(Buttons.B) && Ability3CooldownTimer <= 0)
+            {
+                abilityList.Add(CastAbility3());
             }
 
             UpdateAbility();
+
+            DecreseCooldownTimers();
+
             ResetTimers();
             IfHealthIsZero();
             IfHealthIsFull();
             Revive();
+
             DrawDifferentRects(gameTime);
         }
         /// <summary>
@@ -148,11 +163,19 @@ namespace Paging_the_devil.GameObject
         /// <summary>
         /// Den här metoden återställer timers.
         /// </summary>
-        private void ResetTimers()
+        private void DecreseCooldownTimers()
         {
-            if (slashTimer > 0)
+            if (Ability1CooldownTimer > 0)
             {
-                slashTimer--;
+                Ability1CooldownTimer--;
+            }
+            if (Ability2CooldownTimer > 0)
+            {
+                Ability2CooldownTimer--;
+            }
+            if (Ability3CooldownTimer > 0)
+            {
+                Ability3CooldownTimer--;
             }
         }
         /// <summary>
@@ -164,7 +187,7 @@ namespace Paging_the_devil.GameObject
             foreach (var A in abilityList)
             {
                 A.Update();
-                if (A == A as Slash)
+                if ( A is Slash)
                 {
                     if (!(A as Slash).Active)
                     {
@@ -184,50 +207,47 @@ namespace Paging_the_devil.GameObject
                 abilityList.Remove(toRemove);
             }
         }
-        /// <summary>
-        /// Den här metoden skapar slashes beroende på vinklar.
-        /// </summary>
-        private void Slashes()
-        {
-            double slashDir = Math.Atan2(lastInputDirection.Y, lastInputDirection.X);
+        ///// <summary>
+        ///// Den här metoden skapar slashes beroende på vinklar.
+        ///// </summary>
+        //private void Slashes()
+        //{
+        //    double slashDir = Math.Atan2(lastInputDirection.Y, lastInputDirection.X);
 
-            float slashAngle = MathHelper.ToDegrees((float)slashDir);
+        //    float slashAngle = MathHelper.ToDegrees((float)slashDir);
 
-            Vector2 meleeDirection;
+        //    Vector2 meleeDirection = Vector2.Zero;
 
-            if (slashAngle > 45 && slashAngle < 135) // up
-            {
-                meleeDirection = new Vector2(0, -1);
-                CreateSlash(meleeDirection);
-            }
+        //    if (slashAngle > 45 && slashAngle < 135) // up
+        //    {
+        //        meleeDirection = new Vector2(0, -1);
+        //    }
 
-            else if (slashAngle > 135 || slashAngle < -135) // left
-            {
-                meleeDirection = new Vector2(-1, 0);
-                CreateSlash(meleeDirection);
-            }
+        //    else if (slashAngle > 135 || slashAngle < -135) // left
+        //    {
+        //        meleeDirection = new Vector2(-1, 0);
+        //    }
 
-            else if (slashAngle > -135 && slashAngle < -45) // down
-            {
-                meleeDirection = new Vector2(0, 1);
-                CreateSlash(meleeDirection);
-            }
+        //    else if (slashAngle > -135 && slashAngle < -45) // down
+        //    {
+        //        meleeDirection = new Vector2(0, 1);
+        //    }
 
-            else if (slashAngle > -45 && slashAngle < 45) // right
-            {
-                meleeDirection = new Vector2(1, 0);
-                CreateSlash(meleeDirection);
-            }
+        //    else if (slashAngle > -45 && slashAngle < 45) // right
+        //    {
+        //        meleeDirection = new Vector2(1, 0);
+        //    }
+        //    CreateSlash(meleeDirection);
 
-            slashTimer = 20;
-        }
+        //    slashTimer = 20;
+        //}
         /// <summary>
         /// Den här metoden skapar slashes.
         /// </summary>
         /// <param name="meleeDirection"></param>
         private void CreateSlash(Vector2 meleeDirection)
         {
-            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, meleeDirection);
+            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             abilityList.Add(slashObject);
         }
         /// <summary>
@@ -414,6 +434,20 @@ namespace Paging_the_devil.GameObject
                 Dead = false;
             }
         }
+
+        protected virtual Ability CastAbility1()
+        {
+            return null;
+        }
+        protected virtual Ability CastAbility2()
+        {
+            return null;
+        }
+        protected virtual Ability CastAbility3()
+        {
+            return null;
+        }
+
 
         public Controller Controller { get; set; }
         public bool UpMovementBlocked { get; set; }

@@ -51,6 +51,7 @@
     <Compile Include="GameObject\EnemyFolder\SmallDevil.cs" />
     <Compile Include="GameObject\Healharm.cs" />
     <Compile Include="GameObject\HUD.cs" />
+    <Compile Include="GameObject\HUDButton.cs" />
     <Compile Include="GameObject\Knight.cs" />
     <Compile Include="GameObject\Ranger.cs" />
     <Compile Include="GameObject\Trap.cs" />

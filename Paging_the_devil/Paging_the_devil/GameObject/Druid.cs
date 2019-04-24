@@ -18,35 +18,61 @@ namespace Paging_the_devil.GameObject
         {
             HealthPoints = ValueBank.DruidHealth;
             maxHealthPoints = HealthPoints;
+
+            Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability2 = new Healharm(TextureManager.mageSpellList[3], pos, lastInputDirection);
+            Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+        }
+
+        protected override Ability CastAbility1()
+        {
+            Ability ability = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability1CooldownTimer = ability.coolDownTime;
+            return ability;
+        }
+
+        protected override Ability CastAbility2()
+        {
+            Ability ability = new Healharm(TextureManager.mageSpellList[3], pos, lastInputDirection);
+            Ability2CooldownTimer = ability.coolDownTime;
+            return ability;
+        }
+
+        protected override Ability CastAbility3()
+        {
+            Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability3CooldownTimer = ability.coolDownTime;
+            return ability;
+
         }
         public override void Update(GameTime gameTime)
         {
-            if (Controller.ButtonPressed(Buttons.X))
-            {
-                if (healHarmTimer == 0)
-                {
-                    ShootHealHarm();
-                }
-            }
+            //if (Controller.ButtonPressed(Buttons.X))
+            //{
+            //    if (healHarmTimer == 0)
+            //    {
+            //        ShootHealHarm();
+            //    }
+            //}
 
-            if (healHarmTimer > 0)
-            {
-                healHarmTimer--;
-            }
+            //if (healHarmTimer > 0)
+            //{
+            //    healHarmTimer--;
+            //}
 
             base.Update(gameTime);
 
         }
-        private void ShootHealHarm()
-        {
-            spellDirection = lastInputDirection;
-            spellDirection.Normalize();
-            spellDirection.Y = -spellDirection.Y;
+        //private void ShootHealHarm()
+        //{
+        //    spellDirection = lastInputDirection;
+        //    spellDirection.Normalize();
+        //    spellDirection.Y = -spellDirection.Y;
 
-            ability = new Healharm(TextureManager.mageSpellList[3], pos, spellDirection);
-            abilityList.Add(ability);
+        //    ability = new Healharm(TextureManager.mageSpellList[3], pos, spellDirection);
+        //    abilityList.Add(ability);
 
-            healHarmTimer = 60;
-        }
+        //    healHarmTimer = 60;
+        //}
     }
 }
