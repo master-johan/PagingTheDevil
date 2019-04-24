@@ -76,7 +76,7 @@ namespace Paging_the_devil.GameObject
 
             HealthPoints = 100f;
 
-            movementSpeed = 3.0f;
+            movementSpeed = 10f;
             interval = 200;
             angleUp = true;
             angleDown = true;
@@ -303,7 +303,7 @@ namespace Paging_the_devil.GameObject
                             angleRight = true;
                             angleUp = true;
                         }
-                        Animation(left);
+                        PlayerAnimation(left);
                     }
                     else
                     {
@@ -315,7 +315,7 @@ namespace Paging_the_devil.GameObject
                             angleRight = false;
                             angleUp = true;
                         }
-                        Animation(right);
+                        PlayerAnimation(right);
                     }
                 }
                 else
@@ -330,7 +330,7 @@ namespace Paging_the_devil.GameObject
                             angleRight = true;
                             angleUp = true;
                         }
-                        Animation(down);
+                        PlayerAnimation(down);
                     }
 
                     else
@@ -343,7 +343,7 @@ namespace Paging_the_devil.GameObject
                             angleRight = true;
                             angleUp = false;
                         }
-                        Animation(up);
+                        PlayerAnimation(up);
                     }
                 }
             }
@@ -352,7 +352,7 @@ namespace Paging_the_devil.GameObject
         /// Den här metoden animerar karaktärerna
         /// </summary>
         /// <param name="rect"></param>
-        private void Animation(Rectangle rect)
+        private void PlayerAnimation(Rectangle rect)
         {
             if (timer <= 0)
             {

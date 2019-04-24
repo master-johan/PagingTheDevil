@@ -26,5 +26,6 @@ namespace Paging_the_devil.GameObject
         {
 
         }
+
     }
 }

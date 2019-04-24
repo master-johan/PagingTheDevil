@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace Paging_the_devil.GameObject
 {
     class Druid : Player
     {
+        int healHarmTimer;
+
         public Druid(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
@@ -37,6 +40,35 @@ namespace Paging_the_devil.GameObject
             Ability ability = new Trap(TextureManager.hudTextureList[0], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
+        }
+        public override void Update(GameTime gameTime)
+        {
+            if (Controller.ButtonPressed(Buttons.X))
+            {
+                if (healHarmTimer == 0)
+                {
+                    ShootHealHarm();
+                }
+            }
+
+            if (healHarmTimer > 0)
+            {
+                healHarmTimer--;
+            }
+
+            base.Update(gameTime);
+
+        }
+        private void ShootHealHarm()
+        {
+            spellDirection = lastInputDirection;
+            spellDirection.Normalize();
+            spellDirection.Y = -spellDirection.Y;
+
+            ability = new Healharm(TextureManager.mageSpellList[3], pos, spellDirection);
+            abilityList.Add(ability);
+
+            healHarmTimer = 60;
         }
     }
 }

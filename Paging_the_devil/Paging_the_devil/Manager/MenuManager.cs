@@ -19,9 +19,10 @@ namespace Paging_the_devil.Manager
         Pointer pointer;
         List<Button> buttonList = new List<Button>();
         Vector2 pointerPos;
-
+        int middleScreenY;
+        int middleScreenX;
         States current, previous;
-
+        MainMenuBackground mainMenuBackground;
         public PlayerSelectManager PlayerSelectManager { get; set; }
 
         Controller[] controllerArray;
@@ -30,8 +31,11 @@ namespace Paging_the_devil.Manager
         {
             this.game = game;
 
-            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(400, 300)));
-            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(400, 500)));
+            middleScreenY = (TextureManager.WindowSizeY / 2);
+            middleScreenX = (TextureManager.WindowSizeX/2);
+
+            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(middleScreenX - TextureManager.menuTextureList[0].Width/ 2, middleScreenY - TextureManager.menuTextureList[0].Height)));
+            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureManager.menuTextureList[0].Width/ 2, middleScreenY - TextureManager.menuTextureList[0].Height + 200)));
 
             pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
             pointer = new Pointer(TextureManager.menuTextureList[5], pointerPos, buttonList);
@@ -40,7 +44,7 @@ namespace Paging_the_devil.Manager
             buttonList[0].activeButton = true;
             current = States.None;
 
-
+            mainMenuBackground = new MainMenuBackground();
             PlayerSelectManager = new PlayerSelectManager();
         }
 
@@ -50,6 +54,7 @@ namespace Paging_the_devil.Manager
             {
                 case GameState.MainMenu:
 
+                    mainMenuBackground.Update(gameTime);
                     foreach (var b in buttonList)
                     {
                         b.Update();
@@ -83,8 +88,8 @@ namespace Paging_the_devil.Manager
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
-                    spriteBatch.Draw(TextureManager.menuTextureList[3], Vector2.Zero, Color.White);
-                    spriteBatch.Draw(TextureManager.menuTextureList[4], new Vector2(100, 0), Color.White);
+                    mainMenuBackground.Draw(spriteBatch);                   
+                    spriteBatch.Draw(TextureManager.menuTextureList[4], new Vector2(middleScreenX - TextureManager.menuTextureList[4].Width/2, 200), Color.White);
 
                     foreach (var b in buttonList)
                     {

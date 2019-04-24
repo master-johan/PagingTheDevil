@@ -12,8 +12,11 @@ namespace Paging_the_devil.GameObject
 {
     class Ranger : Player
     {
+        int arrowTimer;
+
         public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
+
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
             Ability2 = new Fireball(TextureManager.mageSpellList[0], pos, lastInputDirection);
             Ability3 = new Trap(TextureManager.hudTextureList[0], pos, new Vector2(0, 0));
@@ -33,11 +36,34 @@ namespace Paging_the_devil.GameObject
             return ability;
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+
+        }
+
         protected override Ability CastAbility3()
         {
+
             Ability ability = new Trap(TextureManager.hudTextureList[0], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
+
+           
+            base.Update(gameTime);
+
+        }
+
+        private void ShootArrow()
+        {
+            spellDirection = lastInputDirection;
+            spellDirection.Normalize();
+            spellDirection.Y = -spellDirection.Y;
+
+            ability = new Arrow(TextureManager.mageSpellList[4], pos, spellDirection);
+            abilityList.Add(ability);
+
+            arrowTimer = 60;
         }
     }
 }

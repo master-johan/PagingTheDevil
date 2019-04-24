@@ -32,17 +32,21 @@ namespace Paging_the_devil.Manager
             playerTextureList.Add(Content.Load<Texture2D>(@"RangerSpriteSheet"));
 
             //Spells
-            mageSpellList.Add(Content.Load<Texture2D>(@"redSquare"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Fireball"));
             mageSpellList.Add(Content.Load<Texture2D>(@"slash"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Trap"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"HealHarm"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Arrow"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
-            roomTextureList.Add(Content.Load<Texture2D>(@"floorTexture"));
+            roomTextureList.Add(Content.Load<Texture2D>(@"FloorPNG1"));
 
             //Enemey
             enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));
+            enemyTextureList.Add(Content.Load<Texture2D>(@"Slime"));
 
             //Menu
             menuTextureList.Add(Content.Load<Texture2D>(@"PlayGameBTN"));

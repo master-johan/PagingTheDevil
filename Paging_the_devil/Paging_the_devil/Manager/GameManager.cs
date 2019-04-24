@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
 using Paging_the_devil.Manager;
 using Microsoft.Xna.Framework.Media;
+using Paging_the_devil.GameObject.EnemyFolder;
 
 namespace Paging_the_devil.Manager
 {
@@ -32,7 +33,7 @@ namespace Paging_the_devil.Manager
         Player[] playerArray;
 
         List<Enemy> enemyList;
-        
+
         bool roomManagerCreated;
         bool hUDManagerCreated;
 
@@ -44,7 +45,7 @@ namespace Paging_the_devil.Manager
         LevelManager levelManager;
 
         Room currentRoom;
-        
+
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
         {
             this.graphicsDevice = graphicsDevice;
@@ -54,17 +55,18 @@ namespace Paging_the_devil.Manager
 
             menuManager = new MenuManager(graphicsDevice, game);
             levelManager = new LevelManager();
-            
+
 
             enemyList = new List<Enemy>();
 
             currentState = GameState.MainMenu;
+            MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(SoundManager.BgMusicList[0]);
 
             CreatingThings();
 
             menuManager = new MenuManager(graphicsDevice, game);
-            
+
 
             ConnectController();
 
@@ -91,12 +93,13 @@ namespace Paging_the_devil.Manager
             connectedController = new bool[4];
             playerArray = new Player[4];
         }
-        
+
         public void Update(GameTime gameTime)
         {
             switch (currentState)
             {
                 case GameState.MainMenu:
+
                     ConnectController();
                     if (controllerArray[0] != null)
                     {
@@ -117,11 +120,12 @@ namespace Paging_the_devil.Manager
 
                     break;
                 case GameState.InGame:
+
                     if (HUDManager == null)
                     {
                         HUDManager = menuManager.PlayerSelectManager.GetHudManager();
-                        hUDManagerCreated = true; 
-                        
+                        hUDManagerCreated = true;
+
                     }
                     if (roomManager == null)
                     {
@@ -129,11 +133,12 @@ namespace Paging_the_devil.Manager
                         currentRoom = roomManager.CurrentRoom;
                     }
 
+
                     if (Keyboard.GetState().IsKeyDown(Keys.A))
                     {
                         for (int i = 0; i < nrOfPlayers; i++)
                         {
-                            playerArray[i].HealthPoints -=0.5f;
+                            playerArray[i].HealthPoints -= 0.5f;
                         }
                     }
                     if (Keyboard.GetState().IsKeyDown(Keys.S))
@@ -146,22 +151,33 @@ namespace Paging_the_devil.Manager
 
                     for (int i = 0; i < nrOfPlayers; i++)
                     {
-                        CheckPlayerAbilites(playerArray[i].abilityList);
+                        CheckPlayerAbilites(playerArray[i].abilityList, playerArray[i]);
                     }
 
                     foreach (var e in enemyList)
                     {
-                        CheckEnemiesAbilites(e.enemyAbilityList);
+                        if(e is SmallDevil)
+                        {
+                            CheckEnemiesAbilites((e as SmallDevil).enemyAbilityList);
+                        }
+
+                        if (e is Slime)
+                        {
+                            CheckSlimeCollision(e as Slime);
+                        }
                     }
+
 
                     HUDManager.Update();
                     UpdatePlayersDirection();
                     UpdateCharacters(gameTime);
+
                     //UpdateHealth();
                     //DeleteAbilities();
-                    
+
 
                     roomManager.Update();
+
 
                     break;
             }
@@ -236,6 +252,7 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.InGame:
 
+
                     if (roomManagerCreated)
                     {
                         roomManager.Draw(spriteBatch);
@@ -244,13 +261,13 @@ namespace Paging_the_devil.Manager
                     {
                         HUDManager.Draw(spriteBatch);
                     }
+                    spriteBatch.Draw(TextureManager.mageSpellList[4], new Rectangle(100, 100, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height), Color.White);
 
-                  
-                    
-                    DrawCharacters(spriteBatch);
 
                     DrawCharacters(spriteBatch);
-               
+
+                    DrawCharacters(spriteBatch);
+
                     break;
             }
         }
@@ -354,16 +371,16 @@ namespace Paging_the_devil.Manager
                     }
                 }
 
-                foreach (var a in playerArray[i].abilityList)
-                {
-                    foreach (var e in enemyList)
-                    {
-                        if (a.GetRect.Intersects(e.GetRect))
-                        {
-                            toRemoveAbility = a;
-                        }
-                    }
-                }
+                //foreach (var a in playerArray[i].abilityList)
+                //{
+                //    foreach (var e in enemyList)
+                //    {
+                //        if (a.GetRect.Intersects(e.GetRect))
+                //        {
+                //            toRemoveAbility = a;
+                //        }
+                //    }
+                //}
 
                 foreach (var e in enemyList)
                 {
@@ -381,15 +398,15 @@ namespace Paging_the_devil.Manager
                     playerArray[i].abilityList.Remove(toRemoveAbility);
                 }
 
-                
+
             }
 
-            
+
         }
 
-        private void CheckPlayerAbilites (List<Ability> abilityList)
+        private void CheckPlayerAbilites(List<Ability> abilityList, Player player)
         {
-            Ability toRemove = null; 
+            Ability toRemove = null;
             foreach (var a in abilityList)
             {
                 foreach (var e in enemyList)
@@ -407,7 +424,7 @@ namespace Paging_the_devil.Manager
                         else
                         {
                             e.HealthPoints -= a.Damage;
-                            toRemove = a; 
+                            toRemove = a;
                         }
 
                         if (a is Trap)
@@ -415,24 +432,47 @@ namespace Paging_the_devil.Manager
                             e.hitBySlowTrap = true;
                             e.MovementSpeed -= 2;
                         }
+
+                        if (a is Healharm)
+                        {
+                            (a as Healharm).character = e;
+
+                        }
+
+                      
                     }
                 }
 
+                for (int i = 0; i < nrOfPlayers; i++)
+                {
+                    if (a.GetRect.Intersects(playerArray[i].GetRect))
+                    {
+                        if (a is Healharm)
+                        {
+                            if (playerArray[i] != player)
+                            {
+                                (a as Healharm).character = playerArray[i];
+                            }
+                        }
+                    }
+                }
+
+
                 foreach (var w in currentRoom.GetWallList())
                 {
-                    if(a.GetRect.Intersects(w.GetRect))
+                    if (a.GetRect.Intersects(w.GetRect))
                     {
-                        toRemove = a; 
+                        toRemove = a;
                     }
                 }
             }
-            if (toRemove!= null)
+            if (toRemove != null)
             {
                 abilityList.Remove(toRemove);
             }
         }
 
-        private void CheckEnemiesAbilites (List<Ability> abilityList)
+        private void CheckEnemiesAbilites(List<Ability> abilityList)
         {
             Ability toRemove = null;
 
@@ -453,17 +493,33 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(w.GetRect))
                     {
 
-                        toRemove = a; 
+                        toRemove = a;
 
                     }
                 }
             }
 
-            if(toRemove != null)
+            if (toRemove != null)
             {
                 abilityList.Remove(toRemove);
             }
 
+
+        }
+        private void CheckSlimeCollision(Slime slime)
+        {
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+
+                if (slime.GetRect.Intersects(playerArray[i].GetRect))
+                {
+                    playerArray[i].HealthPoints = 0;
+
+                }
+
+
+            }
 
         }
     }

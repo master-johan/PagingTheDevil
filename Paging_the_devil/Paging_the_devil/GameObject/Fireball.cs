@@ -19,11 +19,15 @@ namespace Paging_the_devil.GameObject
         public Fireball(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
+
             spellDirection = direction;
             spellDirection.Normalize();
             spellDirection.Y = -spellDirection.Y;
-            speed = 7;
-            Damage = 2;
+
+
+            speed = ValueBank.FireballSpeed;
+            Damage = ValueBank.FireballDmg;
+
             Active = true;
             coolDownTime = 60;
 

@@ -15,7 +15,7 @@ namespace Paging_the_devil.GameObject
         public TimeSpan timePassed { get; set; }
         public Trap(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos, direction)
         {
-            Damage = 2;
+            Damage = ValueBank.TrapDmg;
             dateTime = DateTime.Now;
             coolDownTime = 40;
             btnTexture = TextureManager.hudTextureList[5];

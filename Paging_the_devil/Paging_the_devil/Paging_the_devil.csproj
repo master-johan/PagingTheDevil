@@ -43,13 +43,19 @@
   <ItemGroup>
     <Compile Include="Button.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="GameObject\Arrow.cs" />
     <Compile Include="GameObject\Barbarian.cs" />
     <Compile Include="GameObject\Druid.cs" />
+    <Compile Include="GameObject\EnemyFolder\Enemy.cs" />
+    <Compile Include="GameObject\EnemyFolder\Slime.cs" />
+    <Compile Include="GameObject\EnemyFolder\SmallDevil.cs" />
+    <Compile Include="GameObject\Healharm.cs" />
     <Compile Include="GameObject\HUD.cs" />
     <Compile Include="GameObject\HUDButton.cs" />
     <Compile Include="GameObject\Knight.cs" />
     <Compile Include="GameObject\Ranger.cs" />
     <Compile Include="GameObject\Trap.cs" />
+    <Compile Include="MainMenuBackground.cs" />
     <Compile Include="Manager\HUDManager.cs" />
     <Compile Include="Manager\LevelManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
@@ -57,7 +63,6 @@
     <Compile Include="GameObject\Ability.cs" />
     <Compile Include="GameObject\Character.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="GameObject\Enemy.cs" />
     <Compile Include="GameObject\Fireball.cs" />
     <Compile Include="GameObject\GameObject.cs" />
     <Compile Include="GameObject\MovingObject.cs" />
@@ -67,6 +72,7 @@
     <Compile Include="Manager\RoomManager.cs" />
     <Compile Include="Manager\PlayerSelectManager.cs" />
     <Compile Include="Manager\SoundManager.cs" />
+    <Compile Include="Manager\ValueBank.cs" />
     <Compile Include="PlayerSelectBackground.cs" />
     <Compile Include="Pointer.cs" />
     <Compile Include="Program.cs" />

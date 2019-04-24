@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Paging_the_devil.GameObject;
+using Paging_the_devil.GameObject.EnemyFolder;
 
 namespace Paging_the_devil.Manager
 {
@@ -456,7 +457,12 @@ namespace Paging_the_devil.Manager
 
         private void SpawnEnemies()
         {
-            enemyList.Add(new Enemy(TextureManager.enemyTextureList[0], new Vector2(500, 500)));
+            Random rand = new Random();
+            int x = rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
+            int y = rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
+
+            enemyList.Add(new SmallDevil(TextureManager.enemyTextureList[0], new Vector2(500, 500)));
+            enemyList.Add(new Slime(TextureManager.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
         }
     }
 }
