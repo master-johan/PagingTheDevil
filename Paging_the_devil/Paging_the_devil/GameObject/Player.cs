@@ -121,8 +121,6 @@ namespace Paging_the_devil.GameObject
             UpdateAbility();
 
             DecreseCooldownTimers();
-
-            ResetTimers();
             IfHealthIsZero();
             IfHealthIsFull();
             Revive();
