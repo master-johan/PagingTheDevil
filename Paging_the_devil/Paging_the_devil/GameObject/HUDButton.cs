@@ -29,7 +29,7 @@ namespace Paging_the_devil.GameObject
 
         public override void Update()
         {
-            if (currentTimer >0)
+            if (currentTimer > 0)
             {
                 float procent = (float)currentTimer / (float)maxTimer;
                 double height = procent * rect.Height;
@@ -43,8 +43,8 @@ namespace Paging_the_devil.GameObject
             spriteBatch.Draw(ability.btnTexture, abilityTexturePos, Color.White);
             if (currentTimer >0 )
             {
-                spriteBatch.Draw(TextureManager.mageSpellList[0],
-                                 abilityTexturePos,
+                spriteBatch.Draw(TextureManager.hudTextureList[1],
+                                 new Vector2(rect.X +2 ,rect.Y + 5),
                                  coolDownRect,
                                  Color.White,
                                  MathHelper.ToRadians(180f),
