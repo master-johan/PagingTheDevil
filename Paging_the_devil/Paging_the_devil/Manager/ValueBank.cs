@@ -34,6 +34,7 @@ namespace Paging_the_devil.Manager
         public static int SmallDevilShootTimer;
 
         public static int SmallDevilMoveSpeed;
+        public static float SmallDevilIdleMoveSpeed;
         public static float SlimeSpeed;
 
         public static Random rand;
@@ -78,6 +79,7 @@ namespace Paging_the_devil.Manager
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4;
+            SmallDevilIdleMoveSpeed = 1f;
             SlimeSpeed = 1f;
         }
 

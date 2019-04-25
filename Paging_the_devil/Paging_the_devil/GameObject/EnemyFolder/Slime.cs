@@ -14,16 +14,20 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         Rectangle srcRect;
         Player[] playerArray;
         Player targetPlayer;
+
         int nrOfPlayer;
         int frame;
         int spriteCount;
         int spriteWidth;
         int posX, posY;
+
         float radius;
         float shortestDistanceToPlayer;
         float scale;
+
         double timer;
         double interval;
+
         Vector2 direction;
 
 
@@ -32,6 +36,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             this.playerArray = player;
             this.nrOfPlayer = nrOfPlayer;
 
+            //MovementSpeed = ValueBank.SlimeSpeed;
             interval = 200;
             radius = 500;
             scale = 2f;
@@ -52,7 +57,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             base.Update(gameTime);
             Animation(gameTime);
             GetTarget();
-            Movement();
+            Movement(gameTime);
         }
         private void Animation(GameTime gameTime)
         {
@@ -65,7 +70,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 srcRect.Y = (frame % spriteCount) * spriteWidth;
             }
         }
-        protected override void Movement()
+        protected override void Movement(GameTime gameTime)
         {
             if (targetPlayer != null && !targetPlayer.Dead)
             {
@@ -90,7 +95,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             {
                 shortestDistanceToPlayer = Vector2.Distance(playerArray[i].GetSetPos, pos);
 
-                if (shortestDistanceToPlayer < radius)
+                if (shortestDistanceToPlayer <= radius)
                 {
                     targetPlayer = playerArray[i];
                 }
