@@ -29,6 +29,7 @@ namespace Paging_the_devil.GameObject
             origin = new Vector2(TextureManager.mageSpellList[4].Width / 2, TextureManager.mageSpellList[4].Height / 2);
             srsRect = new Rectangle(0, 0, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
             btnTexture = TextureManager.abilityButtonList[0];
+            coolDownTime = ValueBank.ArrowCooldown;
         }
 
         public override void Update()

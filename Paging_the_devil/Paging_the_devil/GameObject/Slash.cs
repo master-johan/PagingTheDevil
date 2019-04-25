@@ -30,9 +30,8 @@ namespace Paging_the_devil.GameObject
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
             slashPos = pos;
             Hit = false;
-            coolDownTime = 20; 
+            coolDownTime = ValueBank.SlashCooldown; 
             meleeDirection = DecideDirectionOfSlash(direction);
-
             btnTexture = TextureManager.abilityButtonList[1];
 
 

@@ -29,7 +29,7 @@ namespace Paging_the_devil.GameObject
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
             cleavePos = pos;
             Hit = false;
-            coolDownTime = 20;
+            coolDownTime = ValueBank.CleaveCooldown;
             meleeDirection = DecideDirectionOfCleave(direction);
             this.player = player;
             btnTexture = TextureManager.abilityButtonList[4];

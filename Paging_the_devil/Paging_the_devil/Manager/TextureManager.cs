@@ -75,6 +75,7 @@ namespace Paging_the_devil.Manager
             abilityButtonList.Add(Content.Load<Texture2D>(@"TrapButton"));
             abilityButtonList.Add(Content.Load<Texture2D>(@"HealHarmButton"));
             abilityButtonList.Add(Content.Load<Texture2D>(@"CleaveButton"));
+            abilityButtonList.Add(Content.Load<Texture2D>(@"DashButton"));
 
             //PlayerSelectBackground bilder
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Background"));
