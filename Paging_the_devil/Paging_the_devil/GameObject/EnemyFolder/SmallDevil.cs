@@ -26,7 +26,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         float safetyRadiusOuter;
         float safetyRadiusInner;
         float distanceToPlayer;
-       
+
         float scale;
         float randomPosTimer;
 
@@ -35,7 +35,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
         bool fleeing;
         bool safeZone;
-        bool chase;
 
         Vector2 direction;
         public SmallDevil(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayers) : base(tex, pos)
@@ -73,7 +72,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            GetTarget();
+            ChasingOrFleeingOrSafe();
             Movement(gameTime);
             ShootFireball();
         }
@@ -102,15 +101,15 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                     randomPosTimer = 0.2f;
                     posX = ValueBank.rand.Next(-1, 1);
                     posY = ValueBank.rand.Next(-1, 1);
-                  
+
                     if (posX != 0 && posY != 0)
-                    {                        
+                    {
                         direction = new Vector2(posX, posY);
-                        direction.Normalize(); 
-                    }                    
+                        direction.Normalize();
+                    }
                 }
                 pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
-                
+
 
             }
             //else 
@@ -151,7 +150,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 shootTimer = ValueBank.SmallDevilShootTimer;
             }
         }
-        private void GetTarget()
+        private void ChasingOrFleeingOrSafe()
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
@@ -172,7 +171,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                     safeZone = false;
                 }
 
-                else if (distanceToPlayer >= safetyRadiusInner && distanceToPlayer <= safetyRadiusOuter)
+                else if (distanceToPlayer <= safetyRadiusOuter && distanceToPlayer >= safetyRadiusInner)
                 {
                     safeZone = true;
                     fleeing = false;
