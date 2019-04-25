@@ -89,7 +89,7 @@ namespace Paging_the_devil.GameObject
         private void DecidingValues()
         {
             Active = true;
-            Damage = 3;
+            Damage = ValueBank.SlashDmg;
         }
 
         public override void Update()
@@ -102,7 +102,14 @@ namespace Paging_the_devil.GameObject
                 angle < MathHelper.ToRadians(-405f) && meleeDirection == right)
             {
                 Active = false;
+                ToRemove = true;
             }
+
+            if (HitCharacter != null)
+            {
+                ApplyDamage();
+            }
+
             UpdateHitbox();
         }
 

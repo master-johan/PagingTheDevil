@@ -17,6 +17,11 @@ namespace Paging_the_devil.GameObject
         public float Damage { get; set; }
         public float Heal { get; set; }
 
+        public bool Active { get; set; }
+        public bool ToRemove { get; set; }
+
+        public Character HitCharacter { get; set; }
+
         public Ability(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos)
         {
             this.direction = direction;
@@ -37,6 +42,22 @@ namespace Paging_the_devil.GameObject
             spellDirection.Normalize();
             spellDirection.Y = -spellDirection.Y;
             return spellDirection;
+        }
+
+        protected void UpdateRect()
+        {
+            rect.X = (int)pos.X;
+            rect.Y = (int)pos.Y;
+        }
+
+        protected virtual void ApplyDamage()
+        {
+            HitCharacter.HealthPoints -= Damage;
+        }
+
+        protected virtual void ApplyHeal()
+        {
+            HitCharacter.HealthPoints += Heal;
         }
     }
 }
