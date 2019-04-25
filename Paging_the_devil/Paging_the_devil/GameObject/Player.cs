@@ -205,6 +205,13 @@ namespace Paging_the_devil.GameObject
                         toRemove = A;
                     }
                 }
+                if(A is Cleave)
+                {
+                    if(!(A as Cleave).Active)
+                    {
+                        toRemove = A;
+                    }
+                }
                 if (A is Trap)
                 {
                     if ((A as Trap).timePassed.TotalSeconds > 5)
@@ -258,7 +265,7 @@ namespace Paging_the_devil.GameObject
         /// <param name="meleeDirection"></param>
         private void CreateSlash(Vector2 meleeDirection)
         {
-            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection,this);
             abilityList.Add(slashObject);
         }
         /// <summary>

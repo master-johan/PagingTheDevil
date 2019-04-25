@@ -417,6 +417,19 @@ namespace Paging_the_devil.Manager
                             e.HealthPoints -= a.Damage;
                             toRemove = a;
                         }
+                        if ((a is Cleave))
+                        {
+                            if(!(a as Cleave).Hit)
+                            {
+                                e.HealthPoints -= a.Damage;
+                            }
+                            (a as Cleave).Hit = true;
+                        }
+                        else
+                        {
+                            e.HealthPoints -= a.Damage;
+                            toRemove = a;
+                        }
 
                         if (a is Trap)
                         {

@@ -18,6 +18,7 @@ namespace Paging_the_devil.Manager
         public static List<Texture2D> menuTextureList = new List<Texture2D>();
         public static List<Texture2D> hudTextureList = new List<Texture2D>();
         public static List<Texture2D> playerSelectBackgroundList = new List<Texture2D>();
+        public static List<Texture2D> abilityButtonList = new List<Texture2D>();
 
         public static int WindowSizeY;
         public static int WindowSizeX;
@@ -37,6 +38,8 @@ namespace Paging_the_devil.Manager
             mageSpellList.Add(Content.Load<Texture2D>(@"Trap"));
             mageSpellList.Add(Content.Load<Texture2D>(@"HealHarm"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Arrow"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"AxeBarb"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"CleavePNG"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
@@ -65,6 +68,13 @@ namespace Paging_the_devil.Manager
             hudTextureList.Add(Content.Load<Texture2D>(@"HUDtest"));
             hudTextureList.Add(Content.Load<Texture2D>(@"slashBtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"CooldownTex"));
+
+            //AbilityButtons
+            abilityButtonList.Add(Content.Load<Texture2D>(@"ArrowButton"));
+            abilityButtonList.Add(Content.Load<Texture2D>(@"SwordButton"));
+            abilityButtonList.Add(Content.Load<Texture2D>(@"TrapButton"));
+            abilityButtonList.Add(Content.Load<Texture2D>(@"HealHarmButton"));
+            abilityButtonList.Add(Content.Load<Texture2D>(@"CleaveButton"));
 
             //PlayerSelectBackground bilder
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Background"));

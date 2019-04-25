@@ -22,6 +22,7 @@ namespace Paging_the_devil.Manager
         public static int HealHarmDmg;
         public static int SlashDmg;
         public static int FireballDmg;
+        public static int CleaveDmg;
 
         public static int HealHarmHeal;
 
@@ -59,6 +60,7 @@ namespace Paging_the_devil.Manager
             TrapDmg = 2;
             HealHarmDmg = 3;
             SlashDmg = 2;
+            CleaveDmg = 4;
 
             //Enemy Ability Dmg
             FireballDmg = 2;
