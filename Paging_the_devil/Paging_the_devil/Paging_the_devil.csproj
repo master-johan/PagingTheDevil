@@ -45,6 +45,8 @@
     <Compile Include="Controller.cs" />
     <Compile Include="GameObject\Arrow.cs" />
     <Compile Include="GameObject\Barbarian.cs" />
+    <Compile Include="GameObject\Cleave.cs" />
+    <Compile Include="GameObject\Dash.cs" />
     <Compile Include="GameObject\Druid.cs" />
     <Compile Include="GameObject\EnemyFolder\Enemy.cs" />
     <Compile Include="GameObject\EnemyFolder\Slime.cs" />
