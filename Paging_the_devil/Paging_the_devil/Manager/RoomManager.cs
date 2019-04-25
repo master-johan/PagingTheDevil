@@ -462,7 +462,7 @@ namespace Paging_the_devil.Manager
         {
             int x = ValueBank.rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
             int y = ValueBank.rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
-            enemyList.Add(new SmallDevil(TextureManager.enemyTextureList[0], new Vector2(x, y)));
+            enemyList.Add(new SmallDevil(TextureManager.enemyTextureList[0], new Vector2(x, y), playerArray, nrOfPlayers));
         }
         private void SpawnSlime()
         {
