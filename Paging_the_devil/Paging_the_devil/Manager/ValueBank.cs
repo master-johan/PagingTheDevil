@@ -106,8 +106,8 @@ namespace Paging_the_devil.Manager
             HealHarmTimer = 4000;
             SmallDevilShootTimer = 40;
             TrapTimer = 2000;
-            DashTimer = 0.2f;
-            ChargeTimer = 0.2f;
+            DashTimer = 200;
+            ChargeTimer = 200;
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4;
@@ -115,7 +115,7 @@ namespace Paging_the_devil.Manager
             SlimeSpeed = 1f;
 
             //Player Speed
-            PlayerSpeed = 2;
+            PlayerSpeed = 5;
         }
 
 

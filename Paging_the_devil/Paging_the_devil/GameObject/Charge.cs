@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
+using Paging_the_devil.GameObject.EnemyFolder;
 
 namespace Paging_the_devil.GameObject
 {
     class Charge : Ability
     {
         Player player;
-        static DateTime StartTime;
-        TimeSpan timePassed { get; set; }
+
+        float timePassed { get; set; }
         public bool Active { get; set; }
         public bool Hit { get; set; }
+        List<Enemy> enemiesHitList;
 
         public Charge(Texture2D tex, Vector2 pos, Vector2 direction, Player player, bool Active) : base(tex, pos, direction)
         {
@@ -27,12 +29,29 @@ namespace Paging_the_devil.GameObject
             Damage = ValueBank.ChargeDmg;           
             btnTexture = TextureManager.abilityButtonList[5];
             coolDownTime = ValueBank.ChargeCooldown;
-            StartTime = DateTime.Now;
+            enemiesHitList = new List<Enemy>();
         }
         public override void Update(GameTime gameTime)
         {
+            timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             rect = new Rectangle((int)player.GetSetPos.X - player.GetRect.Width/2, (int)player.GetSetPos.Y - player.GetRect.Height / 2, player.GetRect.Width, player.GetRect.Height);
-            ChargeUpdate();
+            ChargeUpdate(gameTime);
+            if (HitCharacter != null)
+            {
+                bool hasHitBefore = false;
+                foreach (var e in enemiesHitList)
+                {
+                    if (HitCharacter == e)
+                    {
+                        hasHitBefore = true;
+                    }
+                }
+                if (!hasHitBefore)
+                {
+                    ApplyDamage();
+                    enemiesHitList.Add(HitCharacter as Enemy);
+                }
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -41,21 +60,21 @@ namespace Paging_the_devil.GameObject
         /// <summary>
         /// Denna metod updaterar charge abilityn 
         /// </summary>
-        public void ChargeUpdate()
+        public void ChargeUpdate(GameTime gameTime)
         {
             if (Active)
             {
                 ChargeDirection(direction);
                 player.movementSpeed = ValueBank.ChargeSpeed;
 
-                TimeSpan timePassed = DateTime.Now - StartTime;
-                if (timePassed.TotalSeconds >= ValueBank.ChargeTimer)
+                
+               
+                if (timePassed >= ValueBank.ChargeTimer)
                 {
                     player.movementSpeed = ValueBank.PlayerSpeed;
                     Active = false;
-                }
-
-            
+                    ToRemove = true;
+                }       
             }
         }
         /// <summary>
@@ -64,7 +83,6 @@ namespace Paging_the_devil.GameObject
         private Vector2 ChargeDirection(Vector2 direction)
         {
             Vector2 chargeDirection = player.LastDirection;
-
             return direction;
         }
     }

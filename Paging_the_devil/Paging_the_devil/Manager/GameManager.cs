@@ -362,17 +362,6 @@ namespace Paging_the_devil.Manager
                     }
                 }
 
-                //foreach (var a in playerArray[i].abilityList)
-                //{
-                //    foreach (var e in enemyList)
-                //    {
-                //        if (a.GetRect.Intersects(e.GetRect))
-                //        {
-                //            toRemoveAbility = a;
-                //        }
-                //    }
-                //}
-
                 foreach (var e in enemyList)
                 {
                     foreach (var a in e.enemyAbilityList)
@@ -398,42 +387,11 @@ namespace Paging_the_devil.Manager
                 {
                     if (a.GetRect.Intersects(e.GetRect))
                     {
-
-
                         a.HitCharacter = e;
-                        if (a is Slash) // arbeta mer för att fixa slashen
+                        if (a is Slash ) // arbeta mer för att fixa slashen
                         {
-
                             (a as Slash).Hit = true;
                         }
-
-                        //if ((a is Slash))
-                        //{
-                        //    if (!(a as Slash).Hit)
-                        //    {
-                        //        e.HealthPoints -= a.Damage;
-                        //    }
-                        //    (a as Slash).Hit = true;
-                        //}
-                        //else
-                        //{
-                        //    e.HealthPoints -= a.Damage;
-                        //    toRemove = a;
-                        //}
-
-                        //if (a is Trap)
-                        //{
-                        //    e.hitBySlowTrap = true;
-                        //    e.MovementSpeed -= 2;
-                        //    //ValueBank.SlimeSpeed -= 0.5f;
-                        //}
-
-                        //if (a is Healharm)
-                        //{
-                        //    (a as Healharm).Active = true;
-                        //    (a as Healharm).DmgOverTime(e);
-                        //}
-
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)
