@@ -225,9 +225,7 @@ namespace Paging_the_devil.GameObject
                     {
                         toRemove = A;
                     }
-
-                }
-                
+                }               
             }
             if (toRemove != null)
             {

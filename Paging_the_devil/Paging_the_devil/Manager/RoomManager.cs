@@ -452,6 +452,7 @@ namespace Paging_the_devil.Manager
                 for (int i = 0; i < nrOfPlayers; i++)
                 {
                     playerArray[i].pos = temp;
+                    SoundManager.SoundEffectList[6].Play();
                 }
 
                
