@@ -20,7 +20,6 @@ namespace Paging_the_devil.GameObject
             coolDownTime = ValueBank.TrapCooldown;
             btnTexture = TextureManager.abilityButtonList[2];
         }
-
         public override void Update()
         {
              timePassed = DateTime.Now - dateTime;
