@@ -25,7 +25,7 @@ namespace Paging_the_devil.GameObject
             coolDownTime = ValueBank.DashCooldown;
             StartTime = DateTime.Now;
         }
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             DashUpdate();
         }

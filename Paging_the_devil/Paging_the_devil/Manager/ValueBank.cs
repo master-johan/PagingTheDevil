@@ -103,9 +103,9 @@ namespace Paging_the_devil.Manager
             ChargeSpeed = 15f;
 
             //Ability Timer
-            HealHarmTimer = 4;
+            HealHarmTimer = 4000;
             SmallDevilShootTimer = 40;
-            TrapTimer = 5;
+            TrapTimer = 2000;
             DashTimer = 0.2f;
             ChargeTimer = 0.2f;
 

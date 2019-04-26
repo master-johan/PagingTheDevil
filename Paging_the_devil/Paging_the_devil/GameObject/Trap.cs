@@ -23,6 +23,7 @@ namespace Paging_the_devil.GameObject
             Damage = ValueBank.TrapDmg;
             coolDownTime = 40;
             btnTexture = TextureManager.hudTextureList[5];
+            Active = true; 
         }
 
         public override void Update(GameTime gameTime)
@@ -32,17 +33,18 @@ namespace Paging_the_devil.GameObject
 
             if (HitCharacter != null)
             {
+                rect.Height = 0;
+                rect.Width = 0;
                 if (Active)
                 {
                     ApplyDamage();
                     Active = false;
                     originalSpeed = (HitCharacter as Enemy).MovementSpeed;
-                    calculatedSpeed = originalSpeed / 2; 
+                    calculatedSpeed = originalSpeed / 2;
+                    SoundManager.SoundEffectList[10].Play();
                 }
-               
                 timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 SlowEffect();
-
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -53,7 +55,7 @@ namespace Paging_the_devil.GameObject
         protected void SlowEffect()
         {
 
-            (HitCharacter as Enemy).MovementSpeed = (int)calculatedSpeed;
+            (HitCharacter as Enemy).MovementSpeed = 0;
             if (timePassed >= ValueBank.TrapTimer  )
             {
                 (HitCharacter as Enemy).MovementSpeed = (int)originalSpeed;

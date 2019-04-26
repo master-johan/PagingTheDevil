@@ -29,7 +29,7 @@ namespace Paging_the_devil.GameObject
             coolDownTime = ValueBank.ChargeCooldown;
             StartTime = DateTime.Now;
         }
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             rect = new Rectangle((int)player.GetSetPos.X - player.GetRect.Width/2, (int)player.GetSetPos.Y - player.GetRect.Height / 2, player.GetRect.Width, player.GetRect.Height);
             ChargeUpdate();
