@@ -13,7 +13,7 @@ namespace Paging_the_devil.GameObject
 
     class Player : Character
     {
-        float movementSpeed;
+        public float movementSpeed { get; set; }
         float rotation;
         protected float maxHealthPoints;
         int slashTimer;
@@ -34,7 +34,7 @@ namespace Paging_the_devil.GameObject
 
         protected Vector2 spellDirection;
         protected Vector2 inputDirection;
-        protected Vector2 lastInputDirection;
+        public Vector2 LastDirection { get; set; }
         
         public Ability Ability1 { get; protected set; }
         public Ability Ability2 { get; protected set; }
@@ -81,7 +81,7 @@ namespace Paging_the_devil.GameObject
             //HealthPoints = 100f;
             //maxHealthPoints = HealthPoints;
 
-            movementSpeed = 10f;
+            movementSpeed = ValueBank.PlayerSpeed;
             interval = 200;
             angleUp = true;
             angleDown = true;
@@ -205,6 +205,13 @@ namespace Paging_the_devil.GameObject
                         toRemove = A;
                     }
                 }
+                if(A is Cleave)
+                {
+                    if(!(A as Cleave).Active)
+                    {
+                        toRemove = A;
+                    }
+                }
                 if (A is Trap)
                 {
                     if ((A as Trap).timePassed.TotalSeconds > 5)
@@ -212,6 +219,13 @@ namespace Paging_the_devil.GameObject
                         toRemove = A;
                     }
                 }
+                if (A is Dash)
+                {
+                    if (!(A as Dash).Active)
+                    {
+                        toRemove = A;
+                    }
+                }               
             }
             if (toRemove != null)
             {
@@ -258,7 +272,7 @@ namespace Paging_the_devil.GameObject
         /// <param name="meleeDirection"></param>
         private void CreateSlash(Vector2 meleeDirection)
         {
-            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, LastDirection,this);
             abilityList.Add(slashObject);
         }
         /// <summary>
@@ -295,7 +309,7 @@ namespace Paging_the_devil.GameObject
         /// <param name="direction"></param>
         public void LastInputDirection(Vector2 direction)
         {
-            lastInputDirection = direction;
+            LastDirection = direction;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

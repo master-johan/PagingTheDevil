@@ -409,8 +409,24 @@ namespace Paging_the_devil.Manager
                             if (!(a as Slash).Hit)
                             {
                                 e.HealthPoints -= a.Damage;
+                                SoundManager.SoundEffectList[2].Play();
                             }
                             (a as Slash).Hit = true;
+                            
+                        }
+                        else
+                        {
+                            e.HealthPoints -= a.Damage;
+                            toRemove = a;
+                        }
+                        if ((a is Cleave))
+                        {
+                            if(!(a as Cleave).Hit)
+                            {
+                                e.HealthPoints -= a.Damage;
+                                SoundManager.SoundEffectList[4].Play();
+                            }
+                            (a as Cleave).Hit = true;
                         }
                         else
                         {
@@ -422,6 +438,7 @@ namespace Paging_the_devil.Manager
                         {
                             e.hitBySlowTrap = true;
                             e.MovementSpeed -= 2;
+                            SoundManager.SoundEffectList[10].Play();
                             //ValueBank.SlimeSpeed -= 0.5f;
                         }
 
@@ -501,14 +518,11 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-
                 if (slime.GetRect.Intersects(playerArray[i].GetRect))
                 {
                     playerArray[i].HealthPoints = 0;
 
                 }
-
-
             }
 
         }
