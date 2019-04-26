@@ -83,14 +83,14 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
-                pos += direction * ValueBank.SmallDevilMoveSpeed;
+                pos += direction * MovementSpeed;
             }
 
             else if (targetPlayer != null && !targetPlayer.Dead && fleeing && !safeZone)
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
-                pos -= direction * ValueBank.SmallDevilMoveSpeed;
+                pos -= direction * MovementSpeed;
             }
             else if (safeZone && !fleeing)
             {
@@ -108,7 +108,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                         direction.Normalize();
                     }
                 }
-                pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
+                pos += direction * MovementSpeed;
 
 
             }

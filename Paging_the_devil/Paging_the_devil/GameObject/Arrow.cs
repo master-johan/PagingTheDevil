@@ -32,7 +32,7 @@ namespace Paging_the_devil.GameObject
             coolDownTime = ValueBank.ArrowCooldown;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             pos += spellDirection * speed;
             UpdateRect();

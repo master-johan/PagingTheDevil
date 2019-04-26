@@ -15,7 +15,7 @@ namespace Paging_the_devil.GameObject
             this.pos = pos;
         }
 
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
 
         public abstract void Draw(SpriteBatch spriteBatch);
         

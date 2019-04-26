@@ -12,34 +12,39 @@ namespace Paging_the_devil.GameObject
 {
     class Trap : Ability
     {
-        DateTime dateTime;
-        public TimeSpan timePassed { get; set; }
+        float counter;
+        float tickTime;
         float originalSpeed;
         float calculatedSpeed;
+        float timePassed;
+       
         public Trap(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos, direction)
         {
             Damage = ValueBank.TrapDmg;
-            dateTime = DateTime.Now;
-            coolDownTime = ValueBank.TrapCooldown;
-            btnTexture = TextureManager.abilityButtonList[2];
+            coolDownTime = 40;
+            btnTexture = TextureManager.hudTextureList[5];
+            Active = true; 
         }
-        public override void Update()
+
+        public override void Update(GameTime gameTime)
         {
             
             UpdateRect();
 
             if (HitCharacter != null)
             {
+                rect.Height = 0;
+                rect.Width = 0;
                 if (Active)
                 {
                     ApplyDamage();
                     Active = false;
                     originalSpeed = (HitCharacter as Enemy).MovementSpeed;
-                    calculatedSpeed = originalSpeed / 2; 
+                    calculatedSpeed = originalSpeed / 2;
+                    SoundManager.SoundEffectList[10].Play();
                 }
-                timePassed = DateTime.Now - dateTime;
+                timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 SlowEffect();
-
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -50,11 +55,11 @@ namespace Paging_the_devil.GameObject
         protected void SlowEffect()
         {
 
-            (HitCharacter as Enemy).MovementSpeed = (int)calculatedSpeed;
-            if (timePassed.Seconds >= ValueBank.TrapTimer  )
+            (HitCharacter as Enemy).MovementSpeed = 0;
+            if (timePassed >= ValueBank.TrapTimer  )
             {
+                (HitCharacter as Enemy).MovementSpeed = (int)originalSpeed;
                 ToRemove = true;
-                (HitCharacter as Enemy).MovementSpeed = (int)originalSpeed; 
             }
         }
     }
