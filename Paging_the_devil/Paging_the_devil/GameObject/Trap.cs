@@ -20,10 +20,9 @@ namespace Paging_the_devil.GameObject
         {
             Damage = ValueBank.TrapDmg;
             dateTime = DateTime.Now;
-            coolDownTime = 40;
-            btnTexture = TextureManager.hudTextureList[5];
+            coolDownTime = ValueBank.TrapCooldown;
+            btnTexture = TextureManager.abilityButtonList[2];
         }
-
         public override void Update()
         {
             

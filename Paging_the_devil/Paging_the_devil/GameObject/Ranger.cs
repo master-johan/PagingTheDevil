@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,12 @@ namespace Paging_the_devil.GameObject
 {
     class Ranger : Player
     {
-        int arrowTimer;
 
         public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
 
-
-            Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
-            Ability2 = new Arrow(TextureManager.mageSpellList[4], pos, lastInputDirection);
+            Ability1 = new Dash(tex, pos, LastDirection,this,false);
+            Ability2 = new Arrow(TextureManager.mageSpellList[4], pos, LastDirection);
             Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
 
             HealthPoints = ValueBank.RangerHealth;
@@ -29,15 +28,17 @@ namespace Paging_the_devil.GameObject
 
         protected override Ability CastAbility1()
         {
-            Ability ability = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability ability = new Dash(tex, pos, LastDirection,this,true);
             Ability1CooldownTimer = ability.coolDownTime;
+            SoundManager.SoundEffectList[8].Play();
             return ability;
         }
 
         protected override Ability CastAbility2()
         {
-            Ability ability = new Arrow(TextureManager.mageSpellList[4], pos, lastInputDirection);
+            Ability ability = new Arrow(TextureManager.mageSpellList[4], pos, LastDirection);
             Ability2CooldownTimer = ability.coolDownTime;
+            SoundManager.SoundEffectList[0].Play();
             return ability;
         }
 
@@ -52,6 +53,7 @@ namespace Paging_the_devil.GameObject
 
             Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
+            SoundManager.SoundEffectList[9].Play();
             return ability;
 
         }
