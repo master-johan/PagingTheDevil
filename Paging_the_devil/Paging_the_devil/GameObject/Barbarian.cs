@@ -23,8 +23,8 @@ namespace Paging_the_devil.GameObject
 
             Ability1 = new Slash(TextureManager.mageSpellList[1], pos, LastDirection,this);
             Ability2 = new Cleave(TextureManager.mageSpellList[6], pos, LastDirection,this);
-            Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
-
+            Ability3 = new Charge(tex, pos, new Vector2(0, 0), this, false);
+            
         }
 
         public override void Update()
@@ -48,7 +48,7 @@ namespace Paging_the_devil.GameObject
 
         protected override Ability CastAbility3()
         {
-            Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability ability = new Charge(tex, pos, new Vector2(0, 0), this, true);
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
         }
