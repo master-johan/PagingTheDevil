@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
-    class SoundManager
+    class SoundBank
     {
         public static List<Song> BgMusicList;
         public static List<SoundEffect> SoundEffectList;

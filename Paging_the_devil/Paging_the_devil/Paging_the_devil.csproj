@@ -71,7 +71,7 @@
     <Compile Include="GameObject\Slash.cs" />
     <Compile Include="Manager\RoomManager.cs" />
     <Compile Include="Manager\PlayerSelectManager.cs" />
-    <Compile Include="Manager\SoundManager.cs" />
+    <Compile Include="Manager\SoundBank.cs" />
     <Compile Include="Manager\ValueBank.cs" />
     <Compile Include="PlayerSelectBackground.cs" />
     <Compile Include="Pointer.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="GameObject\StationaryObjects.cs" />
-    <Compile Include="Manager\TextureManager.cs" />
+    <Compile Include="Manager\TextureBank.cs" />
     <Compile Include="GameObject\Wall.cs" />
   </ItemGroup>
   <ItemGroup>

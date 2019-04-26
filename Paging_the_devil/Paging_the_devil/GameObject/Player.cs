@@ -258,7 +258,7 @@ namespace Paging_the_devil.GameObject
         /// <param name="meleeDirection"></param>
         private void CreateSlash(Vector2 meleeDirection)
         {
-            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability slashObject = new Slash(TextureBank.mageSpellList[1], pos, lastInputDirection);
             abilityList.Add(slashObject);
         }
         /// <summary>

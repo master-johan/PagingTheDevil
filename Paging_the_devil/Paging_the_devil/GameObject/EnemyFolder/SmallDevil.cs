@@ -85,7 +85,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 Vector2 dir = new Vector2((float)x, (float)y);
                 dir.Normalize();
 
-                fireball = new Fireball(TextureManager.mageSpellList[0], pos, dir);
+                fireball = new Fireball(TextureBank.mageSpellList[0], pos, dir);
                 enemyAbilityList.Add(fireball);
                 shootTimer = ValueBank.SmallDevilShootTimer;
             }

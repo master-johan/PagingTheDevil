@@ -23,7 +23,7 @@ namespace Paging_the_devil
 
         public MainMenuBackground()
         {
-            Size = new Rectangle(0, 0, TextureManager.WindowSizeX, TextureManager.WindowSizeY);
+            Size = new Rectangle(0, 0, TextureBank.WindowSizeX, TextureBank.WindowSizeY);
             srcRect = new Rectangle(0, 0, 94, 92);
 
             InitializeCloudOne();
@@ -43,31 +43,31 @@ namespace Paging_the_devil
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[0], Size, Color.White);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[0], Size, Color.White);
 
             foreach (Vector2 v in cloudOneTex)
             {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[1], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[1], v, Color.White);
             }
 
             foreach (Vector2 v in cloudTwoTex)
             {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[2], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[2], v, Color.White);
             }
 
             foreach (Vector2 v in cloudThreeTex)
             {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[6], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[6], v, Color.White);
             }
         }
 
         private void InitializeCloudOne()
         {
             cloudOneTex = new List<Vector2>();
-            cloudOneSpacing = TextureManager.WindowSizeX;
+            cloudOneSpacing = TextureBank.WindowSizeX;
             cloudOneSpeed = 0.2F;
 
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
+            for (int i = 0; i < (TextureBank.WindowSizeX) + 2; i++)
             {
                 cloudOneTex.Add(new Vector2(i * cloudOneSpacing - 500, 50));
             }
@@ -75,10 +75,10 @@ namespace Paging_the_devil
         private void InitializeCloudTwo()
         {
             cloudTwoTex = new List<Vector2>();
-            cloudTwoSpacing = TextureManager.WindowSizeX;
+            cloudTwoSpacing = TextureBank.WindowSizeX;
             cloudTwoSpeed = 0.05f;
 
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
+            for (int i = 0; i < (TextureBank.WindowSizeX) + 2; i++)
             {
                 cloudTwoTex.Add(new Vector2(i * cloudTwoSpacing - 500, 370));
             }
@@ -86,10 +86,10 @@ namespace Paging_the_devil
         private void InitializeCloudThree()
         {
             cloudThreeTex = new List<Vector2>();
-            cloudThreeSpacing = TextureManager.WindowSizeX;
+            cloudThreeSpacing = TextureBank.WindowSizeX;
             cloudThreeSpeed = 0.1f;
 
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
+            for (int i = 0; i < (TextureBank.WindowSizeX) + 2; i++)
             {
                 cloudThreeTex.Add(new Vector2(i * cloudTwoSpacing - 500, 230));
             }

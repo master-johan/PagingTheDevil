@@ -23,7 +23,7 @@ namespace Paging_the_devil
 
         public PlayerSelectBackground()
         {
-            Size = new Rectangle(0, 0, TextureManager.WindowSizeX, TextureManager.WindowSizeY);
+            Size = new Rectangle(0, 0, TextureBank.WindowSizeX, TextureBank.WindowSizeY);
             srcRect = new Rectangle(0, 0, 94, 92);
 
             InitializeCloudOne();
@@ -47,42 +47,42 @@ namespace Paging_the_devil
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[0], Size, Color.White);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[0], Size, Color.White);
 
             foreach (Vector2 v in cloudOneTex)
             {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[1], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[1], v, Color.White);
             }
 
             foreach (Vector2 v in cloudTwoTex)
             {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[2], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[2], v, Color.White);
             }
 
             foreach (Vector2 v in cloudThreeTex)
             {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[6], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[6], v, Color.White);
             }
 
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[4], Size, Color.White);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[4], Size, Color.White);
 
             foreach (Vector2 v in birdTex)
             {
-                spriteBatch.Draw(TextureManager.playerSelectBackgroundList[7], v, srcRect, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[7], v, srcRect, Color.White);
             }
 
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[3], Size, Color.White);
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[5], Size, Color.White);
-            spriteBatch.Draw(TextureManager.playerSelectBackgroundList[8], Size, Color.White);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[3], Size, Color.White);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[5], Size, Color.White);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[8], Size, Color.White);
         }
 
         private void InitializeCloudOne()
         {
             cloudOneTex = new List<Vector2>();
-            cloudOneSpacing = TextureManager.WindowSizeX;
+            cloudOneSpacing = TextureBank.WindowSizeX;
             cloudOneSpeed = 0.2F;
 
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
+            for (int i = 0; i < (TextureBank.WindowSizeX) + 2; i++)
             {
                 cloudOneTex.Add(new Vector2(i * cloudOneSpacing - 500, 50));
             }
@@ -90,10 +90,10 @@ namespace Paging_the_devil
         private void InitializeCloudTwo()
         {
             cloudTwoTex = new List<Vector2>();
-            cloudTwoSpacing = TextureManager.WindowSizeX;
+            cloudTwoSpacing = TextureBank.WindowSizeX;
             cloudTwoSpeed = 0.05f;
 
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
+            for (int i = 0; i < (TextureBank.WindowSizeX) + 2; i++)
             {
                 cloudTwoTex.Add(new Vector2(i * cloudTwoSpacing - 500, 370));
             }
@@ -101,10 +101,10 @@ namespace Paging_the_devil
         private void InitializeCloudThree()
         {
             cloudThreeTex = new List<Vector2>();
-            cloudThreeSpacing = TextureManager.WindowSizeX;
+            cloudThreeSpacing = TextureBank.WindowSizeX;
             cloudThreeSpeed = 0.1f;
 
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
+            for (int i = 0; i < (TextureBank.WindowSizeX) + 2; i++)
             {
                 cloudThreeTex.Add(new Vector2(i * cloudTwoSpacing - 500, 230));
             }
@@ -112,10 +112,10 @@ namespace Paging_the_devil
         private void InitializeBird()
         {
             birdTex = new List<Vector2>();
-            birdSpacing = TextureManager.WindowSizeX * 2;
+            birdSpacing = TextureBank.WindowSizeX * 2;
             birdSpeed = 2f;
 
-            for (int i = 0; i < (TextureManager.WindowSizeX) + 2; i++)
+            for (int i = 0; i < (TextureBank.WindowSizeX) + 2; i++)
             {
                 birdTex.Add(new Vector2(i * birdSpacing, 650));
             }

@@ -18,9 +18,9 @@ namespace Paging_the_devil.GameObject
         {
 
 
-            Ability1 = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
-            Ability2 = new Arrow(TextureManager.mageSpellList[4], pos, lastInputDirection);
-            Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability1 = new Slash(TextureBank.mageSpellList[1], pos, lastInputDirection);
+            Ability2 = new Arrow(TextureBank.mageSpellList[4], pos, lastInputDirection);
+            Ability3 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
 
             HealthPoints = ValueBank.RangerHealth;
             maxHealthPoints = HealthPoints;
@@ -29,14 +29,14 @@ namespace Paging_the_devil.GameObject
 
         protected override Ability CastAbility1()
         {
-            Ability ability = new Slash(TextureManager.mageSpellList[1], pos, lastInputDirection);
+            Ability ability = new Slash(TextureBank.mageSpellList[1], pos, lastInputDirection);
             Ability1CooldownTimer = ability.coolDownTime;
             return ability;
         }
 
         protected override Ability CastAbility2()
         {
-            Ability ability = new Arrow(TextureManager.mageSpellList[4], pos, lastInputDirection);
+            Ability ability = new Arrow(TextureBank.mageSpellList[4], pos, lastInputDirection);
             Ability2CooldownTimer = ability.coolDownTime;
             return ability;
         }
@@ -50,7 +50,7 @@ namespace Paging_the_devil.GameObject
         protected override Ability CastAbility3()
         {
 
-            Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
 

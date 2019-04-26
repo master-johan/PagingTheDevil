@@ -31,14 +31,14 @@ namespace Paging_the_devil.Manager
         {
             this.game = game;
 
-            middleScreenY = (TextureManager.WindowSizeY / 2);
-            middleScreenX = (TextureManager.WindowSizeX/2);
+            middleScreenY = (TextureBank.WindowSizeY / 2);
+            middleScreenX = (TextureBank.WindowSizeX/2);
 
-            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(middleScreenX - TextureManager.menuTextureList[0].Width/ 2, middleScreenY - TextureManager.menuTextureList[0].Height)));
-            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureManager.menuTextureList[0].Width/ 2, middleScreenY - TextureManager.menuTextureList[0].Height + 200)));
+            buttonList.Add(new Button(TextureBank.menuTextureList[0], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width/ 2, middleScreenY - TextureBank.menuTextureList[0].Height)));
+            buttonList.Add(new Button(TextureBank.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width/ 2, middleScreenY - TextureBank.menuTextureList[0].Height + 200)));
 
             pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
-            pointer = new Pointer(TextureManager.menuTextureList[5], pointerPos, buttonList);
+            pointer = new Pointer(TextureBank.menuTextureList[5], pointerPos, buttonList);
 
             selectedBtn = 0;
             buttonList[0].activeButton = true;
@@ -89,7 +89,7 @@ namespace Paging_the_devil.Manager
             {
                 case GameState.MainMenu:
                     mainMenuBackground.Draw(spriteBatch);                   
-                    spriteBatch.Draw(TextureManager.menuTextureList[4], new Vector2(middleScreenX - TextureManager.menuTextureList[4].Width/2, 200), Color.White);
+                    spriteBatch.Draw(TextureBank.menuTextureList[4], new Vector2(middleScreenX - TextureBank.menuTextureList[4].Width/2, 100), Color.White);
 
                     foreach (var b in buttonList)
                     {
@@ -99,6 +99,7 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.PlayerSelect:
                     PlayerSelectManager.Draw(spriteBatch);
+                    spriteBatch.Draw(TextureBank.menuTextureList[8], new Vector2(middleScreenX - TextureBank.menuTextureList[8].Width / 2, 100), Color.White);
                     break;
 
             }

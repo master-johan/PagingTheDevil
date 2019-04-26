@@ -21,14 +21,19 @@ namespace Paging_the_devil.Manager
 
         Rectangle[] playerRectArray;
         Rectangle[] pressYRectArray;
+        Rectangle[] playerArrowArray;
+        Rectangle[] characterInfoArray;
         Rectangle drawKnightRect;
+        Rectangle startGameRect;
 
         int nrOfPlayers;
-        int[] characterChosen;
+        int readyPlayers;
+        int[] currentCharacter;
 
         bool[] playerConnected;
-        bool[] characterSelected;
+        bool[] selectingCharacter;
         bool[] connectedController;
+        bool[] characterChosen;
 
         Texture2D barbarianTex;
         Texture2D knightTex;
@@ -39,23 +44,29 @@ namespace Paging_the_devil.Manager
 
         public PlayerSelectManager()
         {
-            characterChosen = new int[4];
+            currentCharacter = new int[4];
 
-            for (int i = 0; i < characterChosen.Length; i++)
+            for (int i = 0; i < currentCharacter.Length; i++)
             {
-                characterChosen[i] = 0;
+                currentCharacter[i] = 0;
             }
 
             playerRectArray = new Rectangle[4];
             pressYRectArray = new Rectangle[4];
+            playerArrowArray = new Rectangle[4];
+            characterInfoArray = new Rectangle[4];
 
-            characterSelected = new bool[4];
+
+            selectingCharacter = new bool[4];
             connectedController = new bool[4];
             playerConnected = new bool[4];
+            characterChosen = new bool[4];
+
 
             playerArray = new Player[4];
 
             drawKnightRect = new Rectangle(0, 0, 50, 60);
+            startGameRect = new Rectangle(TextureBank.WindowSizeX / 2 - TextureBank.menuTextureList[11].Width /2, TextureBank.WindowSizeY / 3, TextureBank.menuTextureList[11].Width, TextureBank.menuTextureList[11].Height);
 
             DecidingRectangles();
             DecidingTextureArray();
@@ -71,7 +82,7 @@ namespace Paging_the_devil.Manager
             {
                 if (controllerArray[i].ButtonPressed(Buttons.Y))
                 {
-                    characterSelected[i] = true;
+                    selectingCharacter[i] = true;
                     connectedController[i] = false;
                     controllerArray[i] = new Controller((PlayerIndex)i);
                 }
@@ -83,28 +94,28 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (characterSelected[i])
+                if (selectingCharacter[i] && !characterChosen[i])
                 {
                     if (controllerArray[i].ButtonPressed(Buttons.DPadLeft))
                     {
-                        if (characterChosen[i] == 0)
+                        if (currentCharacter[i] == 0)
                         {
-                            characterChosen[i] = 3;
+                            currentCharacter[i] = 3;
                         }
                         else
                         {
-                            characterChosen[i]--;
+                            currentCharacter[i]--;
                         }
                     }
                     else if (controllerArray[i].ButtonPressed(Buttons.DPadRight))
                     {
-                        if (characterChosen[i] == 3)
+                        if (currentCharacter[i] == 3)
                         {
-                            characterChosen[i] = 0;
+                            currentCharacter[i] = 0;
                         }
                         else
                         {
-                            characterChosen[i]++;
+                            currentCharacter[i]++;
                         }
                     }
                 }
@@ -112,74 +123,102 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (controllerArray[i].ButtonPressed(Buttons.A))
+                if (controllerArray[i].ButtonPressed(Buttons.A) && selectingCharacter[i] && !characterChosen[i])
                 {
-                    if (characterChosen[i] == 0)
+                    if (currentCharacter[i] == 0)
                     {
                         playerArray[i] = new Knight(knightTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
                     }
-                    else if (characterChosen[i] == 1)
+                    else if (currentCharacter[i] == 1)
                     {
                         playerArray[i] = new Barbarian(barbarianTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
                     }
-                    else if (characterChosen[i] == 2)
+                    else if (currentCharacter[i] == 2)
                     {
                         playerArray[i] = new Druid(druidTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
                     }
-                    else if (characterChosen[i] == 3)
+                    else if (currentCharacter[i] == 3)
                     {
                         playerArray[i] = new Ranger(rangerTex, new Vector2(100 * i + 100, 200), i, controllerArray[i]);
+                    }
+
+                    characterChosen[i] = true;
+                    readyPlayers++;
+                }         
+            }
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                if (readyPlayers == nrOfPlayers)
+                {
+                    if (controllerArray[i].ButtonPressed(Buttons.Start))
+                    {
+                        HUDManager = new HUDManager(playerArray, nrOfPlayers);
+                        MediaPlayer.Play(SoundBank.BgMusicList[2]);
+                        GameManager.currentState = GameState.InGame;
                     }
                 }
             }
 
-            if (controllerArray[0] != null)
-            {
-                if (controllerArray[0].ButtonPressed(Buttons.Start))
-                {
-
-                    HUDManager = new HUDManager(playerArray,nrOfPlayers);
-                    MediaPlayer.Play(SoundManager.BgMusicList[2]);
-                    GameManager.currentState = GameState.InGame;
-                }
-            }
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.GraphicsDevice.Clear(Color.DarkGray);
-            
-            spriteBatch.Draw(TextureManager.menuTextureList[3], Vector2.Zero, Color.White);
+
+            spriteBatch.Draw(TextureBank.menuTextureList[3], Vector2.Zero, Color.White);
             playerSelectBackground.Draw(spriteBatch);
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (characterSelected[i])
+
+                if (selectingCharacter[i])
                 {
-                    if (characterChosen[i] == 0)
+                    if(!characterChosen[i])
+                    {
+                        spriteBatch.Draw(TextureBank.menuTextureList[9], playerArrowArray[i], Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(TextureBank.menuTextureList[10], pressYRectArray[i], Color.White);
+                    }
+
+                    if (currentCharacter[i] == 0)
                     {
                         spriteBatch.Draw(knightTex, playerRectArray[i], drawKnightRect, Color.White);
+                        spriteBatch.Draw(TextureBank.menuTextureList[12], characterInfoArray[i], Color.White);
+
                     }
-                    else if (characterChosen[i] == 1)
+                    else if (currentCharacter[i] == 1)
                     {
                         spriteBatch.Draw(barbarianTex, playerRectArray[i], drawKnightRect, Color.White);
+                        spriteBatch.Draw(TextureBank.menuTextureList[14], characterInfoArray[i], Color.White);
                     }
-                    else if (characterChosen[i] == 2)
+                    else if (currentCharacter[i] == 2)
                     {
                         spriteBatch.Draw(druidTex, playerRectArray[i], drawKnightRect, Color.White);
+                        spriteBatch.Draw(TextureBank.menuTextureList[15], characterInfoArray[i], Color.White);
                     }
-                    else if (characterChosen[i] == 3)
+                    else if (currentCharacter[i] == 3)
                     {
                         spriteBatch.Draw(rangerTex, playerRectArray[i], drawKnightRect, Color.White);
+                        spriteBatch.Draw(TextureBank.menuTextureList[13], characterInfoArray[i], Color.White);
                     }
+
                 }
                 else if (connectedController[i])
                 {
-                    spriteBatch.Draw(TextureManager.menuTextureList[7], pressYRectArray[i], Color.White);
+                    spriteBatch.Draw(TextureBank.menuTextureList[7], pressYRectArray[i], Color.White);
                 }
             }
+
+            if (nrOfPlayers == readyPlayers && nrOfPlayers > 0)
+            {
+                spriteBatch.Draw(TextureBank.menuTextureList[11], startGameRect, Color.White);
+            }
         }
+
 
         private void DecidingRectangles()
         {
@@ -188,18 +227,30 @@ namespace Paging_the_devil.Manager
             playerRectArray[2] = new Rectangle(1268, 775, 100, 110);
             playerRectArray[3] = new Rectangle(1617, 726, 100, 110);
 
-            pressYRectArray[0] = new Rectangle(160, 686, 200, 150);
-            pressYRectArray[1] = new Rectangle(515, 735, 200, 150);
-            pressYRectArray[2] = new Rectangle(1218, 735, 200, 150);
-            pressYRectArray[3] = new Rectangle(1577, 686, 200, 150);
+            playerArrowArray[0] = new Rectangle(80, 550, 350, 300); 
+            playerArrowArray[1] = new Rectangle(435, 600, 350, 300);
+            playerArrowArray[2] = new Rectangle(1138, 600, 350, 300);
+            playerArrowArray[3] = new Rectangle(1487, 550, 350, 300);
+
+            pressYRectArray[0] = new Rectangle(80, 550, 350, 140);
+            pressYRectArray[1] = new Rectangle(435, 600, 350, 140);
+            pressYRectArray[2] = new Rectangle(1138, 600, 350, 140);
+            pressYRectArray[3] = new Rectangle(1487, 550, 350, 140);
+
+            characterInfoArray[0] = new Rectangle(180, 855, 161, 170);
+            characterInfoArray[1] = new Rectangle(535, 905, 161, 170);
+            characterInfoArray[2] = new Rectangle(1238, 905, 161, 170);
+            characterInfoArray[3] = new Rectangle(1587, 855, 161, 170);
+
+
         }
 
         private void DecidingTextureArray()
         {
-            knightTex = TextureManager.playerTextureList[0];
-            barbarianTex = TextureManager.playerTextureList[1];
-            druidTex = TextureManager.playerTextureList[2];
-            rangerTex = TextureManager.playerTextureList[3];
+            knightTex = TextureBank.playerTextureList[0];
+            barbarianTex = TextureBank.playerTextureList[1];
+            druidTex = TextureBank.playerTextureList[2];
+            rangerTex = TextureBank.playerTextureList[3];
         }
 
         public void GetController(Controller[] controllerArray)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Paging_the_devil.Manager
 {
 
-    static class TextureManager
+    static class TextureBank
     {
         public static List<Texture2D> playerTextureList = new List<Texture2D>();
         public static List<Texture2D> mageSpellList = new List<Texture2D>();
@@ -18,6 +18,7 @@ namespace Paging_the_devil.Manager
         public static List<Texture2D> menuTextureList = new List<Texture2D>();
         public static List<Texture2D> hudTextureList = new List<Texture2D>();
         public static List<Texture2D> playerSelectBackgroundList = new List<Texture2D>();
+        public static List<Texture2D> buttonTextureList = new List<Texture2D>();
 
         public static int WindowSizeY;
         public static int WindowSizeX;
@@ -57,6 +58,15 @@ namespace Paging_the_devil.Manager
             menuTextureList.Add(Content.Load<Texture2D>(@"Pointer"));
             menuTextureList.Add(Content.Load<Texture2D>(@"PlayerSelectBG"));
             menuTextureList.Add(Content.Load<Texture2D>(@"ConnectPlayer"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"PlayerSelectLogo"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"SelectPlayer"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"Ready"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"startGameText"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"KnightInfo"));//12
+            menuTextureList.Add(Content.Load<Texture2D>(@"RangerInfo"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"BarbInfo"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"DruidInfo"));
+
             //HUD
             hudTextureList.Add(Content.Load<Texture2D>(@"Abtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"Bbtn"));
@@ -76,6 +86,12 @@ namespace Paging_the_devil.Manager
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Cloud3"));
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Bird"));
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Walls"));
+
+            // ButtonTexture
+            buttonTextureList.Add(Content.Load<Texture2D>(@"A"));
+            buttonTextureList.Add(Content.Load<Texture2D>(@"B"));
+            buttonTextureList.Add(Content.Load<Texture2D>(@"X"));
+            buttonTextureList.Add(Content.Load<Texture2D>(@"Y"));
         }
     }
 }

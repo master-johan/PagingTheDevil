@@ -31,7 +31,7 @@ namespace Paging_the_devil.GameObject
             coolDownTime = 20; 
             meleeDirection = DecideDirectionOfSlash(direction);
 
-            btnTexture = TextureManager.hudTextureList[5];
+            btnTexture = TextureBank.hudTextureList[5];
 
 
             DirectionOfVectors();

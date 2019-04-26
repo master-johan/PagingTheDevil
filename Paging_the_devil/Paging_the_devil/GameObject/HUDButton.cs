@@ -46,7 +46,7 @@ namespace Paging_the_devil.GameObject
             spriteBatch.Draw(ability.btnTexture, abilityTexturePos, Color.White);
             if (currentTimer >0 )
             {
-                spriteBatch.Draw(TextureManager.hudTextureList[6],
+                spriteBatch.Draw(TextureBank.hudTextureList[6],
                                  new Vector2(rect.X +2 ,rect.Y + 5),
                                  coolDownRect,
                                  Color.White,

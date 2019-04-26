@@ -72,11 +72,11 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                pos = new Vector2(TextureManager.WindowSizeX / 5 * i, 0);
+                pos = new Vector2(TextureBank.WindowSizeX / 5 * i, 0);
 
                 if (i > 1)
                 {
-                    pos.X = TextureManager.WindowSizeX / 5 * (i + 1);
+                    pos.X = TextureBank.WindowSizeX / 5 * (i + 1);
                 }
 
                 playerHudArray[i] = new HUD(pos, playerArray[i]);
