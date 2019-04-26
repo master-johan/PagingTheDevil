@@ -30,7 +30,7 @@ namespace Paging_the_devil.GameObject
             btnTexture = TextureManager.hudTextureList[5];
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             pos += spellDirection * speed;
 

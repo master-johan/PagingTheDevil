@@ -92,7 +92,7 @@ namespace Paging_the_devil.GameObject
             Damage = ValueBank.SlashDmg;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             angle -= 0.3f;
 

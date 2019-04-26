@@ -22,7 +22,7 @@ namespace Paging_the_devil.GameObject
             spriteBatch.Draw(tex, rect, Color.Black);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             rect.X = (int)pos.X;
             rect.Y = (int)pos.Y;

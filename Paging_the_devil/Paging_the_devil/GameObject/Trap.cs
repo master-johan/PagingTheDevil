@@ -12,19 +12,20 @@ namespace Paging_the_devil.GameObject
 {
     class Trap : Ability
     {
-        DateTime dateTime;
-        public TimeSpan timePassed { get; set; }
+        float counter;
+        float tickTime;
         float originalSpeed;
         float calculatedSpeed;
+        float timePassed;
+       
         public Trap(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos, direction)
         {
             Damage = ValueBank.TrapDmg;
-            dateTime = DateTime.Now;
             coolDownTime = 40;
             btnTexture = TextureManager.hudTextureList[5];
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             
             UpdateRect();
@@ -38,7 +39,8 @@ namespace Paging_the_devil.GameObject
                     originalSpeed = (HitCharacter as Enemy).MovementSpeed;
                     calculatedSpeed = originalSpeed / 2; 
                 }
-                timePassed = DateTime.Now - dateTime;
+               
+                timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 SlowEffect();
 
             }
@@ -52,10 +54,10 @@ namespace Paging_the_devil.GameObject
         {
 
             (HitCharacter as Enemy).MovementSpeed = (int)calculatedSpeed;
-            if (timePassed.Seconds >= ValueBank.TrapTimer  )
+            if (timePassed >= ValueBank.TrapTimer  )
             {
+                (HitCharacter as Enemy).MovementSpeed = (int)originalSpeed;
                 ToRemove = true;
-                (HitCharacter as Enemy).MovementSpeed = (int)originalSpeed; 
             }
         }
     }

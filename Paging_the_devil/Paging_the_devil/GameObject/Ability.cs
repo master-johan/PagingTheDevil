@@ -26,7 +26,7 @@ namespace Paging_the_devil.GameObject
         {
             this.direction = direction;
         }
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             
         }

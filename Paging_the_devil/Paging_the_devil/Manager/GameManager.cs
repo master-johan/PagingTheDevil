@@ -168,7 +168,7 @@ namespace Paging_the_devil.Manager
                     }
 
 
-                    HUDManager.Update();
+                    HUDManager.Update(gameTime);
                     UpdatePlayersDirection();
                     UpdateCharacters(gameTime);
 
@@ -450,6 +450,7 @@ namespace Paging_the_devil.Manager
                                 continue;
                             }
                             a.HitCharacter = playerArray[i];
+                            
                         }
                     }
                 }

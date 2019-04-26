@@ -131,7 +131,7 @@ namespace Paging_the_devil.GameObject
                 rotation = 0;
             }
 
-            UpdateAbility();
+            UpdateAbility(gameTime);
 
             DecreseCooldownTimers();
             IfHealthIsZero();
@@ -192,12 +192,12 @@ namespace Paging_the_devil.GameObject
         /// <summary>
         /// Den här metoden uppdaterar abilities samt tar bort abilities.
         /// </summary>
-        private void UpdateAbility()
+        private void UpdateAbility(GameTime gameTime)
         {
             Ability toRemove = null;
             foreach (var A in abilityList)
             {
-                A.Update();
+                A.Update(gameTime);
                 if ( A is Slash)
                 {
                     if (!(A as Slash).Active)
@@ -207,10 +207,10 @@ namespace Paging_the_devil.GameObject
                 }
                 if (A is Trap)
                 {
-                    if ((A as Trap).timePassed.TotalSeconds > 5)
-                    {
-                        toRemove = A;
-                    }
+                    //if ((A as Trap).timePassed.TotalSeconds > 5)
+                    //{
+                    //    toRemove = A;
+                    //}
                 }
             }
             if (toRemove != null)

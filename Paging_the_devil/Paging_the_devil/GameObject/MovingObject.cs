@@ -15,7 +15,7 @@ namespace Paging_the_devil.GameObject
 
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
         }
 

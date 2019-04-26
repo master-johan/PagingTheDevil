@@ -30,7 +30,7 @@ namespace Paging_the_devil.GameObject
             coolDownRect.Y = 0;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             if (currentTimer > 0)
             {

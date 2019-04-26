@@ -29,7 +29,7 @@ namespace Paging_the_devil.Manager
         public static int HealHarmSpeed;
         public static int FireballSpeed;
 
-        public static int HealHarmTimer;
+        public static float HealHarmTimer;
         public static int TrapTimer;
         public static int SmallDevilShootTimer;
 
@@ -72,9 +72,9 @@ namespace Paging_the_devil.Manager
             FireballSpeed = 7;
 
             //Ability Timer
-            HealHarmTimer = 4;
+            HealHarmTimer = 4000;
             SmallDevilShootTimer = 40;
-            TrapTimer = 5;
+            TrapTimer = 5000;
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4;
