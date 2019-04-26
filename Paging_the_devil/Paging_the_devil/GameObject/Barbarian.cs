@@ -35,21 +35,21 @@ namespace Paging_the_devil.GameObject
         protected override Ability CastAbility1()
         {
             Ability ability = new Cleave(TextureManager.mageSpellList[6], pos, LastDirection, this);
-            Ability1CooldownTimer = ability.coolDownTime;
+            Ability1CooldownTimer = ValueBank.CleaveCooldown;
             return ability;
         }
 
         protected override Ability CastAbility2()
         {
             Ability ability = new Slash(TextureManager.mageSpellList[1], pos, LastDirection, this);
-            Ability2CooldownTimer = ability.coolDownTime;
+            Ability2CooldownTimer = ValueBank.SlashCooldown;
             return ability;
         }
 
         protected override Ability CastAbility3()
         {
             Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
-            Ability3CooldownTimer = ability.coolDownTime;
+            Ability3CooldownTimer = ValueBank.TrapCooldown;
             return ability;
         }
 
