@@ -31,8 +31,8 @@ namespace Paging_the_devil
 
         protected override void LoadContent()
         {
-            TextureBank.LoadTextures(Content);
-            SoundBank.LoadSound(Content);
+            TextureManager.LoadTextures(Content);
+            SoundManager.LoadSound(Content);
             ValueBank.Values();
             gameManager = new GameManager(GraphicsDevice, graphics, this);
             

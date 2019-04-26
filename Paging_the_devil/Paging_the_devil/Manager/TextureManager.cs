@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Paging_the_devil.Manager
 {
 
-    static class TextureBank
+    static class TextureManager
     {
         public static List<Texture2D> playerTextureList = new List<Texture2D>();
         public static List<Texture2D> mageSpellList = new List<Texture2D>();

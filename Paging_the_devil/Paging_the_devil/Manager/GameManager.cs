@@ -61,7 +61,7 @@ namespace Paging_the_devil.Manager
 
             currentState = GameState.MainMenu;
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(SoundBank.BgMusicList[0]);
+            MediaPlayer.Play(SoundManager.BgMusicList[0]);
 
             CreatingThings();
 
@@ -79,10 +79,10 @@ namespace Paging_the_devil.Manager
         /// <param name="graphics"></param>
         private static void SetWindowSize(GraphicsDeviceManager graphics)
         {
-            graphics.PreferredBackBufferHeight = TextureBank.WindowSizeY = 1080;
-            graphics.PreferredBackBufferWidth = TextureBank.WindowSizeX = 1920;
+            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 1080;
+            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1920;
             graphics.ApplyChanges();
-            TextureBank.GameWindowStartY = 135;
+            TextureManager.GameWindowStartY = 135;
         }
         /// <summary>
         /// Den här metoden anger värden till olika Arrays och skapar portaler.
@@ -261,7 +261,7 @@ namespace Paging_the_devil.Manager
                     {
                         HUDManager.Draw(spriteBatch);
                     }
-                    spriteBatch.Draw(TextureBank.mageSpellList[4], new Rectangle(100, 100, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height), Color.White);
+                    spriteBatch.Draw(TextureManager.mageSpellList[4], new Rectangle(100, 100, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height), Color.White);
 
 
                     DrawCharacters(spriteBatch);

@@ -33,10 +33,10 @@ namespace Paging_the_devil
             this.StartRoom = startRoom;
             this.bossRoom = bossRoom;
 
-            roomFloor = new Vector2(0, TextureBank.GameWindowStartY);
+            roomFloor = new Vector2(0, TextureManager.GameWindowStartY);
 
-            WindowX = TextureBank.WindowSizeX;
-            WindowY = TextureBank.WindowSizeY;
+            WindowX = TextureManager.WindowSizeX;
+            WindowY = TextureManager.WindowSizeY;
             DecidePos();
             AddToList();
         }
@@ -48,7 +48,7 @@ namespace Paging_the_devil
         public void Draw(SpriteBatch spriteBatch)
         {
 
-            spriteBatch.Draw(TextureBank.roomTextureList[3], roomFloor, color);
+            spriteBatch.Draw(TextureManager.roomTextureList[3], roomFloor, color);
             for (int i = 0; i < wallList.Count; i++)
             {
                 wallList[i].Draw(spriteBatch);
@@ -68,18 +68,18 @@ namespace Paging_the_devil
 
         private void DecidePos()
         {
-            WallTopPos = new Rectangle(0, TextureBank.GameWindowStartY, WindowX, 20);
+            WallTopPos = new Rectangle(0, TextureManager.GameWindowStartY, WindowX, 20);
             WallBottomPos = new Rectangle(0, WindowY - 20, WindowX, 20);
-            WallLeftPos = new Rectangle(0, TextureBank.GameWindowStartY, 20, WindowY);
-            WallRightPos = new Rectangle(WindowX - 20, TextureBank.GameWindowStartY, 20, WindowY);
+            WallLeftPos = new Rectangle(0, TextureManager.GameWindowStartY, 20, WindowY);
+            WallRightPos = new Rectangle(WindowX - 20, TextureManager.GameWindowStartY, 20, WindowY);
         }
 
         private void AddToList()
         {
-            wallList.Add(wallTop = new Wall(TextureBank.roomTextureList[1], Vector2.Zero, WallTopPos));
-            wallList.Add(wallBot = new Wall(TextureBank.roomTextureList[1], Vector2.Zero, WallBottomPos));
-            wallList.Add(wallLeft = new Wall(TextureBank.roomTextureList[2], Vector2.Zero, WallLeftPos));
-            wallList.Add(wallRight = new Wall(TextureBank.roomTextureList[2], Vector2.Zero, WallRightPos));
+            wallList.Add(wallTop = new Wall(TextureManager.roomTextureList[1], Vector2.Zero, WallTopPos));
+            wallList.Add(wallBot = new Wall(TextureManager.roomTextureList[1], Vector2.Zero, WallBottomPos));
+            wallList.Add(wallLeft = new Wall(TextureManager.roomTextureList[2], Vector2.Zero, WallLeftPos));
+            wallList.Add(wallRight = new Wall(TextureManager.roomTextureList[2], Vector2.Zero, WallRightPos));
         }
         public List<Wall> GetWallList()
         {
@@ -96,19 +96,19 @@ namespace Paging_the_devil
             {
                 if (dir == 0)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallList[0].GetRect.Width / 2, wallList[0].GetRect.Y)));
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[0].GetRect.Width / 2, wallList[0].GetRect.Y)));
                 }
                 else if (dir == 1)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallList[1].GetRect.Width / 2, wallList[1].GetRect.Y - 25)));
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[1].GetRect.Width / 2, wallList[1].GetRect.Y - 25)));
                 }
                 else if (dir == 2)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallList[2].GetRect.X, wallList[2].GetRect.Height/2)));
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[2].GetRect.X, wallList[2].GetRect.Height/2)));
                 }
                 else if (dir == 3)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallList[3].GetRect.X- 25, wallList[3].GetRect.Height / 2)));
+                    gateWayList.Add(new Gateway(TextureManager.roomTextureList[0], new Vector2(wallList[3].GetRect.X- 25, wallList[3].GetRect.Height / 2)));
                 }
             }
         }

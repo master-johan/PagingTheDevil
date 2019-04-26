@@ -37,16 +37,16 @@ namespace Paging_the_devil.GameObject
             this.pos = pos;
             this.player = player;
            
-            hudBox = new Rectangle((int)pos.X, (int)pos.Y, TextureBank.WindowSizeX / 5, TextureBank.WindowSizeY / 8);
+            hudBox = new Rectangle((int)pos.X, (int)pos.Y, TextureManager.WindowSizeX / 5, TextureManager.WindowSizeY / 8);
             healthBar = new Rectangle(hudBox.X + 12, hudBox.Y + 45, hudBox.Width / 2, hudBox.Height / 3);
             btnX = new Rectangle(hudBox.X + 225, hudBox.Y + 45, hudBox.Width / 9, hudBox.Height / 3);
             btnA = new Rectangle(hudBox.X + 274, hudBox.Y + 70, hudBox.Width / 9, hudBox.Height / 3);
             btnB = new Rectangle(hudBox.X + 323, hudBox.Y + 45, hudBox.Width / 9, hudBox.Height / 3);
             btnY = new Rectangle(hudBox.X + 274, hudBox.Y + 15, hudBox.Width / 9, hudBox.Height / 3);
 
-            xBtn = new HUDButton(TextureBank.hudTextureList[2], new Vector2(btnX.X, btnX.Y), btnX, player.Ability1);
-            aBtn = new HUDButton(TextureBank.hudTextureList[0], new Vector2(btnA.X, btnA.Y), btnA, player.Ability2);
-            bBtn = new HUDButton(TextureBank.hudTextureList[1], new Vector2(btnB.X, btnB.Y), btnB, player.Ability3);
+            xBtn = new HUDButton(TextureManager.hudTextureList[2], new Vector2(btnX.X, btnX.Y), btnX, player.Ability1);
+            aBtn = new HUDButton(TextureManager.hudTextureList[0], new Vector2(btnA.X, btnA.Y), btnA, player.Ability2);
+            bBtn = new HUDButton(TextureManager.hudTextureList[1], new Vector2(btnB.X, btnB.Y), btnB, player.Ability3);
 
             healBarWidthMax = healBarWidth = healthBar.Width;
             
@@ -75,12 +75,12 @@ namespace Paging_the_devil.GameObject
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureBank.hudTextureList[4], hudBox, Color.White);
-            spriteBatch.Draw(TextureBank.hudTextureList[1], healthBar, Color.White);
+            spriteBatch.Draw(TextureManager.hudTextureList[4], hudBox, Color.White);
+            spriteBatch.Draw(TextureManager.hudTextureList[1], healthBar, Color.White);
             //spriteBatch.Draw(TextureManager.hudTextureList[2], btnX, Color.White);
             //spriteBatch.Draw(TextureManager.hudTextureList[0], btnA, Color.White);
             //spriteBatch.Draw(TextureManager.hudTextureList[1], btnB, Color.White);
-            spriteBatch.Draw(TextureBank.hudTextureList[3], btnY, Color.White);
+            spriteBatch.Draw(TextureManager.hudTextureList[3], btnY, Color.White);
 
             xBtn.Draw(spriteBatch);
             aBtn.Draw(spriteBatch);

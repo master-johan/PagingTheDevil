@@ -25,10 +25,10 @@ namespace Paging_the_devil.GameObject
             speed = ValueBank.ArrowSpeed;
             Damage = ValueBank.ArrowDmg;
             rotation = Math.Atan2(spellDirection.Y, spellDirection.X);
-            rect = new Rectangle((int)pos.X, (int)pos.Y, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height);
-            origin = new Vector2(TextureBank.mageSpellList[4].Width / 2, TextureBank.mageSpellList[4].Height / 2);
-            srsRect = new Rectangle(0, 0, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height);
-            btnTexture = TextureBank.hudTextureList[5];
+            rect = new Rectangle((int)pos.X, (int)pos.Y, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
+            origin = new Vector2(TextureManager.mageSpellList[4].Width / 2, TextureManager.mageSpellList[4].Height / 2);
+            srsRect = new Rectangle(0, 0, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
+            btnTexture = TextureManager.hudTextureList[5];
         }
 
         public override void Update()
