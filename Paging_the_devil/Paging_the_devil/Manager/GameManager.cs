@@ -383,18 +383,12 @@ namespace Paging_the_devil.Manager
                         }
                     }
                 }
-
                 if (toRemoveAbility != null)
                 {
                     playerArray[i].abilityList.Remove(toRemoveAbility);
                 }
-
-
             }
-
-
         }
-
         private void CheckPlayerAbilites(List<Ability> abilityList, Player player)
         {
             Ability toRemove = null;
@@ -405,9 +399,11 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
 
+
                         a.HitCharacter = e;
                         if (a is Slash) // arbeta mer för att fixa slashen
                         {
+
                             (a as Slash).Hit = true;
                         }
 
@@ -437,6 +433,7 @@ namespace Paging_the_devil.Manager
                         //    (a as Healharm).Active = true;
                         //    (a as Healharm).DmgOverTime(e);
                         //}
+
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)
@@ -516,14 +513,11 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-
                 if (slime.GetRect.Intersects(playerArray[i].GetRect))
                 {
                     playerArray[i].HealthPoints = 0;
 
                 }
-
-
             }
 
         }

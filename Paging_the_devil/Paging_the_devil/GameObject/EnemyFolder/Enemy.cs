@@ -85,7 +85,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         /// <summary>
         /// Den här metoden sköter rörelsen.
         /// </summary>
-        protected virtual void Movement()
+        protected virtual void Movement(GameTime gameTime)
         {
 
         }

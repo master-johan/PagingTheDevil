@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
-    class Slash : Ability
+    class Cleave : Ability
     {
         Rectangle sourceRect;
 
         float angle;
 
-        Vector2 slashPos;
+        Vector2 cleavePos;
         Vector2 left, right, up, down;
         Vector2 meleeDirection;
         Player player;
@@ -23,63 +23,63 @@ namespace Paging_the_devil.GameObject
         public bool Active { get; private set; }
         public bool Hit { get; set; }
 
-        public Slash(Texture2D tex, Vector2 pos, Vector2 direction, Player player)
+        public Cleave(Texture2D tex, Vector2 pos, Vector2 direction, Player player)
             : base(tex, pos, direction)
         {
-            this.player = player;
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
-            slashPos = pos;
+            cleavePos = pos;
             Hit = false;
-            coolDownTime = ValueBank.SlashCooldown; 
-            meleeDirection = DecideDirectionOfSlash(direction);
-            btnTexture = TextureManager.abilityButtonList[1];
+            coolDownTime = ValueBank.CleaveCooldown;
+            meleeDirection = DecideDirectionOfCleave(direction);
+            this.player = player;
+            btnTexture = TextureManager.abilityButtonList[4];
 
 
             DirectionOfVectors();
 
             if (meleeDirection == up)
             {
-                angle = MathHelper.ToRadians(-45f);
+                angle = MathHelper.ToRadians(-0f);
             }
             else if (meleeDirection == left)
             {
-                angle = MathHelper.ToRadians(-135);
+                angle = MathHelper.ToRadians(-90);
             }
             else if (meleeDirection == down)
             {
-                angle = MathHelper.ToRadians(-225);
+                angle = MathHelper.ToRadians(-180);
             }
             else if (meleeDirection == right)
             {
-                angle = MathHelper.ToRadians(-315);
+                angle = MathHelper.ToRadians(-270);
             }
             DecidingValues();
         }
 
-        private Vector2 DecideDirectionOfSlash(Vector2 direction)
+        private Vector2 DecideDirectionOfCleave(Vector2 direction)
         {
-            double slashDir = Math.Atan2(direction.Y, direction.X);
+            double cleaveDir = Math.Atan2(direction.Y, direction.X);
 
-            float slashAngle = MathHelper.ToDegrees((float)slashDir);
+            float cleaveAngle = MathHelper.ToDegrees((float)cleaveDir);
 
             Vector2 meleeDirection = Vector2.Zero;
 
-            if (slashAngle > 45 && slashAngle < 135) // up
+            if (cleaveAngle > 45 && cleaveAngle < 135) // up
             {
                 meleeDirection = new Vector2(0, -1);
             }
 
-            else if (slashAngle > 135 || slashAngle < -135) // left
+            else if (cleaveAngle > 135 || cleaveAngle < -135) // left
             {
                 meleeDirection = new Vector2(-1, 0);
             }
 
-            else if (slashAngle > -135 && slashAngle < -45) // down
+            else if (cleaveAngle > -135 && cleaveAngle < -45) // down
             {
                 meleeDirection = new Vector2(0, 1);
             }
 
-            else if (slashAngle > -45 && slashAngle < 45) // right
+            else if (cleaveAngle > -45 && cleaveAngle < 45) // right
             {
                 meleeDirection = new Vector2(1, 0);
             }
@@ -90,31 +90,24 @@ namespace Paging_the_devil.GameObject
         private void DecidingValues()
         {
             Active = true;
-            Damage = ValueBank.SlashDmg;
+            Damage = ValueBank.CleaveDmg;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
-            angle -= 0.3f;
+            angle -= 0.15f;
 
-            if (angle < MathHelper.ToRadians(-135f) && meleeDirection == up ||
-                angle < MathHelper.ToRadians(-225f) && meleeDirection == left ||
-                angle < MathHelper.ToRadians(-315f) && meleeDirection == down ||
-                angle < MathHelper.ToRadians(-405f) && meleeDirection == right)
+            if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
+                angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
+                angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
+                angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
             {
                 Active = false;
-                ToRemove = true;
             }
-
-            if (HitCharacter != null)
-            {
-                ApplyDamage();
-            }
+            Vector2 temp = cleavePos - player.pos;
+            cleavePos -= temp;
 
             UpdateHitbox();
-
-            Vector2 temp = slashPos - player.pos;
-            slashPos -= temp;
         }
 
         private void UpdateHitbox()
@@ -125,21 +118,21 @@ namespace Paging_the_devil.GameObject
             }
             else if (meleeDirection == up)
             {
-                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y - tex.Width - (tex.Width/2), tex.Height * 4, tex.Width + (tex.Width / 2));
+                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y - tex.Width - (tex.Width / 2), tex.Height * 4, tex.Width + (tex.Width / 2));
             }
             else if (meleeDirection == right)
             {
-                rect = new Rectangle((int)pos.X, (int)pos.Y  - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
+                rect = new Rectangle((int)pos.X, (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
             else if (meleeDirection == left)
             {
-                rect = new Rectangle((int)pos.X - tex.Width - (tex.Width/2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
+                rect = new Rectangle((int)pos.X - tex.Width - (tex.Width / 2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, slashPos, sourceRect, Color.White, angle, new Vector2(-20, tex.Height / 2), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, cleavePos, sourceRect, Color.White, angle, new Vector2(-40, tex.Height / 2), 1, SpriteEffects.None, 1);
         }
 
         private void DirectionOfVectors()

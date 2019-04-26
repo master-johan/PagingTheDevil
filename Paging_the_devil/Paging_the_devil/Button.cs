@@ -36,13 +36,13 @@ namespace Paging_the_devil
 
             if (activeButton)
             {
-                if (color.R == 255) down = false;
-                if (color.R == 0) down = true;
-                if (down) color.R += 3; else color.R -= 3;
+                if (color.A == 255) down = false;
+                if (color.A == 0) down = true;
+                if (down) color.A += 3; else color.A -= 3;
             }
-            else if (color.R < 255)
+            else if (color.A < 255)
             {
-                    color.R += 3;
+                    color.A += 3;
                     isClicked = false;
             }
 

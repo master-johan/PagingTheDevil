@@ -11,14 +11,52 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 {
     class SmallDevil : Enemy
     {
-
         Ability fireball;
-        public SmallDevil(Texture2D tex, Vector2 pos) : base(tex, pos)
+        Player[] playerArray;
+        Player targetPlayer;
+
+        int nrOfPlayers;
+        int frame;
+        int spriteCount;
+        int spriteWidth;
+        int posX, posY;
+
+        float radiusForChasing;
+        float radiusForFleeing;
+        float safetyRadiusOuter;
+        float safetyRadiusInner;
+        float distanceToPlayer;
+
+        float scale;
+        float randomPosTimer;
+
+        double timer;
+        double interval;
+
+        bool fleeing;
+        bool safeZone;
+
+        Vector2 direction;
+        public SmallDevil(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayers) : base(tex, pos)
         {
+            this.playerArray = playerArray;
+            this.nrOfPlayers = nrOfPlayers;
+
             HealthPoints = ValueBank.SmallDevilHealth;
             shootTimer = ValueBank.SmallDevilShootTimer;
             left = true;
             right = false;
+
+            radiusForChasing = 400;
+
+            safetyRadiusOuter = 250;
+            safetyRadiusInner = 200;
+
+            radiusForFleeing = 150;
+
+            randomPosTimer = 0.2f;
+            posX = 0;
+            posY = 0;
 
             MovementSpeed = ValueBank.SmallDevilMoveSpeed;
             BaseMoveSpeed = MovementSpeed;
@@ -32,32 +70,54 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         }
 
         public override void Update(GameTime gameTime)
-        {    
-            Movement();
-            ShootFireball();
+        {
             base.Update(gameTime);
+            ChasingOrFleeingOrSafe();
+            Movement(gameTime);
+            ShootFireball();
         }
 
-        protected override void Movement()
+        protected override void Movement(GameTime gameTime)
         {
-            if (pos.X < 100)
+            if (targetPlayer != null && !targetPlayer.Dead && !fleeing && !safeZone)
             {
-                right = true;
-                left = false;
+                direction = targetPlayer.GetSetPos - pos;
+                direction.Normalize();
+                pos += direction * ValueBank.SmallDevilMoveSpeed;
             }
-            else if (pos.X > 1000)
+
+            else if (targetPlayer != null && !targetPlayer.Dead && fleeing && !safeZone)
             {
-                right = false;
-                left = true;
+                direction = targetPlayer.GetSetPos - pos;
+                direction.Normalize();
+                pos -= direction * ValueBank.SmallDevilMoveSpeed;
             }
-            if (right)
+            else if (safeZone && !fleeing)
             {
-                pos.X += MovementSpeed;
+                randomPosTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (randomPosTimer <= 0)
+                {
+                    randomPosTimer = 0.2f;
+                    posX = ValueBank.rand.Next(-1, 1);
+                    posY = ValueBank.rand.Next(-1, 1);
+
+                    if (posX != 0 && posY != 0)
+                    {
+                        direction = new Vector2(posX, posY);
+                        direction.Normalize();
+                    }
+                }
+                pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
+
+
             }
-            else if (left)
-            {
-                pos.X -= MovementSpeed;
-            }
+            //else 
+            //{
+            //    direction = new Vector2(-1, 0);
+            //    direction.Normalize();
+            //    pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
+            //}         
         }
 
         /// <summary>
@@ -88,6 +148,34 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 fireball = new Fireball(TextureManager.mageSpellList[0], pos, dir);
                 enemyAbilityList.Add(fireball);
                 shootTimer = ValueBank.SmallDevilShootTimer;
+            }
+        }
+        private void ChasingOrFleeingOrSafe()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                distanceToPlayer = Vector2.Distance(playerArray[i].GetSetPos, pos);
+
+
+                if (distanceToPlayer <= radiusForChasing && distanceToPlayer >= safetyRadiusOuter)
+                {
+                    targetPlayer = playerArray[i];
+                    fleeing = false;
+                    safeZone = false;
+                }
+
+                else if (distanceToPlayer <= radiusForFleeing && distanceToPlayer <= safetyRadiusInner)
+                {
+                    targetPlayer = playerArray[i];
+                    fleeing = true;
+                    safeZone = false;
+                }
+
+                else if (distanceToPlayer <= safetyRadiusOuter && distanceToPlayer >= safetyRadiusInner)
+                {
+                    safeZone = true;
+                    fleeing = false;
+                }
             }
         }
     }
