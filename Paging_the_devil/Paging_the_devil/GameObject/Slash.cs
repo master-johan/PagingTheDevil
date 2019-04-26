@@ -103,7 +103,14 @@ namespace Paging_the_devil.GameObject
                 angle < MathHelper.ToRadians(-405f) && meleeDirection == right)
             {
                 Active = false;
+                ToRemove = true;
             }
+
+            if (HitCharacter != null)
+            {
+                ApplyDamage();
+            }
+
             UpdateHitbox();
 
             Vector2 temp = slashPos - player.pos;

@@ -34,8 +34,13 @@ namespace Paging_the_devil.GameObject
         {
             pos += spellDirection * speed;
 
-            rect.X = (int)pos.X;
-            rect.Y = (int)pos.Y;
+            UpdateRect();
+
+            if (HitCharacter != null)
+            {
+                ApplyDamage();
+                ToRemove = true; 
+            }
 
         }
 

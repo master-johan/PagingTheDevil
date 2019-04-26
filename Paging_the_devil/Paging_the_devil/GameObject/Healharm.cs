@@ -14,6 +14,8 @@ namespace Paging_the_devil.GameObject
     {
         int speed;
         DateTime dateTime;
+        double tickTime;
+        double counter;
 
         Vector2 spellDirection; 
         public TimeSpan timePassed { get; set; }
@@ -29,30 +31,52 @@ namespace Paging_the_devil.GameObject
             Active = false;
             IsTicking = false;
             dateTime = DateTime.Now;
+
             btnTexture = TextureManager.abilityButtonList[3];
             coolDownTime = ValueBank.HealHarmCooldown;
+
+
+
+            coolDownTime = 40;
+            Damage = ValueBank.HealHarmDmg;
+            Heal = ValueBank.HealHarmHeal;
+            counter = 1500;
 
         }
 
         public override void Update()
         {
-            pos += spellDirection * speed;
-
-            rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
-            timePassed = DateTime.Now - dateTime;
-
-            if (character != null)
+            if (!Active)
             {
-                if (character is Enemy)
+                pos += spellDirection * speed;
+            }
+            UpdateRect();
+            if (HitCharacter != null)
+            {
+                if (!Active)
                 {
-                    Active = true;
+                    dateTime = DateTime.Now;
+                }
+                
+                timePassed = DateTime.Now - dateTime;
+                Active = true;
+                tickTime += timePassed.TotalMilliseconds; 
+
+                if (HitCharacter is Enemy)
+                {
+                    DmgOverTime();
                 }
 
-                if (character is Player)
+                if (HitCharacter is Player)
                 {
-                    Active = true;
                     HealOverTime();                    
                 }
+            }
+            if (timePassed.TotalSeconds >= ValueBank.HealHarmTimer)
+            {
+                Active = false;
+                ToRemove = true;
+
             }
         }
 
@@ -61,41 +85,48 @@ namespace Paging_the_devil.GameObject
             if (!Active)
             {
                 base.Draw(spriteBatch);
+                spriteBatch.Draw(TextureManager.hudTextureList[1], rect, Color.White);
             }
         }
 
-        public void DmgOverTime(Enemy enemy)
+        public void DmgOverTime()
         {
-            character = enemy;
+
             if (Active)
-            {              
-                dateTime = DateTime.Now;
-            }
-            TimeSpan timePassed = DateTime.Now - dateTime;
-
-            if (timePassed.TotalSeconds <= ValueBank.HealHarmTimer)
             {
-                enemy.HealthPoints -= ValueBank.HealHarmDmg;
-                IsTicking = true;
+                if (tickTime > counter)
+                {
+                    ApplyDamage();
+                    tickTime = 0; 
+                }
             }
-            else
-            {
-                IsTicking = false;
-            }
+            //character = enemy;
+            //if (Active)
+            //{              
+            //    dateTime = DateTime.Now;
+            //}
+            //TimeSpan timePassed = DateTime.Now - dateTime;
 
+            //if (timePassed.TotalSeconds <= ValueBank.HealHarmTimer)
+            //{
+            //    enemy.HealthPoints -= ValueBank.HealHarmDmg;
+            //    IsTicking = true;
+            //}
+            //else
+            //{
+            //    IsTicking = false;
+            //}
         }
 
         private void HealOverTime()
         {
             if (Active)
             {
-                dateTime = DateTime.Now;
-            }
-            TimeSpan timePassed = DateTime.Now - dateTime;
-
-            if (timePassed.TotalSeconds >= ValueBank.HealHarmTimer)
-            {
-                character.HealthPoints += ValueBank.HealHarmHeal;
+                if (tickTime > counter)
+                {
+                    ApplyHeal();
+                    tickTime = 0; 
+                }
             }
         }
 

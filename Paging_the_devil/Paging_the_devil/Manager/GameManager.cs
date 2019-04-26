@@ -156,7 +156,7 @@ namespace Paging_the_devil.Manager
 
                     foreach (var e in enemyList)
                     {
-                        if(e is SmallDevil)
+                        if (e is SmallDevil)
                         {
                             CheckEnemiesAbilites((e as SmallDevil).enemyAbilityList);
                         }
@@ -398,88 +398,74 @@ namespace Paging_the_devil.Manager
                 {
                     if (a.GetRect.Intersects(e.GetRect))
                     {
-                        if ((a is Slash))
+
+
+                        a.HitCharacter = e;
+                        if (a is Slash) // arbeta mer för att fixa slashen
                         {
-                            if (!(a as Slash).Hit)
-                            {
-                                e.HealthPoints -= a.Damage;
-                                SoundManager.SoundEffectList[2].Play();
-                            }
-                            (a as Slash).Hit = true;                            
-                        }
-                        else
-                        {
-                            e.HealthPoints -= a.Damage;
-                            toRemove = a;
-                        }
-                        if ((a is Cleave))
-                        {
-                            if(!(a as Cleave).Hit)
-                            {
-                                e.HealthPoints -= a.Damage;
-                                SoundManager.SoundEffectList[4].Play();
-                            }
-                            (a as Cleave).Hit = true;
-                        }
-                        else
-                        {
-                            e.HealthPoints -= a.Damage;
-                            toRemove = a;
+
+                            (a as Slash).Hit = true;
                         }
 
-                        if (a is Trap)
-                        {
-                            e.hitBySlowTrap = true;
-                            e.MovementSpeed -= 2;
-                            SoundManager.SoundEffectList[10].Play();
-                            //ValueBank.SlimeSpeed -= 0.5f;
-                        }
+                        //if ((a is Slash))
+                        //{
+                        //    if (!(a as Slash).Hit)
+                        //    {
+                        //        e.HealthPoints -= a.Damage;
+                        //    }
+                        //    (a as Slash).Hit = true;
+                        //}
+                        //else
+                        //{
+                        //    e.HealthPoints -= a.Damage;
+                        //    toRemove = a;
+                        //}
 
-                        if (a is Healharm)
-                        {
-                            (a as Healharm).Active = true;
-                            (a as Healharm).DmgOverTime(e);
-                        }
-                        if (a is Charge)
-                        {
-                            if (!(a as Charge).Hit)
-                            {
-                                e.HealthPoints -= a.Damage;
-                                toRemove = a;
-                                player.movementSpeed = ValueBank.PlayerSpeed;
-                            }
-                            (a as Charge).Hit = true;
-                        }
-                        else
-                        {
-                            e.HealthPoints -= a.Damage;
-                            toRemove = a;
-                        }
+                        //if (a is Trap)
+                        //{
+                        //    e.hitBySlowTrap = true;
+                        //    e.MovementSpeed -= 2;
+                        //    //ValueBank.SlimeSpeed -= 0.5f;
+                        //}
+
+                        //if (a is Healharm)
+                        //{
+                        //    (a as Healharm).Active = true;
+                        //    (a as Healharm).DmgOverTime(e);
+                        //}
+
                     }
                 }
-
                 for (int i = 0; i < nrOfPlayers; i++)
                 {
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
                         if (a is Healharm)
                         {
-                            if (playerArray[i] != player)
+                            if (player == playerArray[i])
                             {
-                                (a as Healharm).character = playerArray[i];
+                                continue;
                             }
+                            a.HitCharacter = playerArray[i];
                         }
                     }
                 }
 
-
-                foreach (var w in currentRoom.GetWallList())
+                if (a.ToRemove)
                 {
-                    if (a.GetRect.Intersects(w.GetRect))
-                    {
-                        toRemove = a;
-                    }
+                    toRemove = a;
                 }
+
+                
+
+
+                //foreach (var w in currentRoom.GetWallList())
+                //{
+                //    if (a.GetRect.Intersects(w.GetRect))
+                //    {
+                //        toRemove = a;
+                //    }
+                //}
             }
             if (toRemove != null)
             {

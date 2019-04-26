@@ -35,7 +35,13 @@ namespace Paging_the_devil.GameObject
         public override void Update()
         {
             pos += spellDirection * speed;
-            rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+            UpdateRect();
+
+            if (HitCharacter != null)
+            {
+                ApplyDamage();
+                ToRemove = true; 
+            }
 
         }
 
