@@ -383,18 +383,12 @@ namespace Paging_the_devil.Manager
                         }
                     }
                 }
-
                 if (toRemoveAbility != null)
                 {
                     playerArray[i].abilityList.Remove(toRemoveAbility);
                 }
-
-
             }
-
-
         }
-
         private void CheckPlayerAbilites(List<Ability> abilityList, Player player)
         {
             Ability toRemove = null;
@@ -411,8 +405,7 @@ namespace Paging_the_devil.Manager
                                 e.HealthPoints -= a.Damage;
                                 SoundManager.SoundEffectList[2].Play();
                             }
-                            (a as Slash).Hit = true;
-                            
+                            (a as Slash).Hit = true;                            
                         }
                         else
                         {
@@ -446,6 +439,21 @@ namespace Paging_the_devil.Manager
                         {
                             (a as Healharm).Active = true;
                             (a as Healharm).DmgOverTime(e);
+                        }
+                        if (a is Charge)
+                        {
+                            if (!(a as Charge).Hit)
+                            {
+                                e.HealthPoints -= a.Damage;
+                                toRemove = a;
+                                player.movementSpeed = ValueBank.PlayerSpeed;
+                            }
+                            (a as Charge).Hit = true;
+                        }
+                        else
+                        {
+                            e.HealthPoints -= a.Damage;
+                            toRemove = a;
                         }
                     }
                 }
