@@ -316,7 +316,6 @@ namespace Paging_the_devil.GameObject
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-
             spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(30, 35), 1, SpriteEffects.None, 1);
 
             foreach (var A in abilityList)
