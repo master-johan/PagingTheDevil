@@ -31,7 +31,7 @@ namespace Paging_the_devil.GameObject
             rect = sourceRect;
             GenerateRectangles(pos);
         }
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             
         }

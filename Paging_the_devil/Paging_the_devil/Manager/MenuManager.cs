@@ -89,7 +89,7 @@ namespace Paging_the_devil.Manager
             {
                 case GameState.MainMenu:
                     mainMenuBackground.Draw(spriteBatch);                   
-                    spriteBatch.Draw(TextureManager.menuTextureList[4], new Vector2(middleScreenX - TextureManager.menuTextureList[4].Width/2, 200), Color.White);
+                    spriteBatch.Draw(TextureManager.menuTextureList[4], new Vector2(middleScreenX - TextureManager.menuTextureList[4].Width/2, 100), Color.White);
 
                     foreach (var b in buttonList)
                     {
@@ -99,6 +99,7 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.PlayerSelect:
                     PlayerSelectManager.Draw(spriteBatch);
+                    spriteBatch.Draw(TextureManager.menuTextureList[8], new Vector2(middleScreenX - TextureManager.menuTextureList[8].Width / 2, 100), Color.White);
                     break;
 
             }

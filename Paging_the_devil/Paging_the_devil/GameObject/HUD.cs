@@ -53,7 +53,7 @@ namespace Paging_the_devil.GameObject
             maxHealth = player.HealthPoints;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if (player.HealthPoints < maxHealth)
             {
@@ -64,9 +64,9 @@ namespace Paging_the_devil.GameObject
                 healthBar.Width = healBarWidth;
             }
 
-            xBtn.Update();
-            aBtn.Update();
-            bBtn.Update();
+            xBtn.Update(gameTime);
+            aBtn.Update(gameTime);
+            bBtn.Update(gameTime);
 
             xBtn.GetCooldownTimer(player.Ability1CooldownTimer);
             aBtn.GetCooldownTimer(player.Ability2CooldownTimer);

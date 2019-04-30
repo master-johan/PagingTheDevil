@@ -30,12 +30,17 @@ namespace Paging_the_devil.GameObject
             btnTexture = TextureManager.hudTextureList[5];
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             pos += spellDirection * speed;
 
-            rect.X = (int)pos.X;
-            rect.Y = (int)pos.Y;
+            UpdateRect();
+
+            if (HitCharacter != null)
+            {
+                ApplyDamage();
+                ToRemove = true; 
+            }
 
         }
 

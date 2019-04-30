@@ -12,8 +12,8 @@ namespace Paging_the_devil.GameObject
     class Dash : Ability
     {
         Player player;
-        static DateTime StartTime;
-        TimeSpan timePassed { get; set; }
+      
+        float timePassed { get; set; }
         public bool Active { get; set; }
 
         public Dash(Texture2D tex, Vector2 pos, Vector2 direction,Player player, bool Active) : base(tex, pos, direction)
@@ -23,10 +23,11 @@ namespace Paging_the_devil.GameObject
             this.Active = Active;
             btnTexture = TextureManager.abilityButtonList[5];
             coolDownTime = ValueBank.DashCooldown;
-            StartTime = DateTime.Now;
+            
         }
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
+            timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             DashUpdate();
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -43,8 +44,8 @@ namespace Paging_the_devil.GameObject
                 DashDirection(direction);
                 player.movementSpeed = ValueBank.DashSpeed;
 
-                TimeSpan timePassed = DateTime.Now - StartTime;
-                if (timePassed.TotalSeconds >= ValueBank.DashTimer)
+                
+                if (timePassed >= ValueBank.DashTimer)
                 {
                     player.movementSpeed = ValueBank.PlayerSpeed;
                     Active = false;

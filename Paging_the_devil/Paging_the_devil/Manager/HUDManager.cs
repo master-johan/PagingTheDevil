@@ -30,7 +30,7 @@ namespace Paging_the_devil.Manager
             CreateHUDs();
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             //for (int i = 0; i < nrOfPlayers; i++)
             //{
@@ -47,7 +47,7 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                playerHudArray[i].Update();
+                playerHudArray[i].Update(gameTime);
             }
 
 

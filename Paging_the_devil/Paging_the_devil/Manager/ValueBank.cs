@@ -23,6 +23,7 @@ namespace Paging_the_devil.Manager
         public static int SlashCooldown;
         public static int ArrowCooldown;
         public static int TrapCooldown;
+        public static int ChargeCooldown;
 
         public static int ArrowDmg;
         public static int TrapDmg;
@@ -30,6 +31,7 @@ namespace Paging_the_devil.Manager
         public static int SlashDmg;
         public static int FireballDmg;
         public static int CleaveDmg;
+        public static int ChargeDmg;
 
         public static int HealHarmHeal;
 
@@ -37,11 +39,13 @@ namespace Paging_the_devil.Manager
         public static int HealHarmSpeed;
         public static int FireballSpeed;
         public static float DashSpeed;
+        public static float ChargeSpeed;
 
         public static int HealHarmTimer;
         public static int TrapTimer;
         public static int SmallDevilShootTimer;
         public static float DashTimer;
+        public static float ChargeTimer;
 
         public static int SmallDevilMoveSpeed;
         public static float SmallDevilIdleMoveSpeed;
@@ -69,11 +73,12 @@ namespace Paging_the_devil.Manager
 
             //Ability Cooldown
             DashCooldown = 40;
-            CleaveCooldown = 50;
+            CleaveCooldown = 40;
             HealHarmCooldown = 30;
             ArrowCooldown = 30;
             SlashCooldown = 30;
             TrapCooldown = 30;
+            ChargeCooldown = 40;
 
 
             //Ability Dmg
@@ -82,6 +87,7 @@ namespace Paging_the_devil.Manager
             HealHarmDmg = 3;
             SlashDmg = 2;
             CleaveDmg = 4;
+            ChargeDmg = 4;
 
             //Enemy Ability Dmg
             FireballDmg = 2;
@@ -94,12 +100,14 @@ namespace Paging_the_devil.Manager
             HealHarmSpeed = 7;
             FireballSpeed = 7;
             DashSpeed = 15f;
+            ChargeSpeed = 15f;
 
             //Ability Timer
-            HealHarmTimer = 4;
+            HealHarmTimer = 4000;
             SmallDevilShootTimer = 40;
-            TrapTimer = 5;
-            DashTimer = 0.2f;
+            TrapTimer = 2000;
+            DashTimer = 200;
+            ChargeTimer = 200;
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4;
@@ -107,7 +115,9 @@ namespace Paging_the_devil.Manager
             SlimeSpeed = 1f;
 
             //Player Speed
+
             PlayerSpeed = 10;
+
         }
 
 

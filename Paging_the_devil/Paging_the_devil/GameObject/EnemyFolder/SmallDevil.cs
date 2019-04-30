@@ -113,6 +113,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                     }
                 }
 
+
                 
                 pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
 

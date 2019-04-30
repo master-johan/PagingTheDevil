@@ -50,7 +50,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             //Blocked();
             foreach (var e in enemyAbilityList)
             {
-                e.Update();
+                e.Update(gameTime);
             }
 
             if (shootTimer > 0)

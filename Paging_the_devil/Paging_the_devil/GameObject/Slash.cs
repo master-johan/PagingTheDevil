@@ -93,7 +93,7 @@ namespace Paging_the_devil.GameObject
             Damage = ValueBank.SlashDmg;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             angle -= 0.3f;
 
@@ -103,7 +103,14 @@ namespace Paging_the_devil.GameObject
                 angle < MathHelper.ToRadians(-405f) && meleeDirection == right)
             {
                 Active = false;
+                ToRemove = true;
             }
+
+            if (HitCharacter != null)
+            {
+                ApplyDamage();
+            }
+
             UpdateHitbox();
 
             Vector2 temp = slashPos - player.pos;

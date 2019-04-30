@@ -13,12 +13,14 @@ namespace Paging_the_devil.GameObject
     class Healharm : Ability
     {
         int speed;
-        DateTime dateTime;
+
+        float tickTime;
+        float counter;
 
         Vector2 spellDirection; 
-        public TimeSpan timePassed { get; set; }
+        public float timePassed { get; set; }
         public Character character { get; set; }
-        public bool Active { get; set; }
+        //public bool Active { get; set; }
         public bool IsTicking { get; set; }
 
         public Healharm(Texture2D tex, Vector2 pos, Vector2 direction)
@@ -28,31 +30,45 @@ namespace Paging_the_devil.GameObject
             speed = ValueBank.HealHarmSpeed;
             Active = false;
             IsTicking = false;
-            dateTime = DateTime.Now;
-            btnTexture = TextureManager.abilityButtonList[3];
-            coolDownTime = ValueBank.HealHarmCooldown;
-
+            btnTexture = TextureManager.hudTextureList[5];
+            coolDownTime = 40;
+            Damage = ValueBank.HealHarmDmg;
+            Heal = ValueBank.HealHarmHeal;
+            counter = 1000;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
-            pos += spellDirection * speed;
-
-            rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
-            timePassed = DateTime.Now - dateTime;
-
-            if (character != null)
+            if (!Active)
             {
-                if (character is Enemy)
+                pos += spellDirection * speed;
+               
+            }
+            else
+            {
+                rect.Height = 0;
+                rect.Width = 0;
+            }
+            
+            UpdateRect();
+            if (HitCharacter != null)
+            {
+                Active = true;
+                timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                tickTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (HitCharacter is Enemy)
                 {
-                    Active = true;
+                    DmgOverTime();
                 }
-
-                if (character is Player)
+                if (HitCharacter is Player)
                 {
-                    Active = true;
                     HealOverTime();                    
                 }
+            }
+            if (timePassed >= ValueBank.HealHarmTimer)
+            {
+                Active = false;
+                ToRemove = true;
             }
         }
 
@@ -61,43 +77,32 @@ namespace Paging_the_devil.GameObject
             if (!Active)
             {
                 base.Draw(spriteBatch);
+                spriteBatch.Draw(TextureManager.hudTextureList[1], rect, Color.White);
             }
         }
 
-        public void DmgOverTime(Enemy enemy)
+        public void DmgOverTime()
         {
-            character = enemy;
             if (Active)
-            {              
-                dateTime = DateTime.Now;
-            }
-            TimeSpan timePassed = DateTime.Now - dateTime;
-
-            if (timePassed.TotalSeconds <= ValueBank.HealHarmTimer)
             {
-                enemy.HealthPoints -= ValueBank.HealHarmDmg;
-                IsTicking = true;
+                if (tickTime > counter)
+                {
+                    ApplyDamage();
+                    tickTime = 0; 
+                }
             }
-            else
-            {
-                IsTicking = false;
-            }
-
         }
 
         private void HealOverTime()
         {
             if (Active)
             {
-                dateTime = DateTime.Now;
-            }
-            TimeSpan timePassed = DateTime.Now - dateTime;
-
-            if (timePassed.TotalSeconds >= ValueBank.HealHarmTimer)
-            {
-                character.HealthPoints += ValueBank.HealHarmHeal;
+                if (tickTime > counter)
+                {
+                    ApplyHeal();
+                    tickTime = 0; 
+                }
             }
         }
-
     }
 }

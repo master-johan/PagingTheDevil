@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Paging_the_devil.GameObject
         Vector2 left, right, up, down;
         Vector2 meleeDirection;
         Player player;
+        List<Enemy> enemiesHitList;
 
         public bool Active { get; private set; }
         public bool Hit { get; set; }
@@ -34,6 +36,7 @@ namespace Paging_the_devil.GameObject
             this.player = player;
             btnTexture = TextureManager.abilityButtonList[4];
 
+            enemiesHitList = new List<Enemy>();
 
             DirectionOfVectors();
 
@@ -93,7 +96,7 @@ namespace Paging_the_devil.GameObject
             Damage = ValueBank.CleaveDmg;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             angle -= 0.15f;
 
@@ -104,8 +107,27 @@ namespace Paging_the_devil.GameObject
             {
                 Active = false;
             }
+
             Vector2 temp = cleavePos - player.pos;
             cleavePos -= temp;
+
+            
+            if (HitCharacter != null)
+            {
+                bool hasHitBefore = false;
+                foreach (var e in enemiesHitList)
+                {
+                    if (HitCharacter == e)
+                    {
+                        hasHitBefore = true; 
+                    }
+                }
+                if (!hasHitBefore)
+                {
+                    ApplyDamage();
+                    enemiesHitList.Add(HitCharacter as Enemy);
+                }
+            }
 
             UpdateHitbox();
         }
