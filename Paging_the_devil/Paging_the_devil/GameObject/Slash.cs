@@ -2,10 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
@@ -18,22 +14,24 @@ namespace Paging_the_devil.GameObject
         Vector2 slashPos;
         Vector2 left, right, up, down;
         Vector2 meleeDirection;
-        Player player;
 
-        public bool Active { get; private set; }
+        Player player;
+        
         public bool Hit { get; set; }
 
         public Slash(Texture2D tex, Vector2 pos, Vector2 direction, Player player)
             : base(tex, pos, direction)
         {
             this.player = player;
-            sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
             slashPos = pos;
             Hit = false;
-            coolDownTime = ValueBank.SlashCooldown; 
-            meleeDirection = DecideDirectionOfSlash(direction);
-            btnTexture = TextureManager.abilityButtonList[1];
 
+            sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
+
+            coolDownTime = ValueBank.SlashCooldown; 
+            btnTexture = TextureBank.abilityButtonList[1];
+
+            meleeDirection = DecideDirectionOfSlash(direction);
 
             DirectionOfVectors();
 
@@ -41,21 +39,58 @@ namespace Paging_the_devil.GameObject
             {
                 angle = MathHelper.ToRadians(-45f);
             }
+
             else if (meleeDirection == left)
             {
                 angle = MathHelper.ToRadians(-135);
             }
+
             else if (meleeDirection == down)
             {
                 angle = MathHelper.ToRadians(-225);
             }
+
             else if (meleeDirection == right)
             {
                 angle = MathHelper.ToRadians(-315);
             }
+
             DecidingValues();
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            angle -= 0.3f;
+
+            if (angle < MathHelper.ToRadians(-135f) && meleeDirection == up ||
+                angle < MathHelper.ToRadians(-225f) && meleeDirection == left ||
+                angle < MathHelper.ToRadians(-315f) && meleeDirection == down ||
+                angle < MathHelper.ToRadians(-405f) && meleeDirection == right)
+            {
+                Active = false;
+                ToRemove = true;
+            }
+
+            if (HitCharacter != null)
+            {
+                ApplyDamage();
+            }
+
+            UpdateHitbox();
+
+            Vector2 temp = slashPos - player.pos;
+            slashPos -= temp;
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(tex, slashPos, sourceRect, Color.White, angle, new Vector2(-20, tex.Height / 2), 1, SpriteEffects.None, 1);
+        }
+
+        /// <summary>
+        /// Den här metoden sköter rikting på slash
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         private Vector2 DecideDirectionOfSlash(Vector2 direction)
         {
             double slashDir = Math.Atan2(direction.Y, direction.X);
@@ -83,40 +118,20 @@ namespace Paging_the_devil.GameObject
             {
                 meleeDirection = new Vector2(1, 0);
             }
+
             return meleeDirection;
-
         }
-
+        /// <summary>
+        /// Den här metoden bestämmer värde
+        /// </summary>
         private void DecidingValues()
         {
             Active = true;
             Damage = ValueBank.SlashDmg;
         }
-
-        public override void Update(GameTime gameTime)
-        {
-            angle -= 0.3f;
-
-            if (angle < MathHelper.ToRadians(-135f) && meleeDirection == up ||
-                angle < MathHelper.ToRadians(-225f) && meleeDirection == left ||
-                angle < MathHelper.ToRadians(-315f) && meleeDirection == down ||
-                angle < MathHelper.ToRadians(-405f) && meleeDirection == right)
-            {
-                Active = false;
-                ToRemove = true;
-            }
-
-            if (HitCharacter != null)
-            {
-                ApplyDamage();
-            }
-
-            UpdateHitbox();
-
-            Vector2 temp = slashPos - player.pos;
-            slashPos -= temp;
-        }
-
+        /// <summary>
+        /// Den här metoden uppdaterar hitboxen
+        /// </summary>
         private void UpdateHitbox()
         {
             if (meleeDirection == down)
@@ -136,12 +151,9 @@ namespace Paging_the_devil.GameObject
                 rect = new Rectangle((int)pos.X - tex.Width - (tex.Width/2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(tex, slashPos, sourceRect, Color.White, angle, new Vector2(-20, tex.Height / 2), 1, SpriteEffects.None, 1);
-        }
-
+        /// <summary>
+        /// Den här metoden bestämmer riktning på vektorer
+        /// </summary>
         private void DirectionOfVectors()
         {
             right = new Vector2(1, 0);

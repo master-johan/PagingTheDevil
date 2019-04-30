@@ -1,25 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil.Manager
 {
     class HUDManager
     {
-
         int nrOfPlayers;
-        public HUD[] playerHudArray { get; set; }
-        HUD textBoxHud;
+
         Vector2 pos;
+
         Player[] playerArray;
 
-
-
+        public HUD[] playerHudArray { get; set; }
 
         public HUDManager(Player[] playerArray, int nrOfPlayers)
         {
@@ -32,56 +25,43 @@ namespace Paging_the_devil.Manager
 
         public void Update(GameTime gameTime)
         {
-            //for (int i = 0; i < nrOfPlayers; i++)
-            //{
-            //    pos.X = TextureManager.WindowSizeX / 5 * i ;
-            //    pos.Y = 0;
-
-            //    if(i > 1)
-            //    {
-            //        pos.X = TextureManager.WindowSizeX / 5 * (i + 1);
-            //    }
-
-            //    playerHudArray[i] = new HUD(graphicsDevice, pos,p);
-            //}
-
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerHudArray[i].Update(gameTime);
             }
-
-
         }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerHudArray[i].Draw(spriteBatch);
             }
-
         }
 
+        /// <summary>
+        /// Den här metoden hämtar antalet spelare till till HUD:en
+        /// </summary>
+        /// <param name="nrOfPlayers"></param>
         public void GetNrOfPlayersToHud(int nrOfPlayers)
         {
             this.nrOfPlayers = nrOfPlayers;
         }
-
+        /// <summary>
+        /// Den här metoden skapar HUD:s
+        /// </summary>
         private void CreateHUDs()
         {
-
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                pos = new Vector2(TextureManager.WindowSizeX / 5 * i, 0);
+                pos = new Vector2(ValueBank.WindowSizeX / 5 * i, 0);
 
                 if (i > 1)
                 {
-                    pos.X = TextureManager.WindowSizeX / 5 * (i + 1);
+                    pos.X = ValueBank.WindowSizeX / 5 * (i + 1);
                 }
 
                 playerHudArray[i] = new HUD(pos, playerArray[i]);
             }
-
         }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
@@ -14,12 +9,9 @@ namespace Paging_the_devil.GameObject
         int speed;
         Vector2 spellDirection;
 
-        public bool Active { get; set; }
-
         public Fireball(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
-
             spellDirection = GetSpellDirection(direction);
             speed = ValueBank.FireballSpeed;
             Damage = ValueBank.FireballDmg;
@@ -27,7 +19,7 @@ namespace Paging_the_devil.GameObject
             Active = true;
             coolDownTime = 60;
 
-            btnTexture = TextureManager.hudTextureList[5];
+            btnTexture = TextureBank.hudTextureList[5];
         }
 
         public override void Update(GameTime gameTime)
@@ -41,9 +33,7 @@ namespace Paging_the_devil.GameObject
                 ApplyDamage();
                 ToRemove = true; 
             }
-
         }
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);

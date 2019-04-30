@@ -9,6 +9,10 @@ namespace Paging_the_devil.GameObject
         public Vector2 pos;
         protected Rectangle rect;
 
+        public Rectangle GetRect { get { return rect; } }
+
+        public Vector2 GetSetPos { get { return pos; } set { pos = value; } }
+
         public GameObject(Texture2D tex, Vector2 pos)
         {
             this.tex = tex;
@@ -16,11 +20,7 @@ namespace Paging_the_devil.GameObject
         }
 
         public abstract void Update(GameTime gameTime);
-
         public abstract void Draw(SpriteBatch spriteBatch);
         
-        public Rectangle GetRect { get { return rect; } }
-
-        public Vector2 GetSetPos { get { return pos; } set { pos = value; } }
     }
 }

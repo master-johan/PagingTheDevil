@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,53 +7,73 @@ using Paging_the_devil.Manager;
 
 namespace Paging_the_devil.GameObject
 {
-
     class Player : Character
     {
-        public float movementSpeed { get; set; }
         float rotation;
+
         protected float maxHealthPoints;
-        int slashTimer;
+
         int playerIndex;
         int frame;
-        public int Ability1CooldownTimer { get; protected set; }
-        public int Ability2CooldownTimer { get; protected set; }
-        public int Ability3CooldownTimer { get; protected set; }
 
         double timer;
         double interval;
+        
+        Rectangle left;
+        Rectangle right;
+        Rectangle up;
+        Rectangle down;
+        Rectangle hitboxLeft;
+        Rectangle hitboxRight;
+        Rectangle hitboxTop;
+        Rectangle hitboxBot;
 
-        Rectangle left, right, up, down;
-        Rectangle hitboxLeft, hitboxRight, hitboxTop, hitboxBot;
         protected Rectangle drawRect;
 
         public List<Ability> abilityList;
-
-        protected Vector2 spellDirection;
-        protected Vector2 inputDirection;
-        public Vector2 LastDirection { get; set; }
         
-        public Ability Ability1 { get; protected set; }
-        public Ability Ability2 { get; protected set; }
-        public Ability Ability3 { get; protected set; }
-
-
+        protected Vector2 inputDirection;
 
         bool angleRight;
         bool angleLeft;
         bool angleUp;
         bool angleDown;
+
         public bool Dead { get; set; }
 
+        public int Ability1CooldownTimer { get; protected set; }
+        public int Ability2CooldownTimer { get; protected set; }
+        public int Ability3CooldownTimer { get; protected set; }
+
+        public Vector2 LastDirection { get; set; }
+
+        public Ability Ability1 { get; protected set; }
+        public Ability Ability2 { get; protected set; }
+        public Ability Ability3 { get; protected set; }
+
+        public float movementSpeed { get; set; }
+
+        public Rectangle GetTopHitbox { get { return hitboxTop; } }
+        public Rectangle GetBotHitbox { get { return hitboxBot; } }
+        public Rectangle GetLeftHitbox { get { return hitboxLeft; } }
+        public Rectangle GetRightHitbox { get { return hitboxRight; } }
+
+        public Controller Controller { get; set; }
+        public bool UpMovementBlocked { get; set; }
+        public bool DownMovementBlocked { get; set; }
+        public bool LeftMovementBlocked { get; set; }
+        public bool RightMovementBlocked { get; set; }
 
         public Player(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller)
             : base(tex, pos)
         {
             this.playerIndex = playerIndex;
             this.Controller = Controller;
+
+            DecidingSourceRect();
             GenerateRectangles(pos);
             DecidingValues();
-            DecidingSourceRect();
+
             drawRect = down;
             rotation = 0;
         }
@@ -76,10 +93,6 @@ namespace Paging_the_devil.GameObject
         private void DecidingValues()
         {
             abilityList = new List<Ability>();
-            slashTimer = 0;
-
-            //HealthPoints = 100f;
-            //maxHealthPoints = HealthPoints;
 
             movementSpeed = ValueBank.PlayerSpeed;
             interval = 200;
@@ -113,19 +126,23 @@ namespace Paging_the_devil.GameObject
                 {
                     abilityList.Add(CastAbility1());
                 }
-                if (Controller.ButtonPressed(Buttons.A) && Ability2CooldownTimer <= 0)
+
+                else if (Controller.ButtonPressed(Buttons.A) && Ability2CooldownTimer <= 0)
                 {
                     abilityList.Add(CastAbility2());
                 }
-                if (Controller.ButtonPressed(Buttons.B) && Ability3CooldownTimer <= 0)
+
+                else if (Controller.ButtonPressed(Buttons.B) && Ability3CooldownTimer <= 0)
                 {
                     abilityList.Add(CastAbility3());
                 }
             }
+
             if(Dead)
             {
                 rotation = MathHelper.ToRadians(90);
             }
+
             else
             {
                 rotation = 0;
@@ -140,6 +157,15 @@ namespace Paging_the_devil.GameObject
 
             DrawDifferentRects(gameTime);
         }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(30, 35), 1, SpriteEffects.None, 1);
+
+            foreach (var A in abilityList)
+            {
+                A.Draw(spriteBatch);
+            }
+        }
         /// <summary>
         /// Den här metoden sköter spelarens rörelse.
         /// </summary>
@@ -151,7 +177,7 @@ namespace Paging_the_devil.GameObject
 
             }
 
-            if (DownMovementBlocked && inputDirection.Y < 0)
+            else if (DownMovementBlocked && inputDirection.Y < 0)
             {
                 inputDirection.Y = 0;
             }
@@ -160,10 +186,12 @@ namespace Paging_the_devil.GameObject
             {
                 inputDirection.X = 0;
             }
-            if (LeftMovementBlocked && inputDirection.X < 0)
+
+            else if (LeftMovementBlocked && inputDirection.X < 0)
             {
                 inputDirection.X = 0;
             }
+
             if (!Dead)
             {
                 pos.X += inputDirection.X * movementSpeed;
@@ -180,10 +208,12 @@ namespace Paging_the_devil.GameObject
             {
                 Ability1CooldownTimer--;
             }
+
             if (Ability2CooldownTimer > 0)
             {
                 Ability2CooldownTimer--;
             }
+
             if (Ability3CooldownTimer > 0)
             {
                 Ability3CooldownTimer--;
@@ -195,6 +225,7 @@ namespace Paging_the_devil.GameObject
         private void UpdateAbility(GameTime gameTime)
         {
             Ability toRemove = null;
+
             foreach (var A in abilityList)
             {
                 A.Update(gameTime);
@@ -205,6 +236,7 @@ namespace Paging_the_devil.GameObject
                         toRemove = A;
                     }
                 }
+
                 if(A is Cleave)
                 {
                     if(!(A as Cleave).Active)
@@ -212,13 +244,7 @@ namespace Paging_the_devil.GameObject
                         toRemove = A;
                     }
                 }
-                if (A is Trap)
-                {
-                    //if ((A as Trap).timePassed.TotalSeconds > 5)
-                    //{
-                    //    toRemove = A;
-                    //}
-                }
+
                 if (A is Dash)
                 {
                     if (!(A as Dash).Active)
@@ -227,53 +253,11 @@ namespace Paging_the_devil.GameObject
                     }
                 }               
             }
+
             if (toRemove != null)
             {
                 abilityList.Remove(toRemove);
             }
-        }
-        ///// <summary>
-        ///// Den här metoden skapar slashes beroende på vinklar.
-        ///// </summary>
-        //private void Slashes()
-        //{
-        //    double slashDir = Math.Atan2(lastInputDirection.Y, lastInputDirection.X);
-
-        //    float slashAngle = MathHelper.ToDegrees((float)slashDir);
-
-        //    Vector2 meleeDirection = Vector2.Zero;
-
-        //    if (slashAngle > 45 && slashAngle < 135) // up
-        //    {
-        //        meleeDirection = new Vector2(0, -1);
-        //    }
-
-        //    else if (slashAngle > 135 || slashAngle < -135) // left
-        //    {
-        //        meleeDirection = new Vector2(-1, 0);
-        //    }
-
-        //    else if (slashAngle > -135 && slashAngle < -45) // down
-        //    {
-        //        meleeDirection = new Vector2(0, 1);
-        //    }
-
-        //    else if (slashAngle > -45 && slashAngle < 45) // right
-        //    {
-        //        meleeDirection = new Vector2(1, 0);
-        //    }
-        //    CreateSlash(meleeDirection);
-
-        //    slashTimer = 20;
-        //}
-        /// <summary>
-        /// Den här metoden skapar slashes.
-        /// </summary>
-        /// <param name="meleeDirection"></param>
-        private void CreateSlash(Vector2 meleeDirection)
-        {
-            Ability slashObject = new Slash(TextureManager.mageSpellList[1], pos, LastDirection,this);
-            abilityList.Add(slashObject);
         }
         /// <summary>
         /// Den här metoden uppdaterar hitboxes.
@@ -311,16 +295,6 @@ namespace Paging_the_devil.GameObject
         {
             LastDirection = direction;
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(30, 35), 1, SpriteEffects.None, 1);
-
-            foreach (var A in abilityList)
-            {
-                A.Draw(spriteBatch);
-            }
-        }
         /// <summary>
         /// Den här metoden uppdaterar vilken bild som ska ritas ut beroende på hur man styr sin gubbe. 
         /// </summary>
@@ -346,6 +320,7 @@ namespace Paging_the_devil.GameObject
                             }
                             PlayerAnimation(left);
                         }
+
                         else
                         {
                             if (angleRight)
@@ -359,6 +334,7 @@ namespace Paging_the_devil.GameObject
                             PlayerAnimation(right);
                         }
                     }
+
                     else
                     {
                         if (inputDirection.Y < 0)
@@ -404,47 +380,19 @@ namespace Paging_the_devil.GameObject
             }
         }
         /// <summary>
-        /// Den här metoden returnerar hitboxen i norr.
+        /// Den här metoden sköter vad som händer vid en död spelare
         /// </summary>
-        public Rectangle GetTopHitbox
-        {
-            get { return hitboxTop; }
-        }
-        /// <summary>
-        /// Den här metoden returnerar hitboxen i söder.
-        /// </summary>
-        public Rectangle GetBotHitbox
-        {
-            get { return hitboxBot; }
-        }
-        /// <summary>
-        /// Den här metoden returnerar hitboxen i väst.
-        /// </summary>
-        public Rectangle GetLeftHitbox
-        {
-            get { return hitboxLeft; }
-        }
-        /// <summary>
-        /// Den här metoden returnerar hitboxen i öst.
-        /// </summary>
-        public Rectangle GetRightHitbox
-        {
-            get { return hitboxRight; }
-
-        }
         public void IfHealthIsZero()
         {
             if(HealthPoints <= 0)
             {
                 HealthPoints = 0;
                 Dead = true;
-
-                if(Dead)
-                {
-                    //Lägg in en död spelare här eller nåt snyggt
-                }
             }
         }
+        /// <summary>
+        /// Den här metoden sköter vad som händer när hp = max
+        /// </summary>
         public void IfHealthIsFull()
         {
             if(HealthPoints >= maxHealthPoints)
@@ -452,6 +400,9 @@ namespace Paging_the_devil.GameObject
                 HealthPoints = maxHealthPoints;
             }
         }
+        /// <summary>
+        /// Den här metoden sköter vad som händer vid hp över 0
+        /// </summary>
         public void Revive()
         {
             if(HealthPoints > 0)
@@ -472,12 +423,5 @@ namespace Paging_the_devil.GameObject
         {
             return null;
         }
-
-
-        public Controller Controller { get; set; }
-        public bool UpMovementBlocked { get; set; }
-        public bool DownMovementBlocked { get; set; }
-        public bool LeftMovementBlocked { get; set; }
-        public bool RightMovementBlocked { get; set; }
     }
 }

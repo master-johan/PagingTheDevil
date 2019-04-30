@@ -2,33 +2,36 @@
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
     class Arrow : Ability
     {
         int speed;
-        Vector2 origin;
-        double rotation;
-        Rectangle srsRect;
-        Vector2 spellDirection;
 
+        double rotation;
+
+        Rectangle srsRect;
+
+        Vector2 spellDirection;
+        Vector2 origin;
 
         public Arrow(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
             spellDirection = GetSpellDirection(direction);
+
             speed = ValueBank.ArrowSpeed;
             Damage = ValueBank.ArrowDmg;
+
             rotation = Math.Atan2(spellDirection.Y, spellDirection.X);
-            rect = new Rectangle((int)pos.X, (int)pos.Y, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
-            origin = new Vector2(TextureManager.mageSpellList[4].Width / 2, TextureManager.mageSpellList[4].Height / 2);
-            srsRect = new Rectangle(0, 0, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height);
-            btnTexture = TextureManager.abilityButtonList[0];
+
+            rect = new Rectangle((int)pos.X, (int)pos.Y, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height);
+            srsRect = new Rectangle(0, 0, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height);
+
+            origin = new Vector2(TextureBank.mageSpellList[4].Width / 2, TextureBank.mageSpellList[4].Height / 2);
+
+            btnTexture = TextureBank.abilityButtonList[0];
             coolDownTime = ValueBank.ArrowCooldown;
         }
 
@@ -42,7 +45,6 @@ namespace Paging_the_devil.GameObject
                 ApplyDamage();
                 ToRemove = true; 
             }
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)

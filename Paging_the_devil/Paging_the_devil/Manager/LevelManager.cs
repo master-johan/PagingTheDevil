@@ -3,15 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paging_the_devil.Manager
 {
     class LevelManager
     {
         StreamReader streamReader;
+
         List<String> map;
+
+        public Room[,] CurrentLevel { get; set; }
 
         public LevelManager()
         {
@@ -19,9 +20,9 @@ namespace Paging_the_devil.Manager
             map = new List<string>();
             ReadFile();
         }
-
-        public Room[,] CurrentLevel { get; set; }
-
+        /// <summary>
+        /// Den här metoden läser textfilen för kartan över levlen
+        /// </summary>
         private void ReadFile()
         {
             streamReader = new StreamReader(@"level1.txt");
@@ -46,14 +47,17 @@ namespace Paging_the_devil.Manager
                     {
                         CurrentLevel[x, y] = emptyRoom;
                     }
+
                     else if (row[x] == 'R')
                     {
                         CurrentLevel[x, y] = standardRoom;
                     }
+
                     else if (row[x] == 'S')
                     {
                         CurrentLevel[x, y] = startRoom;
                     }
+
                     else if (row[x] == 'B')
                     {
                         CurrentLevel[x, y] = bossRoom;

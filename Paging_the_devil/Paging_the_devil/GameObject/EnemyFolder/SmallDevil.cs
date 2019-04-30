@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 
@@ -36,7 +31,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         bool fleeing;
         bool safeZone;
 
-
         public SmallDevil(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayers) : base(tex, pos)
         {
             this.playerArray = playerArray;
@@ -48,12 +42,9 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             right = false;
 
             radiusForChasing = 400;
-
             safetyRadiusOuter = 350;
             safetyRadiusInner = 300;
-
             radiusForFleeing = 250;
-
             randomPosTimer = 0.2f;
 
             MovementSpeed = ValueBank.SmallDevilMoveSpeed;
@@ -74,7 +65,10 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             Movement(gameTime);
             ShootFireball();
         }
-
+        /// <summary>
+        /// Den här metoden sköter devilens rörelse
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Movement(GameTime gameTime)
         {
             //if(!DownMovementBlocked && !UpMovementBlocked && !LeftMovementBlocked && !RightMovementBlocked)
@@ -113,11 +107,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                     }
                 }
 
-
-                
                 pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
-
-                
             }
 
             //else 
@@ -127,7 +117,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             //    pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
             //}         
         }
-
         /// <summary>
         /// Den här metoden skjuter fireballs.
         /// </summary>
@@ -153,18 +142,20 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 Vector2 dir = new Vector2((float)x, (float)y);
                 dir.Normalize();
 
-                fireball = new Fireball(TextureManager.mageSpellList[0], pos, dir);
+                fireball = new Fireball(TextureBank.mageSpellList[0], pos, dir);
                 enemyAbilityList.Add(fireball);
                 shootTimer = ValueBank.SmallDevilShootTimer;
             }
         }
+        /// <summary>
+        /// Den här metoden sköter ifall smallDevil ska jaga/fly eller vara säker
+        /// </summary>
         private void ChasingOrFleeingOrSafe()
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 distanceToPlayer = Vector2.Distance(playerArray[i].GetSetPos, pos);
-
-
+                
                 if (distanceToPlayer <= radiusForChasing && distanceToPlayer >= safetyRadiusOuter)
                 {
                     targetPlayer = playerArray[i];

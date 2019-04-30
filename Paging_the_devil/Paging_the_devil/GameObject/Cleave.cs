@@ -4,9 +4,6 @@ using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
@@ -19,7 +16,9 @@ namespace Paging_the_devil.GameObject
         Vector2 cleavePos;
         Vector2 left, right, up, down;
         Vector2 meleeDirection;
+
         Player player;
+
         List<Enemy> enemiesHitList;
 
         public bool Active { get; private set; }
@@ -28,37 +27,70 @@ namespace Paging_the_devil.GameObject
         public Cleave(Texture2D tex, Vector2 pos, Vector2 direction, Player player)
             : base(tex, pos, direction)
         {
-            sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
-            cleavePos = pos;
-            Hit = false;
-            coolDownTime = ValueBank.CleaveCooldown;
-            meleeDirection = DecideDirectionOfCleave(direction);
             this.player = player;
-            btnTexture = TextureManager.abilityButtonList[4];
+            cleavePos = pos;
+
+            Hit = false;
+
+            sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
+
+            coolDownTime = ValueBank.CleaveCooldown;
+            btnTexture = TextureBank.abilityButtonList[4];
+
+            meleeDirection = DecideDirectionOfCleave(direction);
 
             enemiesHitList = new List<Enemy>();
 
             DirectionOfVectors();
 
-            if (meleeDirection == up)
-            {
-                angle = MathHelper.ToRadians(-0f);
-            }
-            else if (meleeDirection == left)
-            {
-                angle = MathHelper.ToRadians(-90);
-            }
-            else if (meleeDirection == down)
-            {
-                angle = MathHelper.ToRadians(-180);
-            }
-            else if (meleeDirection == right)
-            {
-                angle = MathHelper.ToRadians(-270);
-            }
             DecidingValues();
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            angle -= 0.15f;
+
+            if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
+                angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
+                angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
+                angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
+            {
+                Active = false;
+            }
+
+            Vector2 temp = cleavePos - player.pos;
+            cleavePos -= temp;
+
+            if (HitCharacter != null)
+            {
+                bool hasHitBefore = false;
+
+                foreach (var e in enemiesHitList)
+                {
+                    if (HitCharacter == e)
+                    {
+                        hasHitBefore = true;
+                    }
+                }
+
+                if (!hasHitBefore)
+                {
+                    ApplyDamage();
+                    enemiesHitList.Add(HitCharacter as Enemy);
+                }
+            }
+            UpdateHitbox();
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(tex, cleavePos, sourceRect, Color.White, angle, new Vector2(-40, tex.Height / 2), 1, SpriteEffects.None, 1);
+        }
+
+        /// <summary>
+        /// Den här metoden bestämmer riktningen av cleave
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         private Vector2 DecideDirectionOfCleave(Vector2 direction)
         {
             double cleaveDir = Math.Atan2(direction.Y, direction.X);
@@ -86,77 +118,65 @@ namespace Paging_the_devil.GameObject
             {
                 meleeDirection = new Vector2(1, 0);
             }
+
             return meleeDirection;
-
         }
-
+        /// <summary>
+        /// Den här metoden bestämmer värden
+        /// </summary>
         private void DecidingValues()
         {
+            if (meleeDirection == up)
+            {
+                angle = MathHelper.ToRadians(-0f);
+            }
+
+            else if (meleeDirection == left)
+            {
+                angle = MathHelper.ToRadians(-90);
+            }
+
+            else if (meleeDirection == down)
+            {
+                angle = MathHelper.ToRadians(-180);
+            }
+
+            else if (meleeDirection == right)
+            {
+                angle = MathHelper.ToRadians(-270);
+            }
+
             Active = true;
             Damage = ValueBank.CleaveDmg;
         }
-
-        public override void Update(GameTime gameTime)
-        {
-            angle -= 0.15f;
-
-            if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
-                angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
-                angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
-                angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
-            {
-                Active = false;
-            }
-
-            Vector2 temp = cleavePos - player.pos;
-            cleavePos -= temp;
-
-            
-            if (HitCharacter != null)
-            {
-                bool hasHitBefore = false;
-                foreach (var e in enemiesHitList)
-                {
-                    if (HitCharacter == e)
-                    {
-                        hasHitBefore = true; 
-                    }
-                }
-                if (!hasHitBefore)
-                {
-                    ApplyDamage();
-                    enemiesHitList.Add(HitCharacter as Enemy);
-                }
-            }
-
-            UpdateHitbox();
-        }
-
+        /// <summary>
+        /// Den här metoden uppdaterar hitboxen
+        /// </summary>
         private void UpdateHitbox()
         {
             if (meleeDirection == down)
             {
                 rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y, tex.Height * 4, tex.Width + (tex.Width / 2));
             }
+
             else if (meleeDirection == up)
             {
                 rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y - tex.Width - (tex.Width / 2), tex.Height * 4, tex.Width + (tex.Width / 2));
             }
+
             else if (meleeDirection == right)
             {
                 rect = new Rectangle((int)pos.X, (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
+
             else if (meleeDirection == left)
             {
                 rect = new Rectangle((int)pos.X - tex.Width - (tex.Width / 2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(tex, cleavePos, sourceRect, Color.White, angle, new Vector2(-40, tex.Height / 2), 1, SpriteEffects.None, 1);
-        }
-
+        /// <summary>
+        /// Den här metoden bestämmer riktning på vektorerna
+        /// </summary>
         private void DirectionOfVectors()
         {
             right = new Vector2(1, 0);

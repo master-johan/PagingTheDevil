@@ -2,11 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.Manager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
@@ -18,22 +13,30 @@ namespace Paging_the_devil.GameObject
         float counter;
 
         Vector2 spellDirection; 
+
         public float timePassed { get; set; }
+
         public Character character { get; set; }
+
         //public bool Active { get; set; }
+
         public bool IsTicking { get; set; }
 
         public Healharm(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
         {
             spellDirection = GetSpellDirection(direction);
+
             speed = ValueBank.HealHarmSpeed;
-            Active = false;
-            IsTicking = false;
-            btnTexture = TextureManager.hudTextureList[5];
-            coolDownTime = 40;
             Damage = ValueBank.HealHarmDmg;
             Heal = ValueBank.HealHarmHeal;
+
+            Active = false;
+            IsTicking = false;
+
+            btnTexture = TextureBank.hudTextureList[5];
+
+            coolDownTime = 40;
             counter = 1000;
         }
 
@@ -44,6 +47,7 @@ namespace Paging_the_devil.GameObject
                 pos += spellDirection * speed;
                
             }
+
             else
             {
                 rect.Height = 0;
@@ -51,20 +55,25 @@ namespace Paging_the_devil.GameObject
             }
             
             UpdateRect();
+
             if (HitCharacter != null)
             {
                 Active = true;
+
                 timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 tickTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
                 if (HitCharacter is Enemy)
                 {
                     DmgOverTime();
                 }
-                if (HitCharacter is Player)
+
+                else if (HitCharacter is Player)
                 {
                     HealOverTime();                    
                 }
             }
+
             if (timePassed >= ValueBank.HealHarmTimer)
             {
                 Active = false;
@@ -77,10 +86,12 @@ namespace Paging_the_devil.GameObject
             if (!Active)
             {
                 base.Draw(spriteBatch);
-                spriteBatch.Draw(TextureManager.hudTextureList[1], rect, Color.White);
+                spriteBatch.Draw(TextureBank.hudTextureList[1], rect, Color.White);
             }
         }
-
+        /// <summary>
+        /// Den här metoden gör skada över tid
+        /// </summary>
         public void DmgOverTime()
         {
             if (Active)
@@ -92,7 +103,9 @@ namespace Paging_the_devil.GameObject
                 }
             }
         }
-
+        /// <summary>
+        /// Den här metoden healar över tid
+        /// </summary>
         private void HealOverTime()
         {
             if (Active)

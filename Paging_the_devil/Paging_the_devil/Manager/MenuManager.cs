@@ -1,44 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Paging_the_devil.GameObject;
 
 namespace Paging_the_devil.Manager
 {
     enum States { GoingDown, GoingUp, None }
+
     class MenuManager
     {
-        Game1 game;
-        int selectedBtn;
-        int nrOfPlayers;
-        Pointer pointer;
-        List<Button> buttonList = new List<Button>();
-        Vector2 pointerPos;
-        int middleScreenY;
-        int middleScreenX;
         States current, previous;
+
+        Game1 game;
+
+        Pointer pointer;
+
         MainMenuBackground mainMenuBackground;
-        public PlayerSelectManager PlayerSelectManager { get; set; }
+
+        List<Button> buttonList = new List<Button>();
 
         Controller[] controllerArray;
+
+        int selectedBtn;
+        int nrOfPlayers;
+        int middleScreenY;
+        int middleScreenX;
+
+        Vector2 pointerPos;
+
+        public PlayerSelectManager PlayerSelectManager { get; set; }
 
         public MenuManager(GraphicsDevice graphicsDevice, Game1 game)
         {
             this.game = game;
 
-            middleScreenY = (TextureManager.WindowSizeY / 2);
-            middleScreenX = (TextureManager.WindowSizeX/2);
+            middleScreenY = (ValueBank.WindowSizeY / 2);
+            middleScreenX = (ValueBank.WindowSizeX/2);
 
-            buttonList.Add(new Button(TextureManager.menuTextureList[0], graphicsDevice, new Vector2(middleScreenX - TextureManager.menuTextureList[0].Width/ 2, middleScreenY - TextureManager.menuTextureList[0].Height)));
-            buttonList.Add(new Button(TextureManager.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureManager.menuTextureList[0].Width/ 2, middleScreenY - TextureManager.menuTextureList[0].Height + 200)));
+            buttonList.Add(new Button(TextureBank.menuTextureList[0], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width/ 2, middleScreenY - TextureBank.menuTextureList[0].Height)));
+            buttonList.Add(new Button(TextureBank.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width/ 2, middleScreenY - TextureBank.menuTextureList[0].Height + 200)));
 
             pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
-            pointer = new Pointer(TextureManager.menuTextureList[5], pointerPos, buttonList);
+            pointer = new Pointer(TextureBank.menuTextureList[5], pointerPos, buttonList);
 
             selectedBtn = 0;
             buttonList[0].activeButton = true;
@@ -53,8 +56,8 @@ namespace Paging_the_devil.Manager
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
-
                     mainMenuBackground.Update(gameTime);
+
                     foreach (var b in buttonList)
                     {
                         b.Update();
@@ -80,28 +83,28 @@ namespace Paging_the_devil.Manager
                     PlayerSelectManager.Update(gameTime);
                     break;
             }
-        }
-
-        
+        }      
         public void Draw(SpriteBatch spriteBatch)
         {
             switch (GameManager.currentState)
             {
                 case GameState.MainMenu:
+
                     mainMenuBackground.Draw(spriteBatch);                   
-                    spriteBatch.Draw(TextureManager.menuTextureList[4], new Vector2(middleScreenX - TextureManager.menuTextureList[4].Width/2, 100), Color.White);
+                    spriteBatch.Draw(TextureBank.menuTextureList[4], new Vector2(middleScreenX - TextureBank.menuTextureList[4].Width/2, 100), Color.White);
 
                     foreach (var b in buttonList)
                     {
                         b.Draw(spriteBatch);
                     }
+
                     pointer.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
-                    PlayerSelectManager.Draw(spriteBatch);
-                    spriteBatch.Draw(TextureManager.menuTextureList[8], new Vector2(middleScreenX - TextureManager.menuTextureList[8].Width / 2, 100), Color.White);
-                    break;
 
+                    PlayerSelectManager.Draw(spriteBatch);
+                    spriteBatch.Draw(TextureBank.menuTextureList[8], new Vector2(middleScreenX - TextureBank.menuTextureList[8].Width / 2, 100), Color.White);
+                    break;
             }
         }
         /// <summary>
@@ -113,10 +116,12 @@ namespace Paging_the_devil.Manager
             {
                 current = States.GoingUp;
             }
+
             else if (controllerArray[0].gamePadState.ThumbSticks.Left.Y < -0.5f)
             {
                 current = States.GoingDown;
             }
+
             else
             {
                 current = States.None;
@@ -131,6 +136,7 @@ namespace Paging_the_devil.Manager
             {
                 GameManager.currentState = GameState.PlayerSelect;
             }
+
             else if (buttonList[1].activeButton)
             {
                 game.Exit();
@@ -147,10 +153,10 @@ namespace Paging_the_devil.Manager
                 {
                     selectedBtn++;
                 }
+
                 else if (current == States.GoingUp && previous != States.GoingUp && selectedBtn > 0)
                 {
                     selectedBtn--;
-
                 }
 
                 buttonList[i].activeButton = false;
@@ -180,6 +186,5 @@ namespace Paging_the_devil.Manager
         {
             PlayerSelectManager.GetNrOfPlayers(nrOfPlayers);
         }
-
     }
 }

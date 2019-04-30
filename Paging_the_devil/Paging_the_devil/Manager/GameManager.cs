@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
-using Paging_the_devil.Manager;
 using Microsoft.Xna.Framework.Media;
 using Paging_the_devil.GameObject.EnemyFolder;
 
@@ -19,14 +13,21 @@ namespace Paging_the_devil.Manager
 
     class GameManager
     {
+        public static GameState currentState;
+
         GraphicsDevice graphicsDevice;
+
         GraphicsDeviceManager graphics;
 
         MenuManager menuManager;
-        public HUDManager HUDManager { get; set; }
+
         Game1 game;
 
-        int nrOfPlayers;
+        RoomManager roomManager;
+
+        LevelManager levelManager;
+
+        Room currentRoom;
 
         Controller[] controllerArray;
 
@@ -34,66 +35,42 @@ namespace Paging_the_devil.Manager
 
         List<Enemy> enemyList;
 
+
+        int nrOfPlayers; 
+
         bool roomManagerCreated;
         bool hudManagerCreated;
 
         bool[] connectedController;
 
-        public static GameState currentState;
-
-        RoomManager roomManager;
-        LevelManager levelManager;
-
-        Room currentRoom;
+        public HUDManager HUDManager { get; set; }
 
         public GameManager(GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics, Game1 game)
         {
             this.graphicsDevice = graphicsDevice;
             this.graphics = graphics;
             this.game = game;
+
             SetWindowSize(graphics);
 
             menuManager = new MenuManager(graphicsDevice, game);
             levelManager = new LevelManager();
 
-
             enemyList = new List<Enemy>();
 
             currentState = GameState.MainMenu;
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(SoundManager.BgMusicList[0]);
 
-            CreatingThings();
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(SoundBank.BgMusicList[0]);
+
+            ArrayGenerator();
 
             menuManager = new MenuManager(graphicsDevice, game);
-
 
             ConnectController();
 
             SetWindowSize(graphics);
-
         }
-        /// <summary>
-        /// Den här metoden sätter fönstrets storlek
-        /// </summary>
-        /// <param name="graphics"></param>
-        private static void SetWindowSize(GraphicsDeviceManager graphics)
-        {
-            graphics.PreferredBackBufferHeight = TextureManager.WindowSizeY = 1080;
-            graphics.PreferredBackBufferWidth = TextureManager.WindowSizeX = 1920;
-            graphics.ApplyChanges();
-            TextureManager.GameWindowStartY = 135;
-        }
-        /// <summary>
-        /// Den här metoden anger värden till olika Arrays och skapar portaler.
-        /// </summary>
-        private void CreatingThings()
-        {
-            controllerArray = new Controller[4];
-            connectedController = new bool[4];
-            playerArray = new Player[4];
-        }
-
         public void Update(GameTime gameTime)
         {
             switch (currentState)
@@ -101,39 +78,38 @@ namespace Paging_the_devil.Manager
                 case GameState.MainMenu:
 
                     ConnectController();
+
                     if (controllerArray[0] != null)
                     {
                         SendControllerToMenu();
                         controllerArray[0].Update();
                         menuManager.Update(gameTime);
                     }
+
                     DisconnectController();
                     break;
                 case GameState.PlayerSelect:
-
                     ConnectController();
                     UpdateController();
                     SendPlayerToMenu();
-                    playerArray = menuManager.PlayerSelectManager.GetPlayerArray();
+                    playerArray = menuManager.PlayerSelectManager.PlayerArray;
                     menuManager.Update(gameTime);
                     DisconnectController();
 
                     break;
                 case GameState.InGame:
-
                     if (HUDManager == null)
                     {
-                        HUDManager = menuManager.PlayerSelectManager.GetHudManager();
+                        HUDManager = menuManager.PlayerSelectManager.HUDManager;
                         hudManagerCreated = true;
-
                     }
+
                     if (roomManager == null)
                     {
                         CreateRoomManager();
                         currentRoom = roomManager.CurrentRoom;
                     }
-
-
+                    //Ta bort i slutprodukten 
                     if (Keyboard.GetState().IsKeyDown(Keys.A))
                     {
                         for (int i = 0; i < nrOfPlayers; i++)
@@ -141,6 +117,7 @@ namespace Paging_the_devil.Manager
                             playerArray[i].HealthPoints -= 0.5f;
                         }
                     }
+
                     if (Keyboard.GetState().IsKeyDown(Keys.S))
                     {
                         for (int i = 0; i < nrOfPlayers; i++)
@@ -167,46 +144,93 @@ namespace Paging_the_devil.Manager
                         }
                     }
 
-
                     HUDManager.Update(gameTime);
                     UpdatePlayersDirection();
-                    UpdateCharacters(gameTime);
-
-                    //UpdateHealth();
+                    CharacterÚpdate(gameTime);
                     DeleteAbilities();
-
-
                     roomManager.Update();
-
 
                     break;
             }
         }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            switch (currentState)
+            {
+                case GameState.MainMenu:
+                    menuManager.Draw(spriteBatch);
+                    break;
+                case GameState.PlayerSelect:
+                    menuManager.Draw(spriteBatch);
+                    break;
+                case GameState.InGame:
+                    if (roomManagerCreated)
+                    {
+                        roomManager.Draw(spriteBatch);
+                    }
+
+                    if (hudManagerCreated)
+                    {
+                        HUDManager.Draw(spriteBatch);
+                    }
+
+                    spriteBatch.Draw(TextureBank.mageSpellList[4], new Rectangle(100, 100, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height), Color.White);
+
+                    DrawCharacters(spriteBatch);
+                    break;
+            }
+        }
+        /// <summary>
+        /// Den här metoden sätter fönstrets storlek
+        /// </summary>
+        /// <param name="graphics"></param>
+        private static void SetWindowSize(GraphicsDeviceManager graphics)
+        {
+            graphics.PreferredBackBufferHeight = ValueBank.WindowSizeY = 1080;
+            graphics.PreferredBackBufferWidth = ValueBank.WindowSizeX = 1920;
+            graphics.ApplyChanges();
+            ValueBank.GameWindowStartY = 135;
+        }
+        /// <summary>
+        /// Den här metoden anger värden till olika Arrays och skapar portaler.
+        /// </summary>
+        private void ArrayGenerator()
+        {
+            controllerArray = new Controller[4];
+            connectedController = new bool[4];
+            playerArray = new Player[4];
+        }
+
         /// <summary>
         /// Den här metoden uppdaterar spelare samt enemies samt tar bort enemies vid död.
         /// </summary>
-        private void UpdateCharacters(GameTime gameTime)
+        private void CharacterÚpdate(GameTime gameTime)
         {
             Enemy toRemoveEnemy = null;
+
             foreach (var e in enemyList)
             {
                 e.Update(gameTime);
+
                 if (e.toRevome)
                 {
                     toRemoveEnemy = e;
                 }
+
                 if (e.TrapTimer < 0)
                 {
-                    e.hitBySlowTrap = false;
+                    e.HitBySlowTrap = false;
                     e.MovementSpeed = e.BaseMoveSpeed;
                 }
             }
+
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 controllerArray[i].Update();
                 playerArray[i].Update(gameTime);
 
             }
+
             if (toRemoveEnemy != null)
             {
                 enemyList.Remove(toRemoveEnemy);
@@ -223,6 +247,7 @@ namespace Paging_the_devil.Manager
                 {
                     playerArray[i].LastInputDirection(controllerArray[i].GetDirection());
                 }
+
                 playerArray[i].InputDirection(controllerArray[i].GetDirection());
             }
         }
@@ -235,40 +260,6 @@ namespace Paging_the_devil.Manager
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 controllerArray[i].Update();
-            }
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            switch (currentState)
-            {
-                case GameState.MainMenu:
-                    menuManager.Draw(spriteBatch);
-                    break;
-                case GameState.PlayerSelect:
-
-                    menuManager.Draw(spriteBatch);
-
-                    break;
-                case GameState.InGame:
-
-
-                    if (roomManagerCreated)
-                    {
-                        roomManager.Draw(spriteBatch);
-                    }
-                    if (hudManagerCreated)
-                    {
-                        HUDManager.Draw(spriteBatch);
-                    }
-                    spriteBatch.Draw(TextureManager.mageSpellList[4], new Rectangle(100, 100, TextureManager.mageSpellList[4].Width, TextureManager.mageSpellList[4].Height), Color.White);
-
-
-                    DrawCharacters(spriteBatch);
-
-                    DrawCharacters(spriteBatch);
-
-                    break;
             }
         }
         /// <summary>
@@ -287,7 +278,6 @@ namespace Paging_the_devil.Manager
                 e.Draw(spriteBatch);
             }
         }
-
         /// <summary>
         /// Den här metoden ansluter en kontroll.
         /// </summary>
@@ -305,7 +295,9 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
-
+        /// <summary>
+        /// Denna metoden kopplar från kontrollerna
+        /// </summary>
         private void DisconnectController()
         {
             for (int i = 0; i < nrOfPlayers; i++)
@@ -325,7 +317,6 @@ namespace Paging_the_devil.Manager
         {
             roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList, levelManager);
             roomManagerCreated = true;
-
         }
         /// <summary>
         /// Den här metoden uppdaterar menumanagerns controllerArray.
@@ -341,7 +332,6 @@ namespace Paging_the_devil.Manager
         {
             menuManager.GetPlayer(nrOfPlayers);
         }
-
         /// <summary>
         /// Den här metoden tar bort abilities vid interaktion med enemies.
         /// </summary>
@@ -359,6 +349,7 @@ namespace Paging_the_devil.Manager
                         {
                             a.ToRemove = true;
                         }
+
                         if (a.ToRemove == true)
                         {
                             toRemove = a;
@@ -386,9 +377,15 @@ namespace Paging_the_devil.Manager
                 }
             }
         }
+        /// <summary>
+        /// Den här metoden kollar interaktion mellan player-abilities och enemies
+        /// </summary>
+        /// <param name="abilityList"></param>
+        /// <param name="player"></param>
         private void CheckPlayerAbilites(List<Ability> abilityList, Player player)
         {
             Ability toRemove = null;
+
             foreach (var a in abilityList)
             {
                 foreach (var e in enemyList)
@@ -396,6 +393,7 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
+
                         if (a is Slash ) // arbeta mer för att fixa slashen
                         {
                             (a as Slash).Hit = true;
@@ -439,11 +437,13 @@ namespace Paging_the_devil.Manager
                 abilityList.Remove(toRemove);
             }
         }
-
+        /// <summary>
+        /// Den här metoden kollar interaktion mellan enemy-abilities och players
+        /// </summary>
+        /// <param name="abilityList"></param>
         private void CheckEnemiesAbilites(List<Ability> abilityList)
         {
             Ability toRemove = null;
-
 
             foreach (var a in abilityList)
             {
@@ -475,21 +475,20 @@ namespace Paging_the_devil.Manager
             {
                 abilityList.Remove(toRemove);
             }
-
-
         }
+        /// <summary>
+        /// Kollar kollisionen för slime och spelare.
+        /// </summary>
+        /// <param name="slime"></param>
         private void CheckSlimeCollision(Slime slime)
         {
-
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 if (slime.GetRect.Intersects(playerArray[i].GetRect))
                 {
                     playerArray[i].HealthPoints = 0;
-
                 }
             }
-
         }
     }
 }

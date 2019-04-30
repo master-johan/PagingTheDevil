@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 
@@ -21,29 +16,29 @@ namespace Paging_the_devil.GameObject
             this.tex = null;
             this.player = player;
             this.Active = Active;
-            btnTexture = TextureManager.abilityButtonList[5];
+            btnTexture = TextureBank.abilityButtonList[5];
             coolDownTime = ValueBank.DashCooldown;
             
         }
+
         public override void Update(GameTime gameTime)
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             DashUpdate();
         }
         public override void Draw(SpriteBatch spriteBatch)
-        {         
+        {
+            
         }
         /// <summary>
         /// Denna metod updaterar dash abilityn 
         /// </summary>
         public void DashUpdate()
         {
-            
             if (Active)
             {                
                 DashDirection(direction);
                 player.movementSpeed = ValueBank.DashSpeed;
-
                 
                 if (timePassed >= ValueBank.DashTimer)
                 {
@@ -52,7 +47,6 @@ namespace Paging_the_devil.GameObject
                 }
             }
         }
-
         /// <summary>
         /// Denna metod hittar riktningen för dashen
         /// </summary>

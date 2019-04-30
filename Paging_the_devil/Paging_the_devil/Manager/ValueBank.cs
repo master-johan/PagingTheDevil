@@ -16,6 +16,13 @@ namespace Paging_the_devil.Manager
         public static float KnightHealth;
         public static float SmallDevilHealth;
         public static float SlimeHealth;
+        public static float SmallDevilIdleMoveSpeed;
+        public static float SlimeSpeed;
+        public static float PlayerSpeed;
+        public static float DashTimer;
+        public static float ChargeTimer;
+        public static float DashSpeed;
+        public static float ChargeSpeed;
 
         public static int DashCooldown;
         public static int HealHarmCooldown;
@@ -24,7 +31,6 @@ namespace Paging_the_devil.Manager
         public static int ArrowCooldown;
         public static int TrapCooldown;
         public static int ChargeCooldown;
-
         public static int ArrowDmg;
         public static int TrapDmg;
         public static int HealHarmDmg;
@@ -32,29 +38,19 @@ namespace Paging_the_devil.Manager
         public static int FireballDmg;
         public static int CleaveDmg;
         public static int ChargeDmg;
-
         public static int HealHarmHeal;
-
         public static int ArrowSpeed;
         public static int HealHarmSpeed;
         public static int FireballSpeed;
-        public static float DashSpeed;
-        public static float ChargeSpeed;
-
         public static int HealHarmTimer;
         public static int TrapTimer;
         public static int SmallDevilShootTimer;
-        public static float DashTimer;
-        public static float ChargeTimer;
-
+        public static int WindowSizeY;
+        public static int WindowSizeX;
+        public static int GameWindowStartY;
         public static int SmallDevilMoveSpeed;
-        public static float SmallDevilIdleMoveSpeed;
-        public static float SlimeSpeed;
-
-        public static float PlayerSpeed;
 
         public static Random rand;
-
 
         public static void Values()
         {
@@ -116,7 +112,7 @@ namespace Paging_the_devil.Manager
 
             //Player Speed
 
-            PlayerSpeed = 10;
+            PlayerSpeed = 4;
 
         }
 

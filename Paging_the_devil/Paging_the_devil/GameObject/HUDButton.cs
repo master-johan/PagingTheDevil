@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 
@@ -14,8 +9,11 @@ namespace Paging_the_devil.GameObject
         Rectangle rect;
         Rectangle coolDownRect;
         Rectangle coolDownSrcRect;
+
         Ability ability;
+
         Vector2 abilityTexturePos;
+
         int currentTimer;
         int maxTimer;
 
@@ -23,8 +21,11 @@ namespace Paging_the_devil.GameObject
         {
             this.rect = rect;
             this.ability = ability;
+
             abilityTexturePos = new Vector2(pos.X + 5, pos.Y + 5);
+
             maxTimer = ability.coolDownTime;
+
             coolDownRect = rect;
             coolDownRect.X = 0;
             coolDownRect.Y = 0;
@@ -34,7 +35,7 @@ namespace Paging_the_devil.GameObject
         {
             if (currentTimer > 0)
             {
-                float procent = (float)currentTimer / (float)maxTimer;
+                float procent = currentTimer / (float)maxTimer;
                 double height = procent * rect.Height;
                 coolDownRect.Height = (int)height;
             }
@@ -44,9 +45,10 @@ namespace Paging_the_devil.GameObject
         {
             spriteBatch.Draw(tex, rect, Color.White);
             spriteBatch.Draw(ability.btnTexture, abilityTexturePos, Color.White);
-            if (currentTimer >0 )
+
+            if (currentTimer > 0)
             {
-                spriteBatch.Draw(TextureManager.hudTextureList[6],
+                spriteBatch.Draw(TextureBank.hudTextureList[6],
                                  new Vector2(rect.X +2 ,rect.Y + 5),
                                  coolDownRect,
                                  Color.White,
@@ -58,7 +60,10 @@ namespace Paging_the_devil.GameObject
             }
 
         }
-
+        /// <summary>
+        /// Den här metoden hämtar timer
+        /// </summary>
+        /// <param name="timer"></param>
         public void GetCooldownTimer(int timer)
         {
             currentTimer = timer; 

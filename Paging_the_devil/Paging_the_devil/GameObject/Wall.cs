@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Paging_the_devil.Manager;
-
 
 namespace Paging_the_devil.GameObject
 {
@@ -30,7 +23,6 @@ namespace Paging_the_devil.GameObject
             pos.X = sourceRect.X;
             pos.Y = sourceRect.Y;
             rect = sourceRect;
-            GenerateRectangles(pos);
         }
         public override void Update(GameTime gameTime)
         {
@@ -45,14 +37,5 @@ namespace Paging_the_devil.GameObject
             //spriteBatch.Draw(tex, hitboxRight, Color.Blue);
            
         }
-
-        private void GenerateRectangles(Vector2 pos)
-        {
-            //hitboxLeft = new Rectangle((int)pos.X, (int)pos.Y,5,GetRect.Height);
-            //hitboxTop = new Rectangle((int)pos.X, (int)pos.Y , GetRect.Width, 5);
-            //hitboxBot = new Rectangle((int)pos.X, (int)pos.Y + GetRect.Height - 5,GetRect.Width, 5);
-            //hitboxRight = new Rectangle((int)pos.X + GetRect.Width -5, (int)pos.Y, 5, GetRect.Height);
-        }
-
     }
 }

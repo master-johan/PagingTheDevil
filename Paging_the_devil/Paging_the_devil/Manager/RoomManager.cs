@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,14 +9,10 @@ namespace Paging_the_devil.Manager
 {
     class RoomManager
     {
-        int nrOfPlayers;
         Player[] playerArray;
-
-        public Room CurrentRoom { get; set; }
 
         Room[,] currentLevel;
 
-        List<Room> roomList;
         List<Enemy> enemyList;
 
         LevelManager levelManager;
@@ -32,9 +24,11 @@ namespace Paging_the_devil.Manager
 
         int RoomCoordinateX;
         int RoomCoordinateY;
+        int nrOfPlayers;
 
         bool[,] enemiesSpawned;
 
+        public Room CurrentRoom { get; set; }
 
         public RoomManager(Player[] playerArray, int nrOfPlayers, List<Enemy> enemyList, LevelManager levelManager)
         {
@@ -55,33 +49,31 @@ namespace Paging_the_devil.Manager
             CollisionWithWall();
             GoIntoGateway();
             AddEnemiesToRoom();
-
             enemyCollisionWithWalls();
         }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             CurrentRoom.Draw(spriteBatch);
-
             if (gatewayEast.IsVisible)
             {
                 gatewayEast.Draw(spriteBatch);
             }
+
             if (gatewayNorth.IsVisible)
             {
                 gatewayNorth.Draw(spriteBatch);
             }
+
             if (gatewaySouth.IsVisible)
             {
                 gatewaySouth.Draw(spriteBatch);
             }
+
             if (gatewayWest.IsVisible)
             {
                 gatewayWest.Draw(spriteBatch);
             }
-
         }
-
         /// <summary>
         /// Den här metoden hanterar kollisionen mellan spelare och väggar.
         /// </summary>
@@ -93,19 +85,21 @@ namespace Paging_the_devil.Manager
 
                 for (int j = 0; j < CurrentRoom.GetWallRectList().Count; j++)
                 {
-
                     if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[0, j] = true;
                     }
+
                     else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[1, j] = true;
                     }
+
                     else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[2, j] = true;
                     }
+
                     else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[3, j] = true;
@@ -167,28 +161,33 @@ namespace Paging_the_devil.Manager
 
             }
         }
+        /// <summary>
+        /// Den här metoden hanterar kollisionen mellan fiende och väggar.
+        /// </summary>
         private void enemyCollisionWithWalls()
         {
             for (int i = 0; i < enemyList.Count; i++)
             {
-                bool[,] boolArray = new bool[4, CurrentRoom.GetWallList().Count];
+                bool[,] boolArray = new bool[4, CurrentRoom.GetWallRectList().Count];
 
-                for (int j = 0; j < CurrentRoom.GetWallList().Count; j++)
+                for (int j = 0; j < CurrentRoom.GetWallRectList().Count; j++)
                 {
-
-                    if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxBot))
+                    if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[0, j] = true;
                     }
-                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxTop))
+
+                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[1, j] = true;
                     }
-                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxLeft))
+
+                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[2, j] = true;
                     }
-                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxRight))
+
+                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[3, j] = true;
                     }
@@ -210,11 +209,11 @@ namespace Paging_the_devil.Manager
                     blockedDirections[y] = isBlocked;
                 }
 
-
                 if (blockedDirections[0] == true)
                 {
                     enemyList[i].UpMovementBlocked = true;
                 }
+
                 else
                 {
                     enemyList[i].UpMovementBlocked = false;
@@ -224,6 +223,7 @@ namespace Paging_the_devil.Manager
                 {
                     enemyList[i].DownMovementBlocked = true;
                 }
+
                 else
                 {
                     enemyList[i].DownMovementBlocked = false;
@@ -233,6 +233,7 @@ namespace Paging_the_devil.Manager
                 {
                     enemyList[i].LeftMovementBlocked = true;
                 }
+
                 else
                 {
                     enemyList[i].LeftMovementBlocked = false;
@@ -242,6 +243,7 @@ namespace Paging_the_devil.Manager
                 {
                     enemyList[i].RightMovementBlocked = true;
                 }
+
                 else
                 {
                     enemyList[i].RightMovementBlocked = false;
@@ -253,7 +255,6 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void GetStaringRoom()
         {
-
             for (int y = 0; y < currentLevel.GetLength(1); y++)
             {
                 for (int x = 0; x < currentLevel.GetLength(0); x++)
@@ -272,18 +273,17 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void DeclareGateways()
         {
-            int halfPortalSize = TextureManager.roomTextureList[0].Height / 2;
+            int halfPortalSize = TextureBank.roomTextureList[0].Height / 2;
 
             Vector2 north = new Vector2(CurrentRoom.GetWallRectList()[0].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[0].Y);
             Vector2 south = new Vector2(CurrentRoom.GetWallRectList()[1].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[1].Y - halfPortalSize);
             Vector2 west = new Vector2(CurrentRoom.GetWallRectList()[2].X , CurrentRoom.GetWallRectList()[2].Height/ 2);
             Vector2 east = new Vector2(CurrentRoom.GetWallRectList()[3].X - halfPortalSize, CurrentRoom.GetWallRectList()[3].Height / 2);
 
-
-            gatewayNorth = new Gateway(TextureManager.roomTextureList[0], north);
-            gatewaySouth = new Gateway(TextureManager.roomTextureList[0], south);
-            gatewayWest = new Gateway(TextureManager.roomTextureList[0], west);
-            gatewayEast = new Gateway(TextureManager.roomTextureList[0], east);
+            gatewayNorth = new Gateway(TextureBank.roomTextureList[0], north);
+            gatewaySouth = new Gateway(TextureBank.roomTextureList[0], south);
+            gatewayWest = new Gateway(TextureBank.roomTextureList[0], west);
+            gatewayEast = new Gateway(TextureBank.roomTextureList[0], east);
         }
         /// <summary>
         /// Den här metoden räknar på vilken gateway som ska visas.
@@ -300,6 +300,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewaySouth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewaySouth.IsVisible = false;
@@ -312,6 +313,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewayNorth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewayNorth.IsVisible = false;
@@ -324,6 +326,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewaySouth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewaySouth.IsVisible = false;
@@ -333,6 +336,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewayNorth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewayNorth.IsVisible = false;
@@ -342,6 +346,7 @@ namespace Paging_the_devil.Manager
                 {
                     gatewayEast.IsVisible = true;
                 }
+
                 else
                 {
                     gatewayEast.IsVisible = false;
@@ -357,6 +362,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewaySouth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewaySouth.IsVisible = false;
@@ -369,6 +375,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewayNorth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewayNorth.IsVisible = false;
@@ -381,6 +388,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewayNorth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewayNorth.IsVisible = false;
@@ -390,6 +398,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewaySouth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewaySouth.IsVisible = false;
@@ -399,6 +408,7 @@ namespace Paging_the_devil.Manager
                 {
                     gatewayWest.IsVisible = true;
                 }
+
                 else
                 {
                     gatewayWest.IsVisible = false;
@@ -414,6 +424,7 @@ namespace Paging_the_devil.Manager
                     {
                         gatewaySouth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewaySouth.IsVisible = false;
@@ -426,11 +437,13 @@ namespace Paging_the_devil.Manager
                     {
                         gatewayNorth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewayNorth.IsVisible = false;
                     }
                 }
+
                 else
                 {
                     //Ifall man står i x1,x2,x3 och y1,y2,y3 koordinat
@@ -438,31 +451,38 @@ namespace Paging_the_devil.Manager
                     {
                         gatewayNorth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewayNorth.IsVisible = false;
                     }
+
                     if (currentLevel[RoomCoordinateX, RoomCoordinateY + 1].AllowedRoom)
                     {
                         gatewaySouth.IsVisible = true;
                     }
+
                     else
                     {
                         gatewaySouth.IsVisible = false;
                     }
                 }
+
                 if (currentLevel[RoomCoordinateX - 1, RoomCoordinateY].AllowedRoom)
                 {
                     gatewayWest.IsVisible = true;
                 }
+
                 else
                 {
                     gatewayWest.IsVisible = false;
                 }
+
                 if (currentLevel[RoomCoordinateX + 1, RoomCoordinateY].AllowedRoom)
                 {
                     gatewayEast.IsVisible = true;
                 }
+
                 else
                 {
                     gatewayEast.IsVisible = false;
@@ -473,14 +493,17 @@ namespace Paging_the_devil.Manager
             {
                 gatewayWest.IsVisible = false;
             }
+
             else if (RoomCoordinateX == 4)
             {
                 gatewayEast.IsVisible = false;
             }
+
             if (RoomCoordinateY == 0)
             {
                 gatewayNorth.IsVisible = false;
             }
+
             else if (RoomCoordinateY == 4)
             {
                 gatewaySouth.IsVisible = false;
@@ -500,33 +523,37 @@ namespace Paging_the_devil.Manager
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateY += 1;
-                    temp = new Vector2(gatewayNorth.pos.X + TextureManager.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureManager.roomTextureList[0].Height / 2 + 25);
+                    temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
                 }
             }
+
             else if (playerArray[0].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
             {
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateY -= 1;
-                    temp = new Vector2(gatewaySouth.pos.X + TextureManager.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureManager.roomTextureList[0].Height / 2 - 25);
+                    temp = new Vector2(gatewaySouth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureBank.roomTextureList[0].Height / 2 - 25);
                 }
             }
+
             else if (playerArray[0].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
             {
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateX += 1;
-                    temp = new Vector2(gatewayWest.pos.X + TextureManager.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureManager.roomTextureList[0].Height / 2);
+                    temp = new Vector2(gatewayWest.pos.X + TextureBank.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureBank.roomTextureList[0].Height / 2);
                 }
             }
+
             else if (playerArray[0].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
             {
                 if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                 {
                     RoomCoordinateX -= 1;
-                    temp = new Vector2(gatewayEast.pos.X + TextureManager.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureManager.roomTextureList[0].Height / 2);
+                    temp = new Vector2(gatewayEast.pos.X + TextureBank.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureBank.roomTextureList[0].Height / 2);
                 }
             }
+
             if (RoomCoordinateX != tempX || RoomCoordinateY != tempY)
             {
                 CurrentRoom = currentLevel[RoomCoordinateX, RoomCoordinateY];
@@ -534,26 +561,33 @@ namespace Paging_the_devil.Manager
                 for (int i = 0; i < nrOfPlayers; i++)
                 {
                     playerArray[i].pos = temp;
-                    SoundManager.SoundEffectList[6].Play();
-                }
-
-               
+                    SoundBank.SoundEffectList[6].Play();
+                }         
             }
         }
-
+        /// <summary>
+        /// Den här metoden spawnar en smallDevil-fiender.
+        /// </summary>
         private void SpawnSmallRedDevil()
         {
-            int x = ValueBank.rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
-            int y = ValueBank.rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
-            enemyList.Add(new SmallDevil(TextureManager.enemyTextureList[0], new Vector2(x, y), playerArray, nrOfPlayers));
+            int x = ValueBank.rand.Next((ValueBank.WindowSizeX / 2) + 20, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 20);
+            int y = ValueBank.rand.Next(120, ValueBank.WindowSizeY - TextureBank.enemyTextureList[0].Height - 40);
+
+            enemyList.Add(new SmallDevil(TextureBank.enemyTextureList[0], new Vector2(x, y), playerArray, nrOfPlayers));
         }
+        /// <summary>
+        /// Den här metoden spawnar en slime
+        /// </summary>
         private void SpawnSlime()
         {
-            int x = ValueBank.rand.Next((TextureManager.WindowSizeX / 2) + 20, TextureManager.WindowSizeX - TextureManager.enemyTextureList[0].Width - 20);
-            int y = ValueBank.rand.Next(120, TextureManager.WindowSizeY - TextureManager.enemyTextureList[0].Height - 40);
+            int x = ValueBank.rand.Next((ValueBank.WindowSizeX / 2) + 20, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 20);
+            int y = ValueBank.rand.Next(120, ValueBank.WindowSizeY - TextureBank.enemyTextureList[0].Height - 40);
 
-            enemyList.Add(new Slime(TextureManager.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
+            enemyList.Add(new Slime(TextureBank.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
         }
+        /// <summary>
+        /// Den här metoden lägger till fiender till rummen
+        /// </summary>
         private void AddEnemiesToRoom()
         {
             if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
@@ -564,6 +598,7 @@ namespace Paging_the_devil.Manager
                 }
                 enemiesSpawned[3, 1] = true;
             }
+
             if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
             {
                 SpawnSlime();

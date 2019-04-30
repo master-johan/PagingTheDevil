@@ -1,17 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paging_the_devil.GameObject
 {
     class Ability : GameObject
     {
         protected Vector2 direction;
+
         public  Texture2D btnTexture { get; protected set;  }
+
         public int coolDownTime { get; protected set; }
 
         public float Damage { get; set; }
@@ -34,7 +31,11 @@ namespace Paging_the_devil.GameObject
         {
             spriteBatch.Draw(tex, pos, Color.White);
         }
-
+        /// <summary>
+        /// Den här metoden sköter riktningen på spells.
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         protected Vector2 GetSpellDirection(Vector2 direction)
         {
             Vector2 spellDirection;
@@ -43,18 +44,24 @@ namespace Paging_the_devil.GameObject
             spellDirection.Y = -spellDirection.Y;
             return spellDirection;
         }
-
+        /// <summary>
+        /// Den här metoden uppdaterar hitboxen
+        /// </summary>
         protected void UpdateRect()
         {
             rect.X = (int)pos.X;
             rect.Y = (int)pos.Y;
         }
-
+        /// <summary>
+        /// Den här metoden gör skada
+        /// </summary>
         protected virtual void ApplyDamage()
         {
             HitCharacter.HealthPoints -= Damage;
         }
-
+        /// <summary>
+        /// Den här metoden healar
+        /// </summary>
         protected virtual void ApplyHeal()
         {
             HitCharacter.HealthPoints += Heal;

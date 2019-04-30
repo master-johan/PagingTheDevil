@@ -1,45 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Paging_the_devil.Manager;
 
 namespace Paging_the_devil.GameObject
 {
     class Ranger : Player
     {
-
         public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
-
             Ability1 = new Dash(tex, pos, LastDirection,this,false);
-            Ability2 = new Arrow(TextureManager.mageSpellList[4], pos, LastDirection);
-            Ability3 = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability2 = new Arrow(TextureBank.mageSpellList[4], pos, LastDirection);
+            Ability3 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
 
             HealthPoints = ValueBank.RangerHealth;
             maxHealthPoints = HealthPoints;
 
-        }
-
-        protected override Ability CastAbility1()
-        {
-            Ability ability = new Dash(tex, pos, LastDirection,this,true);
-            Ability1CooldownTimer = ability.coolDownTime;
-            SoundManager.SoundEffectList[8].Play();
-            return ability;
-        }
-
-        protected override Ability CastAbility2()
-        {
-            Ability ability = new Arrow(TextureManager.mageSpellList[4], pos, LastDirection);
-            Ability2CooldownTimer = ability.coolDownTime;
-            SoundManager.SoundEffectList[0].Play();
-            return ability;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -47,15 +22,38 @@ namespace Paging_the_devil.GameObject
             base.Draw(spriteBatch);
 
         }
-
+        /// <summary>
+        /// Den här metoden sköter ability1
+        /// </summary>
+        /// <returns></returns>
+        protected override Ability CastAbility1()
+        {
+            Ability ability = new Dash(tex, pos, LastDirection,this,true);
+            Ability1CooldownTimer = ability.coolDownTime;
+            SoundBank.SoundEffectList[8].Play();
+            return ability;
+        }
+        /// <summary>
+        /// Den här metoden sköter ability2
+        /// </summary>
+        /// <returns></returns>
+        protected override Ability CastAbility2()
+        {
+            Ability ability = new Arrow(TextureBank.mageSpellList[4], pos, LastDirection);
+            Ability2CooldownTimer = ability.coolDownTime;
+            SoundBank.SoundEffectList[0].Play();
+            return ability;
+        }
+        /// <summary>
+        /// Den här metoden sköter ability3
+        /// </summary>
+        /// <returns></returns>
         protected override Ability CastAbility3()
         {
-
-            Ability ability = new Trap(TextureManager.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
-            SoundManager.SoundEffectList[9].Play();
+            SoundBank.SoundEffectList[9].Play();
             return ability;
-
         }
     }
 }

@@ -1,22 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using Paging_the_devil.GameObject;
-using System;
 using Paging_the_devil.Manager;
 
 namespace Paging_the_devil
 {
     public class Game1 : Game
     {
-
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         GameManager gameManager;
-
-        Room room;
 
         public Game1()
         {
@@ -31,12 +25,11 @@ namespace Paging_the_devil
 
         protected override void LoadContent()
         {
-            TextureManager.LoadTextures(Content);
-            SoundManager.LoadSound(Content);
+            TextureBank.LoadTextures(Content);
+            SoundBank.LoadSound(Content);
             ValueBank.Values();
+
             gameManager = new GameManager(GraphicsDevice, graphics, this);
-            
-            //room = new Room(graphics);
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
           

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 
@@ -19,7 +14,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         int frame;
         int spriteCount;
         int spriteWidth;
-        int posX, posY;
 
         float radius;
         float shortestDistanceToPlayer;
@@ -28,11 +22,9 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         double timer;
         double interval;
 
-
-
-        public Slime(Texture2D tex, Vector2 pos, Player[] player, int nrOfPlayer) : base(tex, pos)
+        public Slime(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayer) : base(tex, pos)
         {
-            this.playerArray = player;
+            this.playerArray = playerArray;
             this.nrOfPlayer = nrOfPlayer;
 
             //MovementSpeed = ValueBank.SlimeSpeed;
@@ -42,13 +34,9 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             spriteCount = 5;
             spriteWidth = tex.Width;
             HealthPoints = ValueBank.SlimeHealth;
+
             srcRect = new Rectangle(0, 0, 32, 32);
             rect = new Rectangle((int)pos.X, (int)pos.Y, 32 * (int)scale, 32 * (int)scale);
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(tex, pos, srcRect, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 1);
         }
 
         public override void Update(GameTime gameTime)
@@ -58,6 +46,15 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             GetTarget();
             Movement(gameTime);
         }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(tex, pos, srcRect, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 1);
+        }
+        /// <summary>
+        /// Den här metoden animerar 
+        /// </summary>
+        /// <param name="gameTime"></param>
         private void Animation(GameTime gameTime)
         {
             timer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -69,13 +66,16 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 srcRect.Y = (frame % spriteCount) * spriteWidth;
             }
         }
+        /// <summary>
+        /// Den här metoden sköter slimens rörelse
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Movement(GameTime gameTime)
         {
             if (targetPlayer != null && !targetPlayer.Dead)
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
-
             }
             
             else
@@ -85,9 +85,10 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             }
 
             pos += direction * ValueBank.SlimeSpeed;
-
-
         }
+        /// <summary>
+        /// Den här metoden sköter slimens target
+        /// </summary>
         private void GetTarget()
         {
             for (int i = 0; i < nrOfPlayer; i++)

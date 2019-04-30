@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Paging_the_devil.Manager;
 
 namespace Paging_the_devil.GameObject.EnemyFolder
@@ -16,9 +12,13 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         protected bool left;
         protected bool right;
 
-        public bool hitBySlowTrap { get; set; }
-
         protected int shootTimer;
+
+        protected Vector2 direction;
+
+        public List<Ability> enemyAbilityList;
+
+        public bool HitBySlowTrap { get; set; }
         public int MovementSpeed { get; set; }
         public int BaseMoveSpeed { get; set; }
         public double TrapTimer { get; set; }
@@ -28,26 +28,20 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         public bool LeftMovementBlocked { get; set; }
         public bool RightMovementBlocked { get; set; }
 
-        protected Vector2 direction;
-        public Vector2 GetDirection
-        {
-            get { return direction; }         
-        }
-
-        public List<Ability> enemyAbilityList;
-
+        public Vector2 GetDirection { get { return direction; } }
 
         public Enemy(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
             enemyAbilityList = new List<Ability>();
         }
+
         public override void Update(GameTime gameTime)
         {
             rect.X = (int)pos.X;
             rect.Y = (int)pos.Y;
 
             Dead();
-            //Blocked();
+
             foreach (var e in enemyAbilityList)
             {
                 e.Update(gameTime);
@@ -58,7 +52,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 shootTimer--;
             }
 
-            if (hitBySlowTrap)
+            if (HitBySlowTrap)
             {
                 TrapTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
@@ -73,7 +67,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             foreach (var e in enemyAbilityList)
             {
                 e.Draw(spriteBatch);
-                spriteBatch.Draw(TextureManager.hudTextureList[0], rect, Color.Black);
+                spriteBatch.Draw(TextureBank.hudTextureList[0], rect, Color.Black);
             }
             
         }
@@ -99,28 +93,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
 
         }
-        protected void Blocked()
-        {
-            if (UpMovementBlocked && direction.Y > 0)
-            {
-                direction.Y = 0;
-            }
-
-            if (DownMovementBlocked && direction.Y < 0)
-            {
-                direction.Y = 0;
-            }
-
-            if (RightMovementBlocked && direction.X > 0)
-            {
-                direction.X = 0;
-            }
-            if (LeftMovementBlocked && direction.X < 0)
-            {
-                direction.X = 0;
-            }
-        }
-
+        /// <summary>
+        /// Den här metoden kollar ifall ändrar movement är tilgängligt
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         protected Vector2 CheckIfAllowedMovement (Vector2 direction)
         {
             if (UpMovementBlocked && direction.Y > 0)
@@ -145,6 +122,5 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
             return direction;
         }
-
     }
 }

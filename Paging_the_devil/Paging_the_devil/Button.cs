@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Paging_the_devil
 {
     public class Button
     {
         Texture2D buttonTex;
-        Vector2 buttonPos, pos;
+        Vector2 buttonPos;
         Rectangle hitBox;
 
         Color color = new Color(255, 255, 255, 255);
@@ -20,14 +14,18 @@ namespace Paging_the_devil
         public Vector2 buttonSize;
 
         bool down;
+
         public bool isClicked;
         public bool activeButton;
 
+        public Vector2 GetPos { get { return buttonPos; } }
+
         public Button(Texture2D newButtonTex, GraphicsDevice graphics, Vector2 buttonPos)
         {
+            this.buttonPos = buttonPos;
+
             buttonTex = newButtonTex;
             buttonSize = new Vector2(newButtonTex.Width, newButtonTex.Height);
-            this.buttonPos = buttonPos;
         }
 
         public void Update()
@@ -40,12 +38,12 @@ namespace Paging_the_devil
                 if (color.A == 0) down = true;
                 if (down) color.A += 3; else color.A -= 3;
             }
+
             else if (color.A < 255)
             {
                     color.A += 3;
                     isClicked = false;
             }
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -57,8 +55,5 @@ namespace Paging_the_devil
         {
             buttonPos = newButtonPos;
         }
-
-        public Vector2 GetPos { get { return buttonPos; } }
-
     }
 }
