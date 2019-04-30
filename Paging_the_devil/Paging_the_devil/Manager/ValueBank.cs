@@ -115,7 +115,9 @@ namespace Paging_the_devil.Manager
             SlimeSpeed = 1f;
 
             //Player Speed
-            PlayerSpeed = 5;
+
+            PlayerSpeed = 10;
+
         }
 
 

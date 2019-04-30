@@ -28,7 +28,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         double timer;
         double interval;
 
-        Vector2 direction;
 
 
         public Slime(Texture2D tex, Vector2 pos, Player[] player, int nrOfPlayer) : base(tex, pos)

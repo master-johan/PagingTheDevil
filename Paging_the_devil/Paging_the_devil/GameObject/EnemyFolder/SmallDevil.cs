@@ -36,7 +36,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         bool fleeing;
         bool safeZone;
 
-        Vector2 direction;
+
         public SmallDevil(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayers) : base(tex, pos)
         {
             this.playerArray = playerArray;
@@ -49,14 +49,12 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
             radiusForChasing = 400;
 
-            safetyRadiusOuter = 250;
-            safetyRadiusInner = 200;
+            safetyRadiusOuter = 350;
+            safetyRadiusInner = 300;
 
-            radiusForFleeing = 150;
+            radiusForFleeing = 250;
 
             randomPosTimer = 0.2f;
-            posX = 0;
-            posY = 0;
 
             MovementSpeed = ValueBank.SmallDevilMoveSpeed;
             BaseMoveSpeed = MovementSpeed;
@@ -79,18 +77,23 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
         protected override void Movement(GameTime gameTime)
         {
+            //if(!DownMovementBlocked && !UpMovementBlocked && !LeftMovementBlocked && !RightMovementBlocked)
+            //{
             if (targetPlayer != null && !targetPlayer.Dead && !fleeing && !safeZone)
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
-                pos += direction * MovementSpeed;
+                direction = CheckIfAllowedMovement(direction);
+                pos += direction * ValueBank.SmallDevilMoveSpeed;
             }
 
             else if (targetPlayer != null && !targetPlayer.Dead && fleeing && !safeZone)
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
-                pos -= direction * MovementSpeed;
+
+                direction = CheckIfAllowedMovement(direction);
+                pos -= direction * ValueBank.SmallDevilMoveSpeed;
             }
             else if (safeZone && !fleeing)
             {
@@ -106,12 +109,17 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                     {
                         direction = new Vector2(posX, posY);
                         direction.Normalize();
+                        direction = CheckIfAllowedMovement(direction);
                     }
                 }
-                pos += direction * MovementSpeed;
 
 
+                
+                pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
+
+                
             }
+
             //else 
             //{
             //    direction = new Vector2(-1, 0);

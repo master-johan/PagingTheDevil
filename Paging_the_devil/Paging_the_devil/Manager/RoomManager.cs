@@ -56,6 +56,7 @@ namespace Paging_the_devil.Manager
             GoIntoGateway();
             AddEnemiesToRoom();
 
+            enemyCollisionWithWalls();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -164,6 +165,87 @@ namespace Paging_the_devil.Manager
                     playerArray[i].RightMovementBlocked = false;
                 }
 
+            }
+        }
+        private void enemyCollisionWithWalls()
+        {
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                bool[,] boolArray = new bool[4, CurrentRoom.GetWallList().Count];
+
+                for (int j = 0; j < CurrentRoom.GetWallList().Count; j++)
+                {
+
+                    if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxBot))
+                    {
+                        boolArray[0, j] = true;
+                    }
+                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxTop))
+                    {
+                        boolArray[1, j] = true;
+                    }
+                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxLeft))
+                    {
+                        boolArray[2, j] = true;
+                    }
+                    else if (enemyList[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxRight))
+                    {
+                        boolArray[3, j] = true;
+                    }
+                }
+
+                bool[] blockedDirections = new bool[4];
+
+                for (int y = 0; y < boolArray.GetLength(0); y++)
+                {
+                    bool isBlocked = false;
+                    for (int x = 0; x < boolArray.GetLength(1); x++)
+                    {
+                        if (boolArray[x, y])
+                        {
+                            isBlocked = true;
+                            break;
+                        }
+                    }
+                    blockedDirections[y] = isBlocked;
+                }
+
+
+                if (blockedDirections[0] == true)
+                {
+                    enemyList[i].UpMovementBlocked = true;
+                }
+                else
+                {
+                    enemyList[i].UpMovementBlocked = false;
+                }
+
+                if (blockedDirections[1] == true)
+                {
+                    enemyList[i].DownMovementBlocked = true;
+                }
+                else
+                {
+                    enemyList[i].DownMovementBlocked = false;
+                }
+
+                if (blockedDirections[2] == true)
+                {
+                    enemyList[i].LeftMovementBlocked = true;
+                }
+                else
+                {
+                    enemyList[i].LeftMovementBlocked = false;
+                }
+
+                if (blockedDirections[3] == true)
+                {
+                    enemyList[i].RightMovementBlocked = true;
+                }
+                else
+                {
+                    enemyList[i].RightMovementBlocked = false;
+                }
             }
         }
         /// <summary>
