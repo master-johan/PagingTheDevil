@@ -88,24 +88,24 @@ namespace Paging_the_devil.Manager
         {
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                bool[,] boolArray = new bool[4, CurrentRoom.GetWallList().Count];
+                bool[,] boolArray = new bool[4, CurrentRoom.GetWallRectList().Count];
 
-                for (int j = 0; j < CurrentRoom.GetWallList().Count; j++)
+                for (int j = 0; j < CurrentRoom.GetWallRectList().Count; j++)
                 {
 
-                    if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxBot))
+                    if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[0, j] = true;
                     }
-                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxTop))
+                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[1, j] = true;
                     }
-                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxLeft))
+                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[2, j] = true;
                     }
-                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallList()[j].HitboxRight))
+                    else if (playerArray[i].GetRect.Intersects(CurrentRoom.GetWallRectList()[j]))
                     {
                         boolArray[3, j] = true;
                     }
@@ -192,10 +192,10 @@ namespace Paging_the_devil.Manager
         {
             int halfPortalSize = TextureManager.roomTextureList[0].Height / 2;
 
-            Vector2 north = new Vector2(CurrentRoom.GetWallList()[0].GetRect.Width / 2 - halfPortalSize, CurrentRoom.GetWallList()[0].GetRect.Y);
-            Vector2 south = new Vector2(CurrentRoom.GetWallList()[1].GetRect.Width / 2 - halfPortalSize, CurrentRoom.GetWallList()[1].GetRect.Y - halfPortalSize);
-            Vector2 west = new Vector2(CurrentRoom.GetWallList()[2].GetRect.X , CurrentRoom.GetWallList()[2].GetRect.Height/ 2);
-            Vector2 east = new Vector2(CurrentRoom.GetWallList()[3].GetRect.X - halfPortalSize, CurrentRoom.GetWallList()[3].GetRect.Height / 2);
+            Vector2 north = new Vector2(CurrentRoom.GetWallRectList()[0].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[0].Y);
+            Vector2 south = new Vector2(CurrentRoom.GetWallRectList()[1].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[1].Y - halfPortalSize);
+            Vector2 west = new Vector2(CurrentRoom.GetWallRectList()[2].X , CurrentRoom.GetWallRectList()[2].Height/ 2);
+            Vector2 east = new Vector2(CurrentRoom.GetWallRectList()[3].X - halfPortalSize, CurrentRoom.GetWallRectList()[3].Height / 2);
 
 
             gatewayNorth = new Gateway(TextureManager.roomTextureList[0], north);
