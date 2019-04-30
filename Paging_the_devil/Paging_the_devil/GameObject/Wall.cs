@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Paging_the_devil.Manager;
 
 
 namespace Paging_the_devil.GameObject
@@ -38,20 +39,19 @@ namespace Paging_the_devil.GameObject
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, sourceRect, Color.White);
-            //spriteBatch.Draw(TextureManager.roomTextureList[0], hitboxBot, Color.Black);
-            //spriteBatch.Draw(TextureManager.roomTextureList[0], hitboxTop, Color.White);
-            //spriteBatch.Draw(TextureManager.roomTextureList[0], hitboxLeft, Color.Red);
-            //spriteBatch.Draw(TextureManager.roomTextureList[0], hitboxRight, Color.Blue);
+            //spriteBatch.Draw(tex, hitboxBot, Color.Black);
+            //spriteBatch.Draw(tex, hitboxTop, Color.White);
+            //spriteBatch.Draw(tex, hitboxLeft, Color.Red);
+            //spriteBatch.Draw(tex, hitboxRight, Color.Blue);
            
         }
 
         private void GenerateRectangles(Vector2 pos)
         {
-            
-            hitboxLeft = new Rectangle((int)pos.X, (int)pos.Y,5,GetRect.Height);
-            hitboxTop = new Rectangle((int)pos.X, (int)pos.Y , GetRect.Width, 5);
-            hitboxBot = new Rectangle((int)pos.X, (int)pos.Y + tex.Height - 5,GetRect.Width, 5);
-            hitboxRight = new Rectangle((int)pos.X + GetRect.Width -5, (int)pos.Y, 5, GetRect.Height);
+            //hitboxLeft = new Rectangle((int)pos.X, (int)pos.Y,5,GetRect.Height);
+            //hitboxTop = new Rectangle((int)pos.X, (int)pos.Y , GetRect.Width, 5);
+            //hitboxBot = new Rectangle((int)pos.X, (int)pos.Y + GetRect.Height - 5,GetRect.Width, 5);
+            //hitboxRight = new Rectangle((int)pos.X + GetRect.Width -5, (int)pos.Y, 5, GetRect.Height);
         }
 
     }

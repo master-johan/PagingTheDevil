@@ -173,7 +173,7 @@ namespace Paging_the_devil.Manager
                     UpdateCharacters(gameTime);
 
                     //UpdateHealth();
-                    //DeleteAbilities();
+                    DeleteAbilities();
 
 
                     roomManager.Update();
@@ -347,17 +347,21 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void DeleteAbilities()
         {
-            Ability toRemoveAbility = null;
+            Ability toRemove = null;
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 foreach (var a in playerArray[i].abilityList)
                 {
-                    foreach (var w in currentRoom.GetWallList())
+                    foreach (var w in currentRoom.GetWallRectList())
                     {
-                        if (a.GetRect.Intersects(w.GetRect))
+                        if (a.GetRect.Intersects(w))
                         {
-                            toRemoveAbility = a;
+                            a.ToRemove = true;
+                        }
+                        if (a.ToRemove == true)
+                        {
+                            toRemove = a;
                         }
                     }
                 }
@@ -368,13 +372,17 @@ namespace Paging_the_devil.Manager
                     {
                         if (a.GetRect.Intersects(playerArray[i].GetRect))
                         {
-                            toRemoveAbility = a;
+                            a.ToRemove = true;
+                        }
+                        if (a.ToRemove == true)
+                        {
+                            toRemove = a;
                         }
                     }
                 }
-                if (toRemoveAbility != null)
+                if (toRemove != null)
                 {
-                    playerArray[i].abilityList.Remove(toRemoveAbility);
+                    playerArray[i].abilityList.Remove(toRemove);
                 }
             }
         }
@@ -444,18 +452,22 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
                         playerArray[i].HealthPoints -= a.Damage;
-                        toRemove = a;
+                        a.ToRemove = true;
                     }
                 }
 
-                foreach (var w in currentRoom.GetWallList())
+                foreach (var w in currentRoom.GetWallRectList())
                 {
-                    if (a.GetRect.Intersects(w.GetRect))
+                    if (a.GetRect.Intersects(w))
                     {
-
-                        toRemove = a;
+                        a.ToRemove = true;
 
                     }
+                }
+
+                if (a.ToRemove == true)
+                {
+                    toRemove = a;
                 }
             }
 
