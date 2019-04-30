@@ -66,7 +66,7 @@ namespace Paging_the_devil
         private void DecidePos()
         {
             wallTopPos = new Rectangle(0, ValueBank.GameWindowStartY, ValueBank.WindowSizeX, 32);
-            wallBottomPos = new Rectangle(0, ValueBank.WindowSizeX - 32, ValueBank.WindowSizeX, 32);
+            wallBottomPos = new Rectangle(0, ValueBank.WindowSizeY - 32, ValueBank.WindowSizeX, 32);
             wallLeftPos = new Rectangle(0, ValueBank.GameWindowStartY, 32, ValueBank.WindowSizeY);
             wallRightPos = new Rectangle(ValueBank.WindowSizeX - 32, ValueBank.GameWindowStartY, 32, ValueBank.WindowSizeY);
         }
