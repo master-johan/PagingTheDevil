@@ -105,7 +105,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 direction.Y = -1;
 
             }
-
             if (DownMovementBlocked && direction.Y < 0)
             {
                 direction.Y = 1;
