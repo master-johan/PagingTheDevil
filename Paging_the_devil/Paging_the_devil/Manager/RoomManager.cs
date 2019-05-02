@@ -589,7 +589,7 @@ namespace Paging_the_devil.Manager
         private void SpawnSpider()
         {
             enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(35, 175), playerArray, nrOfPlayers));
-
+        }
         private void SpawnDevil()
         {
             int x = ValueBank.WindowSizeX / 2;
