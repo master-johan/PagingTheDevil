@@ -60,6 +60,11 @@ namespace Paging_the_devil
             {
                 w.Draw(spriteBatch);
             }
+
+            //spriteBatch.Draw(TextureBank.roomTextureList[1], wallTopPos, Color.Black);
+            //spriteBatch.Draw(TextureBank.roomTextureList[1], wallBottomPos, Color.Red);
+            //spriteBatch.Draw(TextureBank.roomTextureList[1], wallLeftPos, Color.Yellow);
+            //spriteBatch.Draw(TextureBank.roomTextureList[1], wallRightPos, Color.Blue);
         }
 
         private void DecidePos()

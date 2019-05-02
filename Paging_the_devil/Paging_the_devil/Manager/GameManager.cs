@@ -137,7 +137,10 @@ namespace Paging_the_devil.Manager
                         {
                             CheckEnemiesAbilites((e as SmallDevil).enemyAbilityList);
                         }
-
+                        if(e is WallSpider)
+                        {
+                            CheckEnemiesAbilites((e as WallSpider).enemyAbilityList);
+                        }
                         if (e is Slime)
                         {
                             CheckSlimeCollision(e as Slime);
