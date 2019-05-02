@@ -27,6 +27,7 @@ namespace Paging_the_devil.Manager
         public static float ChargeSpeed;
         public static float WebbballTimer;
         public static float DevilSpeed;
+        public static float DevilCleaveTimer;
 
         public static int DashCooldown;
         public static int HealHarmCooldown;
@@ -113,6 +114,7 @@ namespace Paging_the_devil.Manager
             DashTimer = 200;
             ChargeTimer = 200;
             WebbballTimer = 160f;
+            DevilCleaveTimer = 2000;
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4f;

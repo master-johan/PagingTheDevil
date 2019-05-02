@@ -932,11 +932,7 @@
 /processorParam:TextureFormat=Color
 /build:Walltop.png
 
-
 #begin SpiderBoi.png
-
-#begin DevilSprite.png
-
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -946,7 +942,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-
 /build:SpiderBoi.png
 
 #begin Webball.png
@@ -960,6 +955,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Webball.png
+
+#begin DevilSprite.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
 /build:DevilSprite.png
 
+#begin DevilSword.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:DevilSword.png
 

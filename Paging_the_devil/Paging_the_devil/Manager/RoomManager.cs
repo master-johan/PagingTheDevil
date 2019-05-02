@@ -595,7 +595,7 @@ namespace Paging_the_devil.Manager
             int x = ValueBank.WindowSizeX / 2;
             int y = ValueBank.WindowSizeY / 2 + ValueBank.GameWindowStartY;
 
-            enemyList.Add(new Devil(TextureBank.enemyTextureList[2], new Vector2(x, y), playerArray, nrOfPlayers));
+            enemyList.Add(new Devil(TextureBank.enemyTextureList[3], new Vector2(x, y), playerArray, nrOfPlayers));
 
         }
         /// <summary>

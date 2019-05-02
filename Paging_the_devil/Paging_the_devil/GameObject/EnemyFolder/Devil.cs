@@ -185,7 +185,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         }
         private void DevilCleave()
         {
-            Ability ability = new Cleave(TextureBank.mageSpellList[7], pos, direction, this);
+            Ability ability = new Cleave(TextureBank.mageSpellList[8], pos, direction, this);
             enemyAbilityList.Add(ability);
         }
     }
