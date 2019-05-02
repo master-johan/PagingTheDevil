@@ -37,6 +37,7 @@ namespace Paging_the_devil.Manager
             mageSpellList.Add(Content.Load<Texture2D>(@"Arrow"));
             mageSpellList.Add(Content.Load<Texture2D>(@"AxeBarb"));
             mageSpellList.Add(Content.Load<Texture2D>(@"CleavePNG"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"DevilSword"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));

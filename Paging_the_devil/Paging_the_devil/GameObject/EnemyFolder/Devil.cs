@@ -22,6 +22,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         int frame;
         int spriteCount;
         int spriteWidth;
+        int cleaveTimer;
+      
 
         float radius;
         float[] shortestDistanceToPlayer;
@@ -49,10 +51,10 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             scale = 2f;
             spriteCount = 12;
             spriteWidth = tex.Width;
-            HealthPoints = ValueBank.SlimeHealth;
+            HealthPoints = ValueBank.SlimeHealth * 4;
             temp = Vector2.Zero;
 
-            shortestDistanceToPlayer = new float[nrOfPlayer]; 
+            shortestDistanceToPlayer = new float[nrOfPlayer];
 
             up = new Rectangle(0, 315, 70, 100);
             down = new Rectangle(0, 0, 70, 100);
@@ -61,17 +63,27 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             drawRect = down;
 
             rect = new Rectangle((int)pos.X, (int)pos.Y, 70, 100);
+            shootTimer = ValueBank.SmallDevilShootTimer - ValueBank.SmallDevilShootTimer / 2;
+            cleaveTimer = ValueBank.CleaveCooldown;
         }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             GetTarget();
             Movement(gameTime);
+            ShootFireball();
+
+            if (cleaveTimer <= 0)
+            {
+                DevilCleave();
+                cleaveTimer = 240;
+            }
+            cleaveTimer--;
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Draw(tex, pos, drawRect, Color.White);
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(drawRect.Width / 2, drawRect.Height / 2), 1, SpriteEffects.None, 0);
         }
         protected override void Movement(GameTime gameTime)
         {
@@ -168,8 +180,13 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
                 fireball = new Fireball(TextureBank.mageSpellList[0], pos, dir);
                 enemyAbilityList.Add(fireball);
-                shootTimer = ValueBank.SmallDevilShootTimer;
+                shootTimer = ValueBank.SmallDevilShootTimer - ValueBank.SmallDevilShootTimer / 2;
             }
+        }
+        private void DevilCleave()
+        {
+            Ability ability = new Cleave(TextureBank.mageSpellList[7], pos, direction, this);
+            enemyAbilityList.Add(ability);
         }
     }
 }

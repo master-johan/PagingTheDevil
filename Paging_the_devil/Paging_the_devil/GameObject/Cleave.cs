@@ -12,22 +12,23 @@ namespace Paging_the_devil.GameObject
         Rectangle sourceRect;
 
         float angle;
+        float timePassed;
 
         Vector2 cleavePos;
         Vector2 left, right, up, down;
         Vector2 meleeDirection;
 
-        Player player;
+        Character character;
 
         List<Enemy> enemiesHitList;
 
         public bool Active { get; private set; }
         public bool Hit { get; set; }
 
-        public Cleave(Texture2D tex, Vector2 pos, Vector2 direction, Player player)
+        public Cleave(Texture2D tex, Vector2 pos, Vector2 direction, Character character)
             : base(tex, pos, direction)
         {
-            this.player = player;
+            this.character = character;
             cleavePos = pos;
 
             Hit = false;
@@ -48,17 +49,24 @@ namespace Paging_the_devil.GameObject
 
         public override void Update(GameTime gameTime)
         {
-            angle -= 0.15f;
-
-            if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
-                angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
-                angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
-                angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
+            if (character is Devil)
             {
-                Active = false;
+                UpdateDevilCleave(gameTime);
             }
 
-            Vector2 temp = cleavePos - player.pos;
+            else
+            {
+                if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
+                    angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
+                    angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
+                    angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
+                {
+                    Active = false;
+                }
+            }
+            angle -= 0.15f;
+
+            Vector2 temp = cleavePos - character.pos;
             cleavePos -= temp;
 
             if (HitCharacter != null)
@@ -183,6 +191,16 @@ namespace Paging_the_devil.GameObject
             left = new Vector2(-1, 0);
             up = new Vector2(0, -1);
             down = new Vector2(0, 1);
+        }
+
+        private void UpdateDevilCleave(GameTime gameTime)
+        {
+            timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if(timePassed >= ValueBank.DevilCleaveTimer)
+            {
+                ToRemove = true;
+                Active = false;
+            }
         }
     }
 }

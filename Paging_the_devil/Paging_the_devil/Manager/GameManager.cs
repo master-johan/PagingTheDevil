@@ -142,6 +142,10 @@ namespace Paging_the_devil.Manager
                         {
                             CheckSlimeCollision(e as Slime);
                         }
+                        if (e is Devil)
+                        {
+                            CheckEnemiesAbilites((e as Devil).enemyAbilityList);
+                        }
                     }
 
                     HUDManager.Update(gameTime);
@@ -461,7 +465,6 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(w))
                     {
                         a.ToRemove = true;
-
                     }
                 }
 
