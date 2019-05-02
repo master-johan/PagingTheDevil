@@ -67,7 +67,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             foreach (var e in enemyAbilityList)
             {
                 e.Draw(spriteBatch);
-                spriteBatch.Draw(TextureBank.hudTextureList[0], rect, Color.Black);
+                //spriteBatch.Draw(TextureBank.hudTextureList[0], rect, Color.Black);
             }
             
         }
