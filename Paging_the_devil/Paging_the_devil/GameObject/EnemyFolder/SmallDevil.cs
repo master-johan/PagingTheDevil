@@ -49,7 +49,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             radiusForFleeing = 250;
             randomPosTimer = 0.2f;
 
-            MovementSpeed = ValueBank.SmallDevilMoveSpeed;
+            MovementSpeed = (int)ValueBank.SmallDevilMoveSpeed;
             BaseMoveSpeed = MovementSpeed;
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 

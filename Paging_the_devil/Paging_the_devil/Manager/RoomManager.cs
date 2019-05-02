@@ -585,6 +585,10 @@ namespace Paging_the_devil.Manager
 
             enemyList.Add(new Slime(TextureBank.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
         }
+        private void SpawnSpider()
+        {
+            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(35, 175), playerArray, nrOfPlayers));
+        }
         /// <summary>
         /// Den här metoden lägger till fiender till rummen
         /// </summary>
@@ -594,8 +598,10 @@ namespace Paging_the_devil.Manager
             {
                 for (int i = 0; i < 1; i++)
                 {
+                    SpawnSpider();
                     SpawnSmallRedDevil();
                 }
+
                 enemiesSpawned[3, 1] = true;
             }
 
@@ -604,6 +610,7 @@ namespace Paging_the_devil.Manager
                 SpawnSlime();
                 enemiesSpawned[2, 1] = true;
             }
+
         }
     }
 }

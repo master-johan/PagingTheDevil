@@ -18,11 +18,14 @@ namespace Paging_the_devil.Manager
         public static float SlimeHealth;
         public static float SmallDevilIdleMoveSpeed;
         public static float SlimeSpeed;
+        public static float SmallDevilMoveSpeed;
+        public static float SpiderMoveSpeed;
         public static float PlayerSpeed;
         public static float DashTimer;
         public static float ChargeTimer;
         public static float DashSpeed;
         public static float ChargeSpeed;
+        public static float WebbballTimer;
 
         public static int DashCooldown;
         public static int HealHarmCooldown;
@@ -48,7 +51,9 @@ namespace Paging_the_devil.Manager
         public static int WindowSizeY;
         public static int WindowSizeX;
         public static int GameWindowStartY;
-        public static int SmallDevilMoveSpeed;
+        public static int WallSpiderHealth;
+        public static int WebballSpeed;
+
 
         public static Random rand;
 
@@ -66,6 +71,7 @@ namespace Paging_the_devil.Manager
             //Enemy Health
             SmallDevilHealth = 10;
             SlimeHealth = 20;
+            WallSpiderHealth = 10;
 
             //Ability Cooldown
             DashCooldown = 40;
@@ -95,6 +101,7 @@ namespace Paging_the_devil.Manager
             ArrowSpeed = 7;
             HealHarmSpeed = 7;
             FireballSpeed = 7;
+            WebballSpeed = 14;
             DashSpeed = 15f;
             ChargeSpeed = 15f;
 
@@ -104,11 +111,13 @@ namespace Paging_the_devil.Manager
             TrapTimer = 2000;
             DashTimer = 200;
             ChargeTimer = 200;
+            WebbballTimer = 160f;
 
             //Enemy Speed
-            SmallDevilMoveSpeed = 4;
+            SmallDevilMoveSpeed = 4f;
             SmallDevilIdleMoveSpeed = 1f;
             SlimeSpeed = 1f;
+            SpiderMoveSpeed = 2f;
 
             //Player Speed
 
