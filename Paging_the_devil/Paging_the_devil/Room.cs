@@ -48,7 +48,6 @@ namespace Paging_the_devil
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(TextureBank.roomTextureList[3], roomFloor, color);
-
             if (gateWayList.Count > 0)
             {
                 foreach (var g in gateWayList)
@@ -61,6 +60,11 @@ namespace Paging_the_devil
             {
                 w.Draw(spriteBatch);
             }
+
+            spriteBatch.Draw(TextureBank.roomTextureList[1], wallTopPos, Color.Black);
+            spriteBatch.Draw(TextureBank.roomTextureList[1], wallBottomPos, Color.Red);
+            spriteBatch.Draw(TextureBank.roomTextureList[1], wallLeftPos, Color.Yellow);
+            spriteBatch.Draw(TextureBank.roomTextureList[1], wallRightPos, Color.Blue);
         }
 
         private void DecidePos()
