@@ -585,9 +585,18 @@ namespace Paging_the_devil.Manager
 
             enemyList.Add(new Slime(TextureBank.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
         }
+
         private void SpawnSpider()
         {
             enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(35, 175), playerArray, nrOfPlayers));
+
+        private void SpawnDevil()
+        {
+            int x = ValueBank.WindowSizeX / 2;
+            int y = ValueBank.WindowSizeY / 2 + ValueBank.GameWindowStartY;
+
+            enemyList.Add(new Devil(TextureBank.enemyTextureList[2], new Vector2(x, y), playerArray, nrOfPlayers));
+
         }
         /// <summary>
         /// Den här metoden lägger till fiender till rummen
@@ -598,8 +607,10 @@ namespace Paging_the_devil.Manager
             {
                 for (int i = 0; i < 1; i++)
                 {
+
                     SpawnSpider();
                     SpawnSmallRedDevil();
+
                 }
 
                 enemiesSpawned[3, 1] = true;
@@ -607,10 +618,15 @@ namespace Paging_the_devil.Manager
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
             {
-                SpawnSlime();
+                //SpawnSlime();
                 enemiesSpawned[2, 1] = true;
             }
-
+          
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && !enemiesSpawned[2,4])
+            {
+                SpawnDevil();
+                enemiesSpawned[2, 4] = true;
+            }
         }
     }
 }

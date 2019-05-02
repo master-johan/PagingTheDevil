@@ -53,6 +53,7 @@ namespace Paging_the_devil.Manager
             enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));
             enemyTextureList.Add(Content.Load<Texture2D>(@"Slime"));
             enemyTextureList.Add(Content.Load<Texture2D>(@"SpiderBoi"));
+            enemyTextureList.Add(Content.Load<Texture2D>(@"DevilSprite"));
 
             //Menu
             menuTextureList.Add(Content.Load<Texture2D>(@"PlayGameBTN"));
