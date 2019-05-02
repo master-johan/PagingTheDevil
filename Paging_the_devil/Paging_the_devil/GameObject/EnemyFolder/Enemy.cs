@@ -98,28 +98,31 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         /// </summary>
         /// <param name="direction"></param>
         /// <returns></returns>
-        protected Vector2 CheckIfAllowedMovement (Vector2 direction)
+        protected bool CheckIfAllowedMovement ()
         {
-            if (UpMovementBlocked && direction.Y > 0)
-            {
-                direction.Y = -1;
+            bool temp = false;
 
-            }
-            if (DownMovementBlocked && direction.Y < 0)
+            if (UpMovementBlocked)
             {
-                direction.Y = 1;
+                temp = true;
             }
 
-            if (RightMovementBlocked && direction.X > 0)
+            else if (DownMovementBlocked)
             {
-                direction.X = -1;
-            }
-            if (LeftMovementBlocked && direction.X < 0)
-            {
-                direction.X = 1;
+                temp = true;
             }
 
-            return direction;
+            if (RightMovementBlocked)
+            {
+                temp = true;
+            }
+
+            else if (LeftMovementBlocked)
+            {
+                temp = true;
+            }
+
+            return temp;
         }
     }
 }

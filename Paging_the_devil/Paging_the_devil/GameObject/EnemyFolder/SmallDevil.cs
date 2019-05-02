@@ -31,6 +31,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         bool fleeing;
         bool safeZone;
 
+        Vector2 temp;
+
         public SmallDevil(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayers) : base(tex, pos)
         {
             this.playerArray = playerArray;
@@ -50,14 +52,9 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             MovementSpeed = ValueBank.SmallDevilMoveSpeed;
             BaseMoveSpeed = MovementSpeed;
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
-        }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-            spriteBatch.Draw(tex, pos, Color.White);
+            temp = Vector2.Zero;
         }
-
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -65,6 +62,12 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             Movement(gameTime);
             ShootFireball();
         }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            spriteBatch.Draw(tex, pos, Color.White);
+        }  
         /// <summary>
         /// Den här metoden sköter devilens rörelse
         /// </summary>
@@ -73,21 +76,27 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             //if(!DownMovementBlocked && !UpMovementBlocked && !LeftMovementBlocked && !RightMovementBlocked)
             //{
+            bool chasing = false;
+            chasing = CheckIfAllowedMovement();
+
+            if (chasing)
+            {
+                fleeing = false;
+                safeZone = false;
+            }
+
             if (targetPlayer != null && !targetPlayer.Dead && !fleeing && !safeZone)
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
-                direction = CheckIfAllowedMovement(direction);
-                pos += direction * ValueBank.SmallDevilMoveSpeed;
+                temp = direction;
             }
 
             else if (targetPlayer != null && !targetPlayer.Dead && fleeing && !safeZone)
             {
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
-
-                direction = CheckIfAllowedMovement(direction);
-                pos -= direction * ValueBank.SmallDevilMoveSpeed;
+                temp = -direction;
             }
             else if (safeZone && !fleeing)
             {
@@ -96,19 +105,19 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 if (randomPosTimer <= 0)
                 {
                     randomPosTimer = 0.2f;
-                    posX = ValueBank.rand.Next(-1, 1);
-                    posY = ValueBank.rand.Next(-1, 1);
+                    posX = ValueBank.rand.Next(-1, 2);
+                    posY = ValueBank.rand.Next(-1, 2);
 
                     if (posX != 0 && posY != 0)
                     {
                         direction = new Vector2(posX, posY);
                         direction.Normalize();
-                        direction = CheckIfAllowedMovement(direction);
                     }
                 }
-
-                pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
+                temp = direction;
             }
+
+            pos += temp * ValueBank.SmallDevilMoveSpeed;
 
             //else 
             //{
