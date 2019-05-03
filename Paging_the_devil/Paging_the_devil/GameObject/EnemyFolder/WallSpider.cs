@@ -10,8 +10,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
     {
         Player[] playerArray;
 
-        Player targetPlayer;
-
         Ability fireball;
 
         Rectangle srcRect;

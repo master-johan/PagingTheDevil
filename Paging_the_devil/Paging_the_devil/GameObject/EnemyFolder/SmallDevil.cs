@@ -9,8 +9,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
     class SmallDevil : Enemy
     {
         Ability fireball;
+
         Player[] playerArray;
-        Player targetPlayer;
 
         int nrOfPlayers;
         int frame;
@@ -120,13 +120,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             }
 
             pos += temp * ValueBank.SmallDevilMoveSpeed;
-
-            //else 
-            //{
-            //    direction = new Vector2(-1, 0);
-            //    direction.Normalize();
-            //    pos += direction * ValueBank.SmallDevilIdleMoveSpeed;
-            //}         
         }
         /// <summary>
         /// Den här metoden skjuter fireballs.

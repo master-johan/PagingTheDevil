@@ -9,6 +9,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 {
     class Enemy : Character
     {
+        public Player targetPlayer;
+
         public bool toRevome;
 
         protected bool left;

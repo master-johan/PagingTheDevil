@@ -9,7 +9,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
     {
         Rectangle srcRect;
         Player[] playerArray;
-        Player targetPlayer;
 
         int nrOfPlayer;
         int frame;
