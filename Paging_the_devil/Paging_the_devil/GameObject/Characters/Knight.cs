@@ -14,7 +14,7 @@ namespace Paging_the_devil.GameObject.Characters
 
             Ability1 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
             Ability2 = new Fireball(TextureBank.mageSpellList[0], pos, LastDirection);
-            Ability3 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability3 = new Taunt(TextureBank.mageSpellList[10], pos, new Vector2(0, 0),this);
         }
         /// <summary>
         /// Den här metoden sköter ability1
@@ -42,7 +42,7 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility3()
         {
-            Ability ability = new Taunt(TextureBank.mageSpellList[9], pos, new Vector2(0, 0), this);
+            Ability ability = new Taunt(TextureBank.mageSpellList[10], pos, new Vector2(0, 0), this);
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
         }

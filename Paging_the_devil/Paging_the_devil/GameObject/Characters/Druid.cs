@@ -14,7 +14,7 @@ namespace Paging_the_devil.GameObject.Characters
 
             Ability1 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
             Ability2 = new Healharm(TextureBank.mageSpellList[3], pos, LastDirection);
-            Ability3 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability3 = new FlowerPower(TextureBank.mageSpellList[11], pos, new Vector2(0, 0), this);
         }
 
         public override void Update(GameTime gameTime)
@@ -47,7 +47,7 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility3()
         {
-            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability ability = new FlowerPower(TextureBank.mageSpellList[11], pos, new Vector2(0, 0), this);
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
 

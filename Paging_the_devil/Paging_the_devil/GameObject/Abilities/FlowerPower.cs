@@ -5,13 +5,11 @@ using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
 using Paging_the_devil.GameObject.Characters;
-
 namespace Paging_the_devil.GameObject.Abilities
 {
-    class Taunt : Ability
+    class FlowerPower : Ability
     {
-
-        List<Enemy> enemyList;
+        List<Player> playerList;
 
         Player player;
 
@@ -22,18 +20,21 @@ namespace Paging_the_devil.GameObject.Abilities
 
         Color tauntColor;
 
-        public Taunt(Texture2D tex, Vector2 pos, Vector2 direction, Player player) : base(tex, pos, direction)
+        Vector2 healPos;
+
+        public FlowerPower(Texture2D tex, Vector2 pos, Vector2 direction, Player player) : base(tex, pos, direction)
         {
             this.player = player;
 
             Active = false;
             hit = false;
 
-            enemyList = new List<Enemy>();
+            playerList = new List<Player>();
 
             rect = new Rectangle((int)pos.X - tex.Width / 2, (int)pos.Y - tex.Height / 2, 400, 400);
 
             tauntColor = new Color(255, 255, 255, 255);
+            playerList.Add(player);
             btnTexture = TextureBank.hudTextureList[5];
         }
 
@@ -42,10 +43,29 @@ namespace Paging_the_devil.GameObject.Abilities
             rect.X = (int)pos.X - tex.Width / 2;
             rect.Y = (int)pos.Y - tex.Height / 2;
 
+            Vector2 temp = healPos - player.pos;
+            healPos -= temp;
+
             if (HitCharacter != null)
             {
-                enemyList.Add(HitCharacter as Enemy);
-
+                bool hasHitBefore = false;
+                foreach (var p in playerList)
+                {
+                    if (HitCharacter is Player)
+                    {
+                        if (HitCharacter == p)
+                        {
+                            hasHitBefore = true;
+                        }
+                    }
+                }
+                if (!hasHitBefore)
+                {
+                    if (HitCharacter is Player)
+                    {
+                        playerList.Add(HitCharacter as Player);
+                    }
+                }
             }
 
             hit = true;
@@ -53,25 +73,24 @@ namespace Paging_the_devil.GameObject.Abilities
 
             if (hit)
             {
-                Taunted(gameTime);
+                Heal(gameTime);
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, healPos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
         }
 
-        private void Taunted(GameTime gameTime)
+        private void Heal(GameTime gameTime)
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (Active == true)
             {
-                foreach (var e in enemyList)
+                foreach (var p in playerList)
                 {
-                    e.targetPlayer = player;
-                    e.Taunted = true;
+                    p.HealthPoints += 0.2f;
                 }
                 tauntColor.R--;
                 tauntColor.G--;
@@ -83,10 +102,6 @@ namespace Paging_the_devil.GameObject.Abilities
             {
                 Active = false;
                 ToRemove = true;
-                foreach (var e in enemyList)
-                {
-                    e.Taunted = false;
-                }
             }
         }
     }

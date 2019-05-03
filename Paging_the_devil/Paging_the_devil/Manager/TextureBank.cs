@@ -40,6 +40,8 @@ namespace Paging_the_devil.Manager
             mageSpellList.Add(Content.Load<Texture2D>(@"Webball"));
             mageSpellList.Add(Content.Load<Texture2D>(@"DevilSword"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Taunt"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Taunt2"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"CircleOfHeal"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
