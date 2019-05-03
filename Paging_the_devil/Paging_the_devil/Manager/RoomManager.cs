@@ -563,7 +563,11 @@ namespace Paging_the_devil.Manager
                 {
                     playerArray[i].pos = temp;
                     SoundBank.SoundEffectList[6].Play();
-                }         
+                }
+                foreach (var item in playerArray)
+                {
+                    item.abilityList.Clear();
+                }
             }
         }
         /// <summary>
