@@ -10,7 +10,7 @@ using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {
-    public enum GameState { MainMenu, PlayerSelect, InGame }
+    public enum GameState { StoryScreen ,MainMenu, PlayerSelect, InGame }
 
 
     class GameManager
@@ -60,7 +60,7 @@ namespace Paging_the_devil.Manager
 
             enemyList = new List<Enemy>();
 
-            currentState = GameState.MainMenu;
+            currentState = GameState.StoryScreen;
 
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(SoundBank.BgMusicList[0]);
@@ -77,6 +77,22 @@ namespace Paging_the_devil.Manager
         {
             switch (currentState)
             {
+                case GameState.StoryScreen:
+                    ConnectController();
+                    for (int i = 0; i < nrOfPlayers; i++)
+                    {
+                        if (controllerArray[i].ButtonPressed(Buttons.Start))
+                        {
+                            currentState = GameState.MainMenu;
+                        }
+                    }
+                    if (controllerArray[0] != null)
+                    {
+                        SendControllerToMenu();
+                        controllerArray[0].Update();
+                        menuManager.Update(gameTime);
+                    }
+                    break;
                 case GameState.MainMenu:
 
                     ConnectController();
@@ -166,6 +182,9 @@ namespace Paging_the_devil.Manager
         {
             switch (currentState)
             {
+                case GameState.StoryScreen:
+                    menuManager.Draw(spriteBatch);
+                    break;
                 case GameState.MainMenu:
                     menuManager.Draw(spriteBatch);
                     break;

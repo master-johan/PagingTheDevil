@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -28,6 +29,10 @@ namespace Paging_the_devil.Manager
 
         Vector2 pointerPos;
 
+        StreamReader streamReader;
+
+        string story;
+
         public PlayerSelectManager PlayerSelectManager { get; set; }
 
         public MenuManager(GraphicsDevice graphicsDevice, Game1 game)
@@ -49,12 +54,26 @@ namespace Paging_the_devil.Manager
 
             mainMenuBackground = new MainMenuBackground();
             PlayerSelectManager = new PlayerSelectManager();
+
+            ReadStory();
         }
 
         public void Update(GameTime gameTime)
         {
             switch (GameManager.currentState)
             {
+                case GameState.StoryScreen:
+
+                    for (int i = 0; i < nrOfPlayers; i++)
+                    {
+                        if (controllerArray[i].ButtonDown(Buttons.A))
+                        {
+                            //öka speed på text
+                        }
+                    }
+                    mainMenuBackground.Update(gameTime);
+
+                    break;
                 case GameState.MainMenu:
                     mainMenuBackground.Update(gameTime);
 
@@ -88,6 +107,10 @@ namespace Paging_the_devil.Manager
         {
             switch (GameManager.currentState)
             {
+                case GameState.StoryScreen:
+                    mainMenuBackground.Draw(spriteBatch);
+                    spriteBatch.DrawString(TextureBank.spriteFont, story, new Vector2(100, 100), Color.Green);
+                    break;
                 case GameState.MainMenu:
 
                     mainMenuBackground.Draw(spriteBatch);                   
@@ -185,6 +208,17 @@ namespace Paging_the_devil.Manager
         private void SendPlayerToPlayerSelect()
         {
             PlayerSelectManager.GetNrOfPlayers(nrOfPlayers);
+        }
+
+        private void ReadStory()
+        {
+            streamReader = new StreamReader(@"story.txt");
+
+            while(!streamReader.EndOfStream)
+            {
+                story += streamReader.ReadLine();
+            }
+            streamReader.Close();
         }
     }
 }
