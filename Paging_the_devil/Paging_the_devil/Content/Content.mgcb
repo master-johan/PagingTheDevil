@@ -1016,3 +1016,9 @@
 /processorParam:TextureFormat=Color
 /build:CircleOfHeal.png
 
+#begin FlowerPower.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:FlowerPower.wav
+
