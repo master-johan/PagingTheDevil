@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Paging_the_devil.GameObject
+namespace Paging_the_devil.GameObject.Characters
 {
     public class Character : GameObject
     {

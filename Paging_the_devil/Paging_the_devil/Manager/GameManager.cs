@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Paging_the_devil.GameObject;
 using Microsoft.Xna.Framework.Media;
 using Paging_the_devil.GameObject.EnemyFolder;
+using Paging_the_devil.GameObject.Characters;
+using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {

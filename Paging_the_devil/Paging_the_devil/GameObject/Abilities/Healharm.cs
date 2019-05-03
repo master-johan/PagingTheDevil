@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.Manager;
+using Paging_the_devil.GameObject.Characters;
 
-namespace Paging_the_devil.GameObject
+namespace Paging_the_devil.GameObject.Abilities
 {
     class Healharm : Ability
     {
