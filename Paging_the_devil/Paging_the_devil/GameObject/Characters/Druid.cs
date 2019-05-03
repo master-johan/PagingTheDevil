@@ -49,6 +49,7 @@ namespace Paging_the_devil.GameObject.Characters
         {
             Ability ability = new FlowerPower(TextureBank.mageSpellList[11], pos, new Vector2(0, 0), this);
             Ability3CooldownTimer = ability.coolDownTime;
+            SoundBank.SoundEffectList[11].Play();
             return ability;
 
         }

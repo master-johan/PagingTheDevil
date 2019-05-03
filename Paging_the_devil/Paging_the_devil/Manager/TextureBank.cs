@@ -86,6 +86,9 @@ namespace Paging_the_devil.Manager
             hudTextureList.Add(Content.Load<Texture2D>(@"HUDtest"));
             hudTextureList.Add(Content.Load<Texture2D>(@"slashBtn"));
             hudTextureList.Add(Content.Load<Texture2D>(@"CooldownTex"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"TauntBtn"));
+            hudTextureList.Add(Content.Load<Texture2D>(@"FlowerPowerBtn"));
+
 
             //AbilityButtons
             abilityButtonList.Add(Content.Load<Texture2D>(@"ArrowButton"));
