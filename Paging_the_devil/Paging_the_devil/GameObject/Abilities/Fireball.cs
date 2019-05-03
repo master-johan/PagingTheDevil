@@ -6,8 +6,7 @@ namespace Paging_the_devil.GameObject.Abilities
 {
     class Fireball : Ability
     {
-        int speed;
-        Vector2 spellDirection;
+        protected Vector2 spellDirection;
 
         public Fireball(Texture2D tex, Vector2 pos, Vector2 direction)
             : base(tex, pos, direction)
