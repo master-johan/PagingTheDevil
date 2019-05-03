@@ -46,6 +46,7 @@
     <Compile Include="GameObject\Abilities\Arrow.cs" />
     <Compile Include="GameObject\Abilities\FlowerPower.cs" />
     <Compile Include="GameObject\Abilities\Taunt.cs" />
+    <Compile Include="GameObject\Abilities\WebBall.cs" />
     <Compile Include="GameObject\Characters\Barbarian.cs" />
     <Compile Include="GameObject\Abilities\Charge.cs" />
     <Compile Include="GameObject\Abilities\Cleave.cs" />

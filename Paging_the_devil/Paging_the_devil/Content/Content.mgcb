@@ -1035,6 +1035,7 @@
 /build:FlowerPowerBtn.png
 
 #begin TauntBtn.png
+#begin SpiderWeb.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1045,4 +1046,5 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TauntBtn.png
+/build:SpiderWeb.png
 

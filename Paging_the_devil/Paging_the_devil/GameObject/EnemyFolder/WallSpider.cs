@@ -10,7 +10,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
     {
         Player[] playerArray;
 
-        Ability fireball;
+        Ability webBall;
 
         Rectangle srcRect;
 
@@ -190,8 +190,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
                     ValueBank.FireballSpeed = ValueBank.WebballSpeed;
 
-                    fireball = new Fireball(TextureBank.mageSpellList[7], tempVector, dir);
-                    enemyAbilityList.Add(fireball);
+                    webBall = new WebBall(TextureBank.mageSpellList[7], tempVector, dir);
+                    enemyAbilityList.Add(webBall);
                    
 
                     shootTimer = (int)ValueBank.WebbballTimer;
