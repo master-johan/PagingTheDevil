@@ -429,18 +429,8 @@ namespace Paging_the_devil.Manager
                 {
                     toRemove = a;
                 }
-
-                
-
-
-                //foreach (var w in currentRoom.GetWallList())
-                //{
-                //    if (a.GetRect.Intersects(w.GetRect))
-                //    {
-                //        toRemove = a;
-                //    }
-                //}
             }
+
             if (toRemove != null)
             {
                 abilityList.Remove(toRemove);

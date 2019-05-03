@@ -42,7 +42,7 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility3()
         {
-            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability ability = new Taunt(TextureBank.mageSpellList[2], pos, new Vector2(0, 0), this);
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
         }
