@@ -42,6 +42,7 @@ namespace Paging_the_devil.Manager
             mageSpellList.Add(Content.Load<Texture2D>(@"Taunt"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Taunt2"));
             mageSpellList.Add(Content.Load<Texture2D>(@"CircleOfHeal"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"SpiderWeb"));
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
@@ -53,7 +54,7 @@ namespace Paging_the_devil.Manager
             roomTextureList.Add(Content.Load<Texture2D>(@"Wallright"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Wallleft"));
 
-            //Enemey
+            //Enemy
             enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));
             enemyTextureList.Add(Content.Load<Texture2D>(@"Slime"));
             enemyTextureList.Add(Content.Load<Texture2D>(@"SpiderBoi"));

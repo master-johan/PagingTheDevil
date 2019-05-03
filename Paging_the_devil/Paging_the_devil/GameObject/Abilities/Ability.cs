@@ -7,7 +7,7 @@ namespace Paging_the_devil.GameObject.Abilities
     class Ability : GameObject
     {
         protected Vector2 direction;
-
+        protected int speed;
         public  Texture2D btnTexture { get; protected set;  }
 
         public int coolDownTime { get; protected set; }
