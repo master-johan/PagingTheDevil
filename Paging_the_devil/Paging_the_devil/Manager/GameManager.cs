@@ -173,10 +173,13 @@ namespace Paging_the_devil.Manager
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.InGame:
+
                     if (roomManagerCreated)
                     {
                         roomManager.Draw(spriteBatch);
                     }
+
+                    DrawCharacters(spriteBatch);
 
                     if (hudManagerCreated)
                     {
@@ -185,7 +188,6 @@ namespace Paging_the_devil.Manager
 
                     spriteBatch.Draw(TextureBank.mageSpellList[4], new Rectangle(100, 100, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height), Color.White);
 
-                    DrawCharacters(spriteBatch);
                     break;
             }
         }

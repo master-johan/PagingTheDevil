@@ -39,7 +39,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 400, 400), Color.White, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
         }
     }
 }
