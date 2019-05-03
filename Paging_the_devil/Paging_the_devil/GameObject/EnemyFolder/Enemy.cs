@@ -22,11 +22,13 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
         public List<Ability> enemyAbilityList;
 
-        public bool HitBySlowTrap { get; set; }
         public int MovementSpeed { get; set; }
         public int BaseMoveSpeed { get; set; }
+
         public double TrapTimer { get; set; }
 
+        public bool Taunted { get; set; }
+        public bool HitBySlowTrap { get; set; }
         public bool UpMovementBlocked { get; set; }
         public bool DownMovementBlocked { get; set; }
         public bool LeftMovementBlocked { get; set; }

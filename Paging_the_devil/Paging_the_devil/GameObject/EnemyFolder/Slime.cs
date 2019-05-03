@@ -2,22 +2,26 @@
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 using Paging_the_devil.GameObject.Characters;
+using System;
 
 namespace Paging_the_devil.GameObject.EnemyFolder
 {
     class Slime : Enemy
     {
         Rectangle srcRect;
+
         Player[] playerArray;
+
+        Vector2 distanceDifference;
 
         int nrOfPlayer;
         int frame;
         int spriteCount;
         int spriteWidth;
 
-        float radius;
-        float shortestDistanceToPlayer;
         float scale;
+        float oldDistance;
+        float currentDistance;
 
         double timer;
         double interval;
@@ -29,11 +33,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
             //MovementSpeed = ValueBank.SlimeSpeed;
             interval = 200;
-            radius = 500;
             scale = 2f;
             spriteCount = 5;
             spriteWidth = tex.Width;
             HealthPoints = ValueBank.SlimeHealth;
+            oldDistance = int.MaxValue;
 
             srcRect = new Rectangle(0, 0, 32, 32);
             rect = new Rectangle((int)pos.X, (int)pos.Y, 32 * (int)scale, 32 * (int)scale);
@@ -43,7 +47,12 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             base.Update(gameTime);
             Animation(gameTime);
-            GetTarget();
+
+            if (!Taunted)
+            {
+                GetTarget();
+            }
+
             Movement(gameTime);
         }
 
@@ -77,11 +86,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 direction = targetPlayer.GetSetPos - pos;
                 direction.Normalize();
             }
-            
+
             else
             {
                 direction = new Vector2(-1, 0);
-                direction.Normalize();      
+                direction.Normalize();
             }
 
             pos += direction * ValueBank.SlimeSpeed;
@@ -93,13 +102,18 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             for (int i = 0; i < nrOfPlayer; i++)
             {
-                shortestDistanceToPlayer = Vector2.Distance(playerArray[i].GetSetPos, pos);
+                distanceDifference = playerArray[i].pos - pos;
 
-                if (shortestDistanceToPlayer <= radius)
+                currentDistance = distanceDifference.LengthSquared();
+
+                if (currentDistance < oldDistance)
                 {
                     targetPlayer = playerArray[i];
+                    oldDistance = currentDistance;
                 }
             }
+
+            oldDistance = int.MaxValue;
         }
     }
 }

@@ -564,9 +564,10 @@ namespace Paging_the_devil.Manager
                     playerArray[i].pos = temp;
                     SoundBank.SoundEffectList[6].Play();
                 }
-                foreach (var item in playerArray)
+
+                for (int i = 0; i < nrOfPlayers; i++)
                 {
-                    item.abilityList.Clear();
+                    playerArray[i].abilityList.Clear();
                 }
             }
         }
@@ -612,10 +613,8 @@ namespace Paging_the_devil.Manager
             {
                 for (int i = 0; i < 1; i++)
                 {
-
                     SpawnSpider();
                     SpawnSmallRedDevil();
-
                 }
 
                 enemiesSpawned[3, 1] = true;
@@ -623,7 +622,7 @@ namespace Paging_the_devil.Manager
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
             {
-                //SpawnSlime();
+                SpawnSlime();
                 enemiesSpawned[2, 1] = true;
             }
           

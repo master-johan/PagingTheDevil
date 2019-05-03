@@ -358,7 +358,19 @@ namespace Paging_the_devil.Manager
                     {
                         if (a.GetRect.Intersects(w))
                         {
-                            a.ToRemove = true;
+                            if (a.ToRemove == true)
+                            {
+                                toRemove = a;
+                            }
+
+                            if (a is Taunt || a is FlowerPower)
+                            {
+                                a.ToRemove = false;
+                            }
+                            else
+                            {
+                                a.ToRemove = true;
+                            }
                         }
 
                         if (a.ToRemove == true)
@@ -415,7 +427,7 @@ namespace Paging_the_devil.Manager
                 {
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
-                        if (a is Healharm)
+                        if (a is Healharm || a is FlowerPower)
                         {
                             if (player == playerArray[i])
                             {
