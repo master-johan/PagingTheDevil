@@ -43,9 +43,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
         public override void Update(GameTime gameTime)
         {
-            rect.X = (int)pos.X;
-            rect.Y = (int)pos.Y;
-
             Dead();
 
             foreach (var e in enemyAbilityList)

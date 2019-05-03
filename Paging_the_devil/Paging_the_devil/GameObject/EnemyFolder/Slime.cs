@@ -46,6 +46,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            rect.X = (int)pos.X;
+            rect.Y = (int)pos.Y;
             Animation(gameTime);
 
             if (!Taunted)
