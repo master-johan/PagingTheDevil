@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
 using System;
 
-namespace Paging_the_devil.GameObject
+namespace Paging_the_devil.GameObject.Abilities
 {
     class Arrow : Ability
     {

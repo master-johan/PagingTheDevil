@@ -1,23 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
+using Paging_the_devil.GameObject.Abilities;
 
-namespace Paging_the_devil.GameObject
+namespace Paging_the_devil.GameObject.Characters
 {
-    class Barbarian : Player
+    class Knight : Player
     {
-        public Barbarian(Texture2D tex, Vector2 pos, int playerIndex, Controller controller) : base(tex, pos, playerIndex, controller)
+        public Knight(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base (tex, pos, playerIndex, Controller)
         {
-            HealthPoints = ValueBank.BarbarianHealth;
+            HealthPoints = ValueBank.KnightHealth;
             maxHealthPoints = HealthPoints;
 
             Ability1 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
-            Ability2 = new Cleave(TextureBank.mageSpellList[6], pos, LastDirection,this);
-            Ability3 = new Charge(tex, pos, new Vector2(0, 0), this, false);
-        }
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
+            Ability2 = new Fireball(TextureBank.mageSpellList[0], pos, LastDirection);
+            Ability3 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
         }
         /// <summary>
         /// Den här metoden sköter ability1
@@ -25,8 +22,8 @@ namespace Paging_the_devil.GameObject
         /// <returns></returns>
         protected override Ability CastAbility1()
         {
-            Ability ability = new Cleave(TextureBank.mageSpellList[6], pos, LastDirection, this);
-            Ability1CooldownTimer = ability.coolDownTime;
+            Ability ability = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
+            Ability1CooldownTimer = ability.coolDownTime; 
             return ability;
         }
         /// <summary>
@@ -35,7 +32,7 @@ namespace Paging_the_devil.GameObject
         /// <returns></returns>
         protected override Ability CastAbility2()
         {
-            Ability ability = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this);
+            Ability ability = new Fireball(TextureBank.mageSpellList[0], pos, LastDirection);
             Ability2CooldownTimer = ability.coolDownTime;
             return ability;
         }
@@ -45,7 +42,7 @@ namespace Paging_the_devil.GameObject
         /// <returns></returns>
         protected override Ability CastAbility3()
         {
-            Ability ability = new Charge(tex, pos, new Vector2(0, 0), this, true);
+            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
             Ability3CooldownTimer = ability.coolDownTime;
             return ability;
         }

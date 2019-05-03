@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.GameObject;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Paging_the_devil.GameObject.Characters;
 
 namespace Paging_the_devil.Manager
 {

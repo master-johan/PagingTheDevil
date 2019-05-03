@@ -4,8 +4,9 @@ using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.Manager;
 using System;
 using System.Collections.Generic;
+using Paging_the_devil.GameObject.Characters;
 
-namespace Paging_the_devil.GameObject
+namespace Paging_the_devil.GameObject.Abilities
 {
     class Cleave : Ability
     {

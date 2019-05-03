@@ -1,26 +1,24 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.Manager;
+using Paging_the_devil.GameObject.Abilities;
 
-namespace Paging_the_devil.GameObject
+namespace Paging_the_devil.GameObject.Characters
 {
-    class Ranger : Player
+    class Barbarian : Player
     {
-        public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
+        public Barbarian(Texture2D tex, Vector2 pos, int playerIndex, Controller controller) : base(tex, pos, playerIndex, controller)
         {
-            Ability1 = new Dash(tex, pos, LastDirection,this,false);
-            Ability2 = new Arrow(TextureBank.mageSpellList[4], pos, LastDirection);
-            Ability3 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
-
-            HealthPoints = ValueBank.RangerHealth;
+            HealthPoints = ValueBank.BarbarianHealth;
             maxHealthPoints = HealthPoints;
 
+            Ability1 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
+            Ability2 = new Cleave(TextureBank.mageSpellList[6], pos, LastDirection,this);
+            Ability3 = new Charge(tex, pos, new Vector2(0, 0), this, false);
         }
-
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Update(GameTime gameTime)
         {
-            base.Draw(spriteBatch);
-
+            base.Update(gameTime);
         }
         /// <summary>
         /// Den här metoden sköter ability1
@@ -28,9 +26,8 @@ namespace Paging_the_devil.GameObject
         /// <returns></returns>
         protected override Ability CastAbility1()
         {
-            Ability ability = new Dash(tex, pos, LastDirection,this,true);
+            Ability ability = new Cleave(TextureBank.mageSpellList[6], pos, LastDirection, this);
             Ability1CooldownTimer = ability.coolDownTime;
-            SoundBank.SoundEffectList[8].Play();
             return ability;
         }
         /// <summary>
@@ -39,9 +36,8 @@ namespace Paging_the_devil.GameObject
         /// <returns></returns>
         protected override Ability CastAbility2()
         {
-            Ability ability = new Arrow(TextureBank.mageSpellList[4], pos, LastDirection);
+            Ability ability = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this);
             Ability2CooldownTimer = ability.coolDownTime;
-            SoundBank.SoundEffectList[0].Play();
             return ability;
         }
         /// <summary>
@@ -50,9 +46,8 @@ namespace Paging_the_devil.GameObject
         /// <returns></returns>
         protected override Ability CastAbility3()
         {
-            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability ability = new Charge(tex, pos, new Vector2(0, 0), this, true);
             Ability3CooldownTimer = ability.coolDownTime;
-            SoundBank.SoundEffectList[9].Play();
             return ability;
         }
     }
