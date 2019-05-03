@@ -615,6 +615,8 @@ namespace Paging_the_devil.Manager
                 {
                     SpawnSpider();
                     SpawnSmallRedDevil();
+                    //SpawnDevil();
+                    //SpawnSlime();
                 }
 
                 enemiesSpawned[3, 1] = true;

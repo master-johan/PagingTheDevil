@@ -24,11 +24,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         int spriteCount;
         int spriteWidth;
         int cleaveTimer;
-      
-
-        float radius;
-        float[] shortestDistanceToPlayer;
+        
         float scale;
+
+        float oldDistance;
+        float currentDistance;
 
         double timer;
         double interval;
@@ -41,6 +41,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
         Vector2 temp;
         Vector2 tempNow;
+        Vector2 distanceDifference;
 
         public Devil(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayer) : base(tex, pos)
         {
@@ -48,14 +49,12 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             this.nrOfPlayer = nrOfPlayer;
 
             interval = 200;
-            radius = 1000;
             scale = 2f;
             spriteCount = 12;
             spriteWidth = tex.Width;
             HealthPoints = ValueBank.SlimeHealth * 4;
             temp = Vector2.Zero;
-
-            shortestDistanceToPlayer = new float[nrOfPlayer];
+            oldDistance = int.MaxValue;
 
             up = new Rectangle(0, 315, 70, 100);
             down = new Rectangle(0, 0, 70, 100);
@@ -63,14 +62,19 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             right = new Rectangle(0, 630, 70, 100);
             drawRect = down;
 
-            rect = new Rectangle((int)pos.X, (int)pos.Y, 70, 100);
+            rect = new Rectangle((int)pos.X - 35, (int)pos.Y - 200, 70, 100);
             shootTimer = ValueBank.SmallDevilShootTimer - ValueBank.SmallDevilShootTimer / 2;
             cleaveTimer = ValueBank.CleaveCooldown;
         }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            GetTarget();
+            rect.X = (int)pos.X - 35;
+            rect.Y = (int)pos.Y - 50;
+            if (!Taunted)
+            {
+                GetTarget();
+            }
             Movement(gameTime);
             ShootFireball();
 
@@ -98,6 +102,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 tempNow = direction;
                 direction.Normalize();
             }
+
             else
             {
                 direction = new Vector2(-1, 0);
@@ -108,6 +113,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             float nowY = tempNow.Y;
             float lastX = temp.X;
             float lastY = temp.Y;
+
+            pos += direction * ValueBank.DevilSpeed;
 
             if (Math.Abs(direction.X) > Math.Abs(direction.Y))
             {
@@ -132,21 +139,24 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 }
             }
 
-            pos += direction * ValueBank.DevilSpeed;
+
         }
         private void GetTarget()
         {
-            float result = 0;
             for (int i = 0; i < nrOfPlayer; i++)
             {
-                shortestDistanceToPlayer[i] = Vector2.Distance(playerArray[i].GetSetPos, pos);
+                distanceDifference = playerArray[i].pos - pos;
 
-                if (result < radius - shortestDistanceToPlayer[i])
+                currentDistance = distanceDifference.LengthSquared();
+
+                if (currentDistance < oldDistance)
                 {
-                    result = radius - shortestDistanceToPlayer[i];
                     targetPlayer = playerArray[i];
+                    oldDistance = currentDistance;
                 }
             }
+
+            oldDistance = int.MaxValue;
         }
         private void PlayerAnimation(Rectangle rect)
         {

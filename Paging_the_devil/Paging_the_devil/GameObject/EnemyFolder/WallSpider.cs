@@ -66,8 +66,16 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             base.Update(gameTime);
             Animation(gameTime);
 
-            rect.X = (int)pos.X - 25;
-            rect.Y = (int)pos.Y - 25;
+            if (down || up)
+            {
+                rect.X = (int)pos.X - 25;
+                rect.Y = (int)pos.Y - 25;
+            }
+            else
+            {
+                rect.X = (int)pos.X - rect.Width / 2;
+                rect.Y = (int)pos.Y - 25;
+            }
 
             ShootingWeb();
             ChoosingDirection();
@@ -92,9 +100,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         public override void Draw(SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(TextureBank.hudTextureList[0], rect, Color.Black);
-            spriteBatch.Draw(tex, pos, srcRect, Color.White, rotation, origin, scale, SpriteEffects.None, 1f);
-
             base.Draw(spriteBatch);
+            spriteBatch.Draw(tex, pos, srcRect, Color.White, rotation, origin, scale, SpriteEffects.None, 1f);
         }
         protected override void Movement(GameTime gameTime)
         {
@@ -156,7 +163,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         }
         private void UpdateHitbox()
         {
-
             if (down || up)
             {
                 rect.Width = 52;
@@ -164,7 +170,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             }
             else if (left || right)
             {
-                rect.Width = 70;
+                rect.Width = 100;
                 rect.Height = 42;
             }
         }

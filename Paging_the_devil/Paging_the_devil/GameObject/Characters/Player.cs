@@ -78,6 +78,59 @@ namespace Paging_the_devil.GameObject.Characters
             drawRect = down;
             rotation = 0;
         }
+        public override void Update(GameTime gameTime)
+        {
+            Movment();
+
+            Hitboxes();
+
+            if (!Dead)
+            {
+                if (Controller.ButtonPressed(Buttons.X) && Ability1CooldownTimer <= 0)
+                {
+                    abilityList.Add(CastAbility1());
+                }
+
+                else if (Controller.ButtonPressed(Buttons.A) && Ability2CooldownTimer <= 0)
+                {
+                    abilityList.Add(CastAbility2());
+                }
+
+                else if (Controller.ButtonPressed(Buttons.B) && Ability3CooldownTimer <= 0)
+                {
+                    abilityList.Add(CastAbility3());
+                }
+            }
+
+            if (Dead)
+            {
+                rotation = MathHelper.ToRadians(90);
+            }
+
+            else
+            {
+                rotation = 0;
+            }
+
+            UpdateAbility(gameTime);
+
+            DecreseCooldownTimers();
+            IfHealthIsZero();
+            IfHealthIsFull();
+            Revive();
+
+            DrawDifferentRects(gameTime);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (var A in abilityList)
+            {
+                A.Draw(spriteBatch);
+            }
+
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 1);
+        }
         /// <summary>
         /// Den här metoden bestämmer sourcerektanglar.
         /// </summary>
@@ -115,58 +168,7 @@ namespace Paging_the_devil.GameObject.Characters
             hitboxRight = new Rectangle((int)pos.X - 49, (int)pos.Y, 10, 59);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            Movment();
-
-            Hitboxes();
-
-            if(!Dead)
-            {
-                if (Controller.ButtonPressed(Buttons.X) && Ability1CooldownTimer <= 0)
-                {
-                    abilityList.Add(CastAbility1());
-                }
-
-                else if (Controller.ButtonPressed(Buttons.A) && Ability2CooldownTimer <= 0)
-                {
-                    abilityList.Add(CastAbility2());
-                }
-
-                else if (Controller.ButtonPressed(Buttons.B) && Ability3CooldownTimer <= 0)
-                {
-                    abilityList.Add(CastAbility3());
-                }
-            }
-
-            if(Dead)
-            {
-                rotation = MathHelper.ToRadians(90);
-            }
-
-            else
-            {
-                rotation = 0;
-            }
-
-            UpdateAbility(gameTime);
-
-            DecreseCooldownTimers();
-            IfHealthIsZero();
-            IfHealthIsFull();
-            Revive();
-
-            DrawDifferentRects(gameTime);
-        }
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            foreach (var A in abilityList)
-            {
-                A.Draw(spriteBatch);
-            }
-
-            spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(30, 35), 1, SpriteEffects.None, 1);
-        }
+        
         /// <summary>
         /// Den här metoden sköter spelarens rörelse.
         /// </summary>
