@@ -15,6 +15,7 @@ namespace Paging_the_devil.Manager
         Room[,] currentLevel;
 
         List<Enemy> enemyList;
+        List<Enemy> turretList;
 
         LevelManager levelManager;
 
@@ -31,11 +32,12 @@ namespace Paging_the_devil.Manager
 
         public Room CurrentRoom { get; set; }
 
-        public RoomManager(Player[] playerArray, int nrOfPlayers, List<Enemy> enemyList, LevelManager levelManager)
+        public RoomManager(Player[] playerArray, int nrOfPlayers, List<Enemy> enemyList, List<Enemy> turretList, LevelManager levelManager)
         {
             this.playerArray = playerArray;
             this.nrOfPlayers = nrOfPlayers;
             this.enemyList = enemyList;
+            this.turretList = turretList;
             this.levelManager = levelManager;
 
             currentLevel = levelManager.CurrentLevel;
@@ -596,6 +598,11 @@ namespace Paging_the_devil.Manager
         {
             enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(35, 175), playerArray, nrOfPlayers));
         }
+
+        private void SpawnTurret()
+        {
+            turretList.Add(new FireTurret(TextureBank.enemyTextureList[4], new Vector2(10, 145)));
+        }
         private void SpawnDevil()
         {
             int x = ValueBank.WindowSizeX / 2;
@@ -615,6 +622,7 @@ namespace Paging_the_devil.Manager
                 {
                     SpawnSpider();
                     SpawnSmallRedDevil();
+                    SpawnTurret();
                 }
 
                 enemiesSpawned[3, 1] = true;

@@ -67,7 +67,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
                 (HitCharacter as Player).movementSpeed = 0;
             }
-
+           
             if (timePassed >= ValueBank.WebRootTimer)
             {
                 (HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;

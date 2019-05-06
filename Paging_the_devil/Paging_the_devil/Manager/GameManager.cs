@@ -36,6 +36,7 @@ namespace Paging_the_devil.Manager
         Player[] playerArray;
 
         List<Enemy> enemyList;
+        List<Enemy> turretList;
 
 
         int nrOfPlayers; 
@@ -59,6 +60,7 @@ namespace Paging_the_devil.Manager
             levelManager = new LevelManager();
 
             enemyList = new List<Enemy>();
+            turretList = new List<Enemy>();
 
             currentState = GameState.MainMenu;
 
@@ -288,6 +290,10 @@ namespace Paging_the_devil.Manager
             {
                 e.Draw(spriteBatch);
             }
+            foreach (var t in turretList)
+            {
+                t.Draw(spriteBatch);
+            }
         }
         /// <summary>
         /// Den här metoden ansluter en kontroll.
@@ -326,7 +332,7 @@ namespace Paging_the_devil.Manager
         /// </summary>
         public void CreateRoomManager()
         {
-            roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList, levelManager);
+            roomManager = new RoomManager(playerArray, nrOfPlayers, enemyList, turretList, levelManager);
             roomManagerCreated = true;
         }
         /// <summary>

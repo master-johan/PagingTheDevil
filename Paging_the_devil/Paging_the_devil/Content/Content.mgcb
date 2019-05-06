@@ -169,6 +169,18 @@
 /processorParam:Quality=Best
 /build:BossFightSong.mp3
 
+#begin CircleOfHeal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:CircleOfHeal.png
+
 #begin CleaveButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -752,6 +764,18 @@
 /processorParam:TextureFormat=Color
 /build:SpiderBoi.png
 
+#begin SpiderWeb.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SpiderWeb.png
+
 #begin startGameText.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -800,6 +824,18 @@
 /processorParam:TextureFormat=Color
 /build:Taunt.png
 
+#begin Taunt2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Taunt2.png
+
 #begin TauntSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -847,6 +883,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:TrapSound.wav
+
+#begin Turret.gif
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Turret.gif
 
 #begin TwoMount.png
 /importer:TextureImporter
@@ -991,40 +1039,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Ybtn.png
-
-#begin Taunt2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Taunt2.png
-
-#begin CircleOfHeal.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:CircleOfHeal.png
-
-#begin SpiderWeb.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:SpiderWeb.png
 
