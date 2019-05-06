@@ -35,6 +35,8 @@ namespace Paging_the_devil.Manager
 
         string story;
 
+        public bool StoryEnded { get; set; }
+
         public PlayerSelectManager PlayerSelectManager { get; set; }
 
         public MenuManager(GraphicsDevice graphicsDevice, Game1 game)
@@ -58,7 +60,7 @@ namespace Paging_the_devil.Manager
             mainMenuBackground = new MainMenuBackground();
             PlayerSelectManager = new PlayerSelectManager();
 
-            scrollSpeed = 3;
+            scrollSpeed = 1;
 
 
             ReadStory();
@@ -76,16 +78,21 @@ namespace Paging_the_devil.Manager
                     {
                         if (controllerArray[i].ButtonDown(Buttons.A))
                         {
-                            scrollSpeed = 6;
+                            scrollSpeed = 3;
 
                         }
                         else
                         {
-                            scrollSpeed = 3;
+                            scrollSpeed = 1;
                         }
                     
                     }
                     mainMenuBackground.Update(gameTime);
+
+                    if (storyTextPos.Y < -400)
+                    {
+                        StoryEnded = true ;
+                    }
 
                     break;
                 case GameState.MainMenu:
@@ -123,7 +130,7 @@ namespace Paging_the_devil.Manager
             {
                 case GameState.StoryScreen:
                     mainMenuBackground.Draw(spriteBatch);
-                    spriteBatch.DrawString(TextureBank.spriteFont, story, storyTextPos, Color.Green);
+                    spriteBatch.DrawString(TextureBank.spriteFont, story, storyTextPos, Color.Black);
                     break;
                 case GameState.MainMenu:
 

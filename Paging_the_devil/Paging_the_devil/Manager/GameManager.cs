@@ -81,7 +81,7 @@ namespace Paging_the_devil.Manager
                     ConnectController();
                     for (int i = 0; i < nrOfPlayers; i++)
                     {
-                        if (controllerArray[i].ButtonPressed(Buttons.Start))
+                        if (controllerArray[i].ButtonPressed(Buttons.Start) || menuManager.StoryEnded)
                         {
                             currentState = GameState.MainMenu;
                         }
