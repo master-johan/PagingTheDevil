@@ -23,7 +23,8 @@ namespace Paging_the_devil.GameObject.Characters
         protected override Ability CastAbility1()
         {
             Ability ability = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
-            Ability1CooldownTimer = ability.coolDownTime; 
+            Ability1CooldownTimer = ability.coolDownTime;
+            SoundBank.SoundEffectList[4].Play();
             return ability;
         }
         /// <summary>

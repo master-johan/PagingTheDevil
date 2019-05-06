@@ -613,9 +613,9 @@ namespace Paging_the_devil.Manager
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    SpawnSpider();
+                    //SpawnSpider();
                     SpawnSmallRedDevil();
-                    SpawnDevil();
+                    //SpawnDevil();
                     //SpawnSlime();
                 }
 
