@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -25,8 +26,16 @@ namespace Paging_the_devil.Manager
         int nrOfPlayers;
         int middleScreenY;
         int middleScreenX;
+        int scrollSpeed;
 
         Vector2 pointerPos;
+        Vector2 storyTextPos;
+
+        StreamReader streamReader;
+
+        string story;
+
+        public bool StoryEnded { get; set; }
 
         public PlayerSelectManager PlayerSelectManager { get; set; }
 
@@ -41,6 +50,7 @@ namespace Paging_the_devil.Manager
             buttonList.Add(new Button(TextureBank.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width/ 2, middleScreenY - TextureBank.menuTextureList[0].Height + 200)));
 
             pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
+            storyTextPos = new Vector2(70, ValueBank.WindowSizeY - 100);
             pointer = new Pointer(TextureBank.menuTextureList[5], pointerPos, buttonList);
 
             selectedBtn = 0;
@@ -49,12 +59,30 @@ namespace Paging_the_devil.Manager
 
             mainMenuBackground = new MainMenuBackground();
             PlayerSelectManager = new PlayerSelectManager();
+
+            scrollSpeed = 1;
+
+            
+
+            ReadStory();
         }
 
         public void Update(GameTime gameTime)
         {
             switch (GameManager.currentState)
             {
+                case GameState.StoryScreen:
+
+                    storyTextPos.Y -= scrollSpeed;
+
+                    mainMenuBackground.Update(gameTime);
+
+                    if (storyTextPos.Y < -1200)
+                    {
+                        GameManager.currentState = GameState.InGame;
+                    }
+
+                    break;
                 case GameState.MainMenu:
                     mainMenuBackground.Update(gameTime);
 
@@ -88,6 +116,10 @@ namespace Paging_the_devil.Manager
         {
             switch (GameManager.currentState)
             {
+                case GameState.StoryScreen:
+                    mainMenuBackground.Draw(spriteBatch);
+                    spriteBatch.DrawString(TextureBank.spriteFont, story, storyTextPos, Color.Black);
+                    break;
                 case GameState.MainMenu:
 
                     mainMenuBackground.Draw(spriteBatch);                   
@@ -185,6 +217,21 @@ namespace Paging_the_devil.Manager
         private void SendPlayerToPlayerSelect()
         {
             PlayerSelectManager.GetNrOfPlayers(nrOfPlayers);
+        }
+        /// <summary>
+        /// Läser av textfilen med story. @ används som radbrytare.
+        /// </summary>
+        private void ReadStory()
+        {
+            streamReader = new StreamReader(@"story.txt");
+
+            while(!streamReader.EndOfStream)
+            {
+                story += streamReader.ReadLine();
+            }
+            streamReader.Close();
+
+            story = story.Replace("@", /*"@" +*/ System.Environment.NewLine);
         }
     }
 }
