@@ -60,7 +60,7 @@ namespace Paging_the_devil.Manager
 
             enemyList = new List<Enemy>();
 
-            currentState = GameState.StoryScreen;
+            currentState = GameState.MainMenu;
 
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(SoundBank.BgMusicList[0]);
@@ -81,9 +81,9 @@ namespace Paging_the_devil.Manager
                     ConnectController();
                     for (int i = 0; i < nrOfPlayers; i++)
                     {
-                        if (controllerArray[i].ButtonPressed(Buttons.Start) || menuManager.StoryEnded)
+                        if (controllerArray[i].ButtonPressed(Buttons.X))
                         {
-                            currentState = GameState.MainMenu;
+                            currentState = GameState.InGame;
                         }
                     }
                     if (controllerArray[0] != null)
@@ -204,8 +204,6 @@ namespace Paging_the_devil.Manager
                     {
                         HUDManager.Draw(spriteBatch);
                     }
-
-                    spriteBatch.Draw(TextureBank.mageSpellList[4], new Rectangle(100, 100, TextureBank.mageSpellList[4].Width, TextureBank.mageSpellList[4].Height), Color.White);
 
                     break;
             }

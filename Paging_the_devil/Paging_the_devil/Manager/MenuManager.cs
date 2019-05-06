@@ -62,6 +62,7 @@ namespace Paging_the_devil.Manager
 
             scrollSpeed = 1;
 
+            
 
             ReadStory();
         }
@@ -74,24 +75,11 @@ namespace Paging_the_devil.Manager
 
                     storyTextPos.Y -= scrollSpeed;
 
-                    for (int i = 0; i < nrOfPlayers; i++)
-                    {
-                        if (controllerArray[i].ButtonDown(Buttons.A))
-                        {
-                            scrollSpeed = 3;
-
-                        }
-                        else
-                        {
-                            scrollSpeed = 1;
-                        }
-                    
-                    }
                     mainMenuBackground.Update(gameTime);
 
-                    if (storyTextPos.Y < -400)
+                    if (storyTextPos.Y < -1200)
                     {
-                        StoryEnded = true ;
+                        GameManager.currentState = GameState.InGame;
                     }
 
                     break;
