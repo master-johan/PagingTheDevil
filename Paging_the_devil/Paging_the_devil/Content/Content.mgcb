@@ -421,18 +421,6 @@
 /processorParam:TextureFormat=Color
 /build:floorTexture.png
 
-#begin HealHarm.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:HealHarm.png
-
 #begin HealHarmButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1087,4 +1075,16 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:HealHarm.wav
+
+#begin HealHarmTex.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:HealHarmTex.png
 
