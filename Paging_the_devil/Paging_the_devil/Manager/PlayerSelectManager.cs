@@ -4,6 +4,7 @@ using Paging_the_devil.GameObject;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Paging_the_devil.GameObject.Characters;
+using System.Threading;
 
 namespace Paging_the_devil.Manager
 {
@@ -19,7 +20,7 @@ namespace Paging_the_devil.Manager
         Rectangle drawKnightRect;
         Rectangle startGameRect;
 
-        int nrOfPlayers;
+        public int nrOfPlayers { get; set; }
         int readyPlayers;
 
         int[] currentCharacter;
@@ -61,7 +62,7 @@ namespace Paging_the_devil.Manager
             PlayerArray = new Player[4];
 
             drawKnightRect = new Rectangle(0, 0, 50, 60);
-            startGameRect = new Rectangle(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[11].Width /2, ValueBank.WindowSizeY / 3, TextureBank.menuTextureList[11].Width, TextureBank.menuTextureList[11].Height);
+            startGameRect = new Rectangle(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[11].Width / 2, ValueBank.WindowSizeY / 3, TextureBank.menuTextureList[11].Width, TextureBank.menuTextureList[11].Height);
 
             DecidingRectangles();
             DecidingTextureArray();
@@ -145,7 +146,7 @@ namespace Paging_the_devil.Manager
 
                     characterChosen[i] = true;
                     readyPlayers++;
-                }         
+                }
             }
 
             for (int i = 0; i < nrOfPlayers; i++)
@@ -154,9 +155,12 @@ namespace Paging_the_devil.Manager
                 {
                     if (controllerArray[i].ButtonPressed(Buttons.Start))
                     {
+
                         HUDManager = new HUDManager(PlayerArray, nrOfPlayers);
                         MediaPlayer.Play(SoundBank.BgMusicList[2]);
-                        GameManager.currentState = GameState.InGame;
+                        GameManager.currentState = GameState.StoryScreen;
+                        
+
                     }
                 }
             }
@@ -174,7 +178,7 @@ namespace Paging_the_devil.Manager
             {
                 if (selectingCharacter[i])
                 {
-                    if(!characterChosen[i])
+                    if (!characterChosen[i])
                     {
                         spriteBatch.Draw(TextureBank.menuTextureList[9], playerArrowArray[i], Color.White);
                     }
@@ -228,7 +232,7 @@ namespace Paging_the_devil.Manager
             playerRectArray[2] = new Rectangle(1268, 775, 100, 110);
             playerRectArray[3] = new Rectangle(1617, 726, 100, 110);
 
-            playerArrowArray[0] = new Rectangle(80, 550, 350, 300); 
+            playerArrowArray[0] = new Rectangle(80, 550, 350, 300);
             playerArrowArray[1] = new Rectangle(435, 600, 350, 300);
             playerArrowArray[2] = new Rectangle(1138, 600, 350, 300);
             playerArrowArray[3] = new Rectangle(1487, 550, 350, 300);

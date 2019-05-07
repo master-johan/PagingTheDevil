@@ -10,7 +10,7 @@ namespace Paging_the_devil.Manager
     {
         StreamReader streamReader;
 
-        List<String> map;
+        List<string> map;
 
         public Room[,] CurrentLevel { get; set; }
 

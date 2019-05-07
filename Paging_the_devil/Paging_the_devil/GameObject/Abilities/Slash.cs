@@ -85,6 +85,7 @@ namespace Paging_the_devil.GameObject.Abilities
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, slashPos, sourceRect, Color.White, angle, new Vector2(-20, tex.Height / 2), 1, SpriteEffects.None, 1);
+
         }
 
         /// <summary>
@@ -137,19 +138,19 @@ namespace Paging_the_devil.GameObject.Abilities
         {
             if (meleeDirection == down)
             {
-                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y, tex.Height * 4, tex.Width + (tex.Width / 2));
+                rect = new Rectangle((int)slashPos.X - (tex.Height * 2), (int)slashPos.Y, tex.Height * 4, tex.Width + (tex.Width / 2));
             }
             else if (meleeDirection == up)
             {
-                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y - tex.Width - (tex.Width/2), tex.Height * 4, tex.Width + (tex.Width / 2));
+                rect = new Rectangle((int)slashPos.X - (tex.Height * 2), (int)slashPos.Y - tex.Width - (tex.Width/2), tex.Height * 4, tex.Width + (tex.Width / 2));
             }
             else if (meleeDirection == right)
             {
-                rect = new Rectangle((int)pos.X, (int)pos.Y  - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
+                rect = new Rectangle((int)slashPos.X, (int)slashPos.Y  - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
             else if (meleeDirection == left)
             {
-                rect = new Rectangle((int)pos.X - tex.Width - (tex.Width/2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
+                rect = new Rectangle((int)slashPos.X - tex.Width - (tex.Width/2), (int)slashPos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
         }
         /// <summary>

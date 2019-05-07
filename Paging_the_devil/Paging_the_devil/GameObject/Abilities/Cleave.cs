@@ -90,6 +90,7 @@ namespace Paging_the_devil.GameObject.Abilities
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, cleavePos, sourceRect, Color.White, angle, new Vector2(-40, tex.Height / 2), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, rect, Color.Black);
         }
 
         /// <summary>
@@ -162,22 +163,22 @@ namespace Paging_the_devil.GameObject.Abilities
         {
             if (meleeDirection == down)
             {
-                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y, tex.Height * 4, tex.Width + (tex.Width / 2));
+                rect = new Rectangle((int)cleavePos.X - (tex.Height * 2), (int)cleavePos.Y, tex.Height * 4, tex.Width + (tex.Width / 2));
             }
 
             else if (meleeDirection == up)
             {
-                rect = new Rectangle((int)pos.X - (tex.Height * 2), (int)pos.Y - tex.Width - (tex.Width / 2), tex.Height * 4, tex.Width + (tex.Width / 2));
+                rect = new Rectangle((int)cleavePos.X - (tex.Height * 2), (int)cleavePos.Y - tex.Width - (tex.Width / 2), tex.Height * 4, tex.Width + (tex.Width / 2));
             }
 
             else if (meleeDirection == right)
             {
-                rect = new Rectangle((int)pos.X, (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
+                rect = new Rectangle((int)cleavePos.X, (int)cleavePos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
 
             else if (meleeDirection == left)
             {
-                rect = new Rectangle((int)pos.X - tex.Width - (tex.Width / 2), (int)pos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
+                rect = new Rectangle((int)cleavePos.X - tex.Width - (tex.Width / 2), (int)cleavePos.Y - (tex.Height * 2), tex.Width + (tex.Width / 2), tex.Height * 4);
             }
         }
         /// <summary>
@@ -194,6 +195,7 @@ namespace Paging_the_devil.GameObject.Abilities
         private void UpdateDevilCleave(GameTime gameTime)
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             if(timePassed >= ValueBank.DevilCleaveTimer)
             {
                 ToRemove = true;

@@ -20,6 +20,7 @@ namespace Paging_the_devil.Manager
         public static List<Texture2D> playerSelectBackgroundList = new List<Texture2D>();
         public static List<Texture2D> buttonTextureList = new List<Texture2D>();
         public static List<Texture2D> abilityButtonList = new List<Texture2D>();
+        public static SpriteFont spriteFont;
 
         public static void LoadTextures(ContentManager Content)
         {
@@ -33,13 +34,13 @@ namespace Paging_the_devil.Manager
             mageSpellList.Add(Content.Load<Texture2D>(@"Fireball"));
             mageSpellList.Add(Content.Load<Texture2D>(@"slash"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Trap"));
-            mageSpellList.Add(Content.Load<Texture2D>(@"HealHarm"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"HealHarmTex"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Arrow"));
             mageSpellList.Add(Content.Load<Texture2D>(@"AxeBarb"));
             mageSpellList.Add(Content.Load<Texture2D>(@"CleavePNG"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Webball"));
             mageSpellList.Add(Content.Load<Texture2D>(@"DevilSword"));
-            mageSpellList.Add(Content.Load<Texture2D>(@"Taunt"));
+            mageSpellList.Add(Content.Load<Texture2D>(@"Taunt1"));
             mageSpellList.Add(Content.Load<Texture2D>(@"Taunt2"));
             mageSpellList.Add(Content.Load<Texture2D>(@"CircleOfHeal"));
             mageSpellList.Add(Content.Load<Texture2D>(@"SpiderWeb"));
@@ -48,7 +49,7 @@ namespace Paging_the_devil.Manager
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Horisontell Vägg"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Vertikal Vägg"));
-            roomTextureList.Add(Content.Load<Texture2D>(@"FloorPNG1"));
+            roomTextureList.Add(Content.Load<Texture2D>(@"FloorPNG"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Walltop"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Walldown"));
             roomTextureList.Add(Content.Load<Texture2D>(@"Wallright"));
@@ -114,6 +115,8 @@ namespace Paging_the_devil.Manager
             buttonTextureList.Add(Content.Load<Texture2D>(@"B"));
             buttonTextureList.Add(Content.Load<Texture2D>(@"X"));
             buttonTextureList.Add(Content.Load<Texture2D>(@"Y"));
+
+            spriteFont = Content.Load<SpriteFont>(@"HudPlayerTxt");
         }
     }
 }

@@ -611,9 +611,9 @@ namespace Paging_the_devil.Manager
         {
             if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    SpawnSpider();
+                    //SpawnSpider();
                     SpawnSmallRedDevil();
                     //SpawnDevil();
                     //SpawnSlime();
@@ -625,14 +625,40 @@ namespace Paging_the_devil.Manager
             if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
             {
                 SpawnSlime();
+                SpawnSlime();
                 enemiesSpawned[2, 1] = true;
             }
-          
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && !enemiesSpawned[2,4])
+
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 2 && !enemiesSpawned[2, 2])
+            {
+                SpawnSmallRedDevil();
+                SpawnSmallRedDevil();
+                SpawnSmallRedDevil();
+                SpawnSpider();
+                SpawnSpider();
+                SpawnSlime();
+
+                enemiesSpawned[2, 2] = true;
+            }
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 3 && !enemiesSpawned[2,3])
+            {
+                SpawnSmallRedDevil();
+                SpawnSmallRedDevil();
+                SpawnSmallRedDevil();
+                SpawnSmallRedDevil();
+                SpawnSlime();
+                SpawnSlime();
+                SpawnSlime();
+                SpawnSpider();
+                enemiesSpawned[2, 3] = true;
+            }
+            
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && !enemiesSpawned[2, 4])
             {
                 SpawnDevil();
                 enemiesSpawned[2, 4] = true;
             }
+
         }
     }
 }
