@@ -78,6 +78,8 @@ namespace Paging_the_devil.Manager
             menuTextureList.Add(Content.Load<Texture2D>(@"RangerInfo"));
             menuTextureList.Add(Content.Load<Texture2D>(@"BarbInfo"));
             menuTextureList.Add(Content.Load<Texture2D>(@"DruidInfo"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"Controls"));
+            menuTextureList.Add(Content.Load<Texture2D>(@"SkipText"));
 
             //HUD
             hudTextureList.Add(Content.Load<Texture2D>(@"Abtn"));

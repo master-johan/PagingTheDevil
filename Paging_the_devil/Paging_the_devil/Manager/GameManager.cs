@@ -10,7 +10,7 @@ using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {
-    public enum GameState { StoryScreen ,MainMenu, PlayerSelect, InGame }
+    public enum GameState { StoryScreen ,MainMenu, Controls, PlayerSelect, InGame }
 
 
     class GameManager
@@ -106,6 +106,10 @@ namespace Paging_the_devil.Manager
 
                     DisconnectController();
                     break;
+                case GameState.Controls:
+                    menuManager.Update(gameTime);
+                    controllerArray[0].Update();
+                    break;
                 case GameState.PlayerSelect:
                     ConnectController();
                     UpdateController();
@@ -189,6 +193,9 @@ namespace Paging_the_devil.Manager
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.PlayerSelect:
+                    menuManager.Draw(spriteBatch);
+                    break;
+                case GameState.Controls:
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.InGame:
