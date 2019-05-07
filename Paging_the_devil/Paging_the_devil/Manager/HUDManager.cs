@@ -11,6 +11,8 @@ namespace Paging_the_devil.Manager
 
         Vector2 pos;
 
+        Rectangle hudBackground;
+
         Player[] playerArray;
 
         public HUD[] playerHudArray { get; set; }
@@ -20,7 +22,7 @@ namespace Paging_the_devil.Manager
             this.playerArray = playerArray;
             this.nrOfPlayers = nrOfPlayers;
             playerHudArray = new HUD[4];
-
+            hudBackground = new Rectangle(0, 0, ValueBank.WindowSizeX, ValueBank.WindowSizeY / 8);
             CreateHUDs();
         }
 
@@ -33,6 +35,8 @@ namespace Paging_the_devil.Manager
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(TextureBank.menuTextureList[3], hudBackground, Color.Black);
+
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerHudArray[i].Draw(spriteBatch);
@@ -63,6 +67,10 @@ namespace Paging_the_devil.Manager
 
                 playerHudArray[i] = new HUD(pos, playerArray[i]);
             }
+        }
+        private void CreateHUDBackground()
+        {
+          
         }
     }
 }
