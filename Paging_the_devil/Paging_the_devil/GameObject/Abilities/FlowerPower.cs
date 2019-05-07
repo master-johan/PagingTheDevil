@@ -41,8 +41,8 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Update(GameTime gameTime)
         {
-            rect.X = (int)pos.X - tex.Width / 2;
-            rect.Y = (int)pos.Y - tex.Height / 2;
+            rect.X = (int)player.pos.X - tex.Width / 2;
+            rect.Y = (int)player.pos.Y - tex.Height / 2;
 
             Vector2 temp = healPos - player.pos;
             healPos -= temp;
