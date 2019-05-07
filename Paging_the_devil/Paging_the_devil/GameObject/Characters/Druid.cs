@@ -39,6 +39,7 @@ namespace Paging_the_devil.GameObject.Characters
         {
             Ability ability = new Healharm(TextureBank.mageSpellList[3], pos, LastDirection);
             Ability2CooldownTimer = ability.coolDownTime;
+            SoundBank.SoundEffectList[12].Play();
             return ability;
         }
         /// <summary>

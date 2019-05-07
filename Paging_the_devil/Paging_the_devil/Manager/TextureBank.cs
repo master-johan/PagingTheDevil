@@ -92,7 +92,7 @@ namespace Paging_the_devil.Manager
 
 
             //AbilityButtons
-            abilityButtonList.Add(Content.Load<Texture2D>(@"ArrowButton"));
+            abilityButtonList.Add(Content.Load<Texture2D>(@"ArrowBtn"));
             abilityButtonList.Add(Content.Load<Texture2D>(@"SwordButton"));
             abilityButtonList.Add(Content.Load<Texture2D>(@"TrapButton"));
             abilityButtonList.Add(Content.Load<Texture2D>(@"HealHarmButton"));

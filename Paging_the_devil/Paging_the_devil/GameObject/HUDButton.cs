@@ -23,7 +23,7 @@ namespace Paging_the_devil.GameObject
             this.rect = rect;
             this.ability = ability;
 
-            abilityTexturePos = new Vector2(pos.X + 5, pos.Y + 5);
+            abilityTexturePos = new Vector2(pos.X + 4, pos.Y + 5);
 
             maxTimer = ability.coolDownTime;
 
