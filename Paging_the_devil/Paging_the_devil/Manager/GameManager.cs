@@ -427,14 +427,24 @@ namespace Paging_the_devil.Manager
                 {
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
-                        if (a is Healharm || a is FlowerPower)
+                        if (a is Healharm)
                         {
                             if (player == playerArray[i])
                             {
                                 continue;
                             }
                             a.HitCharacter = playerArray[i];
-                            
+                        }
+                        else if (a is Block)
+                        {
+                            if (player == playerArray[i])
+                            {
+                                a.HitCharacter = playerArray[i];
+                            }
+                        }
+                        else if (a is FlowerPower)
+                        {
+                            a.HitCharacter = playerArray[i];
                         }
                     }
                 }

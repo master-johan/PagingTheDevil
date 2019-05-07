@@ -13,7 +13,7 @@ namespace Paging_the_devil.GameObject.Characters
             maxHealthPoints = HealthPoints;
 
             Ability1 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
-            Ability2 = new Fireball(TextureBank.mageSpellList[0], pos, LastDirection);
+            Ability2 = new Block(TextureBank.roomTextureList[0], pos, LastDirection,this);
             Ability3 = new Taunt(TextureBank.mageSpellList[10], pos, new Vector2(0, 0),this);
         }
         /// <summary>
@@ -32,7 +32,7 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility2()
         {
-            Ability ability = new Fireball(TextureBank.mageSpellList[0], pos, LastDirection);
+            Ability ability = new Block(TextureBank.roomTextureList[0], pos, LastDirection,this);
             Ability2CooldownTimer = ability.coolDownTime;
             return ability;
         }
