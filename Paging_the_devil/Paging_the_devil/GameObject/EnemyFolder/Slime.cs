@@ -41,6 +41,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
             srcRect = new Rectangle(0, 0, 32, 32);
             rect = new Rectangle((int)pos.X, (int)pos.Y, 32 * (int)scale, 32 * (int)scale);
+
+            MovementSpeed = ValueBank.SlimeSpeed;
         }
 
         public override void Update(GameTime gameTime)
@@ -95,7 +97,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 direction.Normalize();
             }
 
-            pos += direction * ValueBank.SlimeSpeed;
+            pos += direction * MovementSpeed;
         }
         /// <summary>
         /// Den här metoden sköter slimens target

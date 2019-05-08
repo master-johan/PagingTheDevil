@@ -192,7 +192,7 @@ namespace Paging_the_devil.Manager
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.InGame:
-
+                    
                     if (roomManagerCreated)
                     {
                         roomManager.Draw(spriteBatch);
@@ -380,13 +380,13 @@ namespace Paging_the_devil.Manager
                                 toRemove = a;
                             }
 
-                            if (a is Taunt || a is FlowerPower)
+                            if (a is Healharm || a is Arrow)
                             {
-                                a.ToRemove = false;
+                                a.ToRemove = true;
                             }
                             else
                             {
-                                a.ToRemove = true;
+                                a.ToRemove = false;
                             }
                         }
 
@@ -433,11 +433,6 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
-
-                        if (a is Slash ) // arbeta mer för att fixa slashen
-                        {
-                            (a as Slash).Hit = true;
-                        }
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)

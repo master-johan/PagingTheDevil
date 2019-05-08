@@ -73,6 +73,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             base.Draw(spriteBatch);
             spriteBatch.Draw(tex, pos, Color.White);
+            spriteBatch.Draw(tex, rect, Color.Black);
         }  
         /// <summary>
         /// Den här metoden sköter devilens rörelse
@@ -123,7 +124,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 temp = direction;
             }
 
-            pos += temp * ValueBank.SmallDevilMoveSpeed;
+            pos += temp * MovementSpeed;
         }
         /// <summary>
         /// Den här metoden skjuter fireballs.

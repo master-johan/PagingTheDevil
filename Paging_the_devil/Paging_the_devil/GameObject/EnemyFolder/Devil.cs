@@ -65,6 +65,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             rect = new Rectangle((int)pos.X - 35, (int)pos.Y - 200, 70, 100);
             shootTimer = ValueBank.SmallDevilShootTimer - ValueBank.SmallDevilShootTimer / 2;
             cleaveTimer = ValueBank.CleaveCooldown;
+
+            MovementSpeed = ValueBank.DevilSpeed;
         }
         public override void Update(GameTime gameTime)
         {
@@ -114,7 +116,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             float lastX = temp.X;
             float lastY = temp.Y;
 
-            pos += direction * ValueBank.DevilSpeed;
+            pos += direction * MovementSpeed;
 
             if (Math.Abs(direction.X) > Math.Abs(direction.Y))
             {

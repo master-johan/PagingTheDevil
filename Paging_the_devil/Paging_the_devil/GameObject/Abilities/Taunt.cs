@@ -10,7 +10,6 @@ namespace Paging_the_devil.GameObject.Abilities
 {
     class Taunt : Ability
     {
-
         List<Enemy> enemyList;
 
         Player player;
@@ -46,7 +45,6 @@ namespace Paging_the_devil.GameObject.Abilities
             if (HitCharacter != null)
             {
                 enemyList.Add(HitCharacter as Enemy);
-
             }
 
             hit = true;
