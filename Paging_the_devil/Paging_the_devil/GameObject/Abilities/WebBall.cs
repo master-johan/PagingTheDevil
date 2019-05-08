@@ -28,7 +28,6 @@ namespace Paging_the_devil.GameObject.Abilities
             if (!Active)
             {
                 pos += spellDirection * speed;
-
             }
 
             else
@@ -71,9 +70,9 @@ namespace Paging_the_devil.GameObject.Abilities
             if (timePassed >= ValueBank.WebRootTimer)
             {
                 (HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;
-                ToRemove = true;
                 Active = false;
                 timePassed = 0;
+                ToRemove = true;
             }
         }
     }
