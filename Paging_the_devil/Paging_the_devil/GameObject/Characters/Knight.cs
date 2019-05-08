@@ -12,8 +12,8 @@ namespace Paging_the_devil.GameObject.Characters
             HealthPoints = ValueBank.KnightHealth;
             maxHealthPoints = HealthPoints;
 
-            Ability1 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
-            Ability2 = new Block(TextureBank.roomTextureList[0], pos, LastDirection,this);
+            Ability1 = new Block(TextureBank.roomTextureList[0], pos, LastDirection, this);
+            Ability2 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this); 
             Ability3 = new Taunt(TextureBank.mageSpellList[10], pos, new Vector2(0, 0),this);
         }
         /// <summary>
@@ -22,9 +22,8 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility1()
         {
-            Ability ability = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
-            Ability1CooldownTimer = ability.coolDownTime;
-            SoundBank.SoundEffectList[4].Play();
+            Ability ability = new Block(TextureBank.roomTextureList[0], pos, LastDirection, this);
+            Ability2CooldownTimer = ability.coolDownTime;
             return ability;
         }
         /// <summary>
@@ -33,9 +32,11 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility2()
         {
-            Ability ability = new Block(TextureBank.roomTextureList[0], pos, LastDirection,this);
-            Ability2CooldownTimer = ability.coolDownTime;
+            Ability ability = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this);
+            Ability1CooldownTimer = ability.coolDownTime;
+            SoundBank.SoundEffectList[4].Play();
             return ability;
+
         }
         /// <summary>
         /// Den här metoden sköter ability3

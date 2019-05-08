@@ -19,7 +19,7 @@ namespace Paging_the_devil.GameObject.Abilities
             coolDownTime = 40;
             Active = true;
 
-            btnTexture = TextureBank.hudTextureList[5];
+            btnTexture = TextureBank.abilityButtonList[2];
         }
 
         public override void Update(GameTime gameTime)
