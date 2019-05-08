@@ -472,6 +472,8 @@ namespace Paging_the_devil.Manager
                         else if (a is FlowerPower)
                         {
                             a.HitCharacter = playerArray[i];
+                            //Lägger till i listan för att få med alla spelare till flowerpower-klassen.
+                            (a as FlowerPower).playerList.Add(playerArray[i]);
                         }
                     }
                 }
