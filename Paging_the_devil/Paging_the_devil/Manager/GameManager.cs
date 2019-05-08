@@ -268,6 +268,14 @@ namespace Paging_the_devil.Manager
 
             if (toRemoveEnemy != null)
             {
+                //Gör så att när spindeln dör så återställs spelarnas speed till den vanliga.
+                if (toRemoveEnemy is WallSpider)
+                {
+                    for (int i = 0; i < toRemoveEnemy.enemyAbilityList.Count; i++)
+                    {
+                        (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList[i].movementSpeed = ValueBank.PlayerSpeed;
+                    }
+                }
                 enemyList.Remove(toRemoveEnemy);
             }
         }
