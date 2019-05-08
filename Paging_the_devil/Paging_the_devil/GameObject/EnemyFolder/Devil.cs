@@ -64,7 +64,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
             rect = new Rectangle((int)pos.X - 35, (int)pos.Y - 200, 70, 100);
             shootTimer = ValueBank.SmallDevilShootTimer - ValueBank.SmallDevilShootTimer / 2;
-            cleaveTimer = ValueBank.CleaveCooldown;
+            cleaveTimer = ValueBank.DevilCleaveCooldown;
         }
         public override void Update(GameTime gameTime)
         {
@@ -77,11 +77,12 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             }
             Movement(gameTime);
             ShootFireball();
+            StartLaugh();
 
             if (cleaveTimer <= 0)
             {
                 DevilCleave();
-                cleaveTimer = 240;
+                cleaveTimer = 360;
             }
             cleaveTimer--;
         }
@@ -101,6 +102,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 direction = targetPlayer.GetSetPos - pos;
                 tempNow = direction;
                 direction.Normalize();
+            }
+            else if (targetPlayer.Dead)
+            {
+                Player target = targetPlayer;
+
             }
 
             else
@@ -196,8 +202,16 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         }
         private void DevilCleave()
         {
-            Ability ability = new Cleave(TextureBank.mageSpellList[8], pos, direction, this);
+            Ability ability = new DevilCleave(TextureBank.mageSpellList[8], pos, direction, this);
             enemyAbilityList.Add(ability);
+        }
+
+        public void StartLaugh()
+        {
+            if (cleaveTimer == ValueBank.DevilCleaveCooldown)
+            {
+                SoundBank.SoundEffectList[13].Play();
+            }
         }
     }
 }

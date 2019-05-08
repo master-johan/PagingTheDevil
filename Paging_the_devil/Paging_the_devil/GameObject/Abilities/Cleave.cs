@@ -24,6 +24,7 @@ namespace Paging_the_devil.GameObject.Abilities
         List<Enemy> enemiesHitList;
 
         public bool Active { get; private set; }
+        bool hit;
 
         public Cleave(Texture2D tex, Vector2 pos, Vector2 direction, Character character)
             : base(tex, pos, direction)
@@ -31,10 +32,14 @@ namespace Paging_the_devil.GameObject.Abilities
             this.character = character;
             cleavePos = pos;
 
+
+      
+
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
 
             coolDownTime = ValueBank.CleaveCooldown;
             btnTexture = TextureBank.abilityButtonList[4];
+
 
             meleeDirection = DecideDirectionOfCleave(direction);
 
@@ -47,12 +52,48 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Update(GameTime gameTime)
         {
-            if (character is Devil)
-            {
-                UpdateDevilCleave(gameTime);
-            }
+            //if (character is Devil)
+            //{
+            //    rect.X = (int)character.pos.X - tex.Width / 2;
+            //    rect.Y = (int)character.pos.Y - tex.Height / 2;
 
-            else
+            //    Vector2 devilTemp = cleavePos - character.pos;
+            //    cleavePos -= devilTemp;
+            //    if (HitCharacter != null)
+            //    {
+            //        bool hasHitBefore = false;
+            //        foreach (var p in playerList)
+            //        {
+            //            if (HitCharacter is Player)
+            //            {
+            //                if (HitCharacter == p)
+            //                {
+            //                    hasHitBefore = true;
+            //                }
+            //            }
+            //        }
+            //        if (!hasHitBefore)
+            //        {
+            //            if (HitCharacter is Player)
+            //            {
+            //                ApplyDamage();
+            //                playerList.Add(HitCharacter as Player);
+            //            }
+            //        }
+            //    }
+
+            //    hit = true;
+            //    Active = true;
+
+            //    if (hit)
+            //    {
+            //        UpdateDevilCleave(gameTime);
+            //    }
+
+                
+            //}
+
+            
             {
                 if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
                     angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||

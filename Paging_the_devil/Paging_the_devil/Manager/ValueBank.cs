@@ -59,6 +59,7 @@ namespace Paging_the_devil.Manager
         public static int WallSpiderHealth;
         public static int WebballSpeed;
         public static int WebballDmg;
+        public static int DevilCleaveCooldown;
 
         public static Random rand;
 
@@ -86,6 +87,7 @@ namespace Paging_the_devil.Manager
             SlashCooldown = 30;
             TrapCooldown = 30;
             ChargeCooldown = 40;
+            DevilCleaveCooldown = 360;
 
 
             //Ability Dmg
