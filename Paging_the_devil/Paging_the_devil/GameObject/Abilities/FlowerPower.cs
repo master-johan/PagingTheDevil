@@ -9,7 +9,7 @@ namespace Paging_the_devil.GameObject.Abilities
 {
     class FlowerPower : Ability
     {
-        List<Player> playerList;
+        public List<Player> playerList;
 
         Player player;
 
@@ -34,7 +34,6 @@ namespace Paging_the_devil.GameObject.Abilities
             rect = new Rectangle((int)pos.X - tex.Width / 2, (int)pos.Y - tex.Height / 2, 400, 400);
 
             tauntColor = new Color(255, 255, 255, 255);
-            playerList.Add(player);
             btnTexture = TextureBank.abilityButtonList[7];
             coolDownTime = 600;
         }
@@ -52,20 +51,14 @@ namespace Paging_the_devil.GameObject.Abilities
                 bool hasHitBefore = false;
                 foreach (var p in playerList)
                 {
-                    if (HitCharacter is Player)
+                    if (HitCharacter == p)
                     {
-                        if (HitCharacter == p)
-                        {
-                            hasHitBefore = true;
-                        }
+                        hasHitBefore = true;
                     }
                 }
                 if (!hasHitBefore)
                 {
-                    if (HitCharacter is Player)
-                    {
-                        playerList.Add(HitCharacter as Player);
-                    }
+                    playerList.Add(HitCharacter as Player);
                 }
             }
 
@@ -74,20 +67,21 @@ namespace Paging_the_devil.GameObject.Abilities
 
             if (hit)
             {
-                Heal(gameTime);
+                FlowerPowerHeal(gameTime);
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, healPos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, rect, Color.Black);
         }
 
-        private void Heal(GameTime gameTime)
+        private void FlowerPowerHeal(GameTime gameTime)
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (Active == true)
+            if (Active)
             {
                 foreach (var p in playerList)
                 {
@@ -97,6 +91,8 @@ namespace Paging_the_devil.GameObject.Abilities
                 tauntColor.G--;
                 tauntColor.B--;
                 tauntColor.A--;
+                //Rensar listan för att inte effekten ska hända varje update.
+                playerList.Clear();
             }
 
             if (timePassed >= ValueBank.TauntTimer)
