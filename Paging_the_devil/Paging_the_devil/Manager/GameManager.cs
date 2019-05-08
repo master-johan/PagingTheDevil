@@ -526,7 +526,7 @@ namespace Paging_the_devil.Manager
             {
                 if (slime.GetRect.Intersects(playerArray[i].GetRect))
                 {
-                    playerArray[i].HealthPoints = 0;
+                    playerArray[i].HealthPoints -= slime.Damage;
                 }
             }
         }

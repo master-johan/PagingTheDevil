@@ -40,6 +40,7 @@ namespace Paging_the_devil.Manager
         public static int ArrowCooldown;
         public static int TrapCooldown;
         public static int ChargeCooldown;
+        public static int BlockCooldown;
         public static int ArrowDmg;
         public static int TrapDmg;
         public static int HealHarmDmg;
@@ -87,7 +88,7 @@ namespace Paging_the_devil.Manager
             SlashCooldown = 30;
             TrapCooldown = 30;
             ChargeCooldown = 40;
-
+            BlockCooldown = 1000;
 
             //Ability Dmg
             ArrowDmg = 2;

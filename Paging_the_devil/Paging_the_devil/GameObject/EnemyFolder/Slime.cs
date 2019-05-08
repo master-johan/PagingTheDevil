@@ -26,6 +26,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         double timer;
         double interval;
 
+        public int Damage { get; private set; }
+
         public Slime(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayer) : base(tex, pos)
         {
             this.playerArray = playerArray;
@@ -43,6 +45,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             rect = new Rectangle((int)pos.X, (int)pos.Y, 32 * (int)scale, 32 * (int)scale);
 
             MovementSpeed = ValueBank.SlimeSpeed;
+
+            Damage = 110;
         }
 
         public override void Update(GameTime gameTime)

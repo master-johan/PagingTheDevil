@@ -10,7 +10,7 @@ namespace Paging_the_devil.GameObject.Characters
 {
     class Player : Character
     {
-        float rotation;
+        protected float rotation;
 
         protected float maxHealthPoints;
 
