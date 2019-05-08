@@ -35,7 +35,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
             tauntColor = new Color(255, 255, 255, 255);
             playerList.Add(player);
-            btnTexture = TextureBank.hudTextureList[8];
+            btnTexture = TextureBank.abilityButtonList[7];
             coolDownTime = 600;
         }
 

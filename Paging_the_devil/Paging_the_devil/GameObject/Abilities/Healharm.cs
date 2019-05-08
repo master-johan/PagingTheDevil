@@ -17,9 +17,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public float timePassed { get; set; }
 
-        public Character character { get; set; }
-
-        //public bool Active { get; set; }
+        public Character character { get; set; }       
 
         public bool IsTicking { get; set; }
 
@@ -35,7 +33,7 @@ namespace Paging_the_devil.GameObject.Abilities
             Active = false;
             IsTicking = false;
 
-            btnTexture = TextureBank.hudTextureList[5];
+            btnTexture = TextureBank.abilityButtonList[3];
 
             coolDownTime = 40;
             counter = 1000;

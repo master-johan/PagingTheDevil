@@ -12,8 +12,8 @@ namespace Paging_the_devil.GameObject.Characters
             HealthPoints = ValueBank.BarbarianHealth;
             maxHealthPoints = HealthPoints;
 
-            Ability1 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection,this);
-            Ability2 = new Cleave(TextureBank.mageSpellList[6], pos, LastDirection,this);
+            Ability1 = new Cleave(TextureBank.mageSpellList[6], pos, LastDirection, this); 
+            Ability2 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this);
             Ability3 = new Charge(tex, pos, new Vector2(0, 0), this, false);
         }
         public override void Update(GameTime gameTime)
