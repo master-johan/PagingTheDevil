@@ -585,8 +585,8 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void SpawnSmallRedDevil()
         {
-            int x = ValueBank.rand.Next((ValueBank.WindowSizeX / 2) + 20, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 20);
-            int y = ValueBank.rand.Next(120, ValueBank.WindowSizeY - TextureBank.enemyTextureList[0].Height - 40);
+            int x = ValueBank.rand.Next(40, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 40);
+            int y = ValueBank.rand.Next(180, ValueBank.WindowSizeY - TextureBank.enemyTextureList[0].Height - 40);
 
             enemyList.Add(new SmallDevil(TextureBank.enemyTextureList[0], new Vector2(x, y), playerArray, nrOfPlayers));
         }
@@ -595,7 +595,7 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void SpawnSlime()
         {
-            int x = ValueBank.rand.Next((ValueBank.WindowSizeX / 2) + 20, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 20);
+            int x = ValueBank.rand.Next(40, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 40);
             int y = ValueBank.rand.Next(120, ValueBank.WindowSizeY - TextureBank.enemyTextureList[0].Height - 40);
 
             enemyList.Add(new Slime(TextureBank.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
@@ -632,58 +632,122 @@ namespace Paging_the_devil.Manager
         {
             if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
             {
-                for (int i = 0; i < 4; i++)
-                {
+                //for (int i = 0; i < 15; i++)
+                //{
                     
-                    //SpawnSmallRedDevil();
+                //    SpawnSmallRedDevil();
                    
-                    //SpawnSlime();
                     
-                }
-                SpawnTopSpider();
+                //}
+
+                //for (int i = 0; i < 2; i++)
+                //{
+
+                //    SpawnSlime();
+
+
+                //}
+
                 SpawnBotSpider();
                 SpawnLeftSpider();
                 SpawnRightSpider();
+
                 enemiesSpawned[3, 1] = true;
             }
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
             {
-                SpawnSlime();
-                SpawnSlime();
+                for (int i = 0; i < 10; i++)
+                {
+
+                    SpawnSmallRedDevil();
+
+
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+
+                    SpawnSlime();
+
+
+                }
+
+                SpawnLeftSpider();
+                SpawnBotSpider();
                 enemiesSpawned[2, 1] = true;
             }
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 2 && !enemiesSpawned[2, 2])
             {
-                SpawnSmallRedDevil();
-                SpawnSmallRedDevil();
-                SpawnSmallRedDevil();
-                SpawnTopSpider();
-                SpawnTopSpider();
-                SpawnSlime();
+                for (int i = 0; i < 10; i++)
+                {
 
+                    SpawnSmallRedDevil();
+
+
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+
+                    SpawnSlime();
+
+
+                }
+
+                SpawnLeftSpider();
+                SpawnBotSpider();
                 enemiesSpawned[2, 2] = true;
             }
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 3 && !enemiesSpawned[2,3])
+
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 3 && !enemiesSpawned[2, 3])
             {
-                SpawnSmallRedDevil();
-                SpawnSmallRedDevil();
-                SpawnSmallRedDevil();
-                SpawnSmallRedDevil();
-                SpawnSlime();
-                SpawnSlime();
-                SpawnSlime();
+
+                for (int i = 0; i < 15; i++)
+                {
+
+                    SpawnSmallRedDevil();
+
+
+                }
+
+                for (int i = 0; i < 4; i++)
+                {
+
+                    SpawnSlime();
+
+
+                }
+
+                SpawnBotSpider();
+                SpawnRightSpider();
                 SpawnTopSpider();
                 enemiesSpawned[2, 3] = true;
             }
-            
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && !enemiesSpawned[2, 4])
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && !enemiesSpawned[2,4])
             {
+                for (int i = 0; i < 10; i++)
+                {
+
+                    SpawnSmallRedDevil();
+
+
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+
+                    SpawnSlime();
+
+
+                }
+
+                SpawnLeftSpider();
+                SpawnBotSpider();
                 SpawnDevil();
                 enemiesSpawned[2, 4] = true;
             }
-
         }
     }
 }

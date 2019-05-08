@@ -61,7 +61,6 @@ namespace Paging_the_devil.GameObject.Abilities
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureBank.mageSpellList[0], rect, Color.Black);
         }
         /// <summary>
         /// Denna metod updaterar charge abilityn 

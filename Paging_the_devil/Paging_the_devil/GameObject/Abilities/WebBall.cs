@@ -15,6 +15,7 @@ namespace Paging_the_devil.GameObject.Abilities
         float timePassed;
         bool damage;
         public List<Player> playerList;
+
         public WebBall(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos, direction)
         {
             speed = ValueBank.WebballSpeed;
@@ -54,26 +55,30 @@ namespace Paging_the_devil.GameObject.Abilities
         }
         private void WebRoot(GameTime gameTime)
         {
+            timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             if (HitCharacter != null)
             {
-                playerList.Add(HitCharacter as Player);
-
                 Active = true;
 
                 if (!damage)
                 {
                     ApplyDamage();
+                    timePassed = 2000;
                     damage = true;
                 }
 
-                timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                playerList.Add(HitCharacter as Player);
 
                 (HitCharacter as Player).movementSpeed = 0;
             }
 
             if (timePassed >= ValueBank.WebRootTimer)
             {
-                (HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;
+                if (HitCharacter != null)
+                {
+                    (HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;
+                }
                 Active = false;
                 timePassed = 0;
                 ToRemove = true;

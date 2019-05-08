@@ -273,7 +273,10 @@ namespace Paging_the_devil.Manager
                 {
                     for (int i = 0; i < toRemoveEnemy.enemyAbilityList.Count; i++)
                     {
-                        (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList[i].movementSpeed = ValueBank.PlayerSpeed;
+                        for (int j = 0; j < (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList.Count; j++)
+                        {
+                            (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList[j].movementSpeed = ValueBank.PlayerSpeed;
+                        }
                     }
                 }
                 enemyList.Remove(toRemoveEnemy);
@@ -523,6 +526,13 @@ namespace Paging_the_devil.Manager
 
             if (toRemove != null)
             {
+                if (toRemove is WebBall)
+                {
+                    if ((toRemove as WebBall).HitCharacter != null)
+                    {
+                        ((toRemove as WebBall).HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;
+                    }
+                }
                 abilityList.Remove(toRemove);
             }
         }

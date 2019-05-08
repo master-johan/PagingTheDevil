@@ -122,7 +122,7 @@ namespace Paging_the_devil.Manager
             WebbballTimer = 160f;
             DevilCleaveTimer = 2000;
             TauntTimer = 4000;
-            WebRootTimer = 1000;
+            WebRootTimer = 3000;
             BlockTimer = 3000;
             RootTimer = 2500;
 

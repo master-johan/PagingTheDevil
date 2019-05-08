@@ -74,7 +74,6 @@ namespace Paging_the_devil.GameObject.Abilities
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, healPos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
-            spriteBatch.Draw(tex, rect, Color.Black);
         }
 
         private void FlowerPowerHeal(GameTime gameTime)

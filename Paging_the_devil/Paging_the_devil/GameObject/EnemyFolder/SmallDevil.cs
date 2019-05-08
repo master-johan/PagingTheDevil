@@ -73,7 +73,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             base.Draw(spriteBatch);
             spriteBatch.Draw(tex, pos, Color.White);
-            spriteBatch.Draw(tex, rect, Color.Black);
         }  
         /// <summary>
         /// Den här metoden sköter devilens rörelse
