@@ -31,11 +31,6 @@ namespace Paging_the_devil.GameObject
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(tex, sourceRect, Color.White);
-            //spriteBatch.Draw(tex, hitboxBot, Color.Black);
-            //spriteBatch.Draw(tex, hitboxTop, Color.White);
-            //spriteBatch.Draw(tex, hitboxLeft, Color.Red);
-            //spriteBatch.Draw(tex, hitboxRight, Color.Blue);
-           
         }
     }
 }

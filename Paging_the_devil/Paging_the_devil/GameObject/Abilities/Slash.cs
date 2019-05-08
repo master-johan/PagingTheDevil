@@ -17,15 +17,15 @@ namespace Paging_the_devil.GameObject.Abilities
         Vector2 meleeDirection;
 
         Player player;
-        
-        public bool Hit { get; set; }
+
+        bool hit;
 
         public Slash(Texture2D tex, Vector2 pos, Vector2 direction, Player player)
             : base(tex, pos, direction)
         {
             this.player = player;
             slashPos = pos;
-            Hit = false;
+            hit = false;
 
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
 
@@ -74,7 +74,11 @@ namespace Paging_the_devil.GameObject.Abilities
 
             if (HitCharacter != null)
             {
-                ApplyDamage();
+                if (!hit)
+                {
+                    ApplyDamage();
+                    hit = true;
+                }
             }
 
             UpdateHitbox();

@@ -611,12 +611,12 @@ namespace Paging_the_devil.Manager
         {
             if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     //SpawnSpider();
                     SpawnSmallRedDevil();
                     //SpawnDevil();
-                    //SpawnSlime();
+                    SpawnSlime();
                 }
 
                 enemiesSpawned[3, 1] = true;
