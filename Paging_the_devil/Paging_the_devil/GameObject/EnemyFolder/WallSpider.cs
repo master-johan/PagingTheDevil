@@ -59,6 +59,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             maxY = 1030;
             minX = 35;
             minY = 175;
+
+            MovementSpeed = ValueBank.SpiderMoveSpeed;
         }
 
         public override void Update(GameTime gameTime)
@@ -146,19 +148,19 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             if (up)
             {
-                pos.Y -= ValueBank.SpiderMoveSpeed; //Uppåt
+                pos.Y -= MovementSpeed; //Uppåt
             }
             if (down)
             {
-                pos.Y += ValueBank.SpiderMoveSpeed; //Nedåt
+                pos.Y += MovementSpeed; //Nedåt
             }
             if (left)
             {
-                pos.X -= ValueBank.SpiderMoveSpeed; //Vänster
+                pos.X -= MovementSpeed; //Vänster
             }
             if (right)
             {
-                pos.X += ValueBank.SpiderMoveSpeed; //Höger
+                pos.X += MovementSpeed; //Höger
             }
         }
         private void UpdateHitbox()
