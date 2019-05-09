@@ -199,7 +199,7 @@ namespace Paging_the_devil.Manager
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.InGame:
-
+                    
                     if (roomManagerCreated)
                     {
                         roomManager.Draw(spriteBatch);
@@ -268,6 +268,14 @@ namespace Paging_the_devil.Manager
 
             if (toRemoveEnemy != null)
             {
+                //Gör så att när spindeln dör så återställs spelarnas speed till den vanliga.
+                if (toRemoveEnemy is WallSpider)
+                {
+                    for (int i = 0; i < toRemoveEnemy.enemyAbilityList.Count; i++)
+                    {
+                        (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList[i].movementSpeed = ValueBank.PlayerSpeed;
+                    }
+                }
                 enemyList.Remove(toRemoveEnemy);
             }
         }
@@ -387,13 +395,13 @@ namespace Paging_the_devil.Manager
                                 toRemove = a;
                             }
 
-                            if (a is Taunt || a is FlowerPower)
+                            if (a is Healharm || a is Arrow)
                             {
-                                a.ToRemove = false;
+                                a.ToRemove = true;
                             }
                             else
                             {
-                                a.ToRemove = true;
+                                a.ToRemove = false;
                             }
                         }
 
@@ -440,11 +448,6 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
-
-                        if (a is Slash ) // arbeta mer för att fixa slashen
-                        {
-                            (a as Slash).Hit = true;
-                        }
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)
@@ -469,6 +472,8 @@ namespace Paging_the_devil.Manager
                         else if (a is FlowerPower)
                         {
                             a.HitCharacter = playerArray[i];
+                            //Lägger till i listan för att få med alla spelare till flowerpower-klassen.
+                            (a as FlowerPower).playerList.Add(playerArray[i]);
                         }
                     }
                 }
@@ -531,7 +536,7 @@ namespace Paging_the_devil.Manager
             {
                 if (slime.GetRect.Intersects(playerArray[i].GetRect))
                 {
-                    playerArray[i].HealthPoints = 0;
+                    playerArray[i].HealthPoints -= slime.Damage;
                 }
             }
         }

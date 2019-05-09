@@ -23,6 +23,9 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public bool Active { get; private set; }
 
+        int width;
+        int height;
+
         public Block(Texture2D tex, Vector2 pos, Vector2 direction, Player player) : base(tex, pos, direction)
         {
             this.player = player;
@@ -30,10 +33,15 @@ namespace Paging_the_devil.GameObject.Abilities
             Active = false;
             btnTexture = TextureBank.hudTextureList[7];
 
-            rect.Width = tex.Width;
-            rect.Height = tex.Height;
+            width = 59;
+            height = 61;
+
+            rect.Width = width;
+            rect.Height = height;
 
             first = false;
+
+            coolDownTime = ValueBank.BlockCooldown;
         }
         public override void Update(GameTime gameTime)
         {
@@ -41,8 +49,8 @@ namespace Paging_the_devil.GameObject.Abilities
 
             Active = true;
 
-            rect.X = (int)player.pos.X - tex.Width / 2;
-            rect.Y = (int)player.pos.Y - tex.Height / 2;
+            rect.X = (int)player.pos.X - width / 2;
+            rect.Y = (int)player.pos.Y - height / 2;
 
             Vector2 temp = blockPos - player.pos;
             blockPos -= temp;
@@ -69,7 +77,7 @@ namespace Paging_the_devil.GameObject.Abilities
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, blockPos, new Rectangle(0, 0, tex.Width, tex.Height), Color.White, 0, new Vector2(tex.Width/2, tex.Height/2), 1, SpriteEffects.None, 1);
+
         }
     }
 }

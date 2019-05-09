@@ -22,8 +22,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
         public List<Ability> enemyAbilityList;
 
-        public int MovementSpeed { get; set; }
-        public int BaseMoveSpeed { get; set; }
+        public float MovementSpeed { get; set; }
+        public float BaseMoveSpeed { get; set; }
 
         public double TrapTimer { get; set; }
 
@@ -70,7 +70,6 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             foreach (var e in enemyAbilityList)
             {
                 e.Draw(spriteBatch);
-                //spriteBatch.Draw(TextureBank.hudTextureList[0], rect, Color.Black);
             }
             
         }
