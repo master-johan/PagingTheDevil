@@ -12,7 +12,7 @@ namespace Paging_the_devil.GameObject.Abilities
 {
     class Root : Ability
     {
-        List<Enemy> enemyList;
+        public List<Enemy> enemyList;
 
         float timePassed;
         
@@ -49,13 +49,10 @@ namespace Paging_the_devil.GameObject.Abilities
                 if (!hasHitBefore)
                 {
                     enemyList.Add(HitCharacter as Enemy);
-                }
-
-                if (!hasHitBefore)
-                {
                     ApplyDamage();
                 }
             }
+
             Active = true;
             WebRoot(gameTime);
         }
@@ -74,7 +71,6 @@ namespace Paging_the_devil.GameObject.Abilities
                 foreach (var e in enemyList)
                 {
                     e.MovementSpeed = 0;
-
                 }
             }
 
@@ -99,6 +95,7 @@ namespace Paging_the_devil.GameObject.Abilities
                         (e as WallSpider).MovementSpeed = ValueBank.SpiderMoveSpeed;
                     }
                 }
+
                 ToRemove = true;
                 Active = false;
                 timePassed = 0;

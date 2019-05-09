@@ -80,6 +80,8 @@ namespace Paging_the_devil.GameObject.Characters
         }
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             Movment();
 
             Hitboxes();
@@ -130,6 +132,11 @@ namespace Paging_the_devil.GameObject.Characters
             }
 
             spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 1);
+
+            if (Hit)
+            {
+                spriteBatch.Draw(tex, pos, drawRect, Color.Red, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 1);
+            }
         }
         /// <summary>
         /// Den här metoden bestämmer sourcerektanglar.

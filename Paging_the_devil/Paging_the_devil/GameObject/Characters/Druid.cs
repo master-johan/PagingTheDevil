@@ -21,6 +21,11 @@ namespace Paging_the_devil.GameObject.Characters
         {
             base.Update(gameTime);
         }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+        }
         /// <summary>
         /// Den här metoden sköter ability1
         /// </summary>

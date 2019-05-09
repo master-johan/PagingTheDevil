@@ -177,7 +177,7 @@ namespace Paging_the_devil.Manager
                     UpdatePlayersDirection();
                     CharacterÚpdate(gameTime);
                     DeleteAbilities();
-                    roomManager.Update();
+                    roomManager.Update(gameTime);
 
                     break;
             }
@@ -415,20 +415,6 @@ namespace Paging_the_devil.Manager
                     }
                 }
 
-                //foreach (var e in enemyList)
-                //{
-                //    foreach (var a in e.enemyAbilityList)
-                //    {
-                //        if (a.GetRect.Intersects(playerArray[i].GetRect))
-                //        {
-                //            a.ToRemove = true;
-                //        }
-                //        if (a.ToRemove == true)
-                //        {
-                //            toRemove = a;
-                //        }
-                //    }
-                //}
                 if (toRemove != null)
                 {
                     playerArray[i].abilityList.Remove(toRemove);
@@ -451,6 +437,20 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
+
+                        if (a is Root)
+                        {
+                            (a as Root).enemyList.Add(e);
+                        }
+
+                        if (a is FlowerPower)
+                        {
+
+                        }
+                        else
+                        {
+                            (a.HitCharacter as Enemy).Hit = true;
+                        }
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)
@@ -507,6 +507,7 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
                         a.HitCharacter = playerArray[i];
+                        (a.HitCharacter as Player).Hit = true;
                     }
                 }
 

@@ -101,9 +101,14 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(TextureBank.hudTextureList[0], rect, Color.Black);
             base.Draw(spriteBatch);
+
             spriteBatch.Draw(tex, pos, srcRect, Color.White, rotation, origin, scale, SpriteEffects.None, 1f);
+
+            if (Hit)
+            {
+                spriteBatch.Draw(tex, pos, srcRect, Color.Red, rotation, origin, scale, SpriteEffects.None, 1f);
+            }
         }
         protected override void Movement(GameTime gameTime)
         {

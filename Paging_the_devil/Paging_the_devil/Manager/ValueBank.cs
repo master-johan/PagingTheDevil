@@ -32,6 +32,7 @@ namespace Paging_the_devil.Manager
         public static float WebRootTimer;
         public static float BlockTimer;
         public static float RootTimer;
+        public static float HitTimerMax;
 
         public static int DashCooldown;
         public static int HealHarmCooldown;
@@ -61,6 +62,7 @@ namespace Paging_the_devil.Manager
         public static int WallSpiderHealth;
         public static int WebballSpeed;
         public static int WebballDmg;
+        public static int DevilCleaveCooldown;
 
         public static Random rand;
 
@@ -88,8 +90,9 @@ namespace Paging_the_devil.Manager
             SlashCooldown = 30;
             TrapCooldown = 30;
             ChargeCooldown = 40;
+            DevilCleaveCooldown = 360;
             BlockCooldown = 1000;
-
+          
             //Ability Dmg
             ArrowDmg = 2;
             TrapDmg = 2;
@@ -125,6 +128,7 @@ namespace Paging_the_devil.Manager
             WebRootTimer = 3000;
             BlockTimer = 3000;
             RootTimer = 2500;
+            HitTimerMax = 350;
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4f;
