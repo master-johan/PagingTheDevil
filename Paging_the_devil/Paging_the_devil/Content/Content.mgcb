@@ -181,6 +181,12 @@
 /processorParam:Quality=Best
 /build:BossFightSong.mp3
 
+#begin BossLaugh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:BossLaugh.wav
+
 #begin CircleOfHeal.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -775,6 +781,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:P4.png
+
+#begin PlayerRing.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerRing.png
 
 #begin PlayerSelectBG.png
 /importer:TextureImporter
@@ -1393,3 +1411,4 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:BossLaugh.wav
+
