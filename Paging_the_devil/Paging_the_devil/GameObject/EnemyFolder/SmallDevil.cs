@@ -72,8 +72,12 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+
             spriteBatch.Draw(tex, pos, Color.White);
-            spriteBatch.Draw(tex, rect, Color.Black);
+            if (Hit)
+            {
+                spriteBatch.Draw(tex, pos, Color.Red);
+            }
         }  
         /// <summary>
         /// Den här metoden sköter devilens rörelse

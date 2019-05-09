@@ -273,7 +273,10 @@ namespace Paging_the_devil.Manager
                 {
                     for (int i = 0; i < toRemoveEnemy.enemyAbilityList.Count; i++)
                     {
-                        (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList[i].movementSpeed = ValueBank.PlayerSpeed;
+                        for (int j = 0; j < (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList.Count; j++)
+                        {
+                            (toRemoveEnemy.enemyAbilityList[i] as WebBall).playerList[j].movementSpeed = ValueBank.PlayerSpeed;
+                        }
                     }
                 }
                 enemyList.Remove(toRemoveEnemy);
@@ -412,20 +415,6 @@ namespace Paging_the_devil.Manager
                     }
                 }
 
-                //foreach (var e in enemyList)
-                //{
-                //    foreach (var a in e.enemyAbilityList)
-                //    {
-                //        if (a.GetRect.Intersects(playerArray[i].GetRect))
-                //        {
-                //            a.ToRemove = true;
-                //        }
-                //        if (a.ToRemove == true)
-                //        {
-                //            toRemove = a;
-                //        }
-                //    }
-                //}
                 if (toRemove != null)
                 {
                     playerArray[i].abilityList.Remove(toRemove);
@@ -448,6 +437,20 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
+
+                        if (a is Root)
+                        {
+                            (a as Root).enemyList.Add(e);
+                        }
+
+                        if (a is FlowerPower)
+                        {
+
+                        }
+                        else
+                        {
+                            (a.HitCharacter as Enemy).Hit = true;
+                        }
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)
@@ -504,6 +507,7 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
                         a.HitCharacter = playerArray[i];
+                        (a.HitCharacter as Player).Hit = true;
                     }
                 }
 
@@ -523,6 +527,13 @@ namespace Paging_the_devil.Manager
 
             if (toRemove != null)
             {
+                if (toRemove is WebBall)
+                {
+                    if ((toRemove as WebBall).HitCharacter != null)
+                    {
+                        ((toRemove as WebBall).HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;
+                    }
+                }
                 abilityList.Remove(toRemove);
             }
         }

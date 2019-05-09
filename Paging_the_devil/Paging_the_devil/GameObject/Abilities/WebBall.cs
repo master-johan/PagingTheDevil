@@ -13,14 +13,19 @@ namespace Paging_the_devil.GameObject.Abilities
     class WebBall : Fireball
     {
         float timePassed;
+
         bool damage;
+        bool block;
+
         public List<Player> playerList;
+
         public WebBall(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos, direction)
         {
             speed = ValueBank.WebballSpeed;
             Damage = ValueBank.WebballDmg;
 
             Active = false;
+            block = false;
 
             playerList = new List<Player>();
         }
@@ -49,31 +54,49 @@ namespace Paging_the_devil.GameObject.Abilities
 
             else
             {
-                spriteBatch.Draw(TextureBank.mageSpellList[12], (HitCharacter as Player).GetRect, Color.White);
+                if (!block)
+                {
+                    spriteBatch.Draw(TextureBank.mageSpellList[12], (HitCharacter as Player).GetRect, Color.White);
+                }
             }
         }
         private void WebRoot(GameTime gameTime)
         {
+            timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
             if (HitCharacter != null)
             {
-                playerList.Add(HitCharacter as Player);
-
                 Active = true;
 
                 if (!damage)
                 {
                     ApplyDamage();
+                    timePassed = 2000;
                     damage = true;
                 }
 
-                timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                playerList.Add(HitCharacter as Player);
 
-                (HitCharacter as Player).movementSpeed = 0;
+                for (int i = 0; i < (HitCharacter as Player).abilityList.Count; i++)
+                {
+                    if (((HitCharacter as Player).abilityList[i]) is Block)
+                    {
+                        block = true;
+                    }
+                }
+
+                if (!block)
+                {
+                    (HitCharacter as Player).movementSpeed = 0;
+                }
             }
 
             if (timePassed >= ValueBank.WebRootTimer)
             {
-                (HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;
+                if (HitCharacter != null)
+                {
+                    (HitCharacter as Player).movementSpeed = ValueBank.PlayerSpeed;
+                }
                 Active = false;
                 timePassed = 0;
                 ToRemove = true;
