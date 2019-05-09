@@ -545,12 +545,12 @@ namespace Paging_the_devil.Manager
                                 {
                                     if (!blockSound && !(a is WebBall))
                                     {
-                                        SoundBank.SoundEffectList[13].Play();
+                                        //SoundBank.SoundEffectList[13].Play();
                                         blockSound = true;
                                     }
                                     else if ((a as WebBall).hasHit)
                                     {
-                                        SoundBank.SoundEffectList[13].Play();
+                                        //SoundBank.SoundEffectList[13].Play();
                                         (a as WebBall).hasHit = false;
                                     }
                                 }
