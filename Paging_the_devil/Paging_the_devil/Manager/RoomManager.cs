@@ -669,6 +669,7 @@ namespace Paging_the_devil.Manager
             //Femte rummet
             if (RoomReturn(2, 4))
             {
+                MediaPlayer.Play(SoundBank.BgMusicList[2]);
                 Spawner(10, 2, true, true, false, true, false, true, true);
                 
                 enemiesSpawned[2, 4] = true;
@@ -713,7 +714,6 @@ namespace Paging_the_devil.Manager
             }
             if (spiderBot)
             {
-                MediaPlayer.Play(SoundBank.BgMusicList[2]);
                 SpawnBotSpider();
             }
             if (devil)
