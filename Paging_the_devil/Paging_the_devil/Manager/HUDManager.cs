@@ -37,9 +37,34 @@ namespace Paging_the_devil.Manager
         {
             spriteBatch.Draw(TextureBank.menuTextureList[3], hudBackground, Color.Black);
 
+            CreateHuds(spriteBatch);
+        }
+
+        /// <summary>
+        /// Denna metoden skapar olika HUDs till spelarena. P1, P2, P3, P4
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        private void CreateHuds(SpriteBatch spriteBatch)
+        {
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                playerHudArray[i].Draw(spriteBatch);
+                if (i == 0)
+                {
+                    playerHudArray[i].Draw(spriteBatch, TextureBank.hudTextureList[9]);
+                }
+                else if (i == 1)
+                {
+                    playerHudArray[i].Draw(spriteBatch, TextureBank.hudTextureList[10]);
+                }
+                else if (i == 2)
+                {
+                    playerHudArray[i].Draw(spriteBatch, TextureBank.hudTextureList[11]);
+                }
+                else if (i == 3)
+                {
+                    playerHudArray[i].Draw(spriteBatch, TextureBank.hudTextureList[12]);
+                }
+
             }
         }
 
@@ -65,12 +90,8 @@ namespace Paging_the_devil.Manager
                     pos.X = ValueBank.WindowSizeX / 5 * (i + 1);
                 }
 
-                playerHudArray[i] = new HUD(pos, playerArray[i]);
+                playerHudArray[i] = new HUD(pos, playerArray[i], nrOfPlayers);
             }
-        }
-        private void CreateHUDBackground()
-        {
-          
         }
     }
 }

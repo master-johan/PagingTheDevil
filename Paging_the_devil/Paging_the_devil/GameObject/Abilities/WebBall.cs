@@ -13,7 +13,10 @@ namespace Paging_the_devil.GameObject.Abilities
     class WebBall : Fireball
     {
         float timePassed;
+
         bool damage;
+        bool block;
+
         public List<Player> playerList;
         public bool hasHit;
 
@@ -24,6 +27,8 @@ namespace Paging_the_devil.GameObject.Abilities
 
             Active = false;
             hasHit = false;
+            block = false;
+
 
             playerList = new List<Player>();
         }
@@ -51,7 +56,10 @@ namespace Paging_the_devil.GameObject.Abilities
 
             else
             {
-                spriteBatch.Draw(TextureBank.mageSpellList[12], (HitCharacter as Player).GetRect, Color.White);
+                if (!block)
+                {
+                    spriteBatch.Draw(TextureBank.mageSpellList[12], (HitCharacter as Player).GetRect, Color.White);
+                }
             }
         }
         private void WebRoot(GameTime gameTime)
@@ -71,7 +79,18 @@ namespace Paging_the_devil.GameObject.Abilities
 
                 playerList.Add(HitCharacter as Player);
 
-                (HitCharacter as Player).movementSpeed = 0;
+                for (int i = 0; i < (HitCharacter as Player).abilityList.Count; i++)
+                {
+                    if (((HitCharacter as Player).abilityList[i]) is Block)
+                    {
+                        block = true;
+                    }
+                }
+
+                if (!block)
+                {
+                    (HitCharacter as Player).movementSpeed = 0;
+                }
             }
 
             if (timePassed >= ValueBank.WebRootTimer)

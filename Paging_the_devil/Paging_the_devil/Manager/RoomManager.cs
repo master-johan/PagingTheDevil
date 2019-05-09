@@ -32,6 +32,8 @@ namespace Paging_the_devil.Manager
         int minY;
         int minX;
 
+        float timePassed;
+
         bool[,] enemiesSpawned;
 
         public Room CurrentRoom { get; set; }
@@ -55,11 +57,11 @@ namespace Paging_the_devil.Manager
             minY = 175;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             CollisionWithWall();
             GoIntoGateway();
-            AddEnemiesToRoom();
+            AddEnemiesToRoom(gameTime);
             enemyCollisionWithWalls();
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -629,126 +631,94 @@ namespace Paging_the_devil.Manager
         /// <summary>
         /// Den här metoden lägger till fiender till rummen
         /// </summary>
-        private void AddEnemiesToRoom()
+        private void AddEnemiesToRoom(GameTime gameTime)
         {
-            if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
+            //Första rummet, OBS inte startrum
+            if (RoomReturn(3,1))
             {
-                for (int i = 0; i < 5; i++)
+                timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                if (timePassed >= 4000)
                 {
-
-                    SpawnSmallRedDevil();
-
-
+                    Spawner(0, 0, false, false, true, true, true, false, false);
+                    enemiesSpawned[3, 1] = true;
+                    timePassed = 0;
                 }
 
-                for (int i = 0; i < 1; i++)
+            }
+            //Andra rummet
+            if (RoomReturn(2, 1))
+            {
+                Spawner(10, 2, true, true, false, false, false, false, false);
+                enemiesSpawned[2, 1] = true;
+            }
+            //Tredje rummet
+            if (RoomReturn(2, 2))
+            {
+                Spawner(12, 3, true, true, true, true, false, false, false);
+                
+                enemiesSpawned[2, 2] = true;
+            }
+            //Fjärde rummet
+            if (RoomReturn(2, 3))
+            {
+                Spawner(15, 4, true, true, true, true, true, true, false);
+                
+                enemiesSpawned[2, 3] = true;
+            }
+            //Femte rummet
+            if (RoomReturn(2, 4))
+            {
+                Spawner(10, 2, true, true, false, true, false, true, true);
+                
+                enemiesSpawned[2, 4] = true;
+            }
+        }
+        private bool RoomReturn(int first, int second)
+        {
+            if (RoomCoordinateX == first && RoomCoordinateY == second && !enemiesSpawned[first, second])
+            {
+                return true;
+            }
+            return false;
+        }
+      
+        private void Spawner(int firstLoop, int secondLoop, bool smallDevil, bool slime, bool spiderTop, bool spiderRight, bool spiderBot, bool spiderLeft, bool devil)
+        {
+            for (int i = 0; i < firstLoop; i++)
+            {
+                if (smallDevil)
                 {
-
+                  SpawnSmallRedDevil();
+                }
+            }
+            for (int i = 0; i < secondLoop; i++)
+            {
+                if (slime)
+                {
                     SpawnSlime();
-
-
                 }
-                SpawnDevil();
-                SpawnBotSpider();
-                //SpawnLeftSpider();
-                //SpawnRightSpider();
-
-                enemiesSpawned[3, 1] = true;
             }
-
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
+            if (spiderTop)
             {
-                //for (int i = 0; i < 10; i++)
-                //{
-
-                //    SpawnSmallRedDevil();
-
-
-                //}
-
-                //for (int i = 0; i < 2; i++)
-                //{
-
-                //    SpawnSlime();
-
-
-                //}
-
-                //SpawnLeftSpider();
-                //SpawnBotSpider();
-                //enemiesSpawned[2, 1] = true;
+                SpawnTopSpider();
             }
-
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 2 && !enemiesSpawned[2, 2])
+            if (spiderRight)
             {
-                //for (int i = 0; i < 10; i++)
-                //{
-
-                //    SpawnSmallRedDevil();
-
-
-                //}
-
-                //for (int i = 0; i < 2; i++)
-                //{
-
-                //    SpawnSlime();
-
-
-                //}
-
-                //SpawnLeftSpider();
-                //SpawnBotSpider();
-                //enemiesSpawned[2, 2] = true;
+                SpawnRightSpider();
             }
-
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 3 && !enemiesSpawned[2, 3])
+            if (spiderLeft)
             {
-
-                //for (int i = 0; i < 15; i++)
-                //{
-
-                //    SpawnSmallRedDevil();
-
-
-                //}
-
-                //for (int i = 0; i < 4; i++)
-                //{
-
-                //    SpawnSlime();
-
-
-                //}
-
-                //SpawnBotSpider();
-                //SpawnRightSpider();
-                //SpawnTopSpider();
-                //enemiesSpawned[2, 3] = true;
+              SpawnLeftSpider();
             }
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && !enemiesSpawned[2,4])
+            if (spiderBot)
             {
                 MediaPlayer.Play(SoundBank.BgMusicList[2]);
-                //for (int i = 0; i < 10; i++)
-                //{
-
-                //    SpawnSmallRedDevil();
-
-
-                //}
-
-                //for (int i = 0; i < 2; i++)
-                //{
-
-                //    SpawnSlime();
-
-
-                //}
-
-                //SpawnLeftSpider();
-                //SpawnBotSpider();
+                SpawnBotSpider();
+            }
+            if (devil)
+            {
                 SpawnDevil();
-                enemiesSpawned[2, 4] = true;
             }
         }
     }

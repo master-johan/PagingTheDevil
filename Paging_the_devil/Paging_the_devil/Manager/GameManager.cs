@@ -179,7 +179,7 @@ namespace Paging_the_devil.Manager
                     UpdatePlayersDirection();
                     CharacterÚpdate(gameTime);
                     DeleteAbilities();
-                    roomManager.Update();
+                    roomManager.Update(gameTime);
 
                     break;
             }
@@ -439,7 +439,20 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
-                        (a.HitCharacter as Enemy).Hit = true;
+
+                        if (a is Root)
+                        {
+                            (a as Root).enemyList.Add(e);
+                        }
+
+                        if (a is FlowerPower)
+                        {
+
+                        }
+                        else
+                        {
+                            (a.HitCharacter as Enemy).Hit = true;
+                        }
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)

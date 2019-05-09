@@ -13,16 +13,19 @@ namespace Paging_the_devil.GameObject
         Rectangle btnB;
         Rectangle hudBox;
         Rectangle healthBar;
+        Rectangle playerIconRect;
 
         Vector2 pos;
 
-        float health;
         float maxHealth;
 
         int healBarWidthMax;
         int healBarWidth;
+        int nrOfPlayers;
 
         double procentHealth;
+
+        Texture2D[] playerIconTex;
 
         Player player;
 
@@ -31,13 +34,15 @@ namespace Paging_the_devil.GameObject
         HUDButton xBtn;
         HUDButton yBtn;
 
-        public HUD( Vector2 pos, Player player)
+        public HUD( Vector2 pos, Player player,int nrOfPlayers)
         {
             this.pos = pos;
             this.player = player;
+            this.nrOfPlayers = nrOfPlayers;
            
             hudBox = new Rectangle((int)pos.X, (int)pos.Y, ValueBank.WindowSizeX / 5, ValueBank.WindowSizeY / 8);
-            healthBar = new Rectangle(hudBox.X + 12, hudBox.Y + 45, hudBox.Width / 2, hudBox.Height / 3);
+            healthBar = new Rectangle(hudBox.X + 6, hudBox.Y + 77, hudBox.Width / 2, hudBox.Height / 3);
+            playerIconRect = new Rectangle(hudBox.X + 130, hudBox.Y + 5, hudBox.Width / 7, 65);
 
             btnX = new Rectangle(hudBox.X + 225, hudBox.Y + 45, hudBox.Width / 9, hudBox.Height / 3);
             btnA = new Rectangle(hudBox.X + 274, hudBox.Y + 70, hudBox.Width / 9, hudBox.Height / 3);
@@ -49,12 +54,15 @@ namespace Paging_the_devil.GameObject
             bBtn = new HUDButton(TextureBank.hudTextureList[1], new Vector2(btnB.X, btnB.Y), btnB, player.Ability3);
 
             healBarWidthMax = healBarWidth = healthBar.Width;
-            
             maxHealth = player.HealthPoints;
+
+            playerIconTex = new Texture2D[4];
         }
 
         public void Update(GameTime gameTime)
         {
+            ChoosingPlayerIcon();
+
             if (player.HealthPoints < maxHealth)
             {
                 procentHealth = player.HealthPoints / (double)maxHealth;
@@ -73,15 +81,54 @@ namespace Paging_the_devil.GameObject
             bBtn.GetCooldownTimer(player.Ability3CooldownTimer);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-            spriteBatch.Draw(TextureBank.hudTextureList[4], hudBox, Color.White);
-            spriteBatch.Draw(TextureBank.hudTextureList[1], healthBar, Color.White);
+            spriteBatch.Draw(tex, hudBox, Color.White);
+
+            DrawPlayerIcon(spriteBatch);
+
+            spriteBatch.Draw(TextureBank.hudTextureList[18], healthBar, Color.White);
             spriteBatch.Draw(TextureBank.hudTextureList[3], btnY, Color.White);
+            spriteBatch.Draw(TextureBank.hudTextureList[17], hudBox, Color.White);
 
             xBtn.Draw(spriteBatch);
             aBtn.Draw(spriteBatch);
             bBtn.Draw(spriteBatch);
         }
+
+        /// <summary>
+        /// Denna metoden ritar ut karaktären som valts i respektive HUD
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        private void DrawPlayerIcon(SpriteBatch spriteBatch)
+        {
+            if (player is Knight)
+            {
+                spriteBatch.Draw(playerIconTex[0], playerIconRect, Color.White);
+            }
+            else if (player is Barbarian)
+            {
+                spriteBatch.Draw(playerIconTex[1], playerIconRect, Color.White);
+            }
+            else if (player is Druid)
+            {
+                spriteBatch.Draw(playerIconTex[2], playerIconRect, Color.White);
+            }
+            else if (player is Ranger)
+            {
+                spriteBatch.Draw(playerIconTex[3], playerIconRect, Color.White);
+            }
+        }
+        /// <summary>
+        /// Denna metoden Sätter rätt texture till den valda karaktären
+        /// </summary>
+        private void ChoosingPlayerIcon()
+        {
+            playerIconTex[0] = TextureBank.hudTextureList[15];
+            playerIconTex[1] = TextureBank.hudTextureList[13];
+            playerIconTex[2] = TextureBank.hudTextureList[14];
+            playerIconTex[3] = TextureBank.hudTextureList[16];     
+        }
+
     }
 }
