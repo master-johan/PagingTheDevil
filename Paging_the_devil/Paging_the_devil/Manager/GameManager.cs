@@ -38,8 +38,9 @@ namespace Paging_the_devil.Manager
         List<Enemy> enemyList;
 
 
-        int nrOfPlayers; 
+        int nrOfPlayers;
 
+        bool blockSound;
         bool roomManagerCreated;
         bool hudManagerCreated;
 
@@ -59,11 +60,12 @@ namespace Paging_the_devil.Manager
             levelManager = new LevelManager();
 
             enemyList = new List<Enemy>();
+            blockSound = false;
 
             currentState = GameState.MainMenu;
 
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(SoundBank.BgMusicList[0]);
+            MediaPlayer.Play(SoundBank.BgMusicList[1]);
 
             ArrayGenerator();
 
@@ -495,8 +497,30 @@ namespace Paging_the_devil.Manager
                     {
                         a.HitCharacter = playerArray[i];
                         (a.HitCharacter as Player).Hit = true;
+
+                        if(a.HitCharacter is Player)
+                        {
+                            for (int j = 0; j < (a.HitCharacter as Player).abilityList.Count; j++)
+                            {
+                                if ((a.HitCharacter as Player).abilityList[j] is Block)
+                                {
+                                    if (!blockSound && !(a is WebBall))
+                                    {
+                                        SoundBank.SoundEffectList[13].Play();
+                                        blockSound = true;
+                                    }
+                                    else if ((a as WebBall).hasHit)
+                                    {
+                                        SoundBank.SoundEffectList[13].Play();
+                                        (a as WebBall).hasHit = false;
+                                    }
+                                }
+                            }
+                        }
                     }
+                    blockSound = false;
                 }
+               
 
                 foreach (var w in currentRoom.GetWallRectList())
                 {
@@ -511,6 +535,8 @@ namespace Paging_the_devil.Manager
                     toRemove = a;
                 }
             }
+
+            
 
             if (toRemove != null)
             {

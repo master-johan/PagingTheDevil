@@ -1184,3 +1184,15 @@
 /processorParam:TextureFormat=Color
 /build:RootBtn.png
 
+#begin BlockSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:BlockSound.wav
+
+#begin RootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:RootSound.wav
+

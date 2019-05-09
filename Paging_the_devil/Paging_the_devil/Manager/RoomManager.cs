@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Paging_the_devil.GameObject;
 using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.GameObject.Characters;
+using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
@@ -632,12 +633,37 @@ namespace Paging_the_devil.Manager
         {
             if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
             {
-                //for (int i = 0; i < 15; i++)
+                for (int i = 0; i < 5; i++)
+                {
+
+                    SpawnSmallRedDevil();
+
+
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+
+                    SpawnSlime();
+
+
+                }
+                SpawnDevil();
+                SpawnBotSpider();
+                //SpawnLeftSpider();
+                //SpawnRightSpider();
+
+                enemiesSpawned[3, 1] = true;
+            }
+
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
+            {
+                //for (int i = 0; i < 10; i++)
                 //{
-                    
+
                 //    SpawnSmallRedDevil();
-                   
-                    
+
+
                 //}
 
                 //for (int i = 0; i < 2; i++)
@@ -648,103 +674,79 @@ namespace Paging_the_devil.Manager
 
                 //}
 
-                SpawnBotSpider();
-                SpawnLeftSpider();
-                SpawnRightSpider();
-
-                enemiesSpawned[3, 1] = true;
-            }
-
-            if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
-            {
-                for (int i = 0; i < 10; i++)
-                {
-
-                    SpawnSmallRedDevil();
-
-
-                }
-
-                for (int i = 0; i < 2; i++)
-                {
-
-                    SpawnSlime();
-
-
-                }
-
-                SpawnLeftSpider();
-                SpawnBotSpider();
-                enemiesSpawned[2, 1] = true;
+                //SpawnLeftSpider();
+                //SpawnBotSpider();
+                //enemiesSpawned[2, 1] = true;
             }
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 2 && !enemiesSpawned[2, 2])
             {
-                for (int i = 0; i < 10; i++)
-                {
+                //for (int i = 0; i < 10; i++)
+                //{
 
-                    SpawnSmallRedDevil();
-
-
-                }
-
-                for (int i = 0; i < 2; i++)
-                {
-
-                    SpawnSlime();
+                //    SpawnSmallRedDevil();
 
 
-                }
+                //}
 
-                SpawnLeftSpider();
-                SpawnBotSpider();
-                enemiesSpawned[2, 2] = true;
+                //for (int i = 0; i < 2; i++)
+                //{
+
+                //    SpawnSlime();
+
+
+                //}
+
+                //SpawnLeftSpider();
+                //SpawnBotSpider();
+                //enemiesSpawned[2, 2] = true;
             }
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 3 && !enemiesSpawned[2, 3])
             {
 
-                for (int i = 0; i < 15; i++)
-                {
+                //for (int i = 0; i < 15; i++)
+                //{
 
-                    SpawnSmallRedDevil();
-
-
-                }
-
-                for (int i = 0; i < 4; i++)
-                {
-
-                    SpawnSlime();
+                //    SpawnSmallRedDevil();
 
 
-                }
+                //}
 
-                SpawnBotSpider();
-                SpawnRightSpider();
-                SpawnTopSpider();
-                enemiesSpawned[2, 3] = true;
+                //for (int i = 0; i < 4; i++)
+                //{
+
+                //    SpawnSlime();
+
+
+                //}
+
+                //SpawnBotSpider();
+                //SpawnRightSpider();
+                //SpawnTopSpider();
+                //enemiesSpawned[2, 3] = true;
             }
             if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && !enemiesSpawned[2,4])
             {
-                for (int i = 0; i < 10; i++)
-                {
+                MediaPlayer.Play(SoundBank.BgMusicList[2]);
+                //for (int i = 0; i < 10; i++)
+                //{
 
-                    SpawnSmallRedDevil();
-
-
-                }
-
-                for (int i = 0; i < 2; i++)
-                {
-
-                    SpawnSlime();
+                //    SpawnSmallRedDevil();
 
 
-                }
+                //}
 
-                SpawnLeftSpider();
-                SpawnBotSpider();
+                //for (int i = 0; i < 2; i++)
+                //{
+
+                //    SpawnSlime();
+
+
+                //}
+
+                //SpawnLeftSpider();
+                //SpawnBotSpider();
                 SpawnDevil();
                 enemiesSpawned[2, 4] = true;
             }

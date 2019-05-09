@@ -157,7 +157,7 @@ namespace Paging_the_devil.Manager
                     {
 
                         HUDManager = new HUDManager(PlayerArray, nrOfPlayers);
-                        MediaPlayer.Play(SoundBank.BgMusicList[2]);
+                        MediaPlayer.Play(SoundBank.BgMusicList[0]);
                         GameManager.currentState = GameState.StoryScreen;
                         
 

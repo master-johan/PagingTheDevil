@@ -15,6 +15,7 @@ namespace Paging_the_devil.GameObject.Abilities
         float timePassed;
         bool damage;
         public List<Player> playerList;
+        public bool hasHit;
 
         public WebBall(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos, direction)
         {
@@ -22,6 +23,7 @@ namespace Paging_the_devil.GameObject.Abilities
             Damage = ValueBank.WebballDmg;
 
             Active = false;
+            hasHit = false;
 
             playerList = new List<Player>();
         }
@@ -32,7 +34,6 @@ namespace Paging_the_devil.GameObject.Abilities
             {
                 pos += spellDirection * speed;
             }
-
             else
             {
                 rect.Width = 0;
@@ -60,12 +61,12 @@ namespace Paging_the_devil.GameObject.Abilities
             if (HitCharacter != null)
             {
                 Active = true;
-
                 if (!damage)
                 {
                     ApplyDamage();
                     timePassed = 2000;
                     damage = true;
+                    hasHit = true;
                 }
 
                 playerList.Add(HitCharacter as Player);
