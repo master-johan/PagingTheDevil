@@ -632,6 +632,20 @@ namespace Paging_the_devil.Manager
         {
             if (RoomCoordinateX == 3 && RoomCoordinateY == 1 && !enemiesSpawned[3, 1])
             {
+                for (int i = 0; i < 15; i++)
+                {
+
+                    SpawnSmallRedDevil();
+
+                for (int i = 0; i < 3; i++)
+                {
+                    SpawnSlime();
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+                    SpawnSpider();
+                }
                 //for (int i = 0; i < 15; i++)
                 //{
                     
@@ -657,16 +671,26 @@ namespace Paging_the_devil.Manager
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 1 && !enemiesSpawned[2, 1])
             {
+                for (int i = 0; i < 15; i++)
+                {
+                    //SpawnDevil();
+                    //SpawnSpider();
+                    SpawnSmallRedDevil();
+                }
+
+                for (int i = 0; i < 3; i++)
+                {
+                    SpawnSlime();
                 for (int i = 0; i < 10; i++)
                 {
 
                     SpawnSmallRedDevil();
-
-
                 }
 
                 for (int i = 0; i < 2; i++)
                 {
+                    SpawnSpider();
+                }
 
                     SpawnSlime();
 
@@ -680,6 +704,30 @@ namespace Paging_the_devil.Manager
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 2 && !enemiesSpawned[2, 2])
             {
+                for (int i = 0; i < 15; i++)
+                {
+                    //SpawnDevil();
+                    //SpawnSpider();
+                    SpawnSmallRedDevil();
+                    //SpawnDevil();
+                    //SpawnSlime();
+                }
+
+                for (int i = 0; i < 3; i++)
+                {
+                    SpawnSlime();
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    SpawnSpider();
+                }
+                SpawnSmallRedDevil();
+                SpawnSmallRedDevil();
+                SpawnSmallRedDevil();
+                SpawnTopSpider();
+                SpawnTopSpider();
+                SpawnSlime();
                 for (int i = 0; i < 10; i++)
                 {
 
@@ -703,6 +751,25 @@ namespace Paging_the_devil.Manager
 
             if (RoomCoordinateX == 2 && RoomCoordinateY == 3 && !enemiesSpawned[2, 3])
             {
+
+                for (int i = 0; i < 7; i++)
+                {
+                    //SpawnDevil();
+                    //SpawnSpider();
+                    SpawnSmallRedDevil();
+                    //SpawnDevil();
+                    //SpawnSlime();
+                }
+
+                for (int i = 0; i < 3; i++)
+                {
+                    SpawnSlime();
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    SpawnSpider();
+                }
 
                 for (int i = 0; i < 15; i++)
                 {
@@ -729,6 +796,22 @@ namespace Paging_the_devil.Manager
             {
                 for (int i = 0; i < 10; i++)
                 {
+                    //SpawnDevil();
+                    //SpawnSpider();
+                    SpawnSmallRedDevil();
+                    //SpawnDevil();
+                    //SpawnSlime();
+                }
+
+                for (int i = 0; i < 3; i++)
+                {
+                    SpawnSlime();
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    SpawnSpider();
+                }
 
                     SpawnSmallRedDevil();
 

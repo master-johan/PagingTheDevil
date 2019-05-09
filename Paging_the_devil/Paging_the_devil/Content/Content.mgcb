@@ -1184,3 +1184,9 @@
 /processorParam:TextureFormat=Color
 /build:RootBtn.png
 
+#begin BossLaugh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:BossLaugh.wav
+
