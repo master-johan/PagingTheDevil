@@ -632,6 +632,7 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void AddEnemiesToRoom(GameTime gameTime)
         {
+            //Första rummet, OBS inte startrum
             if (RoomReturn(3,1))
             {
                 timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -644,26 +645,27 @@ namespace Paging_the_devil.Manager
                 }
 
             }
-
+            //Andra rummet
             if (RoomReturn(2, 1))
             {
                 Spawner(10, 2, true, true, false, false, false, false, false);
                 enemiesSpawned[2, 1] = true;
             }
-
+            //Tredje rummet
             if (RoomReturn(2, 2))
             {
                 Spawner(12, 3, true, true, true, true, false, false, false);
                 
                 enemiesSpawned[2, 2] = true;
             }
-
+            //Fjärde rummet
             if (RoomReturn(2, 3))
             {
                 Spawner(15, 4, true, true, true, true, true, true, false);
                 
                 enemiesSpawned[2, 3] = true;
             }
+            //Femte rummet
             if (RoomReturn(2, 4))
             {
                 Spawner(10, 2, true, true, false, true, false, true, true);
@@ -687,7 +689,7 @@ namespace Paging_the_devil.Manager
             {
                 if (smallDevil)
                 {
-                  SpawnSmallDevil();
+                  SpawnSmallRedDevil();
                 }
             }
             for (int i = 0; i < secondLoop; i++)
