@@ -32,6 +32,7 @@ namespace Paging_the_devil.Manager
         public static float WebRootTimer;
         public static float BlockTimer;
         public static float RootTimer;
+        public static float HitTimerMax;
 
         public static int DashCooldown;
         public static int HealHarmCooldown;
@@ -125,6 +126,7 @@ namespace Paging_the_devil.Manager
             WebRootTimer = 3000;
             BlockTimer = 3000;
             RootTimer = 2500;
+            HitTimerMax = 350;
 
             //Enemy Speed
             SmallDevilMoveSpeed = 4f;

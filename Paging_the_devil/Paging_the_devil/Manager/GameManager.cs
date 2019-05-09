@@ -437,6 +437,7 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
+                        (a.HitCharacter as Enemy).Hit = true;
                     }
                 }
                 for (int i = 0; i < nrOfPlayers; i++)
@@ -493,6 +494,7 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
                         a.HitCharacter = playerArray[i];
+                        (a.HitCharacter as Player).Hit = true;
                     }
                 }
 
