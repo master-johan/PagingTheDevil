@@ -338,17 +338,17 @@ namespace Paging_the_devil.Manager
             {
                 spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Red);
             }
-            else if (playerArray[1] is Player)
+            if (playerArray[1] is Player)
             {
-                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Blue);
+                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[1].GetRect, Color.Blue);
             }
-            else if (playerArray[2] is Player)
+            if (playerArray[2] is Player)
             {
-                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Green);
+                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[2].GetRect, Color.Green);
             }
-            else if (playerArray[3] is Player)
+            if (playerArray[3] is Player)
             {
-                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Yellow);
+                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[3].GetRect, Color.Yellow);
             }
         }
 
