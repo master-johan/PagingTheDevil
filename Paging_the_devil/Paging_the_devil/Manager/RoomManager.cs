@@ -632,7 +632,6 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void AddEnemiesToRoom(GameTime gameTime)
         {
-
             if (RoomReturn(3,1))
             {
                 timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -649,7 +648,6 @@ namespace Paging_the_devil.Manager
             if (RoomReturn(2, 1))
             {
                 Spawner(10, 2, true, true, false, false, false, false, false);
-
                 enemiesSpawned[2, 1] = true;
             }
 
@@ -682,14 +680,14 @@ namespace Paging_the_devil.Manager
             }
             return false;
         }
-
+      
         private void Spawner(int firstLoop, int secondLoop, bool smallDevil, bool slime, bool spiderTop, bool spiderRight, bool spiderBot, bool spiderLeft, bool devil)
         {
             for (int i = 0; i < firstLoop; i++)
             {
                 if (smallDevil)
                 {
-                    SpawnSmallRedDevil();
+                  SpawnSmallDevil();
                 }
             }
             for (int i = 0; i < secondLoop; i++)
@@ -709,7 +707,7 @@ namespace Paging_the_devil.Manager
             }
             if (spiderLeft)
             {
-                SpawnLeftSpider();
+              SpawnLeftSpider();
             }
             if (spiderBot)
             {

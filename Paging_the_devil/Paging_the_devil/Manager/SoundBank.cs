@@ -37,6 +37,7 @@ namespace Paging_the_devil.Manager
             SoundEffectList.Add(Content.Load<SoundEffect>("TrapHitSound"));//10
             SoundEffectList.Add(Content.Load<SoundEffect>("FlowerPower"));//11
             SoundEffectList.Add(Content.Load<SoundEffect>("HealHarmSound"));//12
+            SoundEffectList.Add(Content.Load<SoundEffect>("BossLaugh"));//13
 
         }
     }

@@ -24,6 +24,7 @@ namespace Paging_the_devil.GameObject.Abilities
         List<Enemy> enemiesHitList;
 
         public bool Active { get; private set; }
+        bool hit;
 
         public Cleave(Texture2D tex, Vector2 pos, Vector2 direction, Character character)
             : base(tex, pos, direction)
@@ -31,10 +32,14 @@ namespace Paging_the_devil.GameObject.Abilities
             this.character = character;
             cleavePos = pos;
 
+
+
+
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
 
             coolDownTime = ValueBank.CleaveCooldown;
             btnTexture = TextureBank.abilityButtonList[4];
+
 
             meleeDirection = DecideDirectionOfCleave(direction);
 
@@ -47,21 +52,16 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Update(GameTime gameTime)
         {
-            if (character is Devil)
+
+
+            if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
+                angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
+                angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
+                angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
             {
-                UpdateDevilCleave(gameTime);
+                Active = false;
             }
 
-            else
-            {
-                if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
-                    angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
-                    angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
-                    angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
-                {
-                    Active = false;
-                }
-            }
             angle -= 0.15f;
 
             Vector2 temp = cleavePos - character.pos;
@@ -195,7 +195,7 @@ namespace Paging_the_devil.GameObject.Abilities
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if(timePassed >= ValueBank.DevilCleaveTimer)
+            if (timePassed >= ValueBank.DevilCleaveTimer)
             {
                 ToRemove = true;
                 Active = false;
