@@ -640,7 +640,7 @@ namespace Paging_the_devil.Manager
 
                 if (timePassed >= 4000)
                 {
-                    Spawner(0, 0, false, false, true, true, true, false, false);
+                    Spawner(0, 0, false, false, true, true, true, false, false); 
                     enemiesSpawned[3, 1] = true;
                     timePassed = 0;
                 }
