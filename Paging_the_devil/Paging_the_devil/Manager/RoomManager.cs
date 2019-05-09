@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Paging_the_devil.GameObject;
 using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.GameObject.Characters;
+using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
@@ -673,7 +674,6 @@ namespace Paging_the_devil.Manager
                 enemiesSpawned[2, 4] = true;
             }
         }
-
         private bool RoomReturn(int first, int second)
         {
             if (RoomCoordinateX == first && RoomCoordinateY == second && !enemiesSpawned[first, second])
@@ -713,6 +713,7 @@ namespace Paging_the_devil.Manager
             }
             if (spiderBot)
             {
+                MediaPlayer.Play(SoundBank.BgMusicList[2]);
                 SpawnBotSpider();
             }
             if (devil)

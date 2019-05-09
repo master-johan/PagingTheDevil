@@ -65,7 +65,7 @@ namespace Paging_the_devil.GameObject.Abilities
             }
 
             if (HitCharacter != null)
-            {
+            {                
                 HitCharacter.HealthPoints = health;
             }
 

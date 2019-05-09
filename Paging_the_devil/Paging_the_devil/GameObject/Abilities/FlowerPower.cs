@@ -64,7 +64,6 @@ namespace Paging_the_devil.GameObject.Abilities
 
             hit = true;
             Active = true;
-
             if (hit)
             {
                 FlowerPowerHeal(gameTime);
@@ -75,7 +74,9 @@ namespace Paging_the_devil.GameObject.Abilities
         {
             spriteBatch.Draw(tex, healPos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
         }
-
+        /// <summary>
+        /// Den här metoden sköter healen (FlowerPower) 
+        /// </summary>
         private void FlowerPowerHeal(GameTime gameTime)
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
