@@ -415,20 +415,6 @@ namespace Paging_the_devil.Manager
                     }
                 }
 
-                //foreach (var e in enemyList)
-                //{
-                //    foreach (var a in e.enemyAbilityList)
-                //    {
-                //        if (a.GetRect.Intersects(playerArray[i].GetRect))
-                //        {
-                //            a.ToRemove = true;
-                //        }
-                //        if (a.ToRemove == true)
-                //        {
-                //            toRemove = a;
-                //        }
-                //    }
-                //}
                 if (toRemove != null)
                 {
                     playerArray[i].abilityList.Remove(toRemove);
