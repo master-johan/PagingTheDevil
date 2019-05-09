@@ -177,7 +177,7 @@ namespace Paging_the_devil.Manager
                     UpdatePlayersDirection();
                     CharacterÚpdate(gameTime);
                     DeleteAbilities();
-                    roomManager.Update();
+                    roomManager.Update(gameTime);
 
                     break;
             }
