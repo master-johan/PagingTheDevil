@@ -33,7 +33,7 @@ namespace Paging_the_devil.GameObject.Abilities
             cleavePos = pos;
 
 
-      
+
 
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
 
@@ -52,57 +52,16 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Update(GameTime gameTime)
         {
-            //if (character is Devil)
-            //{
-            //    rect.X = (int)character.pos.X - tex.Width / 2;
-            //    rect.Y = (int)character.pos.Y - tex.Height / 2;
 
-            //    Vector2 devilTemp = cleavePos - character.pos;
-            //    cleavePos -= devilTemp;
-            //    if (HitCharacter != null)
-            //    {
-            //        bool hasHitBefore = false;
-            //        foreach (var p in playerList)
-            //        {
-            //            if (HitCharacter is Player)
-            //            {
-            //                if (HitCharacter == p)
-            //                {
-            //                    hasHitBefore = true;
-            //                }
-            //            }
-            //        }
-            //        if (!hasHitBefore)
-            //        {
-            //            if (HitCharacter is Player)
-            //            {
-            //                ApplyDamage();
-            //                playerList.Add(HitCharacter as Player);
-            //            }
-            //        }
-            //    }
 
-            //    hit = true;
-            //    Active = true;
-
-            //    if (hit)
-            //    {
-            //        UpdateDevilCleave(gameTime);
-            //    }
-
-                
-            //}
-
-            
+            if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
+                angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
+                angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
+                angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
             {
-                if (angle < MathHelper.ToRadians(-180f) && meleeDirection == up ||
-                    angle < MathHelper.ToRadians(-270f) && meleeDirection == left ||
-                    angle < MathHelper.ToRadians(-360f) && meleeDirection == down ||
-                    angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
-                {
-                    Active = false;
-                }
+                Active = false;
             }
+
             angle -= 0.15f;
 
             Vector2 temp = cleavePos - character.pos;
@@ -237,7 +196,7 @@ namespace Paging_the_devil.GameObject.Abilities
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if(timePassed >= ValueBank.DevilCleaveTimer)
+            if (timePassed >= ValueBank.DevilCleaveTimer)
             {
                 ToRemove = true;
                 Active = false;
