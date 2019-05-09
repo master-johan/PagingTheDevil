@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Paging_the_devil.GameObject;
 using Paging_the_devil.GameObject.EnemyFolder;
 using Paging_the_devil.GameObject.Characters;
+using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
@@ -668,12 +669,12 @@ namespace Paging_the_devil.Manager
             //Femte rummet
             if (RoomReturn(2, 4))
             {
+                MediaPlayer.Play(SoundBank.BgMusicList[2]);
                 Spawner(10, 2, true, true, false, true, false, true, true);
                 
                 enemiesSpawned[2, 4] = true;
             }
         }
-
         private bool RoomReturn(int first, int second)
         {
             if (RoomCoordinateX == first && RoomCoordinateY == second && !enemiesSpawned[first, second])

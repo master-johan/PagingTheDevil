@@ -11,12 +11,13 @@ namespace Paging_the_devil.GameObject.Abilities
         float originalSpeed;
         float calculatedSpeed;
         float timePassed;
+        float noHitTimer;
        
         public Trap(Texture2D tex, Vector2 pos, Vector2 direction) : base(tex, pos, direction)
         {
             Damage = ValueBank.TrapDmg;
 
-            coolDownTime = 40;
+            coolDownTime = ValueBank.TrapCooldown;
             Active = true;
 
             btnTexture = TextureBank.abilityButtonList[2];
@@ -46,6 +47,11 @@ namespace Paging_the_devil.GameObject.Abilities
                 timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 SlowEffect();
             }
+            else if (HitCharacter == null)
+            {
+                noHitTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                RemoveTrap();
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
@@ -61,6 +67,16 @@ namespace Paging_the_devil.GameObject.Abilities
             if (timePassed >= ValueBank.TrapTimer)
             {
                 (HitCharacter as Enemy).MovementSpeed = (int)originalSpeed;
+                ToRemove = true;
+            }
+        }
+        /// <summary>
+        /// Den här metoden tar bort trappen om den inte träffar en fiende
+        /// </summary>
+        private void RemoveTrap()
+        {
+            if (noHitTimer >=ValueBank.TrapNoHitTimer)
+            {
                 ToRemove = true;
             }
         }
