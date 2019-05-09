@@ -317,6 +317,8 @@ namespace Paging_the_devil.Manager
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerArray[i].Draw(spriteBatch);
+
+                DrawPlayerRing(spriteBatch);
             }
 
             foreach (var e in enemyList)
@@ -324,6 +326,30 @@ namespace Paging_the_devil.Manager
                 e.Draw(spriteBatch);
             }
         }
+        /// <summary>
+        /// Denna metod ritar ut en player ring under spelaren.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        private void DrawPlayerRing(SpriteBatch spriteBatch)
+        {
+            if (playerArray[0] is Player)
+            {
+                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Red);
+            }
+            else if (playerArray[1] is Player)
+            {
+                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Blue);
+            }
+            else if (playerArray[2] is Player)
+            {
+                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Green);
+            }
+            else if (playerArray[3] is Player)
+            {
+                spriteBatch.Draw(TextureBank.playerTextureList[4], playerArray[0].GetRect, Color.Yellow);
+            }
+        }
+
         /// <summary>
         /// Den här metoden ansluter en kontroll.
         /// </summary>
