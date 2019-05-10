@@ -15,6 +15,7 @@ namespace Paging_the_devil.Manager
         public static float BarbarianHealth;
         public static float KnightHealth;
         public static float SmallDevilHealth;
+        public static float DevilHealth;
         public static float SlimeHealth;
         public static float SmallDevilIdleMoveSpeed;
         public static float SlimeSpeed;
@@ -82,6 +83,7 @@ namespace Paging_the_devil.Manager
             SmallDevilHealth = 10;
             SlimeHealth = 15;
             WallSpiderHealth = 10;
+            DevilHealth = 100;
 
             //Ability Cooldown
             DashCooldown = 40;
