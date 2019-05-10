@@ -101,8 +101,24 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
             else
             {
-                direction = new Vector2(-1, 0);
-                direction.Normalize();
+                if (pos.X <= 50)
+                {
+                    direction.X = 1;
+                    direction.Normalize();
+                }
+                else if (pos.X >= 1850)
+                {
+                    direction.X = -1;
+                    direction.Normalize();
+                }
+                if (pos.Y >= 980)
+                {
+                    direction.Y = -1;
+                }
+                else if (pos.Y <= ValueBank.GameWindowStartY + 80)
+                {
+                    direction.Y = 1;
+                }
             }
 
             pos += direction * MovementSpeed;
