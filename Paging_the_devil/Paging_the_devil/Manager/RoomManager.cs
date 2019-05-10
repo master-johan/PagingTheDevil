@@ -62,14 +62,14 @@ namespace Paging_the_devil.Manager
             DeclareGateways();
             ShowGateways();
             enemiesSpawned = new bool[5, 5];
-          
+
             clear = true;
             SettingMaxAndMinValues();
 
             TargetDummySpawnPos = new Vector2(1700, 200);
         }
 
-       
+
 
         public void Update(GameTime gameTime)
         {
@@ -323,7 +323,7 @@ namespace Paging_the_devil.Manager
 
             Vector2 north = new Vector2(CurrentRoom.GetWallRectList()[0].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[0].Y);
             Vector2 south = new Vector2(CurrentRoom.GetWallRectList()[1].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[1].Y - halfPortalSize);
-            Vector2 west = new Vector2(CurrentRoom.GetWallRectList()[2].X , CurrentRoom.GetWallRectList()[2].Height/ 2);
+            Vector2 west = new Vector2(CurrentRoom.GetWallRectList()[2].X, CurrentRoom.GetWallRectList()[2].Height / 2);
             Vector2 east = new Vector2(CurrentRoom.GetWallRectList()[3].X - halfPortalSize, CurrentRoom.GetWallRectList()[3].Height / 2);
 
             gatewayNorth = new Gateway(TextureBank.roomTextureList[0], north);
@@ -342,7 +342,7 @@ namespace Paging_the_devil.Manager
                 //Ifall man står i y0 och x0 koordinat.
                 if (RoomCoordinateY == 0)
                 {
-                    if (currentLevel[RoomCoordinateX,RoomCoordinateY + 1].AllowedRoom)
+                    if (currentLevel[RoomCoordinateX, RoomCoordinateY + 1].AllowedRoom)
                     {
                         gatewaySouth.IsVisible = true;
                     }
@@ -404,7 +404,7 @@ namespace Paging_the_devil.Manager
                 //Ifall man står i x4 och y0 koordinat.
                 if (RoomCoordinateY == 0)
                 {
-                    if (currentLevel[RoomCoordinateX,RoomCoordinateY + 1].AllowedRoom)
+                    if (currentLevel[RoomCoordinateX, RoomCoordinateY + 1].AllowedRoom)
                     {
                         gatewaySouth.IsVisible = true;
                     }
@@ -479,7 +479,7 @@ namespace Paging_the_devil.Manager
                 //Ifall man står i x1,x2,x3 och y4 koordinat.
                 else if (RoomCoordinateY == 4)
                 {
-                    if (currentLevel[RoomCoordinateX,RoomCoordinateY - 1].AllowedRoom)
+                    if (currentLevel[RoomCoordinateX, RoomCoordinateY - 1].AllowedRoom)
                     {
                         gatewayNorth.IsVisible = true;
                     }
@@ -566,39 +566,37 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
+                if (playerArray[i].GetRect.Intersects(gatewaySouth.GetRect) && gatewaySouth.IsVisible)
                 {
-                    //Tar bort fienderna ur listan när man går nedåt eftersom targetdummy måste tas bort när man går ur första rummet
-                    //där dörren är south.
-                    enemyList.Clear();
-                    RoomCoordinateY += 1;
-                    temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
+                    {
+                        //Tar bort fienderna ur listan när man går nedåt eftersom targetdummy måste tas bort när man går ur första rummet
+                        //där dörren är south.
+                        enemyList.Clear();
+                        RoomCoordinateY += 1;
+                        temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
+                    }
                 }
-            else if (playerArray[0].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
-            {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
+                else if (playerArray[i].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
                 {
-                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                     {
                         RoomCoordinateY -= 1;
                         temp = new Vector2(gatewaySouth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureBank.roomTextureList[0].Height / 2 - 25);
                     }
                 }
-            else if (playerArray[0].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
-            {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
+
+                else if (playerArray[i].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
                 {
-                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                     {
                         RoomCoordinateX += 1;
                         temp = new Vector2(gatewayWest.pos.X + TextureBank.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureBank.roomTextureList[0].Height / 2);
                     }
                 }
-            else if (playerArray[0].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
-            {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
+                else if (playerArray[i].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
                 {
-                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                     {
                         RoomCoordinateX -= 1;
                         temp = new Vector2(gatewayEast.pos.X + TextureBank.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureBank.roomTextureList[0].Height / 2);
@@ -697,20 +695,20 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void AddEnemiesToRoom(GameTime gameTime)
         {
-            if(RoomReturn(3,0))
+            if (RoomReturn(3, 0))
             {
                 Spawner(0, 0, false, false, false, false, false, false, false, true);
 
                 enemiesSpawned[3, 0] = true;
             }
             //Första rummet, OBS inte startrum
-            if (RoomReturn(3,1))
+            if (RoomReturn(3, 1))
             {
                 timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
                 if (timePassed >= 4000)
                 {
-                    Spawner(4, 0, true, false, false, false, false, false, true); 
+                    Spawner(0, 0, false, false, false, false, false, false, false, true);
                     enemiesSpawned[3, 1] = true;
                     timePassed = 0;
                 }
@@ -725,14 +723,14 @@ namespace Paging_the_devil.Manager
             if (RoomReturn(2, 2))
             {
                 Spawner(12, 3, true, true, true, false, false, false, false, false);
-                
+
                 enemiesSpawned[2, 2] = true;
             }
             //Fjärde rummet
             if (RoomReturn(2, 3))
             {
                 Spawner(15, 4, true, true, false, true, false, true, false, false);
-                
+
                 enemiesSpawned[2, 3] = true;
             }
             //Femte rummet
@@ -740,7 +738,7 @@ namespace Paging_the_devil.Manager
             {
                 MediaPlayer.Play(SoundBank.BgMusicList[2]);
                 Spawner(10, 2, true, true, false, true, false, true, true, false);
-                
+
                 enemiesSpawned[2, 4] = true;
             }
         }
@@ -752,14 +750,14 @@ namespace Paging_the_devil.Manager
             }
             return false;
         }
-      
+
         private void Spawner(int firstLoop, int secondLoop, bool smallDevil, bool slime, bool spiderTop, bool spiderRight, bool spiderBot, bool spiderLeft, bool devil, bool targetDummy)
         {
             for (int i = 0; i < firstLoop; i++)
             {
                 if (smallDevil)
                 {
-                  SpawnSmallRedDevil();
+                    SpawnSmallRedDevil();
                 }
             }
             for (int i = 0; i < secondLoop; i++)
@@ -779,7 +777,7 @@ namespace Paging_the_devil.Manager
             }
             if (spiderLeft)
             {
-              SpawnLeftSpider();
+                SpawnLeftSpider();
             }
             if (spiderBot)
             {
@@ -789,7 +787,7 @@ namespace Paging_the_devil.Manager
             {
                 SpawnDevil();
             }
-            if(targetDummy)
+            if (targetDummy)
             {
                 SpawnTargetDummy();
             }
