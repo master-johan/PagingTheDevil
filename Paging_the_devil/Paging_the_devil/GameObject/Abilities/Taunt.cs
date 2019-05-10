@@ -30,11 +30,11 @@ namespace Paging_the_devil.GameObject.Abilities
 
             enemyList = new List<Enemy>();
 
-            rect = new Rectangle((int)pos.X - tex.Width / 2, (int)pos.Y - tex.Height / 2, 400, 400);
+            rect = new Rectangle((int)pos.X - tex.Width / 2, (int)pos.Y - tex.Height / 2, 600, 600);
 
             tauntColor = new Color(255, 255, 255, 255);
             btnTexture = TextureBank.abilityButtonList[8];
-            coolDownTime = 600;
+            coolDownTime = 50;
         }
 
         public override void Update(GameTime gameTime)
@@ -58,7 +58,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 600, 600), tauntColor, 0, new Vector2(300, 300), 1, SpriteEffects.None, 1);
         }
 
         private void Taunted(GameTime gameTime)
