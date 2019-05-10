@@ -52,7 +52,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             scale = 2f;
             spriteCount = 12;
             spriteWidth = tex.Width;
-            HealthPoints = ValueBank.SlimeHealth * 5;
+            HealthPoints = ValueBank.DevilHealth;
             temp = Vector2.Zero;
             oldDistance = int.MaxValue;
 
