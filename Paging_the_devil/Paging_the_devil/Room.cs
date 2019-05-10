@@ -47,7 +47,7 @@ namespace Paging_the_devil
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureBank.roomTextureList[3], roomFloor, color);
+            spriteBatch.Draw(TextureBank.roomTextureList[3], roomFloor, null, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0.0f);
             if (gateWayList.Count > 0)
             {
                 foreach (var g in gateWayList)

@@ -85,7 +85,7 @@ namespace Paging_the_devil.GameObject.Abilities
         {
             if (Active)
             {
-                spriteBatch.Draw(tex, cleavePos, sourceRect, Color.White, angle, new Vector2(-40, tex.Height / 2), 1, SpriteEffects.None, 1);
+                spriteBatch.Draw(tex, cleavePos, sourceRect, Color.White, angle, new Vector2(-40, tex.Height / 2), 1, SpriteEffects.None, 0.1f);
                 //spriteBatch.Draw(tex, rect, Color.Black);
             }     
         }

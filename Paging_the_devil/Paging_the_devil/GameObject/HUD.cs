@@ -83,13 +83,13 @@ namespace Paging_the_devil.GameObject
 
         public void Draw(SpriteBatch spriteBatch, Texture2D tex)
         {
-            spriteBatch.Draw(tex, hudBox, Color.White);
+            spriteBatch.Draw(tex, hudBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
 
             DrawPlayerIcon(spriteBatch);
 
-            spriteBatch.Draw(TextureBank.hudTextureList[18], healthBar, Color.White);
-            spriteBatch.Draw(TextureBank.hudTextureList[3], btnY, Color.White);
-            spriteBatch.Draw(TextureBank.hudTextureList[17], hudBox, Color.White);
+            spriteBatch.Draw(TextureBank.hudTextureList[18], healthBar, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+            spriteBatch.Draw(TextureBank.hudTextureList[3], btnY, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+            spriteBatch.Draw(TextureBank.hudTextureList[17], hudBox, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
 
             xBtn.Draw(spriteBatch);
             aBtn.Draw(spriteBatch);
@@ -104,19 +104,19 @@ namespace Paging_the_devil.GameObject
         {
             if (player is Knight)
             {
-                spriteBatch.Draw(playerIconTex[0], playerIconRect, Color.White);
+                spriteBatch.Draw(playerIconTex[0], playerIconRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (player is Barbarian)
             {
-                spriteBatch.Draw(playerIconTex[1], playerIconRect, Color.White);
+                spriteBatch.Draw(playerIconTex[1], playerIconRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (player is Druid)
             {
-                spriteBatch.Draw(playerIconTex[2], playerIconRect, Color.White);
+                spriteBatch.Draw(playerIconTex[2], playerIconRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
             else if (player is Ranger)
             {
-                spriteBatch.Draw(playerIconTex[3], playerIconRect, Color.White);
+                spriteBatch.Draw(playerIconTex[3], playerIconRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
             }
         }
         /// <summary>

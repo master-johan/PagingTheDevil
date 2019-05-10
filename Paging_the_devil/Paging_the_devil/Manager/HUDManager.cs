@@ -35,7 +35,7 @@ namespace Paging_the_devil.Manager
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureBank.menuTextureList[3], hudBackground, Color.Black);
+            spriteBatch.Draw(TextureBank.menuTextureList[3], hudBackground, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
 
             CreateHuds(spriteBatch);
         }

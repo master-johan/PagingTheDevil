@@ -58,7 +58,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 0.1f);
         }
 
         private void Taunted(GameTime gameTime)

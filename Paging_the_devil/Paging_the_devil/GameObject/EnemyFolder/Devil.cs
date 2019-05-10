@@ -94,11 +94,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             base.Draw(spriteBatch);
 
-            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(drawRect.Width / 2, drawRect.Height / 2), 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, 0, new Vector2(drawRect.Width / 2, drawRect.Height / 2), 1, SpriteEffects.None, 0.3f);
 
             if (Hit)
             {
-                spriteBatch.Draw(tex, pos, drawRect, Color.Red, 0, new Vector2(drawRect.Width / 2, drawRect.Height / 2), 1, SpriteEffects.None, 0);
+                spriteBatch.Draw(tex, pos, drawRect, Color.Red, 0, new Vector2(drawRect.Width / 2, drawRect.Height / 2), 1, SpriteEffects.None, 0.3f);
             }
         }
         protected override void Movement(GameTime gameTime)

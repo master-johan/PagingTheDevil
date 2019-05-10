@@ -55,7 +55,7 @@ namespace Paging_the_devil.GameObject.Abilities
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, Color.White);
+            base.Draw(spriteBatch);
         }
         /// <summary>
         /// Den här metoden sköter slow

@@ -85,7 +85,6 @@ namespace Paging_the_devil.GameObject.Abilities
             if (!Active)
             {
                 base.Draw(spriteBatch);
-                spriteBatch.Draw(TextureBank.hudTextureList[1], rect, Color.White);
             }
         }
         /// <summary>

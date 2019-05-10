@@ -43,7 +43,7 @@ namespace Paging_the_devil
         }
         protected override void Draw(GameTime gameTime)
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
             gameManager.Draw(spriteBatch);
             
             spriteBatch.End();

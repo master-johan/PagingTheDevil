@@ -73,10 +73,10 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         {
             base.Draw(spriteBatch);
 
-            spriteBatch.Draw(tex, pos, Color.White);
+            spriteBatch.Draw(tex, pos, null, Color.White, 0, Vector2.Zero, 1,SpriteEffects.None, 0.3f);
             if (Hit)
             {
-                spriteBatch.Draw(tex, pos, Color.Red);
+                spriteBatch.Draw(tex, pos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
             }
         }  
         /// <summary>
