@@ -15,18 +15,18 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         Vector2 distanceDifference;
 
         int nrOfPlayer;
-        int frame;
-        int spriteCount;
-        int spriteWidth;
+        protected int frame;
+        protected int spriteCount;
+        protected int spriteWidth;
 
-        float scale;
+        protected float scale;
         float oldDistance;
         float currentDistance;
 
-        double timer;
-        double interval;
+        protected double timer;
+        protected double interval;
 
-        public float Damage { get; private set; }
+        public float Damage { get; protected set; }
 
         public Slime(Texture2D tex, Vector2 pos, Player[] playerArray, int nrOfPlayer) : base(tex, pos)
         {

@@ -24,13 +24,24 @@ namespace Paging_the_devil.Manager
         Gateway gatewayEast;
         Gateway gatewayWest;
 
+        Vector2 TargetDummySpawnPos;
+
         int RoomCoordinateX;
         int RoomCoordinateY;
         int nrOfPlayers;
-        int maxY;
-        int maxX;
-        int minY;
-        int minX;
+        int spawnSpiderMaxY;
+        int spawnSpiderMaxX;
+        int spawnSpiderMinY;
+        int spawnSpiderMinX;
+        int spawnSlimeMaxX;
+        int spawnSlimeMinX;
+        int spawnSlimeMaxY;
+        int spawnSlimeMinY;
+        int spawnSmallDevilMaxX;
+        int spawnSmallDevilMinX;
+        int spawnSmallDevilMaxY;
+        int spawnSmallDevilMinY;
+
 
         float timePassed;
 
@@ -51,13 +62,14 @@ namespace Paging_the_devil.Manager
             DeclareGateways();
             ShowGateways();
             enemiesSpawned = new bool[5, 5];
-
-            maxX = 1875;
-            maxY = 1030;
-            minX = 35;
-            minY = 175;
+          
             clear = true;
+            SettingMaxAndMinValues();
+
+            TargetDummySpawnPos = new Vector2(1700, 200);
         }
+
+       
 
         public void Update(GameTime gameTime)
         {
@@ -89,6 +101,24 @@ namespace Paging_the_devil.Manager
             {
                 gatewayWest.Draw(spriteBatch);
             }
+        }
+        /// <summary>
+        /// Den här metoden sätter alla max och min värden för fienders spawn position.
+        /// </summary>
+        private void SettingMaxAndMinValues()
+        {
+            spawnSpiderMaxX = 1875;
+            spawnSpiderMaxY = 1030;
+            spawnSpiderMinX = 35;
+            spawnSpiderMinY = 175;
+            spawnSlimeMaxX = 1500;
+            spawnSlimeMinX = 350;
+            spawnSlimeMaxY = 700;
+            spawnSlimeMinY = 400;
+            spawnSmallDevilMaxX = 1800;
+            spawnSmallDevilMinX = 70;
+            spawnSmallDevilMaxY = 950;
+            spawnSmallDevilMinY = 200;
         }
         /// <summary>
         /// Den här metoden hanterar kollisionen mellan spelare och väggar.
@@ -536,16 +566,17 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (playerArray[i].GetRect.Intersects(gatewaySouth.GetRect) && gatewaySouth.IsVisible)
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                 {
-                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
-                    {
-                        RoomCoordinateY += 1;
-                        temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
-                    }
+                    //Tar bort fienderna ur listan när man går nedåt eftersom targetdummy måste tas bort när man går ur första rummet
+                    //där dörren är south.
+                    enemyList.Clear();
+                    RoomCoordinateY += 1;
+                    temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
                 }
-
-                else if (playerArray[i].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
+            else if (playerArray[0].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
+            {
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                 {
                     if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                     {
@@ -553,8 +584,9 @@ namespace Paging_the_devil.Manager
                         temp = new Vector2(gatewaySouth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureBank.roomTextureList[0].Height / 2 - 25);
                     }
                 }
-
-                else if (playerArray[i].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
+            else if (playerArray[0].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
+            {
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                 {
                     if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                     {
@@ -562,8 +594,9 @@ namespace Paging_the_devil.Manager
                         temp = new Vector2(gatewayWest.pos.X + TextureBank.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureBank.roomTextureList[0].Height / 2);
                     }
                 }
-
-                else if (playerArray[i].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
+            else if (playerArray[0].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
+            {
+                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                 {
                     if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
                     {
@@ -616,8 +649,8 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void SpawnSmallRedDevil()
         {
-            int x = ValueBank.rand.Next(40, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 40);
-            int y = ValueBank.rand.Next(180, ValueBank.WindowSizeY - TextureBank.enemyTextureList[0].Height - 40);
+            int x = ValueBank.rand.Next(spawnSmallDevilMinX, spawnSmallDevilMaxX);
+            int y = ValueBank.rand.Next(spawnSmallDevilMinY, spawnSmallDevilMaxY);
 
             enemyList.Add(new SmallDevil(TextureBank.enemyTextureList[0], new Vector2(x, y), playerArray, nrOfPlayers));
         }
@@ -626,27 +659,27 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void SpawnSlime()
         {
-            int x = ValueBank.rand.Next(40, ValueBank.WindowSizeX - TextureBank.enemyTextureList[0].Width - 40);
-            int y = ValueBank.rand.Next(120, ValueBank.WindowSizeY - TextureBank.enemyTextureList[0].Height - 40);
+            int x = ValueBank.rand.Next(spawnSlimeMinX, spawnSlimeMaxX);
+            int y = ValueBank.rand.Next(spawnSlimeMinY, spawnSlimeMaxY);
 
             enemyList.Add(new Slime(TextureBank.enemyTextureList[1], new Vector2(x, y), playerArray, nrOfPlayers));
         }
 
         private void SpawnTopSpider()
         {
-            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(minX, minY), playerArray, nrOfPlayers));
+            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(spawnSpiderMinX, spawnSpiderMinY), playerArray, nrOfPlayers));
         }
         private void SpawnBotSpider()
         {
-            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(maxX, maxY), playerArray, nrOfPlayers));
+            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(spawnSpiderMaxX, spawnSpiderMaxY), playerArray, nrOfPlayers));
         }
         private void SpawnLeftSpider()
         {
-            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(minX, maxY), playerArray, nrOfPlayers));
+            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(spawnSpiderMinX, spawnSpiderMaxY), playerArray, nrOfPlayers));
         }
         private void SpawnRightSpider()
         {
-            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(maxX, minY), playerArray, nrOfPlayers));
+            enemyList.Add(new WallSpider(TextureBank.enemyTextureList[2], new Vector2(spawnSpiderMaxX, spawnSpiderMinY), playerArray, nrOfPlayers));
         }
         private void SpawnDevil()
         {
@@ -654,13 +687,22 @@ namespace Paging_the_devil.Manager
             int y = ValueBank.WindowSizeY / 2 + ValueBank.GameWindowStartY;
 
             enemyList.Add(new Devil(TextureBank.enemyTextureList[3], new Vector2(x, y), playerArray, nrOfPlayers));
-
+        }
+        private void SpawnTargetDummy()
+        {
+            enemyList.Add(new TargetDummy(TextureBank.enemyTextureList[4], TargetDummySpawnPos, playerArray, nrOfPlayers));
         }
         /// <summary>
         /// Den här metoden lägger till fiender till rummen
         /// </summary>
         private void AddEnemiesToRoom(GameTime gameTime)
         {
+            if(RoomReturn(3,0))
+            {
+                Spawner(0, 0, false, false, false, false, false, false, false, true);
+
+                enemiesSpawned[3, 0] = true;
+            }
             //Första rummet, OBS inte startrum
             if (RoomReturn(3,1))
             {
@@ -672,25 +714,24 @@ namespace Paging_the_devil.Manager
                     enemiesSpawned[3, 1] = true;
                     timePassed = 0;
                 }
-
             }
             //Andra rummet
             if (RoomReturn(2, 1))
             {
-                Spawner(10, 2, true, true, false, false, false, false, false);
+                Spawner(10, 2, true, true, false, false, false, false, false, false);
                 enemiesSpawned[2, 1] = true;
             }
             //Tredje rummet
             if (RoomReturn(2, 2))
             {
-                Spawner(12, 3, true, true, true, false, false, false, false);
+                Spawner(12, 3, true, true, true, false, false, false, false, false);
                 
                 enemiesSpawned[2, 2] = true;
             }
             //Fjärde rummet
             if (RoomReturn(2, 3))
             {
-                Spawner(15, 4, true, true, false, true, false, true, false);
+                Spawner(15, 4, true, true, false, true, false, true, false, false);
                 
                 enemiesSpawned[2, 3] = true;
             }
@@ -698,7 +739,7 @@ namespace Paging_the_devil.Manager
             if (RoomReturn(2, 4))
             {
                 MediaPlayer.Play(SoundBank.BgMusicList[2]);
-                Spawner(10, 2, true, true, false, true, false, true, true);
+                Spawner(10, 2, true, true, false, true, false, true, true, false);
                 
                 enemiesSpawned[2, 4] = true;
             }
@@ -712,7 +753,7 @@ namespace Paging_the_devil.Manager
             return false;
         }
       
-        private void Spawner(int firstLoop, int secondLoop, bool smallDevil, bool slime, bool spiderTop, bool spiderRight, bool spiderBot, bool spiderLeft, bool devil)
+        private void Spawner(int firstLoop, int secondLoop, bool smallDevil, bool slime, bool spiderTop, bool spiderRight, bool spiderBot, bool spiderLeft, bool devil, bool targetDummy)
         {
             for (int i = 0; i < firstLoop; i++)
             {
@@ -747,6 +788,10 @@ namespace Paging_the_devil.Manager
             if (devil)
             {
                 SpawnDevil();
+            }
+            if(targetDummy)
+            {
+                SpawnTargetDummy();
             }
         }
     }

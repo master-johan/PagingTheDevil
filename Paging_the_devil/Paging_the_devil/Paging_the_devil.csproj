@@ -59,6 +59,7 @@
     <Compile Include="GameObject\EnemyFolder\Enemy.cs" />
     <Compile Include="GameObject\EnemyFolder\Slime.cs" />
     <Compile Include="GameObject\EnemyFolder\SmallDevil.cs" />
+    <Compile Include="GameObject\EnemyFolder\TargetDummy.cs" />
     <Compile Include="GameObject\EnemyFolder\WallSpider.cs" />
     <Compile Include="GameObject\Abilities\Healharm.cs" />
     <Compile Include="GameObject\HUD.cs" />

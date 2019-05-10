@@ -31,7 +31,7 @@ namespace Paging_the_devil.GameObject.Abilities
             this.player = player;
 
             Active = false;
-            btnTexture = TextureBank.hudTextureList[7];
+            btnTexture = TextureBank.abilityButtonList[10];
 
             width = 59;
             height = 61;
