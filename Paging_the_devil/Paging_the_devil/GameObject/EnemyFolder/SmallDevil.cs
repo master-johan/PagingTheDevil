@@ -127,7 +127,26 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 }
                 temp = direction;
             }
-
+            if (pos.X <= 50)
+            {
+                temp.X = 1;
+                direction.Normalize();
+            }
+            else if (pos.X >= 1850)
+            {
+                temp.X = -1;
+                direction.Normalize();
+            }
+            if (pos.Y >= 980)
+            {
+                temp.Y = -1;
+                direction.Normalize();
+            }
+            else if (pos.Y <= ValueBank.GameWindowStartY + 80)
+            {
+                temp.Y = 1;
+                direction.Normalize();
+            }
             pos += temp * MovementSpeed;
         }
         /// <summary>

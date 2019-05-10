@@ -559,6 +559,10 @@ namespace Paging_the_devil.Manager
                         }
                     }
                     blockSound = false;
+                    if (a is DevilCleave)
+                    {
+                        (a as DevilCleave).playerList.Add(playerArray[i]);
+                    }
                 }
                
 

@@ -35,6 +35,7 @@ namespace Paging_the_devil.Manager
         float timePassed;
 
         bool[,] enemiesSpawned;
+        bool clear;
 
         public Room CurrentRoom { get; set; }
 
@@ -55,6 +56,7 @@ namespace Paging_the_devil.Manager
             maxY = 1030;
             minX = 35;
             minY = 175;
+            clear = true;
         }
 
         public void Update(GameTime gameTime)
@@ -63,6 +65,7 @@ namespace Paging_the_devil.Manager
             GoIntoGateway();
             AddEnemiesToRoom(gameTime);
             enemyCollisionWithWalls();
+            SpawnPlayers();
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -531,39 +534,42 @@ namespace Paging_the_devil.Manager
             int tempY = RoomCoordinateY;
             Vector2 temp = Vector2.Zero;
 
-            if (playerArray[0].GetRect.Intersects(gatewaySouth.GetRect) && gatewaySouth.IsVisible)
+            for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                if (playerArray[i].GetRect.Intersects(gatewaySouth.GetRect) && gatewaySouth.IsVisible)
                 {
-                    RoomCoordinateY += 1;
-                    temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                    {
+                        RoomCoordinateY += 1;
+                        temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
+                    }
                 }
-            }
 
-            else if (playerArray[0].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
-            {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                else if (playerArray[i].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
                 {
-                    RoomCoordinateY -= 1;
-                    temp = new Vector2(gatewaySouth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureBank.roomTextureList[0].Height / 2 - 25);
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                    {
+                        RoomCoordinateY -= 1;
+                        temp = new Vector2(gatewaySouth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureBank.roomTextureList[0].Height / 2 - 25);
+                    }
                 }
-            }
 
-            else if (playerArray[0].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
-            {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                else if (playerArray[i].GetRect.Intersects(gatewayEast.GetRect) && gatewayEast.IsVisible)
                 {
-                    RoomCoordinateX += 1;
-                    temp = new Vector2(gatewayWest.pos.X + TextureBank.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureBank.roomTextureList[0].Height / 2);
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                    {
+                        RoomCoordinateX += 1;
+                        temp = new Vector2(gatewayWest.pos.X + TextureBank.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureBank.roomTextureList[0].Height / 2);
+                    }
                 }
-            }
 
-            else if (playerArray[0].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
-            {
-                if (playerArray[0].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                else if (playerArray[i].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
                 {
-                    RoomCoordinateX -= 1;
-                    temp = new Vector2(gatewayEast.pos.X + TextureBank.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureBank.roomTextureList[0].Height / 2);
+                    if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0)
+                    {
+                        RoomCoordinateX -= 1;
+                        temp = new Vector2(gatewayEast.pos.X + TextureBank.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureBank.roomTextureList[0].Height / 2);
+                    }
                 }
             }
 
@@ -581,6 +587,28 @@ namespace Paging_the_devil.Manager
                 {
                     playerArray[i].abilityList.Clear();
                 }
+            }
+        }
+        /// <summary>
+        /// Om spelaren dött och andra clutchar rummet får de döda 50 hp
+        /// </summary>
+        private void SpawnPlayers()
+        {
+            if (enemyList.Count != 0)
+            {
+                clear = false;
+            }
+
+            if (!clear && enemyList.Count == 0)
+            {
+                for (int i = 0; i < nrOfPlayers; i++)
+                {
+                    if (playerArray[i].HealthPoints == 0)
+                    {
+                        playerArray[i].HealthPoints = 50;
+                    }
+                }
+                clear = true;
             }
         }
         /// <summary>
@@ -640,7 +668,7 @@ namespace Paging_the_devil.Manager
 
                 if (timePassed >= 4000)
                 {
-                    Spawner(0, 0, false, false, true, true, true, false, false); 
+                    Spawner(4, 0, true, false, false, false, false, false, true); 
                     enemiesSpawned[3, 1] = true;
                     timePassed = 0;
                 }

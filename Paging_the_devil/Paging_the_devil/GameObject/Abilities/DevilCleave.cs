@@ -13,7 +13,7 @@ namespace Paging_the_devil.GameObject.Abilities
 {
     class DevilCleave : Ability
     {
-        List<Player> playerList;
+        public List<Player> playerList;
         Vector2 cleavePos;
         Texture2D tex;
         Rectangle sourceRect;
@@ -100,6 +100,7 @@ namespace Paging_the_devil.GameObject.Abilities
                 {
                     p.HealthPoints -= 0.5f;
                 }
+                playerList.Clear();
             }
 
             if (timePassed >= ValueBank.DevilCleaveTimer)

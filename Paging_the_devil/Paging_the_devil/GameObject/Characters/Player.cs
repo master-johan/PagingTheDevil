@@ -398,6 +398,7 @@ namespace Paging_the_devil.GameObject.Characters
             {
                 HealthPoints = 0;
                 Dead = true;
+                abilityList.Clear();
             }
         }
         /// <summary>
