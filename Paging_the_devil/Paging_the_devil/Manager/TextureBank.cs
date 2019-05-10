@@ -45,6 +45,7 @@ namespace Paging_the_devil.Manager
             mageSpellList.Add(Content.Load<Texture2D>(@"Taunt2"));//10
             mageSpellList.Add(Content.Load<Texture2D>(@"CircleOfHeal"));//11
             mageSpellList.Add(Content.Load<Texture2D>(@"SpiderWeb"));//12
+            mageSpellList.Add(Content.Load<Texture2D>(@"Root"));//13
 
             //Room
             roomTextureList.Add(Content.Load<Texture2D>(@"Portal"));//0
@@ -103,6 +104,7 @@ namespace Paging_the_devil.Manager
             hudTextureList.Add(Content.Load<Texture2D>(@"HudRanger"));//16
             hudTextureList.Add(Content.Load<Texture2D>(@"HudHealth"));//17
             hudTextureList.Add(Content.Load<Texture2D>(@"HP"));//18
+            
 
 
 
@@ -116,6 +118,8 @@ namespace Paging_the_devil.Manager
             abilityButtonList.Add(Content.Load<Texture2D>(@"RootBtn"));//6
             abilityButtonList.Add(Content.Load<Texture2D>(@"FlowerPowerBtn"));//7
             abilityButtonList.Add(Content.Load<Texture2D>(@"TauntBtn"));//8
+            abilityButtonList.Add(Content.Load<Texture2D>(@"RootBtn"));//9
+            abilityButtonList.Add(Content.Load<Texture2D>(@"BlockBtn"));//10
 
             //PlayerSelectBackground bilder
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Background"));//0

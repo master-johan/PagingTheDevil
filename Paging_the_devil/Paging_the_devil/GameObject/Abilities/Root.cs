@@ -15,6 +15,7 @@ namespace Paging_the_devil.GameObject.Abilities
         public List<Enemy> enemyList;
 
         float timePassed;
+        Color rootColor;
         
         public bool Active { get; private set; }
 
@@ -26,7 +27,8 @@ namespace Paging_the_devil.GameObject.Abilities
 
             rect = new Rectangle((int)pos.X - tex.Width / 2, (int)pos.Y - tex.Height / 2, 400, 400);
 
-            btnTexture = TextureBank.hudTextureList[7];
+            rootColor = new Color(255, 255, 255, 255);
+            btnTexture = TextureBank.abilityButtonList[9];
             coolDownTime = 600;
         }
 
@@ -59,23 +61,28 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, tex.Width, tex.Height), Color.Red, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, pos, new Rectangle(0, 0, tex.Width, tex.Height), rootColor, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
         }
 
         private void WebRoot(GameTime gameTime)
         {
             timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (Active == true)
+            if (Active)
             {
                 foreach (var e in enemyList)
                 {
                     e.MovementSpeed = 0;
                 }
+                rootColor.R--;
+                rootColor.G--;
+                rootColor.B--;
+                rootColor.A--;
             }
 
             if (timePassed >= ValueBank.RootTimer)
             {
+
                 foreach (var e in enemyList)
                 {
                     if (e is Slime)
@@ -94,6 +101,7 @@ namespace Paging_the_devil.GameObject.Abilities
                     {
                         (e as WallSpider).MovementSpeed = ValueBank.SpiderMoveSpeed;
                     }
+
                 }
 
                 ToRemove = true;
