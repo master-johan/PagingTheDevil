@@ -535,6 +535,11 @@ namespace Paging_the_devil.Manager
                 {
                     if (a.GetRect.Intersects(playerArray[i].GetRect))
                     {
+                        if (a is DevilCleave)
+                        {
+                            (a as DevilCleave).playerList.Add(playerArray[i]);
+                        }
+
                         a.HitCharacter = playerArray[i];
                         (a.HitCharacter as Player).Hit = true;
 
@@ -559,10 +564,7 @@ namespace Paging_the_devil.Manager
                         }
                     }
                     blockSound = false;
-                    if (a is DevilCleave)
-                    {
-                        (a as DevilCleave).playerList.Add(playerArray[i]);
-                    }
+                   
                 }
                
 
