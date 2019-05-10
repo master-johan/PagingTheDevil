@@ -86,6 +86,7 @@ namespace Paging_the_devil.Manager
                         if (controllerArray[i].ButtonPressed(Buttons.X))
                         {
                             currentState = GameState.InGame;
+                            MediaPlayer.Play(SoundBank.BgMusicList[0]);
                         }
                     }
                     if (controllerArray[0] != null)

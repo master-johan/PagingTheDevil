@@ -23,6 +23,7 @@ namespace Paging_the_devil.Manager
             BgMusicList.Add( Content.Load<Song>("ThemeSong"));
             BgMusicList.Add(Content.Load<Song>("AltSong"));
             BgMusicList.Add(Content.Load<Song>("BossFightSong"));
+            BgMusicList.Add(Content.Load<Song>("Narrator"));
 
             SoundEffectList.Add(Content.Load<SoundEffect>("ArrowSound"));//0
             SoundEffectList.Add(Content.Load<SoundEffect>("ArrowHitSound"));//1

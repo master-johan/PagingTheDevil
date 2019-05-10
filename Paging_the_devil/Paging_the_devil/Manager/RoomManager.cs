@@ -655,14 +655,14 @@ namespace Paging_the_devil.Manager
             //Tredje rummet
             if (RoomReturn(2, 2))
             {
-                Spawner(12, 3, true, true, true, true, false, false, false);
+                Spawner(12, 3, true, true, true, false, false, false, false);
                 
                 enemiesSpawned[2, 2] = true;
             }
             //Fjärde rummet
             if (RoomReturn(2, 3))
             {
-                Spawner(15, 4, true, true, true, true, true, true, false);
+                Spawner(15, 4, true, true, false, true, false, true, false);
                 
                 enemiesSpawned[2, 3] = true;
             }

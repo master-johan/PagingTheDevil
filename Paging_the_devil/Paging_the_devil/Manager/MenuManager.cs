@@ -3,9 +3,11 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
+    
     enum States { GoingDown, GoingUp, None }
 
     class MenuManager
@@ -26,7 +28,7 @@ namespace Paging_the_devil.Manager
         int nrOfPlayers;
         int middleScreenY;
         int middleScreenX;
-        int scrollSpeed;
+        float scrollSpeed;
 
         Vector2 pointerPos;
         Vector2 storyTextPos;
@@ -35,6 +37,7 @@ namespace Paging_the_devil.Manager
         StreamReader streamReader;
 
         string story;
+        
 
         public bool StoryEnded { get; set; }
 
@@ -64,9 +67,7 @@ namespace Paging_the_devil.Manager
             mainMenuBackground = new MainMenuBackground();
             PlayerSelectManager = new PlayerSelectManager();
 
-            scrollSpeed = 1;
-
-            
+            scrollSpeed = 0.6f;
 
             ReadStory();
         }
@@ -81,9 +82,10 @@ namespace Paging_the_devil.Manager
 
                     mainMenuBackground.Update(gameTime);
 
-                    if (storyTextPos.Y < -1200)
+                    if (storyTextPos.Y < -1600)
                     {
                         GameManager.currentState = GameState.InGame;
+                        MediaPlayer.Play(SoundBank.BgMusicList[0]);
                     }
 
                     break;
@@ -149,8 +151,7 @@ namespace Paging_the_devil.Manager
 
                     PlayerSelectManager.Draw(spriteBatch);
                     spriteBatch.Draw(TextureBank.menuTextureList[8], new Vector2(middleScreenX - TextureBank.menuTextureList[8].Width / 2, 100), Color.White);
-                    break;
-                
+                    break;                
             }
         }
         /// <summary>
