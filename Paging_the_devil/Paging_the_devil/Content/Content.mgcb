@@ -1340,7 +1340,10 @@
 /processorParam:Quality=Best
 /build:Narrator.mp3
 
+
 #begin Root.png
+#begin TargetDummy.png
+
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1363,4 +1366,7 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:BlockBtn.png
+
+/build:TargetDummy.png
+
 

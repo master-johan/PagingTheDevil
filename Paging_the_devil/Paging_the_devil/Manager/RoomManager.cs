@@ -24,13 +24,15 @@ namespace Paging_the_devil.Manager
         Gateway gatewayEast;
         Gateway gatewayWest;
 
+        Vector2 TargetDummySpawnPos;
+
         int RoomCoordinateX;
         int RoomCoordinateY;
         int nrOfPlayers;
         int maxY;
         int maxX;
         int minY;
-        int minX;
+        int minX;  
 
         float timePassed;
 
@@ -55,6 +57,8 @@ namespace Paging_the_devil.Manager
             maxY = 1030;
             minX = 35;
             minY = 175;
+
+            TargetDummySpawnPos = new Vector2(1700, 200);
         }
 
         public void Update(GameTime gameTime)
@@ -626,13 +630,22 @@ namespace Paging_the_devil.Manager
             int y = ValueBank.WindowSizeY / 2 + ValueBank.GameWindowStartY;
 
             enemyList.Add(new Devil(TextureBank.enemyTextureList[3], new Vector2(x, y), playerArray, nrOfPlayers));
-
+        }
+        private void SpawnTargetDummy()
+        {
+            enemyList.Add(new TargetDummy(TextureBank.enemyTextureList[4], TargetDummySpawnPos, playerArray, nrOfPlayers));
         }
         /// <summary>
         /// Den här metoden lägger till fiender till rummen
         /// </summary>
         private void AddEnemiesToRoom(GameTime gameTime)
         {
+            if(RoomReturn(3,0))
+            {
+                Spawner(0, 0, false, false, false, false, false, false, false, true);
+
+                enemiesSpawned[3, 0] = true;
+            }
             //Första rummet, OBS inte startrum
             if (RoomReturn(3,1))
             {
@@ -640,29 +653,28 @@ namespace Paging_the_devil.Manager
 
                 if (timePassed >= 4000)
                 {
-                    Spawner(0, 0, false, false, true, true, true, false, false); 
+                    Spawner(0, 0, false, false, true, true, true, false, false, false); 
                     enemiesSpawned[3, 1] = true;
                     timePassed = 0;
                 }
-
             }
             //Andra rummet
             if (RoomReturn(2, 1))
             {
-                Spawner(10, 2, true, true, false, false, false, false, false);
+                Spawner(10, 2, true, true, false, false, false, false, false, false);
                 enemiesSpawned[2, 1] = true;
             }
             //Tredje rummet
             if (RoomReturn(2, 2))
             {
-                Spawner(12, 3, true, true, true, false, false, false, false);
+                Spawner(12, 3, true, true, true, false, false, false, false, false);
                 
                 enemiesSpawned[2, 2] = true;
             }
             //Fjärde rummet
             if (RoomReturn(2, 3))
             {
-                Spawner(15, 4, true, true, false, true, false, true, false);
+                Spawner(15, 4, true, true, false, true, false, true, false, false);
                 
                 enemiesSpawned[2, 3] = true;
             }
@@ -670,7 +682,7 @@ namespace Paging_the_devil.Manager
             if (RoomReturn(2, 4))
             {
                 MediaPlayer.Play(SoundBank.BgMusicList[2]);
-                Spawner(10, 2, true, true, false, true, false, true, true);
+                Spawner(10, 2, true, true, false, true, false, true, true, false);
                 
                 enemiesSpawned[2, 4] = true;
             }
@@ -684,7 +696,7 @@ namespace Paging_the_devil.Manager
             return false;
         }
       
-        private void Spawner(int firstLoop, int secondLoop, bool smallDevil, bool slime, bool spiderTop, bool spiderRight, bool spiderBot, bool spiderLeft, bool devil)
+        private void Spawner(int firstLoop, int secondLoop, bool smallDevil, bool slime, bool spiderTop, bool spiderRight, bool spiderBot, bool spiderLeft, bool devil, bool targetDummy)
         {
             for (int i = 0; i < firstLoop; i++)
             {
@@ -719,6 +731,10 @@ namespace Paging_the_devil.Manager
             if (devil)
             {
                 SpawnDevil();
+            }
+            if(targetDummy)
+            {
+                SpawnTargetDummy();
             }
         }
     }
