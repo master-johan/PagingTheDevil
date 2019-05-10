@@ -12,7 +12,7 @@ namespace Paging_the_devil.GameObject.Characters
             HealthPoints = ValueBank.DruidHealth;
             maxHealthPoints = HealthPoints;
 
-            Ability1 = new Root(TextureBank.mageSpellList[11], pos, LastDirection);
+            Ability1 = new Root(TextureBank.mageSpellList[13], pos, LastDirection);
             Ability2 = new Healharm(TextureBank.mageSpellList[3], pos, LastDirection);
             Ability3 = new FlowerPower(TextureBank.mageSpellList[11], pos, new Vector2(0, 0), this);
         }
@@ -32,7 +32,7 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility1()
         {
-            Ability ability = new Root(TextureBank.mageSpellList[11], pos, LastDirection);
+            Ability ability = new Root(TextureBank.mageSpellList[13], pos, LastDirection);
             Ability1CooldownTimer = ability.coolDownTime;
             SoundBank.SoundEffectList[14].Play();
             return ability;

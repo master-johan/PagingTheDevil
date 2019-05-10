@@ -18,7 +18,7 @@ namespace Paging_the_devil.GameObject.Abilities
         bool hit;
         public bool Active { get; private set; }
 
-        Color tauntColor;
+        Color flowerPowerColor;
 
         Vector2 healPos;
 
@@ -33,7 +33,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
             rect = new Rectangle((int)pos.X - tex.Width / 2, (int)pos.Y - tex.Height / 2, 400, 400);
 
-            tauntColor = new Color(255, 255, 255, 255);
+            flowerPowerColor = new Color(255, 255, 255, 255);
             btnTexture = TextureBank.abilityButtonList[7];
             coolDownTime = 600;
         }
@@ -72,7 +72,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, healPos, new Rectangle(0, 0, 400, 400), tauntColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, healPos, new Rectangle(0, 0, 400, 400), flowerPowerColor, 0, new Vector2(200, 200), 1, SpriteEffects.None, 1);
         }
         /// <summary>
         /// Den här metoden sköter healen (FlowerPower) 
@@ -87,10 +87,10 @@ namespace Paging_the_devil.GameObject.Abilities
                 {
                     p.HealthPoints += 0.2f;
                 }
-                tauntColor.R--;
-                tauntColor.G--;
-                tauntColor.B--;
-                tauntColor.A--;
+                flowerPowerColor.R--;
+                flowerPowerColor.G--;
+                flowerPowerColor.B--;
+                flowerPowerColor.A--;
                 //Rensar listan för att inte effekten ska hända varje update.
                 playerList.Clear();
             }
