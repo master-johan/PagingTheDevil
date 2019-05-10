@@ -697,7 +697,7 @@ namespace Paging_the_devil.Manager
         {
             if (RoomReturn(3, 0))
             {
-                Spawner(0, 0, false, false, false, false, false, false, true, true);
+                Spawner(0, 0, false, false, false, false, false, false, false, true);
 
                 enemiesSpawned[3, 0] = true;
             }
@@ -708,7 +708,7 @@ namespace Paging_the_devil.Manager
 
                 if (timePassed >= 4000)
                 {
-                    Spawner(0, 0, false, false, false, false, false, false, false, true);
+                    Spawner(5, 0, true, false, false, false, false, false, false, false);
                     enemiesSpawned[3, 1] = true;
                     timePassed = 0;
                 }
@@ -716,7 +716,7 @@ namespace Paging_the_devil.Manager
             //Andra rummet
             if (RoomReturn(2, 1))
             {
-                Spawner(10, 2, true, true, false, false, false, false, false, false);
+                Spawner(10, 2, true, true, false, true, false, false, false, false);
                 enemiesSpawned[2, 1] = true;
             }
             //Tredje rummet
