@@ -131,11 +131,11 @@ namespace Paging_the_devil.GameObject.Characters
                 A.Draw(spriteBatch);
             }
 
-            spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 1);
+            spriteBatch.Draw(tex, pos, drawRect, Color.White, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 0.4f);
 
             if (Hit)
             {
-                spriteBatch.Draw(tex, pos, drawRect, Color.Red, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 1);
+                spriteBatch.Draw(tex, pos, drawRect, Color.Red, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 0.4f);
             }
         }
         /// <summary>

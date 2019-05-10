@@ -58,7 +58,7 @@ namespace Paging_the_devil.GameObject.Abilities
             {
                 if (!block)
                 {
-                    spriteBatch.Draw(TextureBank.mageSpellList[12], (HitCharacter as Player).GetRect, Color.White);
+                    spriteBatch.Draw(TextureBank.mageSpellList[12], (HitCharacter as Player).GetRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
                 }
             }
         }

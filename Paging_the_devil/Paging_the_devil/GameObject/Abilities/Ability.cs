@@ -29,7 +29,7 @@ namespace Paging_the_devil.GameObject.Abilities
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, Color.White);
+            spriteBatch.Draw(tex, pos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.1f);
         }
         /// <summary>
         /// Den här metoden sköter riktningen på spells.

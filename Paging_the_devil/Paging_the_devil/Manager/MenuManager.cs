@@ -129,13 +129,14 @@ namespace Paging_the_devil.Manager
             {
                 case GameState.StoryScreen:
                     mainMenuBackground.Draw(spriteBatch);
-                    spriteBatch.DrawString(TextureBank.spriteFont, story, storyTextPos, Color.Black);
-                    spriteBatch.Draw(TextureBank.menuTextureList[17], skipTextPos, Color.White);
+                    spriteBatch.DrawString(TextureBank.spriteFont, story, storyTextPos, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
+                    spriteBatch.Draw(TextureBank.menuTextureList[17], skipTextPos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
                     break;
                 case GameState.MainMenu:
 
                     mainMenuBackground.Draw(spriteBatch);                   
-                    spriteBatch.Draw(TextureBank.menuTextureList[4], new Vector2(middleScreenX - TextureBank.menuTextureList[4].Width/2, 100), Color.White);
+                    spriteBatch.Draw(TextureBank.menuTextureList[4], new Vector2(middleScreenX - TextureBank.menuTextureList[4].Width / 2, 100), null, Color.White, 0, Vector2.Zero, 1,SpriteEffects.None, 0.3f);
+
 
                     foreach (var b in buttonList)
                     {
@@ -150,7 +151,6 @@ namespace Paging_the_devil.Manager
                 case GameState.PlayerSelect:
 
                     PlayerSelectManager.Draw(spriteBatch);
-                    spriteBatch.Draw(TextureBank.menuTextureList[8], new Vector2(middleScreenX - TextureBank.menuTextureList[8].Width / 2, 100), Color.White);
                     break;                
             }
         }

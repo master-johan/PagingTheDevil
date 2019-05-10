@@ -44,8 +44,8 @@ namespace Paging_the_devil.GameObject
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, rect, Color.White);
-            spriteBatch.Draw(ability.btnTexture, abilityTexturePos, Color.White);
+            spriteBatch.Draw(tex, rect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.4f);
+            spriteBatch.Draw(ability.btnTexture, abilityTexturePos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.5f);
 
             if (currentTimer > 0)
             {
@@ -57,7 +57,7 @@ namespace Paging_the_devil.GameObject
                                  new Vector2(40, 40),
                                  1,
                                  SpriteEffects.None,
-                                 1);
+                                 0.6f);
             }
 
         }

@@ -43,33 +43,33 @@ namespace Paging_the_devil
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[0], Size, Color.White);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[0], Size, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.1f);
 
             foreach (Vector2 v in cloudOneTex)
             {
-                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[1], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[1], v, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.2f);
             }
 
             foreach (Vector2 v in cloudTwoTex)
             {
-                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[2], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[2], v, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.2f);
             }
 
             foreach (Vector2 v in cloudThreeTex)
             {
-                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[6], v, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[6], v, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.2f);
             }
-
-            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[4], Size, Color.White);
+            
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[4], Size, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
 
             foreach (Vector2 v in birdTex)
             {
-                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[7], v, srcRect, Color.White);
+                spriteBatch.Draw(TextureBank.playerSelectBackgroundList[7], v, srcRect, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.4f);
             }
-
-            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[3], Size, Color.White);
-            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[5], Size, Color.White);
-            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[8], Size, Color.White);
+            
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[3], Size, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[5], Size, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.6f);
+            spriteBatch.Draw(TextureBank.playerSelectBackgroundList[8], Size, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.7f);
         }
 
         private void InitializeCloudOne()
