@@ -10,7 +10,7 @@ using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {
-    public enum GameState { StoryScreen ,MainMenu, Controls, PlayerSelect, InGame }
+    public enum GameState { StoryScreen , MainMenu, Controls, PlayerSelect, InGame }
 
 
     class GameManager
@@ -123,65 +123,82 @@ namespace Paging_the_devil.Manager
 
                     break;
                 case GameState.InGame:
-                    if (HUDManager == null)
-                    {
-                        HUDManager = menuManager.PlayerSelectManager.HUDManager;
-                        hudManagerCreated = true;
-                    }
 
-                    if (roomManager == null)
+                    if (!menuManager.gamePaused)
                     {
-                        CreateRoomManager();
-                        currentRoom = roomManager.CurrentRoom;
-                    }
-                    //Ta bort i slutprodukten 
-                    if (Keyboard.GetState().IsKeyDown(Keys.A))
-                    {
+
+                        if (HUDManager == null)
+                        {
+                            HUDManager = menuManager.PlayerSelectManager.HUDManager;
+                            hudManagerCreated = true;
+                        }
+
+                        if (roomManager == null)
+                        {
+                            CreateRoomManager();
+                            currentRoom = roomManager.CurrentRoom;
+                        }
+                        //Ta bort i slutprodukten 
+                        if (Keyboard.GetState().IsKeyDown(Keys.A))
+                        {
+                            for (int i = 0; i < nrOfPlayers; i++)
+                            {
+                                playerArray[i].HealthPoints -= 0.5f;
+                            }
+                        }
+
+                        if (Keyboard.GetState().IsKeyDown(Keys.S))
+                        {
+                            for (int i = 0; i < nrOfPlayers; i++)
+                            {
+                                playerArray[i].HealthPoints += 0.5f;
+                            }
+                        }
+
                         for (int i = 0; i < nrOfPlayers; i++)
                         {
-                            playerArray[i].HealthPoints -= 0.5f;
+                            CheckPlayerAbilites(playerArray[i].abilityList, playerArray[i]);
                         }
-                    }
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.S))
-                    {
                         for (int i = 0; i < nrOfPlayers; i++)
                         {
-                            playerArray[i].HealthPoints += 0.5f;
+                            if (controllerArray[i].ButtonPressed(Buttons.Start))
+                            {
+                                menuManager.gamePaused = true;
+                            }
                         }
-                    }
 
-                    for (int i = 0; i < nrOfPlayers; i++)
+                        foreach (var e in enemyList)
+                        {
+                            if (e is SmallDevil)
+                            {
+                                CheckEnemiesAbilites((e as SmallDevil).enemyAbilityList);
+                            }
+                            if (e is WallSpider)
+                            {
+                                CheckEnemiesAbilites((e as WallSpider).enemyAbilityList);
+                            }
+                            if (e is Slime)
+                            {
+                                CheckSlimeCollision(e as Slime);
+                            }
+                            if (e is Devil)
+                            {
+                                CheckEnemiesAbilites((e as Devil).enemyAbilityList);
+                            }
+                        }
+
+                        HUDManager.Update(gameTime);
+                        UpdatePlayersDirection();
+                        CharacterÚpdate(gameTime);
+                        DeleteAbilities();
+                        roomManager.Update(gameTime);
+                    }
+                    else
                     {
-                        CheckPlayerAbilites(playerArray[i].abilityList, playerArray[i]);
+                        controllerArray[0].Update();
+                        menuManager.Update(gameTime);
                     }
-
-                    foreach (var e in enemyList)
-                    {
-                        if (e is SmallDevil)
-                        {
-                            CheckEnemiesAbilites((e as SmallDevil).enemyAbilityList);
-                        }
-                        if(e is WallSpider)
-                        {
-                            CheckEnemiesAbilites((e as WallSpider).enemyAbilityList);
-                        }
-                        if (e is Slime)
-                        {
-                            CheckSlimeCollision(e as Slime);
-                        }
-                        if (e is Devil)
-                        {
-                            CheckEnemiesAbilites((e as Devil).enemyAbilityList);
-                        }
-                    }
-
-                    HUDManager.Update(gameTime);
-                    UpdatePlayersDirection();
-                    CharacterÚpdate(gameTime);
-                    DeleteAbilities();
-                    roomManager.Update(gameTime);
-
                     break;
             }
         }
@@ -213,6 +230,11 @@ namespace Paging_the_devil.Manager
                     if (hudManagerCreated)
                     {
                         HUDManager.Draw(spriteBatch);
+                    }
+
+                    if(menuManager.gamePaused)
+                    {
+                        menuManager.Draw(spriteBatch);
                     }
 
                     break;

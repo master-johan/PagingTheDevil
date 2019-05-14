@@ -19,7 +19,7 @@ namespace Paging_the_devil.GameObject.Characters
 
         double timer;
         double interval;
-        
+
         Rectangle left;
         Rectangle right;
         Rectangle up;

@@ -83,6 +83,9 @@ namespace Paging_the_devil.Manager
             menuTextureList.Add(Content.Load<Texture2D>(@"DruidInfo"));//15
             menuTextureList.Add(Content.Load<Texture2D>(@"Controls"));//16
             menuTextureList.Add(Content.Load<Texture2D>(@"SkipText"));//17
+            menuTextureList.Add(Content.Load<Texture2D>(@"PausTex"));//18
+            menuTextureList.Add(Content.Load<Texture2D>(@"PauseResume"));//19
+            menuTextureList.Add(Content.Load<Texture2D>(@"PauseCharInfo"));//20
 
             //HUD
             hudTextureList.Add(Content.Load<Texture2D>(@"Abtn"));//0
@@ -138,6 +141,7 @@ namespace Paging_the_devil.Manager
             buttonTextureList.Add(Content.Load<Texture2D>(@"X"));//2
             buttonTextureList.Add(Content.Load<Texture2D>(@"Y"));//3
 
+            // Fonts
             spriteFont = Content.Load<SpriteFont>(@"HudPlayerTxt");
         }
     }
