@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Paging_the_devil.Manager
 {
-    
+
     enum States { GoingDown, GoingUp, None }
 
     class MenuManager
@@ -16,11 +16,13 @@ namespace Paging_the_devil.Manager
 
         Game1 game;
 
-        Pointer pointer;
+        Pointer pointerMainMenu;
+        Pointer pointerPause;
 
         MainMenuBackground mainMenuBackground;
 
-        List<Button> buttonList = new List<Button>();
+        List<Button> mainMenuButtonList = new List<Button>();
+        List<Button> pauseButtonList = new List<Button>();
 
         Controller[] controllerArray;
 
@@ -30,14 +32,18 @@ namespace Paging_the_devil.Manager
         int middleScreenX;
         float scrollSpeed;
 
-        Vector2 pointerPos;
+        Vector2 pointerPosMainMenu;
+        Vector2 pointerPosPause;
         Vector2 storyTextPos;
         Vector2 skipTextPos;
 
         StreamReader streamReader;
 
         string story;
-        
+
+        bool fromPause;
+        public bool gamePaused;
+
 
         public bool StoryEnded { get; set; }
 
@@ -48,20 +54,21 @@ namespace Paging_the_devil.Manager
             this.game = game;
 
             middleScreenY = (ValueBank.WindowSizeY / 2);
-            middleScreenX = (ValueBank.WindowSizeX/2);
+            middleScreenX = (ValueBank.WindowSizeX / 2);
 
-            buttonList.Add(new Button(TextureBank.menuTextureList[0], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width/ 2, middleScreenY - TextureBank.menuTextureList[0].Height)));
-            buttonList.Add(new Button(TextureBank.menuTextureList[1], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width/ 2, middleScreenY - TextureBank.menuTextureList[0].Height + 150)));
-            buttonList.Add(new Button(TextureBank.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height + 300)));
+            CreatingButtons(graphicsDevice);
 
-            pointerPos = new Vector2(buttonList[0].GetPos.X - 200, buttonList[0].GetPos.Y + 10);
+            pointerPosMainMenu = new Vector2(mainMenuButtonList[0].GetPos.X - 200, mainMenuButtonList[0].GetPos.Y + 10);
+            pointerPosPause = new Vector2(pauseButtonList[0].GetPos.X - 200, pauseButtonList[0].GetPos.Y + 10);
+
             storyTextPos = new Vector2(70, ValueBank.WindowSizeY - 100);
             skipTextPos = new Vector2(ValueBank.WindowSizeX - 400, 50);
 
-            pointer = new Pointer(TextureBank.menuTextureList[5], pointerPos, buttonList);
+            pointerMainMenu = new Pointer(TextureBank.menuTextureList[5], pointerPosMainMenu, mainMenuButtonList);
+            pointerPause = new Pointer(TextureBank.menuTextureList[5], pointerPosPause, pauseButtonList);
 
             selectedBtn = 0;
-            buttonList[0].activeButton = true;
+            mainMenuButtonList[0].activeButton = true;
             current = States.None;
 
             mainMenuBackground = new MainMenuBackground();
@@ -92,14 +99,12 @@ namespace Paging_the_devil.Manager
                 case GameState.MainMenu:
                     mainMenuBackground.Update(gameTime);
 
-                    BackToMainMenu();
-
-                    foreach (var b in buttonList)
+                    foreach (var b in mainMenuButtonList)
                     {
                         b.Update();
                     }
 
-                    pointer.Update(gameTime);
+                    pointerMainMenu.Update(gameTime);
 
                     previous = current;
 
@@ -109,12 +114,12 @@ namespace Paging_the_devil.Manager
 
                     if (controllerArray[0].ButtonPressed(Buttons.A))
                     {
-                        ButtonClick();
+                        ButtonClickMainMenu();
                     }
-                    
+
                     break;
                 case GameState.Controls:
-                    BackToMainMenu();
+                    GobackInControls();
                     break;
                 case GameState.PlayerSelect:
                     PlayerSelectManager.GetController(controllerArray);
@@ -122,7 +127,30 @@ namespace Paging_the_devil.Manager
                     PlayerSelectManager.Update(gameTime);
                     break;
             }
-        }      
+
+            if (gamePaused)
+            {
+                foreach (var b in pauseButtonList)
+                {
+                    b.Update();
+                }
+
+                pointerPause.Update(gameTime);
+
+                previous = current;
+
+                MovingInMenu();
+
+                UpdateButtonChoise();
+
+                if (controllerArray[0].ButtonPressed(Buttons.A))
+                {
+                    ButtonClickPause();
+                }
+            }
+
+
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
             switch (GameManager.currentState)
@@ -134,25 +162,50 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.MainMenu:
 
-                    mainMenuBackground.Draw(spriteBatch);                   
-                    spriteBatch.Draw(TextureBank.menuTextureList[4], new Vector2(middleScreenX - TextureBank.menuTextureList[4].Width / 2, 100), null, Color.White, 0, Vector2.Zero, 1,SpriteEffects.None, 0.3f);
+                    mainMenuBackground.Draw(spriteBatch);
+                    spriteBatch.Draw(TextureBank.menuTextureList[4], new Vector2(middleScreenX - TextureBank.menuTextureList[4].Width / 2, 100), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
 
-
-                    foreach (var b in buttonList)
+                    foreach (var b in mainMenuButtonList)
                     {
                         b.Draw(spriteBatch);
                     }
 
-                    pointer.Draw(spriteBatch);
+                    pointerMainMenu.Draw(spriteBatch);
                     break;
                 case GameState.Controls:
                     spriteBatch.Draw(TextureBank.menuTextureList[16], Vector2.Zero, Color.White);
                     break;
                 case GameState.PlayerSelect:
-
                     PlayerSelectManager.Draw(spriteBatch);
-                    break;                
+                    break;
+                case GameState.InGame:
+                    spriteBatch.Draw(TextureBank.menuTextureList[18], Vector2.Zero, Color.White);
+
+                    foreach (var b in pauseButtonList)
+                    {
+                        b.Draw(spriteBatch);
+                    }
+
+                    pointerPause.Draw(spriteBatch);
+
+                    break;
             }
+        }
+        /// <summary>
+        ///  Den här metoden skapar knapparna för MainMenu och Pause Menu
+        /// </summary>
+        /// <param name="graphicsDevice"></param>
+        private void CreatingButtons(GraphicsDevice graphicsDevice)
+        {
+            mainMenuButtonList.Add(new Button(TextureBank.menuTextureList[0], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height)));
+            mainMenuButtonList.Add(new Button(TextureBank.menuTextureList[1], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height + 150)));
+            mainMenuButtonList.Add(new Button(TextureBank.menuTextureList[20], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height + 300)));
+            mainMenuButtonList.Add(new Button(TextureBank.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height + 450)));
+
+            pauseButtonList.Add(new Button(TextureBank.menuTextureList[19], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height)));
+            pauseButtonList.Add(new Button(TextureBank.menuTextureList[1], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height + 150)));
+            pauseButtonList.Add(new Button(TextureBank.menuTextureList[20], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height + 300)));
+            pauseButtonList.Add(new Button(TextureBank.menuTextureList[2], graphicsDevice, new Vector2(middleScreenX - TextureBank.menuTextureList[0].Width / 2, middleScreenY - TextureBank.menuTextureList[0].Height + 450)));
         }
         /// <summary>
         /// Den här metoden gör att man kan röra sig i menyn
@@ -175,39 +228,74 @@ namespace Paging_the_devil.Manager
             }
         }
         /// <summary>
-        /// Den här metoden uppdaterar vad som händer när man trycker på en knapp.
+        /// Den här metoden uppdaterar vad som händer när man trycker på en knapp i main manu.
         /// </summary>
-        public void ButtonClick()
+        public void ButtonClickMainMenu()
         {
-            if (buttonList[0].activeButton)
+            if (mainMenuButtonList[0].activeButton)
             {
                 GameManager.currentState = GameState.PlayerSelect;
             }
-            else if (buttonList[1].activeButton)
+            else if (mainMenuButtonList[1].activeButton)
             {
                 GameManager.currentState = GameState.Controls;
             }
-            else if (buttonList[2].activeButton)
+            else if (mainMenuButtonList[2].activeButton)
+            {
+
+            }
+            else if (mainMenuButtonList[3].activeButton)
             {
                 game.Exit();
             }
         }
         /// <summary>
+        /// Den här metoden uppdaterar vad som händer när man trycker på en knapp i paus menyn
+        /// </summary>
+        public void ButtonClickPause()
+        {
+            if (pauseButtonList[0].activeButton)
+            {
+                gamePaused = false;
+            }
+            else if (pauseButtonList[1].activeButton)
+            {
+                GameManager.currentState = GameState.Controls;
+                fromPause = true;
+            }
+            else if (pauseButtonList[2].activeButton)
+            {
+
+            }
+            else if (pauseButtonList[3].activeButton)
+            {
+                game.Exit();
+            }
+
+        }
+        /// <summary>
         /// Denna metoden ändrar currentState till main menu.
         /// </summary>
-        private void BackToMainMenu()
+        private void GobackInControls()
         {
-            if (controllerArray[0].ButtonPressed(Buttons.B))
+
+            if (controllerArray[0].ButtonPressed(Buttons.B) && fromPause == false)
             {
                 GameManager.currentState = GameState.MainMenu;
             }
+            else if (controllerArray[0].ButtonPressed(Buttons.B) && fromPause == true)
+            {
+                GameManager.currentState = GameState.InGame;
+                fromPause = false;
+            }
+
         }
         /// <summary>
         /// Den här metoden uppdaterar vid byte av knappval.
         /// </summary>
         private void UpdateButtonChoise()
         {
-            if (current == States.GoingDown && previous != States.GoingDown && selectedBtn < (buttonList.Count - 1))
+            if (current == States.GoingDown && previous != States.GoingDown && selectedBtn < (mainMenuButtonList.Count - 1))
             {
                 selectedBtn++;
             }
@@ -217,10 +305,16 @@ namespace Paging_the_devil.Manager
                 selectedBtn--;
             }
 
-            for (int i = 0; i < buttonList.Count; i++)
+            for (int i = 0; i < mainMenuButtonList.Count; i++)
             {
-                buttonList[i].activeButton = false;
-                buttonList[selectedBtn].activeButton = true;
+                mainMenuButtonList[i].activeButton = false;
+                mainMenuButtonList[selectedBtn].activeButton = true;
+            }
+
+            for (int i = 0; i < pauseButtonList.Count; i++)
+            {
+                pauseButtonList[i].activeButton = false;
+                pauseButtonList[selectedBtn].activeButton = true;
             }
         }
         /// <summary>
@@ -253,7 +347,7 @@ namespace Paging_the_devil.Manager
         {
             streamReader = new StreamReader(@"story.txt");
 
-            while(!streamReader.EndOfStream)
+            while (!streamReader.EndOfStream)
             {
                 story += streamReader.ReadLine();
             }
@@ -261,5 +355,6 @@ namespace Paging_the_devil.Manager
 
             story = story.Replace("@", /*"@" +*/ System.Environment.NewLine);
         }
+
     }
 }
