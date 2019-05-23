@@ -73,7 +73,11 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             {
                 e.Draw(spriteBatch);
             }
-            
+            if (ShowHealthbar)
+            {
+                DrawHealthBar(spriteBatch);
+            }
+
         }
 
         /// <summary>

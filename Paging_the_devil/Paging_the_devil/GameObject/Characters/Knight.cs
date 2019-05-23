@@ -10,7 +10,7 @@ namespace Paging_the_devil.GameObject.Characters
         public Knight(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base (tex, pos, playerIndex, Controller)
         {
             HealthPoints = ValueBank.KnightHealth;
-            maxHealthPoints = HealthPoints;
+            MaxHealthPoints = HealthPoints;
 
             Ability1 = new Block(TextureBank.roomTextureList[0], pos, LastDirection, this);
             Ability2 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this); 
