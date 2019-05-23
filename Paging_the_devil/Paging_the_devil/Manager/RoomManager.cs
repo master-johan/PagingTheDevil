@@ -792,5 +792,29 @@ namespace Paging_the_devil.Manager
                 SpawnTargetDummy();
             }
         }
+
+        public bool CheckIfBossRoomDefeated()
+        {
+            if (RoomCoordinateX == 2 && RoomCoordinateY == 4 && enemyList.Count == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void Reset()
+        {
+            for (int i = 0; i < enemiesSpawned.GetLength(0); i++)
+            {
+                for (int j = 0; j < enemiesSpawned.GetLength(1); j++)
+                {
+                    enemiesSpawned[i, j] = false;
+                }
+            }
+            CurrentRoom = currentLevel[3, 0];
+            enemyList.Clear();
+            RoomCoordinateX = 3;
+            RoomCoordinateY = 0;
+        }
     }
 }
