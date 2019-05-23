@@ -572,7 +572,7 @@ namespace Paging_the_devil.Manager
                     {
                         //Tar bort fienderna ur listan när man går nedåt eftersom targetdummy måste tas bort när man går ur första rummet
                         //där dörren är south.
-                        enemyList.Clear();
+                        //enemyList.Clear();
                         RoomCoordinateY += 1;
                         temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
                     }
@@ -590,6 +590,7 @@ namespace Paging_the_devil.Manager
                 {
                     if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                     {
+                        enemyList.Clear();
                         RoomCoordinateX += 1;
                         temp = new Vector2(gatewayWest.pos.X + TextureBank.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureBank.roomTextureList[0].Height / 2);
                     }
@@ -695,51 +696,80 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void AddEnemiesToRoom(GameTime gameTime)
         {
-            if (RoomReturn(3, 0))
+            if (RoomReturn(0, 0))
             {
                 Spawner(0, 0, false, false, false, false, false, false, false, true);
 
-                enemiesSpawned[3, 0] = true;
+                enemiesSpawned[0, 0] = true;
             }
             //Första rummet, OBS inte startrum
-            if (RoomReturn(3, 1))
+            if (RoomReturn(1, 0))
             {
-                timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-                if (timePassed >= 4000)
-                {
-                    Spawner(5, 0, true, false, false, false, false, false, false, false);
-                    enemiesSpawned[3, 1] = true;
-                    timePassed = 0;
-                }
+                Spawner(1, 0, true, false, false, false, false, false, false, false);
+                enemiesSpawned[1, 0] = true;
             }
             //Andra rummet
-            if (RoomReturn(2, 1))
+            if (RoomReturn(2, 0))
             {
-                Spawner(10, 2, true, true, false, true, false, false, false, false);
-                enemiesSpawned[2, 1] = true;
+                Spawner(2, 1, true, true, false, true, false, false, false, false);
+                enemiesSpawned[2, 0] = true;
             }
             //Tredje rummet
+            if (RoomReturn(3, 0))
+            {
+                Spawner(4, 1, true, true, false, false, false, false, false, false);
+
+                enemiesSpawned[3, 0] = true;
+            }
+            //Fjärde rummet
+            if (RoomReturn(4,0))
+            {
+                Spawner(3, 2, true, true, false, false, false, true, false, false);
+
+                enemiesSpawned[4,0] = true;
+            }
+            //Femte
+            if (RoomReturn(4, 1))
+            {
+                Spawner(6, 3, true, true, false, true, false, true, false, false);
+
+                enemiesSpawned[4, 1] = true;
+            }
+            //Sjätte
+            if (RoomReturn(4, 2))
+            {
+                Spawner(10, 4, true, true, false, false, false, false, false, false);
+
+                enemiesSpawned[4, 2] = true;
+            }
+            //Sjunde
+            if (RoomReturn(3, 2))
+            {
+                Spawner(15, 1, true, true, false, true, false, false, false, false);
+
+                enemiesSpawned[3, 2] = true;
+            }
+            //Åttonde
             if (RoomReturn(2, 2))
             {
-                Spawner(12, 3, true, true, true, false, false, false, false, false);
+                Spawner(18, 2, true, true, false, true, false, true, false, false);
 
                 enemiesSpawned[2, 2] = true;
             }
-            //Fjärde rummet
+            //Nionde
             if (RoomReturn(2, 3))
             {
-                Spawner(15, 4, true, true, false, true, false, true, false, false);
+                Spawner(5, 6, true, true, true, true, true, true, false, false);
 
                 enemiesSpawned[2, 3] = true;
             }
-            //Femte rummet
+            //Bossrummet
             if (RoomReturn(2, 4))
             {
                 MediaPlayer.Play(SoundBank.BgMusicList[2]);
                 Spawner(10, 2, true, true, false, true, false, true, true, false);
 
-                enemiesSpawned[2, 4] = true;
+                enemiesSpawned[4, 2] = true;
             }
         }
         private bool RoomReturn(int first, int second)
