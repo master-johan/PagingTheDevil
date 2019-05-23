@@ -59,8 +59,7 @@ namespace Paging_the_devil.Manager
 
             currentLevel = levelManager.CurrentLevel;
             GetStaringRoom();
-            DeclareGateways();
-            ShowGateways();
+
             enemiesSpawned = new bool[5, 5];
 
             clear = true;
@@ -73,6 +72,8 @@ namespace Paging_the_devil.Manager
 
         public void Update(GameTime gameTime)
         {
+            DeclareGateways();
+            ShowGateways();
             CollisionWithWall();
             GoIntoGateway();
             AddEnemiesToRoom(gameTime);
@@ -769,7 +770,7 @@ namespace Paging_the_devil.Manager
                 MediaPlayer.Play(SoundBank.BgMusicList[2]);
                 Spawner(10, 2, true, true, false, true, false, true, true, false);
 
-                enemiesSpawned[4, 2] = true;
+                enemiesSpawned[2, 4] = true;
             }
         }
         private bool RoomReturn(int first, int second)
@@ -841,10 +842,10 @@ namespace Paging_the_devil.Manager
                     enemiesSpawned[i, j] = false;
                 }
             }
-            CurrentRoom = currentLevel[3, 0];
+            CurrentRoom = currentLevel[0, 0];
             enemyList.Clear();
-            RoomCoordinateX = 3;
-            RoomCoordinateY = 0;
+            RoomCoordinateX = 0;
+            RoomCoordinateY = 0;          
         }
     }
 }
