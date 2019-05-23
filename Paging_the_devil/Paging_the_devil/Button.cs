@@ -48,7 +48,7 @@ namespace Paging_the_devil
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(buttonTex, hitBox, null, color, 0, Vector2.Zero, SpriteEffects.None, 0.3f);
+            spriteBatch.Draw(buttonTex, hitBox, null, color, 0, Vector2.Zero, SpriteEffects.None, 1);
         }
 
         public void setPosition(Vector2 newButtonPos)

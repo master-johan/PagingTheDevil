@@ -118,7 +118,6 @@ namespace Paging_the_devil.Manager
                     {
                         ButtonClickMainMenu();
                     }
-
                     break;
                 case GameState.Controls:
                     GoBack();
@@ -152,7 +151,7 @@ namespace Paging_the_devil.Manager
                 pointerPause.Update(gameTime);
 
                 previous = current;
- 
+
             }
 
             PauseMenu(gameTime);
@@ -282,7 +281,7 @@ namespace Paging_the_devil.Manager
             else if (pauseButtonList[2].activeButton)
             {
                 GameManager.currentState = GameState.CharacterInfo;
-                fromPause = true;   
+                fromPause = true;
             }
             else if (pauseButtonList[3].activeButton)
             {
