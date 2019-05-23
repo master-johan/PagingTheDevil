@@ -16,6 +16,7 @@ namespace Paging_the_devil.Manager
         Room[,] currentLevel;
 
         List<Enemy> enemyList;
+        List<Gateway> gatewayList;
 
         LevelManager levelManager;
 
@@ -42,7 +43,6 @@ namespace Paging_the_devil.Manager
         int spawnSmallDevilMaxY;
         int spawnSmallDevilMinY;
 
-
         float timePassed;
 
         bool[,] enemiesSpawned;
@@ -57,6 +57,8 @@ namespace Paging_the_devil.Manager
             this.enemyList = enemyList;
             this.levelManager = levelManager;
 
+            gatewayList = new List<Gateway>();
+
             currentLevel = levelManager.CurrentLevel;
             GetStaringRoom();
 
@@ -66,6 +68,7 @@ namespace Paging_the_devil.Manager
             SettingMaxAndMinValues();
 
             TargetDummySpawnPos = new Vector2(1700, 200);
+
         }
 
 
@@ -79,6 +82,17 @@ namespace Paging_the_devil.Manager
             AddEnemiesToRoom(gameTime);
             enemyCollisionWithWalls();
             SpawnPlayers();
+            foreach (var gate in gatewayList)
+            {
+                if (enemyList.Count == 0 || enemyList[0] is TargetDummy)
+                {
+                    gate.Open = true;
+                }
+                else
+                {
+                    gate.Open = false;
+                }
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -320,17 +334,17 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void DeclareGateways()
         {
-            int halfPortalSize = TextureBank.roomTextureList[0].Height / 2;
 
-            Vector2 north = new Vector2(CurrentRoom.GetWallRectList()[0].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[0].Y);
-            Vector2 south = new Vector2(CurrentRoom.GetWallRectList()[1].Width / 2 - halfPortalSize, CurrentRoom.GetWallRectList()[1].Y - halfPortalSize);
-            Vector2 west = new Vector2(CurrentRoom.GetWallRectList()[2].X, CurrentRoom.GetWallRectList()[2].Height / 2);
-            Vector2 east = new Vector2(CurrentRoom.GetWallRectList()[3].X - halfPortalSize, CurrentRoom.GetWallRectList()[3].Height / 2);
+            Vector2 north = new Vector2(CurrentRoom.GetWallRectList()[0].Width / 2, CurrentRoom.GetWallRectList()[0].Y + 24);
+            Vector2 south = new Vector2(CurrentRoom.GetWallRectList()[1].Width / 2, CurrentRoom.GetWallRectList()[1].Y + 10);
+            Vector2 west = new Vector2(CurrentRoom.GetWallRectList()[2].X + 24, CurrentRoom.GetWallRectList()[2].Height / 2);
+            Vector2 east = new Vector2(CurrentRoom.GetWallRectList()[3].X + 10, CurrentRoom.GetWallRectList()[3].Height / 2);
 
-            gatewayNorth = new Gateway(TextureBank.roomTextureList[0], north);
-            gatewaySouth = new Gateway(TextureBank.roomTextureList[0], south);
-            gatewayWest = new Gateway(TextureBank.roomTextureList[0], west);
-            gatewayEast = new Gateway(TextureBank.roomTextureList[0], east);
+            gatewayList.Add(gatewayNorth = new Gateway(TextureBank.roomTextureList[8], north, 0, TextureBank.roomTextureList[9]));
+            gatewayList.Add(gatewaySouth = new Gateway(TextureBank.roomTextureList[8], south, 1, TextureBank.roomTextureList[9]));
+            gatewayList.Add(gatewayWest = new Gateway(TextureBank.roomTextureList[8], west, 2, TextureBank.roomTextureList[9]));
+            gatewayList.Add(gatewayEast = new Gateway(TextureBank.roomTextureList[8], east, 3, TextureBank.roomTextureList[9]));
+            
         }
         /// <summary>
         /// Den här metoden räknar på vilken gateway som ska visas.
@@ -575,7 +589,7 @@ namespace Paging_the_devil.Manager
                         //där dörren är south.
                         //enemyList.Clear();
                         RoomCoordinateY += 1;
-                        temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewayNorth.pos.Y + TextureBank.roomTextureList[0].Height / 2 + 25);
+                        temp = new Vector2(gatewayNorth.pos.X + TextureBank.roomTextureList[8].Width / 2, gatewayNorth.pos.Y + 50);
                     }
                 }
                 else if (playerArray[i].GetRect.Intersects(gatewayNorth.GetRect) && gatewayNorth.IsVisible)
@@ -583,7 +597,7 @@ namespace Paging_the_devil.Manager
                     if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                     {
                         RoomCoordinateY -= 1;
-                        temp = new Vector2(gatewaySouth.pos.X + TextureBank.roomTextureList[0].Width / 2, gatewaySouth.pos.Y + TextureBank.roomTextureList[0].Height / 2 - 25);
+                        temp = new Vector2(gatewaySouth.pos.X + TextureBank.roomTextureList[8].Width / 2, gatewaySouth.pos.Y - 50);
                     }
                 }
 
@@ -593,7 +607,7 @@ namespace Paging_the_devil.Manager
                     {
                         enemyList.Clear();
                         RoomCoordinateX += 1;
-                        temp = new Vector2(gatewayWest.pos.X + TextureBank.roomTextureList[0].Width / 2 + 25, gatewayWest.pos.Y + TextureBank.roomTextureList[0].Height / 2);
+                        temp = new Vector2(gatewayWest.pos.X + 50, gatewayWest.pos.Y + TextureBank.roomTextureList[8].Height / 2);
                     }
                 }
                 else if (playerArray[i].GetRect.Intersects(gatewayWest.GetRect) && gatewayWest.IsVisible)
@@ -601,7 +615,7 @@ namespace Paging_the_devil.Manager
                     if (playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList.Count == 0 || playerArray[i].Controller.ButtonPressed(Buttons.Y) && enemyList[0] is TargetDummy)
                     {
                         RoomCoordinateX -= 1;
-                        temp = new Vector2(gatewayEast.pos.X + TextureBank.roomTextureList[0].Width / 2 - 25, gatewayEast.pos.Y + TextureBank.roomTextureList[0].Height / 2);
+                        temp = new Vector2(gatewayEast.pos.X - 50, gatewayEast.pos.Y + TextureBank.roomTextureList[8].Height / 2);
                     }
                 }
             }
