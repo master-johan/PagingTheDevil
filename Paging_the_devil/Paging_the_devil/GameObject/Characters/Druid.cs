@@ -10,7 +10,7 @@ namespace Paging_the_devil.GameObject.Characters
         public Druid(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
             HealthPoints = ValueBank.DruidHealth;
-            maxHealthPoints = HealthPoints;
+            MaxHealthPoints = HealthPoints;
 
             Ability1 = new Root(TextureBank.mageSpellList[13], pos, LastDirection);
             Ability2 = new Healharm(TextureBank.mageSpellList[3], pos, LastDirection);
