@@ -23,7 +23,7 @@ namespace Paging_the_devil.GameObject.Characters
             healthbarYOffset = -5;
             healthbarWidth = tex.Width;
             healthbarWidthMax = healthbarWidth;
-            HealthBarRectangle = new Rectangle((int)GetSetPos.X + healthbarXOffset, (int)GetSetPos.Y + healthbarYOffset, healthbarWidth, 10);
+            HealthBarRectangle = new Rectangle((int)GetSetPos.X + healthbarXOffset, (int)GetSetPos.Y + healthbarYOffset, healthbarWidth, 15);
             Hit = false;
             HitTimer = 0;
         }
