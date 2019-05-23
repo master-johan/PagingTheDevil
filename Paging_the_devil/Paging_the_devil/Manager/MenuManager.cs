@@ -126,6 +126,12 @@ namespace Paging_the_devil.Manager
                     SendPlayerToPlayerSelect();
                     PlayerSelectManager.Update(gameTime);
                     break;
+                case GameState.Win:
+                    mainMenuBackground.Update(gameTime);
+                    break;
+                case GameState.GameOver:
+                    mainMenuBackground.Update(gameTime);
+                    break;
             }
 
             if (gamePaused)
@@ -188,6 +194,12 @@ namespace Paging_the_devil.Manager
 
                     pointerPause.Draw(spriteBatch);
 
+                    break;
+                case GameState.Win:
+                    mainMenuBackground.Draw(spriteBatch);
+                    break;
+                case GameState.GameOver:
+                    mainMenuBackground.Draw(spriteBatch);
                     break;
             }
         }

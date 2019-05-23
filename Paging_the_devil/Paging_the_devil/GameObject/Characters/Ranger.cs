@@ -9,9 +9,9 @@ namespace Paging_the_devil.GameObject.Characters
     {
         public Ranger(Texture2D tex, Vector2 pos, int playerIndex, Controller Controller) : base(tex, pos, playerIndex, Controller)
         {
-            Ability1 = new Dash(tex, pos, LastDirection,this,false);
+            Ability1 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
             Ability2 = new Arrow(TextureBank.mageSpellList[4], pos, LastDirection);
-            Ability3 = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability3 = new Dash(tex, pos, LastDirection, this, false);
 
             HealthPoints = ValueBank.RangerHealth;
             maxHealthPoints = HealthPoints;
@@ -29,9 +29,9 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility1()
         {
-            Ability ability = new Dash(tex, pos, LastDirection,this,true);
+            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
             Ability1CooldownTimer = ability.coolDownTime;
-            SoundBank.SoundEffectList[8].Play();
+            SoundBank.SoundEffectList[9].Play();
             return ability;
         }
         /// <summary>
@@ -51,9 +51,9 @@ namespace Paging_the_devil.GameObject.Characters
         /// <returns></returns>
         protected override Ability CastAbility3()
         {
-            Ability ability = new Trap(TextureBank.mageSpellList[2], pos, new Vector2(0, 0));
+            Ability ability = new Dash(tex, pos, LastDirection, this, true);
             Ability3CooldownTimer = ability.coolDownTime;
-            SoundBank.SoundEffectList[9].Play();
+            SoundBank.SoundEffectList[8].Play();
             return ability;
         }
     }
