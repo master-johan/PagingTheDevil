@@ -10,6 +10,7 @@ namespace Paging_the_devil.GameObject.Characters
         protected float MaxHealthPoints { get; set; }
         public float HitTimer { get; set; }
         protected Rectangle HealthBarRectangle;
+        protected Rectangle HealthBarBackgroundRect;
         protected int healthbarWidth;
         protected int healthbarWidthMax;
         protected int healthbarYOffset;
@@ -24,6 +25,8 @@ namespace Paging_the_devil.GameObject.Characters
             healthbarWidth = tex.Width;
             healthbarWidthMax = healthbarWidth;
             HealthBarRectangle = new Rectangle((int)GetSetPos.X + healthbarXOffset, (int)GetSetPos.Y + healthbarYOffset, healthbarWidth, 15);
+            HealthBarBackgroundRect = HealthBarRectangle;
+
             Hit = false;
             HitTimer = 0;
         }
@@ -67,6 +70,9 @@ namespace Paging_the_devil.GameObject.Characters
             HealthBarRectangle.X = (int)GetSetPos.X + healthbarXOffset;
             HealthBarRectangle.Y = (int)GetSetPos.Y + healthbarYOffset;
 
+            HealthBarBackgroundRect.X = (int)GetSetPos.X + healthbarXOffset;
+            HealthBarBackgroundRect.Y = (int)GetSetPos.Y + healthbarYOffset;
+
             float healthbarWidthProcent = HealthPoints / MaxHealthPoints;
 
             healthbarWidth = (int)(healthbarWidthProcent * healthbarWidthMax);
@@ -77,6 +83,8 @@ namespace Paging_the_devil.GameObject.Characters
         protected void DrawHealthBar(SpriteBatch spriteBatch)
         {
             //spriteBatch.Draw(TextureBank.hudTextureList[18], HealthBarRectangle, Color.White);
+            spriteBatch.Draw(TextureBank.hudTextureList[18], null, HealthBarBackgroundRect, null, null, 0, Vector2.One, Color.Black, SpriteEffects.None, 0.9f);
+
             spriteBatch.Draw(TextureBank.hudTextureList[18], null, HealthBarRectangle, null, null, 0, Vector2.One, Color.White, SpriteEffects.None, 1);
         }
     }
