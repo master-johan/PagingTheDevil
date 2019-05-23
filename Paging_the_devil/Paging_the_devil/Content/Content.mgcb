@@ -1593,7 +1593,6 @@
 /build:Ybtn.png
 
 #begin DoorClosed.png
-#begin GameOver.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1605,8 +1604,29 @@
 /processorParam:TextureFormat=Color
 /build:DoorClosed.png
 
-#begin DoorOpen.png
+#begin GameOver.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
 /build:GameOver.png
+
+#begin DoorOpen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:DoorOpen.png
 
 #begin Winner.png
 /importer:TextureImporter
@@ -1618,7 +1638,6 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:DoorOpen.png
 /build:Winner.png
 
 #begin Restart.png
@@ -1632,4 +1651,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Restart.png
+
+#begin spritefont1.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:spritefont1.spritefont
 

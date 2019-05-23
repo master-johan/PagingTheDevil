@@ -732,7 +732,7 @@ namespace Paging_the_devil.Manager
             //Tredje rummet
             if (RoomReturn(3, 0))
             {
-                Spawner(4, 1, true, true, false, false, false, false, false, false);
+                Spawner(4, 1, true, true, false, false, false, false, true, false);
 
                 enemiesSpawned[3, 0] = true;
             }

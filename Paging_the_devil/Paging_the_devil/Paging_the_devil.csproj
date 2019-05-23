@@ -67,6 +67,7 @@
     <Compile Include="GameObject\Characters\Knight.cs" />
     <Compile Include="GameObject\Characters\Ranger.cs" />
     <Compile Include="GameObject\Abilities\Trap.cs" />
+    <Compile Include="GameObject\InfoBox.cs" />
     <Compile Include="MainMenuBackground.cs" />
     <Compile Include="Manager\CharacterInfoManager.cs" />
     <Compile Include="Manager\HUDManager.cs" />
