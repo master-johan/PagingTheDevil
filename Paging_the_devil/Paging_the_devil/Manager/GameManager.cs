@@ -36,6 +36,7 @@ namespace Paging_the_devil.Manager
 
         List<Enemy> enemyList;
 
+        InfoBox infoBox;
 
         int nrOfPlayers;
 
@@ -73,6 +74,8 @@ namespace Paging_the_devil.Manager
             ConnectController();
 
             SetWindowSize(graphics);
+
+            infoBox = new InfoBox(TextureBank.hudTextureList[19], new Vector2(768, 0), enemyList);
         }
         public void Update(GameTime gameTime)
         {
@@ -126,7 +129,7 @@ namespace Paging_the_devil.Manager
                     UpdateController();
                     break;
                 case GameState.InGame:
-
+                    infoBox.Update(gameTime);
                     if (!menuManager.gamePaused)
                     {
                         if (HUDManager == null)
@@ -253,6 +256,9 @@ namespace Paging_the_devil.Manager
                     {
                         menuManager.Draw(spriteBatch);
                     }
+
+                    infoBox.Draw(spriteBatch);
+                    SendEnemyList();
 
                     break;
                 case GameState.Win:
@@ -715,6 +721,10 @@ namespace Paging_the_devil.Manager
                     HUDManager = null;
                 }
             }
+        }
+        private void SendEnemyList()
+        {
+            infoBox.GetEnemyList(enemyList);
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Paging_the_devil.Manager
         public static List<Texture2D> abilityButtonList = new List<Texture2D>();
         public static List<Texture2D> characterInfoList = new List<Texture2D>();
         public static SpriteFont spriteFont;
+        public static SpriteFont spriteFontInfo;
 
         public static void LoadTextures(ContentManager Content)
         {
@@ -115,6 +116,7 @@ namespace Paging_the_devil.Manager
             hudTextureList.Add(Content.Load<Texture2D>(@"HudRanger"));//16
             hudTextureList.Add(Content.Load<Texture2D>(@"HudHealth"));//17
             hudTextureList.Add(Content.Load<Texture2D>(@"HP"));//18
+            hudTextureList.Add(Content.Load<Texture2D>(@"HudBG")); //19
             
             //AbilityButtons
             abilityButtonList.Add(Content.Load<Texture2D>(@"ArrowBtn"));//0
@@ -165,6 +167,7 @@ namespace Paging_the_devil.Manager
 
             // Fonts
             spriteFont = Content.Load<SpriteFont>(@"HudPlayerTxt");
+            spriteFontInfo = Content.Load<SpriteFont>(@"spritefont1");
         }
     }
 }
