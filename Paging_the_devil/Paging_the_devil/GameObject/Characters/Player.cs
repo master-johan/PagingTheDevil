@@ -79,7 +79,7 @@ namespace Paging_the_devil.GameObject.Characters
             rotation = 0;
 
             healthbarXOffset = -25;
-            healthbarYOffset = -35;
+            healthbarYOffset = -45;
         }
         public override void Update(GameTime gameTime)
         {

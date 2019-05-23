@@ -31,11 +31,11 @@ namespace Paging_the_devil.Manager
         public static float DevilCleaveTimer;
         public static float TauntTimer;
         public static float WebRootTimer;
-        public static float BlockTimer;
         public static float RootTimer;
         public static float HitTimerMax;
         public static float TrapNoHitTimer;
 
+        public static int BlockTimer;
         public static int DashCooldown;
         public static int HealHarmCooldown;
         public static int CleaveCooldown;
@@ -131,7 +131,7 @@ namespace Paging_the_devil.Manager
             DevilCleaveTimer = 2000;
             TauntTimer = 4000;
             WebRootTimer = 3000;
-            BlockTimer = 4000;
+            BlockTimer = 4;
             RootTimer = 2000;
             HitTimerMax = 350;
             TrapNoHitTimer = 4000;

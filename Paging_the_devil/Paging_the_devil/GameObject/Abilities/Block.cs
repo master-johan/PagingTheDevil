@@ -15,11 +15,14 @@ namespace Paging_the_devil.GameObject.Abilities
         float health;
         float timePassed;
 
+        string blockTimerText;
+
         bool first;
 
         Player player;
 
         Vector2 blockPos;
+        Vector2 blockTimerTextPos;
 
         public bool Active { get; private set; }
 
@@ -33,6 +36,8 @@ namespace Paging_the_devil.GameObject.Abilities
             Active = false;
             btnTexture = TextureBank.abilityButtonList[10];
 
+            blockTimerTextPos = new Vector2(player.pos.X, player.pos.Y);
+
             width = 59;
             height = 61;
 
@@ -42,15 +47,22 @@ namespace Paging_the_devil.GameObject.Abilities
             first = false;
 
             coolDownTime = ValueBank.BlockCooldown;
+
+            timePassed = (int)ValueBank.BlockTimer;
         }
         public override void Update(GameTime gameTime)
         {
-            timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            timePassed -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            blockTimerText = timePassed.ToString("0");
 
             Active = true;
 
             rect.X = (int)player.pos.X - width / 2;
             rect.Y = (int)player.pos.Y - height / 2;
+
+            blockTimerTextPos.X = player.pos.X - 15;
+            blockTimerTextPos.Y = player.pos.Y + 20;
 
             Vector2 temp = blockPos - player.pos;
             blockPos -= temp;
@@ -69,15 +81,16 @@ namespace Paging_the_devil.GameObject.Abilities
                 HitCharacter.HealthPoints = health;
             }
 
-            if (timePassed >= ValueBank.BlockTimer)
+            if (timePassed <= 0)
             {
                 Active = false;
                 ToRemove = true;
+                timePassed = (int)ValueBank.BlockTimer;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.DrawString(TextureBank.spriteFont, blockTimerText, blockTimerTextPos, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1f);
         }
     }
 }
