@@ -132,6 +132,7 @@ namespace Paging_the_devil.Manager
                     characterInfoManager.GetController(controllerArray);
                     characterInfoManager.Update(gameTime);
                     GoBack();
+                    break;
 
                 case GameState.Win:
                     mainMenuBackground.Update(gameTime);
@@ -151,8 +152,7 @@ namespace Paging_the_devil.Manager
                 pointerPause.Update(gameTime);
 
                 previous = current;
-
-                    break;
+ 
             }
 
             PauseMenu(gameTime);
