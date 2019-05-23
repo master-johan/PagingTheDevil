@@ -79,7 +79,7 @@ namespace Paging_the_devil.Manager
             background.Draw(spritebatch);
             spritebatch.Draw(TextureBank.characterInfoList[0], Vector2.Zero, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
             spritebatch.Draw(TextureBank.characterInfoList[1], logoPos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
-            spritebatch.Draw(TextureBank.menuTextureList[21], goBackTextPos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
+            spritebatch.Draw(TextureBank.menuTextureList[24], goBackTextPos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
         }
         /// <summary>
         /// Den här metoden väljer textur till karaktär, abilities och roll.
