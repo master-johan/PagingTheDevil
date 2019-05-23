@@ -74,7 +74,7 @@ namespace Paging_the_devil.Manager
             //Random
             rand = new Random();
             //Character Health
-            BarbarianHealth = 200f;
+            BarbarianHealth = 250f;
             KnightHealth = 300f;
             DruidHealth = 120f;
             RangerHealth = 100f;
@@ -97,12 +97,12 @@ namespace Paging_the_devil.Manager
             BlockCooldown = 1000;
           
             //Ability Dmg
-            ArrowDmg = 2;
+            ArrowDmg = 1;
             TrapDmg = 1;
             HealHarmDmg = 1;
             SlashDmg = 2;
             CleaveDmg = 4;
-            ChargeDmg = 4;
+            ChargeDmg = 3;
 
             //Enemy Ability Dmg
             FireballDmg = 2;

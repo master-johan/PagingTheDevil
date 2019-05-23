@@ -10,8 +10,7 @@ using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {
-    public enum GameState { StoryScreen , MainMenu, Controls, PlayerSelect, InGame, Win, GameOver }
-
+    public enum GameState { StoryScreen , MainMenu, Controls, PlayerSelect, InGame, Win, GameOver, CharacterInfo }
 
     class GameManager
     {
@@ -122,11 +121,14 @@ namespace Paging_the_devil.Manager
                     DisconnectController();
 
                     break;
+                case GameState.CharacterInfo:
+                    menuManager.Update(gameTime);
+                    UpdateController();
+                    break;
                 case GameState.InGame:
 
                     if (!menuManager.gamePaused)
                     {
-
                         if (HUDManager == null)
                         {
                             HUDManager = menuManager.PlayerSelectManager.HUDManager;
@@ -227,6 +229,9 @@ namespace Paging_the_devil.Manager
                 case GameState.PlayerSelect:
                     menuManager.Draw(spriteBatch);
                     break;
+                case GameState.CharacterInfo:
+                    menuManager.Draw(spriteBatch);
+                    break;
                 case GameState.Controls:
                     menuManager.Draw(spriteBatch);
                     break;
@@ -253,10 +258,20 @@ namespace Paging_the_devil.Manager
                 case GameState.Win:
                     graphicsDevice.Clear(Color.Black);
                     menuManager.Draw(spriteBatch);
+
+                    spriteBatch.Draw(TextureBank.menuTextureList[22], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[22].Width / 2,
+                    ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[22].Height / 2), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
+                    spriteBatch.Draw(TextureBank.menuTextureList[23], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[23].Width / 2,
+                    (ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[23].Height / 2) + 300), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
                     break;
                 case GameState.GameOver:
                     graphicsDevice.Clear(Color.Black);
                     menuManager.Draw(spriteBatch);
+
+                    spriteBatch.Draw(TextureBank.menuTextureList[21], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[21].Width / 2,
+                    ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[21].Height / 2), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
+                    spriteBatch.Draw(TextureBank.menuTextureList[23], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[23].Width / 2,
+                    (ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[23].Height / 2) + 200), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
                     break;
             }
         }

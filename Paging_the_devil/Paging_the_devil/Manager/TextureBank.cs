@@ -20,6 +20,7 @@ namespace Paging_the_devil.Manager
         public static List<Texture2D> playerSelectBackgroundList = new List<Texture2D>();
         public static List<Texture2D> buttonTextureList = new List<Texture2D>();
         public static List<Texture2D> abilityButtonList = new List<Texture2D>();
+        public static List<Texture2D> characterInfoList = new List<Texture2D>();
         public static SpriteFont spriteFont;
 
         public static void LoadTextures(ContentManager Content)
@@ -89,6 +90,10 @@ namespace Paging_the_devil.Manager
             menuTextureList.Add(Content.Load<Texture2D>(@"PausTex"));//18
             menuTextureList.Add(Content.Load<Texture2D>(@"PauseResume"));//19
             menuTextureList.Add(Content.Load<Texture2D>(@"PauseCharInfo"));//20
+            menuTextureList.Add(Content.Load<Texture2D>(@"GameOver"));//21
+            menuTextureList.Add(Content.Load<Texture2D>(@"Winner"));//22
+            menuTextureList.Add(Content.Load<Texture2D>(@"Restart"));//23
+            menuTextureList.Add(Content.Load<Texture2D>(@"GoBackText"));//24
 
             //HUD
             hudTextureList.Add(Content.Load<Texture2D>(@"Abtn"));//0
@@ -111,9 +116,6 @@ namespace Paging_the_devil.Manager
             hudTextureList.Add(Content.Load<Texture2D>(@"HudHealth"));//17
             hudTextureList.Add(Content.Load<Texture2D>(@"HP"));//18
             
-
-
-
             //AbilityButtons
             abilityButtonList.Add(Content.Load<Texture2D>(@"ArrowBtn"));//0
             abilityButtonList.Add(Content.Load<Texture2D>(@"SlashBtn"));//1
@@ -137,6 +139,23 @@ namespace Paging_the_devil.Manager
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Cloud3"));//6
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Bird"));//7
             playerSelectBackgroundList.Add(Content.Load<Texture2D>(@"Walls"));//8
+
+            //CharacterInfo 
+            characterInfoList.Add(Content.Load<Texture2D>(@"CharInfoForeground"));//0
+            characterInfoList.Add(Content.Load<Texture2D>(@"CharacterInfoLogo"));//1
+            characterInfoList.Add(Content.Load<Texture2D>(@"KnightStor"));//2
+            characterInfoList.Add(Content.Load<Texture2D>(@"DruidStor"));//3
+            characterInfoList.Add(Content.Load<Texture2D>(@"RangerStor"));//4
+            characterInfoList.Add(Content.Load<Texture2D>(@"BarbarianStor"));//5
+            characterInfoList.Add(Content.Load<Texture2D>(@"BigKnightInfo"));//6
+            characterInfoList.Add(Content.Load<Texture2D>(@"BigDruidInfo"));//7
+            characterInfoList.Add(Content.Load<Texture2D>(@"BigRangerInfo"));//8
+            characterInfoList.Add(Content.Load<Texture2D>(@"BigBarbInfo"));//9
+            characterInfoList.Add(Content.Load<Texture2D>(@"AbilityInfoBox"));//10
+            characterInfoList.Add(Content.Load<Texture2D>(@"AbilityInfoDruid"));//11
+            characterInfoList.Add(Content.Load<Texture2D>(@"AbilityInfoBarbarian"));//12
+            characterInfoList.Add(Content.Load<Texture2D>(@"AbilityInfoRanger"));//13
+
 
             // ButtonTexture
             buttonTextureList.Add(Content.Load<Texture2D>(@"A"));//0

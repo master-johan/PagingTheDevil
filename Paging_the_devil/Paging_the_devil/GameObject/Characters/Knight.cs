@@ -45,7 +45,7 @@ namespace Paging_the_devil.GameObject.Characters
         {
             Ability ability = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this);
             Ability2CooldownTimer = ability.coolDownTime;
-            SoundBank.SoundEffectList[4].Play();
+            SoundBank.SoundEffectList[4].Play(0.2f, 0.0f,0.0f);
             return ability;
 
         }
