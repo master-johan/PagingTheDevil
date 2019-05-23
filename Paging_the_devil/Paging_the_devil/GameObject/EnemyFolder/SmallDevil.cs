@@ -41,6 +41,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             this.nrOfPlayers = nrOfPlayers;
 
             HealthPoints = ValueBank.SmallDevilHealth;
+            MaxHealthPoints = HealthPoints;
             shootTimer = ValueBank.SmallDevilShootTimer;
             left = true;
             right = false;
@@ -56,6 +57,8 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
             temp = Vector2.Zero;
+            healthbarWidth = 60;
+            healthbarWidthMax = healthbarWidth;
         }
         public override void Update(GameTime gameTime)
         {

@@ -39,6 +39,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             spriteCount = 5;
             spriteWidth = tex.Width;
             HealthPoints = ValueBank.SlimeHealth;
+            MaxHealthPoints = HealthPoints;
             oldDistance = int.MaxValue;
 
             srcRect = new Rectangle(0, 0, 32, 32);
@@ -70,6 +71,10 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             if (Hit)
             {
                 spriteBatch.Draw(tex, pos, srcRect, Color.Red, 0, Vector2.Zero, scale, SpriteEffects.None, 0.3f);
+            }
+            if (ShowHealthbar)
+            {
+                DrawHealthBar(spriteBatch);
             }
         }
         /// <summary>
