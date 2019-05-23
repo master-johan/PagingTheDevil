@@ -529,10 +529,25 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
+                        bool cleaveHit = false;
 
                         if (a is Root)
                         {
                             (a as Root).enemyList.Add(e);
+                        }
+                        if (a is Cleave)
+                        {
+                            for (int i = 0; i < (a as Cleave).enemiesHitList.Count; i++)
+                            {
+                                if (e == (a as Cleave).enemiesHitList[i])
+                                {
+                                    cleaveHit = true;
+                                }
+                            }
+                            if (!cleaveHit)
+                            {
+                                (a as Cleave).enemiesHitList.Add(e);
+                            }
                         }
 
                         if (a is FlowerPower)
