@@ -10,7 +10,7 @@ using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {
-    public enum GameState { StoryScreen , MainMenu, Controls, PlayerSelect, InGame, Win, GameOver, CharacterInfo }
+    public enum GameState { StoryScreen, MainMenu, Controls, PlayerSelect, InGame, Win, GameOver, CharacterInfo }
 
     class GameManager
     {
@@ -236,7 +236,7 @@ namespace Paging_the_devil.Manager
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.InGame:
-                    
+
                     if (roomManagerCreated)
                     {
                         roomManager.Draw(spriteBatch);
@@ -249,7 +249,7 @@ namespace Paging_the_devil.Manager
                         HUDManager.Draw(spriteBatch);
                     }
 
-                    if(menuManager.gamePaused)
+                    if (menuManager.gamePaused)
                     {
                         menuManager.Draw(spriteBatch);
                     }
@@ -600,7 +600,7 @@ namespace Paging_the_devil.Manager
                         a.HitCharacter = playerArray[i];
                         (a.HitCharacter as Player).Hit = true;
 
-                        if(a.HitCharacter is Player)
+                        if (a.HitCharacter is Player)
                         {
                             for (int j = 0; j < (a.HitCharacter as Player).abilityList.Count; j++)
                             {
@@ -621,9 +621,9 @@ namespace Paging_the_devil.Manager
                         }
                     }
                     blockSound = false;
-                   
+
                 }
-               
+
 
                 foreach (var w in currentRoom.GetWallRectList())
                 {
@@ -639,7 +639,7 @@ namespace Paging_the_devil.Manager
                 }
             }
 
-            
+
 
             if (toRemove != null)
             {
@@ -702,18 +702,20 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void StartToRestart()
         {
-            for (int i = 0; i < nrOfPlayers; i++)
+            if (controllerArray[0].ButtonPressed(Buttons.Start))
             {
-                if (playerArray[i].Controller.ButtonPressed(Buttons.Start))
+
+                currentState = GameState.MainMenu;
+                menuManager.PlayerSelectManager.Reset();
+                roomManager.Reset();
+
+                for (int j = 0; j < nrOfPlayers; j++)
                 {
-                    currentState = GameState.MainMenu;
-                    menuManager.PlayerSelectManager.Reset();
-                    roomManager.Reset();
-                    HUDManager.playerHudArray[i].Reset();
-                    HUDManager.Reset();
-                    hudManagerCreated = false;
-                    HUDManager = null;
+                    HUDManager.playerHudArray[j].Reset();
                 }
+                HUDManager.Reset();
+                hudManagerCreated = false;
+                HUDManager = null;
             }
         }
     }
