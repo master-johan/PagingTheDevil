@@ -97,7 +97,7 @@ namespace Paging_the_devil.Manager
             BlockCooldown = 1000;
           
             //Ability Dmg
-            ArrowDmg = 2;
+            ArrowDmg = 1;
             TrapDmg = 1;
             HealHarmDmg = 1;
             SlashDmg = 2;

@@ -87,7 +87,10 @@ namespace Paging_the_devil.Manager
             menuTextureList.Add(Content.Load<Texture2D>(@"PausTex"));//18
             menuTextureList.Add(Content.Load<Texture2D>(@"PauseResume"));//19
             menuTextureList.Add(Content.Load<Texture2D>(@"PauseCharInfo"));//20
-            menuTextureList.Add(Content.Load<Texture2D>(@"GoBackText"));//21
+            menuTextureList.Add(Content.Load<Texture2D>(@"GameOver"));//21
+            menuTextureList.Add(Content.Load<Texture2D>(@"Winner"));//22
+            menuTextureList.Add(Content.Load<Texture2D>(@"Restart"));//23
+            menuTextureList.Add(Content.Load<Texture2D>(@"GoBackText"));//24
 
             //HUD
             hudTextureList.Add(Content.Load<Texture2D>(@"Abtn"));//0
