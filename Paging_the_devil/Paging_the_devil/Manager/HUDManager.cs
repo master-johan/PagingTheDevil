@@ -103,7 +103,6 @@ namespace Paging_the_devil.Manager
 
         public void Reset()
         {
-            //Array.Clear(playerHudArray, 0, nrOfPlayers);
             for (int i = 0; i < nrOfPlayers; i++)
             {
                 playerHudArray[i] = null;
