@@ -708,7 +708,7 @@ namespace Paging_the_devil.Manager
 
                 if (timePassed >= 4000)
                 {
-                    Spawner(5, 0, true, false, false, false, false, false, false, false);
+                    Spawner(2, 0, true, false, false, false, false, false, false, false);
                     enemiesSpawned[3, 1] = true;
                     timePassed = 0;
                 }
@@ -716,20 +716,20 @@ namespace Paging_the_devil.Manager
             //Andra rummet
             if (RoomReturn(2, 1))
             {
-                Spawner(10, 2, true, true, false, true, false, false, false, false);
+                Spawner(0, 0, false, false, false, false, false, true, false, false);
                 enemiesSpawned[2, 1] = true;
             }
             //Tredje rummet
             if (RoomReturn(2, 2))
             {
-                Spawner(12, 3, true, true, true, false, false, false, false, false);
+                Spawner(0, 1, false, true, false, false, false, false, false, false);
 
                 enemiesSpawned[2, 2] = true;
             }
             //Fjärde rummet
             if (RoomReturn(2, 3))
             {
-                Spawner(15, 4, true, true, false, true, false, true, false, false);
+                Spawner(3, 2, true, true, false, true, false, false, false, false);
 
                 enemiesSpawned[2, 3] = true;
             }
@@ -737,7 +737,7 @@ namespace Paging_the_devil.Manager
             if (RoomReturn(2, 4))
             {
                 MediaPlayer.Play(SoundBank.BgMusicList[2]);
-                Spawner(10, 2, true, true, false, true, false, true, true, false);
+                Spawner(0, 0, false, false, false, false, false, false, true, false);
 
                 enemiesSpawned[2, 4] = true;
             }
