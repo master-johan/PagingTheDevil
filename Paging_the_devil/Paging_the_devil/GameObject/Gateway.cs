@@ -7,9 +7,12 @@ namespace Paging_the_devil.GameObject
     {
         public bool IsVisible { get; set; }
 
+        Rectangle srcRect;
+
         public Gateway(Texture2D tex, Vector2 pos) : base(tex, pos)
         {
             rect = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+            srcRect = new Rectangle(0, 0, tex.Width / 2, tex.Height);
         }
         public override void Update(GameTime gameTime)
         {
@@ -20,7 +23,7 @@ namespace Paging_the_devil.GameObject
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tex, pos, null, Color.White, 0, Vector2.Zero, 1,SpriteEffects.None, 0.3f);
+            spriteBatch.Draw(tex, pos, srcRect, Color.White, 0, Vector2.Zero, 1,SpriteEffects.None, 0.3f);
         }
     }
 }

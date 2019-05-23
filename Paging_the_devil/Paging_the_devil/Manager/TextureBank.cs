@@ -56,6 +56,7 @@ namespace Paging_the_devil.Manager
             roomTextureList.Add(Content.Load<Texture2D>(@"Walldown"));//5
             roomTextureList.Add(Content.Load<Texture2D>(@"Wallright"));//6
             roomTextureList.Add(Content.Load<Texture2D>(@"Wallleft"));//7
+            roomTextureList.Add(Content.Load<Texture2D>(@"DoorAnim"));//8
 
             //Enemy
             enemyTextureList.Add(Content.Load<Texture2D>(@"RedDevil"));//0

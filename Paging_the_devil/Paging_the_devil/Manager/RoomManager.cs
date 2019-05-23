@@ -326,10 +326,10 @@ namespace Paging_the_devil.Manager
             Vector2 west = new Vector2(CurrentRoom.GetWallRectList()[2].X, CurrentRoom.GetWallRectList()[2].Height / 2);
             Vector2 east = new Vector2(CurrentRoom.GetWallRectList()[3].X - halfPortalSize, CurrentRoom.GetWallRectList()[3].Height / 2);
 
-            gatewayNorth = new Gateway(TextureBank.roomTextureList[0], north);
-            gatewaySouth = new Gateway(TextureBank.roomTextureList[0], south);
-            gatewayWest = new Gateway(TextureBank.roomTextureList[0], west);
-            gatewayEast = new Gateway(TextureBank.roomTextureList[0], east);
+            gatewayNorth = new Gateway(TextureBank.roomTextureList[8], north);
+            gatewaySouth = new Gateway(TextureBank.roomTextureList[8], south);
+            gatewayWest = new Gateway(TextureBank.roomTextureList[8], west);
+            gatewayEast = new Gateway(TextureBank.roomTextureList[8], east);
         }
         /// <summary>
         /// Den här metoden räknar på vilken gateway som ska visas.

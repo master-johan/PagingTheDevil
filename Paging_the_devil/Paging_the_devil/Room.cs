@@ -107,19 +107,19 @@ namespace Paging_the_devil
             {
                 if (dir == 0)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallRectList[0].Width / 2, wallRectList[0].Y)));
+                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[0].Width / 2, wallRectList[0].Y)));
                 }
                 else if (dir == 1)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallRectList[1].Width / 2, wallRectList[1].Y - 25)));
+                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[1].Width / 2, wallRectList[1].Y - 25)));
                 }
                 else if (dir == 2)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallRectList[2].X, wallRectList[2].Height/2)));
+                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[2].X, wallRectList[2].Height/2)));
                 }
                 else if (dir == 3)
                 {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[0], new Vector2(wallRectList[3].X- 25, wallRectList[3].Height / 2)));
+                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[3].X- 25, wallRectList[3].Height / 2)));
                 }
             }
         }
