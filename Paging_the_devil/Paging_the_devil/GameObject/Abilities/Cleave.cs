@@ -15,13 +15,15 @@ namespace Paging_the_devil.GameObject.Abilities
         float angle;
         float timePassed;
 
+        bool hitBefore;
+
         Vector2 cleavePos;
         Vector2 left, right, up, down;
         Vector2 meleeDirection;
 
         Character character;
 
-        List<Enemy> enemiesHitList;
+        public List<Enemy> enemiesHitList;
 
         public bool Active { get; private set; }
         bool hit;
@@ -33,7 +35,7 @@ namespace Paging_the_devil.GameObject.Abilities
             cleavePos = pos;
 
 
-
+            hitBefore = false;
 
             sourceRect = new Rectangle(0, 0, tex.Width, tex.Height);
 
@@ -60,6 +62,8 @@ namespace Paging_the_devil.GameObject.Abilities
                 angle < MathHelper.ToRadians(-430f) && meleeDirection == right)
             {
                 Active = false;
+                ToRemove = true;
+                enemiesHitList.Clear();
             }
 
             angle -= 0.15f;
@@ -73,7 +77,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
                 foreach (var e in enemiesHitList)
                 {
-                    if (HitCharacter == e)
+                    if (HitCharacter == e && hitBefore)
                     {
                         hasHitBefore = true;
                     }
@@ -81,8 +85,8 @@ namespace Paging_the_devil.GameObject.Abilities
 
                 if (!hasHitBefore)
                 {
-                    ApplyDamage();
-                    enemiesHitList.Add(HitCharacter as Enemy);
+                    DoDamage();
+                    hitBefore = true;
                 }
             }
             UpdateHitbox();
@@ -191,14 +195,11 @@ namespace Paging_the_devil.GameObject.Abilities
             down = new Vector2(0, 1);
         }
 
-        private void UpdateDevilCleave(GameTime gameTime)
+        private void DoDamage()
         {
-            timePassed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (timePassed >= ValueBank.DevilCleaveTimer)
+            foreach (var e in enemiesHitList)
             {
-                ToRemove = true;
-                Active = false;
+                e.HealthPoints -= Damage;
             }
         }
     }

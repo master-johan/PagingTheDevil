@@ -65,6 +65,7 @@ namespace Paging_the_devil.Manager
         public static int WebballSpeed;
         public static int WebballDmg;
         public static int DevilCleaveCooldown;
+        public static int FlowerPowerCooldown;
 
         public static Random rand;
 
@@ -86,35 +87,36 @@ namespace Paging_the_devil.Manager
             DevilHealth = 100;
 
             //Ability Cooldown
-            DashCooldown = 40;
-            CleaveCooldown = 40;
+            DashCooldown = 60;
+            CleaveCooldown = 100;
             HealHarmCooldown = 30;
-            ArrowCooldown = 30;
+            ArrowCooldown = 60;
             SlashCooldown = 30;
             TrapCooldown = 80;
-            ChargeCooldown = 40;
+            ChargeCooldown = 100;
             DevilCleaveCooldown = 360;
             BlockCooldown = 1000;
+            FlowerPowerCooldown = 800;
           
             //Ability Dmg
-            ArrowDmg = 1;
+            ArrowDmg = 3;
             TrapDmg = 1;
             HealHarmDmg = 1;
             SlashDmg = 2;
-            CleaveDmg = 4;
+            CleaveDmg = 6;
             ChargeDmg = 3;
 
             //Enemy Ability Dmg
-            FireballDmg = 2;
+            FireballDmg = 4;
             WebballDmg = 2;
 
             //Ability Heal
             HealHarmHeal = 4;
 
             //Ability Speed
-            ArrowSpeed = 7;
-            HealHarmSpeed = 7;
-            FireballSpeed = 7;
+            ArrowSpeed = 10;
+            HealHarmSpeed = 10;
+            FireballSpeed = 10;
             WebballSpeed = 14;
             DashSpeed = 15f;
             ChargeSpeed = 15f;
@@ -124,13 +126,13 @@ namespace Paging_the_devil.Manager
             SmallDevilShootTimer = 40;
             TrapTimer = 2000;
             DashTimer = 200;
-            ChargeTimer = 200;
+            ChargeTimer = 400;
             WebbballTimer = 160f;
             DevilCleaveTimer = 2000;
             TauntTimer = 4000;
             WebRootTimer = 3000;
-            BlockTimer = 3000;
-            RootTimer = 2500;
+            BlockTimer = 4000;
+            RootTimer = 2000;
             HitTimerMax = 350;
             TrapNoHitTimer = 4000;
 

@@ -713,7 +713,7 @@ namespace Paging_the_devil.Manager
         {
             if (RoomReturn(0, 0))
             {
-                Spawner(0, 0, false, false, false, false, false, false, false, true);
+                Spawner(0, 2, false, true, false, false, false, false, false, true);
 
                 enemiesSpawned[0, 0] = true;
             }

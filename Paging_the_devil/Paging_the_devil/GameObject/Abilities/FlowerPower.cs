@@ -35,7 +35,7 @@ namespace Paging_the_devil.GameObject.Abilities
 
             flowerPowerColor = new Color(255, 255, 255, 255);
             btnTexture = TextureBank.abilityButtonList[7];
-            coolDownTime = 600;
+            coolDownTime = ValueBank.FlowerPowerCooldown;
         }
 
         public override void Update(GameTime gameTime)
