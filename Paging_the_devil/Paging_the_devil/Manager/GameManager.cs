@@ -554,6 +554,10 @@ namespace Paging_the_devil.Manager
                         {
 
                         }
+                        if (a is Taunt)
+                        {
+                            (a as Taunt).enemyList.Add(e);
+                        }
                         else
                         {
                             (a.HitCharacter as Enemy).Hit = true;

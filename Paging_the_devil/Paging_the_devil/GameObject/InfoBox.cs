@@ -25,6 +25,7 @@ namespace Paging_the_devil.GameObject
         string devilHealth;
         string infoText;
         string infoDoor;
+        string infoTrain;
 
         double maxHealth;
 
@@ -43,11 +44,12 @@ namespace Paging_the_devil.GameObject
             maxHealthBar = new Rectangle((int)pos.X + 80, (int)pos.Y + 77, tex.Width / 2, tex.Height / 3);
 
             devilTextPos = new Vector2((int)pos.X + 60, (int)pos.Y + 25);
-            infoTextPos = new Vector2((int)pos.X + 60, (int)pos.Y + 25);
+            infoTextPos = new Vector2((int)pos.X + 60, (int)pos.Y + 15);
 
             devilHealth ="Devil Health";
             infoText = "Kill all enemies to proceed!";
             infoDoor = "Press Y at the open door \n to proceed";
+            infoTrain = "Try out your attacks \n on the targetdummy \n when ready Press Y at the \n open door to proceed";
         }
 
         public override void Update(GameTime gameTime)
@@ -96,13 +98,17 @@ namespace Paging_the_devil.GameObject
                 spriteBatch.Draw(TextureBank.menuTextureList[3], maxHealthBar, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
                 spriteBatch.Draw(TextureBank.hudTextureList[18], healthBar, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.5f);
             }
-            else if (enemiesDead == false)
+            else if (enemiesDead == false && enemy as TargetDummy == null)
             {
                 spriteBatch.DrawString(TextureBank.spriteFontInfo, infoText, infoTextPos, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0.5f);
             }
             else if (enemiesDead == true)
             {
                 spriteBatch.DrawString(TextureBank.spriteFontInfo, infoDoor, infoTextPos, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0.5f);
+            }
+            else if (enemy as TargetDummy != null)
+            {
+                spriteBatch.DrawString(TextureBank.spriteFontInfo, infoTrain, infoTextPos, Color.Black, 0, Vector2.Zero, 1, SpriteEffects.None, 0.5f);
             }
 
             
