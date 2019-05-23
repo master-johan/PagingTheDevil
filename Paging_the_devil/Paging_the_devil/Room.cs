@@ -101,28 +101,28 @@ namespace Paging_the_devil
         /// dir reprecents direction. 0 = North, 1= South, 2 = West, 3 = East.
         /// </summary>
         /// <param name="dir"></param>
-        public void CreateGateWays(int dir)
-        {
-            if (dir >=0 && dir <=3)
-            {
-                if (dir == 0)
-                {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[0].Width / 2, wallRectList[0].Y)));
-                }
-                else if (dir == 1)
-                {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[1].Width / 2, wallRectList[1].Y - 25)));
-                }
-                else if (dir == 2)
-                {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[2].X, wallRectList[2].Height/2)));
-                }
-                else if (dir == 3)
-                {
-                    gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[3].X- 25, wallRectList[3].Height / 2)));
-                }
-            }
-        }
+        //public void CreateGateWays(int dir)
+        //{
+        //    if (dir >=0 && dir <=3)
+        //    {
+        //        if (dir == 0)
+        //        {
+        //            gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[0].Width / 2, wallRectList[0].Y)));
+        //        }
+        //        else if (dir == 1)
+        //        {
+        //            gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[1].Width / 2, wallRectList[1].Y - 25)));
+        //        }
+        //        else if (dir == 2)
+        //        {
+        //            gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[2].X, wallRectList[2].Height/2)));
+        //        }
+        //        else if (dir == 3)
+        //        {
+        //            gateWayList.Add(new Gateway(TextureBank.roomTextureList[8], new Vector2(wallRectList[3].X- 25, wallRectList[3].Height / 2)));
+        //        }
+        //    }
+        //}
         public List<Gateway> GetGatewayList()
         {
             return gateWayList;
