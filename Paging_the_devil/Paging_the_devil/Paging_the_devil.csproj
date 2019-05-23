@@ -68,6 +68,7 @@
     <Compile Include="GameObject\Characters\Ranger.cs" />
     <Compile Include="GameObject\Abilities\Trap.cs" />
     <Compile Include="MainMenuBackground.cs" />
+    <Compile Include="Manager\CharacterInfoManager.cs" />
     <Compile Include="Manager\HUDManager.cs" />
     <Compile Include="Manager\LevelManager.cs" />
     <Compile Include="Manager\MenuManager.cs" />
