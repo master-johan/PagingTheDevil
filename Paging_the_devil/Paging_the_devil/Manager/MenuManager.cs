@@ -62,7 +62,7 @@ namespace Paging_the_devil.Manager
             pointerPosMainMenu = new Vector2(mainMenuButtonList[0].GetPos.X - 200, mainMenuButtonList[0].GetPos.Y + 10);
             pointerPosPause = new Vector2(pauseButtonList[0].GetPos.X - 200, pauseButtonList[0].GetPos.Y + 10);
 
-            storyTextPos = new Vector2(70, ValueBank.WindowSizeY - 100);
+            storyTextPos = new Vector2(70, ValueBank.WindowSizeY /*- 100*/);
             skipTextPos = new Vector2(ValueBank.WindowSizeX - 400, 50);
 
             pointerMainMenu = new Pointer(TextureBank.menuTextureList[5], pointerPosMainMenu, mainMenuButtonList);
@@ -76,7 +76,7 @@ namespace Paging_the_devil.Manager
             PlayerSelectManager = new PlayerSelectManager();
             characterInfoManager = new CharacterInfoManager();
 
-            scrollSpeed = 0.6f;
+            scrollSpeed = 0.5f;
 
             ReadStory();
         }
@@ -91,7 +91,7 @@ namespace Paging_the_devil.Manager
 
                     mainMenuBackground.Update(gameTime);
 
-                    if (storyTextPos.Y < -1600)
+                    if (storyTextPos.Y < -1100)
                     {
                         GameManager.currentState = GameState.InGame;
                         MediaPlayer.Play(SoundBank.BgMusicList[0]);
@@ -132,6 +132,25 @@ namespace Paging_the_devil.Manager
                     characterInfoManager.GetController(controllerArray);
                     characterInfoManager.Update(gameTime);
                     GoBack();
+
+                case GameState.Win:
+                    mainMenuBackground.Update(gameTime);
+                    break;
+                case GameState.GameOver:
+                    mainMenuBackground.Update(gameTime);
+                    break;
+            }
+
+            if (gamePaused)
+            {
+                foreach (var b in pauseButtonList)
+                {
+                    b.Update();
+                }
+
+                pointerPause.Update(gameTime);
+
+                previous = current;
 
                     break;
             }
@@ -179,6 +198,12 @@ namespace Paging_the_devil.Manager
 
                     pointerPause.Draw(spriteBatch);
 
+                    break;
+                case GameState.Win:
+                    mainMenuBackground.Draw(spriteBatch);
+                    break;
+                case GameState.GameOver:
+                    mainMenuBackground.Draw(spriteBatch);
                     break;
             }
         }

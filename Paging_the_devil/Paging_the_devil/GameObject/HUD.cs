@@ -130,5 +130,9 @@ namespace Paging_the_devil.GameObject
             playerIconTex[3] = TextureBank.hudTextureList[16];     
         }
 
+        public void Reset()
+        {
+            player = null;
+        }
     }
 }

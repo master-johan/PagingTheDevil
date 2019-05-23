@@ -10,8 +10,7 @@ using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {
-    public enum GameState { StoryScreen , MainMenu, Controls, PlayerSelect, CharacterInfo, InGame }
-
+    public enum GameState { StoryScreen , MainMenu, Controls, PlayerSelect, InGame, Win, GameOver, CharacterInfo }
 
     class GameManager
     {
@@ -196,12 +195,24 @@ namespace Paging_the_devil.Manager
                         CharacterÚpdate(gameTime);
                         DeleteAbilities();
                         roomManager.Update(gameTime);
+                        CheckIfGameOver();
+                        CheckIfWin();
                     }
                     else
                     {
                         controllerArray[0].Update();
                         menuManager.Update(gameTime);
                     }
+                    break;
+                case GameState.Win:
+                    UpdateController();
+                    StartToRestart();
+                    menuManager.Update(gameTime);
+                    break;
+                case GameState.GameOver:
+                    UpdateController();
+                    StartToRestart();
+                    menuManager.Update(gameTime);
                     break;
             }
         }
@@ -243,6 +254,14 @@ namespace Paging_the_devil.Manager
                         menuManager.Draw(spriteBatch);
                     }
 
+                    break;
+                case GameState.Win:
+                    graphicsDevice.Clear(Color.Black);
+                    menuManager.Draw(spriteBatch);
+                    break;
+                case GameState.GameOver:
+                    graphicsDevice.Clear(Color.Black);
+                    menuManager.Draw(spriteBatch);
                     break;
             }
         }
@@ -635,6 +654,55 @@ namespace Paging_the_devil.Manager
                 if (slime.GetRect.Intersects(playerArray[i].GetRect))
                 {
                     playerArray[i].HealthPoints -= slime.Damage;
+                }
+            }
+        }
+        /// <summary>
+        /// Den här metoden kollar ifall alla är döda
+        /// </summary>
+        private void CheckIfGameOver()
+        {
+            int hp = 0;
+
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                if (playerArray[i].HealthPoints != 0)
+                {
+                    hp++;
+                }
+            }
+
+            if (hp == 0)
+            {
+                currentState = GameState.GameOver;
+            }
+        }
+        /// <summary>
+        /// Den här metoden kollar ifall man har vunnit
+        /// </summary>
+        private void CheckIfWin()
+        {
+            if (roomManager.CheckIfBossRoomDefeated())
+            {
+                currentState = GameState.Win;
+            }
+        }
+        /// <summary>
+        /// Den här metoden gör så att man kan starta om spelet
+        /// </summary>
+        private void StartToRestart()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                if (playerArray[i].Controller.ButtonPressed(Buttons.Start))
+                {
+                    currentState = GameState.MainMenu;
+                    menuManager.PlayerSelectManager.Reset();
+                    roomManager.Reset();
+                    HUDManager.playerHudArray[i].Reset();
+                    HUDManager.Reset();
+                    hudManagerCreated = false;
+                    HUDManager = null;
                 }
             }
         }

@@ -276,5 +276,19 @@ namespace Paging_the_devil.Manager
         {
             this.nrOfPlayers = nrOfPlayers;
         }
+
+        public void Reset()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                selectingCharacter[i] = false;
+                connectedController[i] = true;
+                currentCharacter[i] = 0;
+                PlayerArray[i] = null;
+                characterChosen[i] = false;
+                readyPlayers = 0;
+                HUDManager = null;
+            }
+        }
     }
 }

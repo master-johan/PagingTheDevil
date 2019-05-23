@@ -35,9 +35,15 @@ namespace Paging_the_devil.Manager
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(TextureBank.menuTextureList[3], hudBackground, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                if (playerHudArray[i] != null)
+                {
+                    spriteBatch.Draw(TextureBank.menuTextureList[3], hudBackground, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.2f);
 
-            CreateHuds(spriteBatch);
+                    CreateHuds(spriteBatch);
+                }
+            }
         }
 
         /// <summary>
@@ -91,6 +97,14 @@ namespace Paging_the_devil.Manager
                 }
 
                 playerHudArray[i] = new HUD(pos, playerArray[i], nrOfPlayers);
+            }
+        }
+
+        public void Reset()
+        {
+            for (int i = 0; i < nrOfPlayers; i++)
+            {
+                playerHudArray[i] = null;
             }
         }
     }
