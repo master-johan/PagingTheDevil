@@ -95,6 +95,7 @@ namespace Paging_the_devil.Manager
             menuTextureList.Add(Content.Load<Texture2D>(@"Winner"));//22
             menuTextureList.Add(Content.Load<Texture2D>(@"Restart"));//23
             menuTextureList.Add(Content.Load<Texture2D>(@"GoBackText"));//24
+            menuTextureList.Add(Content.Load<Texture2D>(@"TheoDeleo"));//25
 
             //HUD
             hudTextureList.Add(Content.Load<Texture2D>(@"Abtn"));//0

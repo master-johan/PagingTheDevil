@@ -228,6 +228,9 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.MainMenu:
                     menuManager.Draw(spriteBatch);
+
+                    spriteBatch.Draw(TextureBank.menuTextureList[25], new Vector2((ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[25].Width / 2) + 120,
+                    (ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[25].Height / 2) - 250), null, Color.White, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0.3f);
                     break;
                 case GameState.PlayerSelect:
                     menuManager.Draw(spriteBatch);
