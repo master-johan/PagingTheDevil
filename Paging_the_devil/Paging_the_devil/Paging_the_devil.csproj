@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ptdikon_nMq_icon.ico</ApplicationIcon>
+    <ApplicationIcon>ptdikon_qes_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -134,6 +134,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ptdikon_nMq_icon.ico" />
+    <Content Include="ptdikon_qes_icon.ico" />
     <Content Include="story.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
