@@ -90,6 +90,7 @@ namespace Paging_the_devil.Manager
             spriteBatch.GraphicsDevice.Clear(Color.DarkGray);
 
             playerSelectBackground.Draw(spriteBatch);
+
             spriteBatch.Draw(TextureBank.menuTextureList[8], new Vector2(middleScreenX - TextureBank.menuTextureList[8].Width / 2, 100), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.6f);
             spriteBatch.Draw(TextureBank.menuTextureList[24], goBackTextPos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
 
@@ -136,6 +137,7 @@ namespace Paging_the_devil.Manager
                     spriteBatch.Draw(TextureBank.menuTextureList[7], pressYRectArray[i], null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.6f);
                 }
             }
+
             if (nrOfPlayers == readyPlayers && nrOfPlayers > 0)
             {
                 spriteBatch.Draw(TextureBank.menuTextureList[11], startGameRect, null, Color.White, 0, Vector2.Zero, SpriteEffects.None, 0.6f);
@@ -174,12 +176,9 @@ namespace Paging_the_devil.Manager
                 {
                     if (controllerArray[i].ButtonPressed(Buttons.Start))
                     {
-
                         HUDManager = new HUDManager(PlayerArray, nrOfPlayers);
                         GameManager.currentState = GameState.StoryScreen;
                         MediaPlayer.Play(SoundBank.BgMusicList[3]);
-
-
                     }
                 }
             }
@@ -224,6 +223,7 @@ namespace Paging_the_devil.Manager
                     readyPlayers--;
                     justPressed = true;
                 }
+
                 else if (controllerArray[0].ButtonPressed(Buttons.B) && selectingCharacter[0] && !justPressed)
                 {
                     for (int j = 0; j < nrOfPlayers; j++)
@@ -257,6 +257,7 @@ namespace Paging_the_devil.Manager
                             currentCharacter[i]--;
                         }
                     }
+
                     else if (controllerArray[i].ButtonPressed(Buttons.DPadRight))
                     {
                         if (currentCharacter[i] == 3)
@@ -326,10 +327,14 @@ namespace Paging_the_devil.Manager
             {
                 selectingCharacter[i] = false;
                 connectedController[i] = true;
-                currentCharacter[i] = 0;
-                PlayerArray[i] = null;
                 characterChosen[i] = false;
+
+                PlayerArray[i] = null;
+
+                currentCharacter[i] = 0;
+
                 readyPlayers = 0;
+
                 HUDManager = null;
             }
         }
