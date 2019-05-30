@@ -68,10 +68,7 @@ namespace Paging_the_devil.Manager
             SettingMaxAndMinValues();
 
             TargetDummySpawnPos = new Vector2(1700, 200);
-
         }
-
-
 
         public void Update(GameTime gameTime)
         {

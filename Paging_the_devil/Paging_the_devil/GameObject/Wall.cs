@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Paging_the_devil.GameObject
 {
-    public class Wall : StationaryObjects
+    public class Wall : GameObject
     {
         Rectangle sourceRect;
         

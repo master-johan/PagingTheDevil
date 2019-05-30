@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Paging_the_devil.GameObject
 {
-    class Gateway : StationaryObjects
+    class Gateway : GameObject
     {
         public bool IsVisible { get; set; }
         
@@ -49,6 +49,11 @@ namespace Paging_the_devil.GameObject
                 rect.X = (int)pos.X - 48;
                 rect.Y = (int)pos.Y - 20;
             }
+
+        }
+
+        public override void Update(GameTime gameTime)
+        {
 
         }
 
