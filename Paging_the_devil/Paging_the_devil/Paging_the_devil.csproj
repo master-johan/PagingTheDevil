@@ -15,7 +15,7 @@
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Jesper\Desktop\Pag\</PublishUrl>
+    <PublishUrl>C:\Users\Johan\Dropbox\PagingTheDevl\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -57,7 +57,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>3BF52C3C0395CB0B2BF4BD7FEEEB7963087F4DD5</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>9111351AD92FF58630B205CCBA4F2C3750EEAE67</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>Paging_the_devil_TemporaryKey.pfx</ManifestKeyFile>
