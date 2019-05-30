@@ -48,12 +48,16 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             rect = new Rectangle((int)pos.X, (int)pos.Y, spriteWidth, spriteHeight);
 
             HealthPoints = ValueBank.WallSpiderHealth;
+            MaxHealthPoints = HealthPoints;
 
             spriteCount = 6;
             interval = 200;
 
             scale = 2f;
             origin = new Vector2(TextureBank.enemyTextureList[2].Width / 2, 16);
+
+            healthbarXOffset = (int) -origin.X;
+            healthbarYOffset = (int)-origin.Y - 3;
 
             maxX = 1875;
             maxY = 1030;

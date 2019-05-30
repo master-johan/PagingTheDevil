@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Paging_the_devil.GameObject;
 using Paging_the_devil.GameObject.Characters;
+using System;
 
 namespace Paging_the_devil.Manager
 {

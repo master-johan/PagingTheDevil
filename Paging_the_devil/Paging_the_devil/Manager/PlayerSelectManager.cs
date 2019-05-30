@@ -20,6 +20,8 @@ namespace Paging_the_devil.Manager
         Rectangle drawKnightRect;
         Rectangle startGameRect;
 
+        Vector2 goBackTextPos;
+
         public int nrOfPlayers { get; set; }
         int readyPlayers;
         int middleScreenX;
@@ -30,6 +32,7 @@ namespace Paging_the_devil.Manager
         bool[] selectingCharacter;
         bool[] connectedController;
         bool[] characterChosen;
+        bool justPressed;
 
         Texture2D barbarianTex;
         Texture2D knightTex;
@@ -62,6 +65,8 @@ namespace Paging_the_devil.Manager
 
             PlayerArray = new Player[4];
 
+            goBackTextPos = new Vector2(15, 15);
+
             middleScreenX = (ValueBank.WindowSizeX / 2);
 
             drawKnightRect = new Rectangle(0, 0, 50, 60);
@@ -79,7 +84,7 @@ namespace Paging_the_devil.Manager
 
             for (int i = 0; i < nrOfPlayers; i++)
             {
-                if (controllerArray[i].ButtonPressed(Buttons.Y))
+                if (controllerArray[i].ButtonPressed(Buttons.Y) && !characterChosen[i])
                 {
                     selectingCharacter[i] = true;
                     connectedController[i] = false;
@@ -149,6 +154,25 @@ namespace Paging_the_devil.Manager
 
                     characterChosen[i] = true;
                     readyPlayers++;
+
+                }
+
+                if(controllerArray[i].ButtonPressed(Buttons.B) && characterChosen[i])
+                {
+                    characterChosen[i] = false;
+                    readyPlayers--;
+                    justPressed = true;
+                }
+                else if(controllerArray[0].ButtonPressed(Buttons.B) && selectingCharacter[0] && !justPressed)
+                {
+                    for (int j = 0; j < nrOfPlayers; j++)
+                    {
+                        characterChosen[j] = false;
+                        currentCharacter[j] = 0;
+                        readyPlayers = 0;
+                    }
+
+                    GameManager.currentState = GameState.MainMenu;
                 }
             }
 
@@ -168,7 +192,7 @@ namespace Paging_the_devil.Manager
                 }
             }
 
-
+            justPressed = false;
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -176,6 +200,7 @@ namespace Paging_the_devil.Manager
 
             playerSelectBackground.Draw(spriteBatch);
             spriteBatch.Draw(TextureBank.menuTextureList[8], new Vector2(middleScreenX - TextureBank.menuTextureList[8].Width / 2, 100), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.6f);
+            spriteBatch.Draw(TextureBank.menuTextureList[24], goBackTextPos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 1);
 
             for (int i = 0; i < nrOfPlayers; i++)
             {

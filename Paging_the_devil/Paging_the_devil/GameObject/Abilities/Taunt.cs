@@ -10,7 +10,7 @@ namespace Paging_the_devil.GameObject.Abilities
 {
     class Taunt : Ability
     {
-        List<Enemy> enemyList;
+        public List<Enemy> enemyList;
 
         Player player;
 
@@ -86,6 +86,7 @@ namespace Paging_the_devil.GameObject.Abilities
                 {
                     e.Taunted = false;
                 }
+                enemyList.Clear();
             }
         }
     }

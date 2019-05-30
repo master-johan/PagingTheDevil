@@ -16,6 +16,7 @@ namespace Paging_the_devil
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.IsFullScreen = true;
         }
 
         protected override void Initialize()
@@ -40,6 +41,7 @@ namespace Paging_the_devil
                 Exit();
             
             gameManager.Update(gameTime);
+           
         }
         protected override void Draw(GameTime gameTime)
         {

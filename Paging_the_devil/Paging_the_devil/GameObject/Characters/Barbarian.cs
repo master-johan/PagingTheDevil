@@ -10,7 +10,7 @@ namespace Paging_the_devil.GameObject.Characters
         public Barbarian(Texture2D tex, Vector2 pos, int playerIndex, Controller controller) : base(tex, pos, playerIndex, controller)
         {
             HealthPoints = ValueBank.BarbarianHealth;
-            maxHealthPoints = HealthPoints;
+            MaxHealthPoints = HealthPoints;
 
             Ability1 = new Cleave(TextureBank.mageSpellList[6], pos, LastDirection, this); 
             Ability2 = new Slash(TextureBank.mageSpellList[1], pos, LastDirection, this);

@@ -12,7 +12,7 @@ namespace Paging_the_devil.GameObject.Characters
     {
         protected float rotation;
 
-        protected float maxHealthPoints;
+        
 
         int playerIndex;
         int frame;
@@ -77,6 +77,9 @@ namespace Paging_the_devil.GameObject.Characters
 
             drawRect = down;
             rotation = 0;
+
+            healthbarXOffset = -25;
+            healthbarYOffset = -45;
         }
         public override void Update(GameTime gameTime)
         {
@@ -136,6 +139,11 @@ namespace Paging_the_devil.GameObject.Characters
             if (Hit)
             {
                 spriteBatch.Draw(tex, pos, drawRect, Color.Red, rotation, new Vector2(25, 30), 1, SpriteEffects.None, 0.4f);
+            }
+
+            if (ShowHealthbar)
+            {
+                DrawHealthBar(spriteBatch);
             }
         }
         /// <summary>
@@ -406,9 +414,9 @@ namespace Paging_the_devil.GameObject.Characters
         /// </summary>
         public void IfHealthIsFull()
         {
-            if(HealthPoints >= maxHealthPoints)
+            if(HealthPoints >= MaxHealthPoints)
             {
-                HealthPoints = maxHealthPoints;
+                HealthPoints = MaxHealthPoints;
             }
         }
         /// <summary>

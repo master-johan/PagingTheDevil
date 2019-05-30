@@ -14,7 +14,7 @@ namespace Paging_the_devil.GameObject.Characters
             Ability3 = new Dash(tex, pos, LastDirection, this, false);
 
             HealthPoints = ValueBank.RangerHealth;
-            maxHealthPoints = HealthPoints;
+            MaxHealthPoints = HealthPoints;
 
         }
 

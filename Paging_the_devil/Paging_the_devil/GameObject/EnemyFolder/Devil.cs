@@ -26,7 +26,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         int cleaveTimer;
         
         float scale;
-
+        float timePassed;
         float oldDistance;
         float currentDistance;
 
@@ -53,6 +53,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
             spriteCount = 12;
             spriteWidth = tex.Width;
             HealthPoints = ValueBank.DevilHealth;
+            MaxHealthPoints = HealthPoints;
             temp = Vector2.Zero;
             oldDistance = int.MaxValue;
 
@@ -72,6 +73,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
         }
         public override void Update(GameTime gameTime)
         {
+            timePassed += (float)gameTime.ElapsedGameTime.TotalSeconds;
             base.Update(gameTime);
             rect.X = (int)pos.X - 35;
             rect.Y = (int)pos.Y - 50;
@@ -89,6 +91,13 @@ namespace Paging_the_devil.GameObject.EnemyFolder
                 cleaveTimer = 360;
             }
             cleaveTimer--;
+
+            if (timePassed >= 20)
+            {
+                SoundBank.SoundEffectList[15].Play();
+                MovementSpeed += 1;
+                timePassed = 0;
+            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

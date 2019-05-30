@@ -22,6 +22,7 @@ namespace Paging_the_devil.GameObject.EnemyFolder
 
             Damage = 0.1f;
             HealthPoints = 50000000;
+            MaxHealthPoints = HealthPoints;
 
             maxY = 900;
             minY = 250;

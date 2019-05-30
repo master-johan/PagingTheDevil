@@ -31,11 +31,11 @@ namespace Paging_the_devil.Manager
         public static float DevilCleaveTimer;
         public static float TauntTimer;
         public static float WebRootTimer;
-        public static float BlockTimer;
         public static float RootTimer;
         public static float HitTimerMax;
         public static float TrapNoHitTimer;
 
+        public static int BlockTimer;
         public static int DashCooldown;
         public static int HealHarmCooldown;
         public static int CleaveCooldown;
@@ -65,6 +65,7 @@ namespace Paging_the_devil.Manager
         public static int WebballSpeed;
         public static int WebballDmg;
         public static int DevilCleaveCooldown;
+        public static int FlowerPowerCooldown;
 
         public static Random rand;
 
@@ -74,8 +75,8 @@ namespace Paging_the_devil.Manager
             //Random
             rand = new Random();
             //Character Health
-            BarbarianHealth = 250f;
-            KnightHealth = 300f;
+            BarbarianHealth = 200f;
+            KnightHealth = 250f;
             DruidHealth = 120f;
             RangerHealth = 100f;
 
@@ -83,38 +84,39 @@ namespace Paging_the_devil.Manager
             SmallDevilHealth = 10;
             SlimeHealth = 15;
             WallSpiderHealth = 10;
-            DevilHealth = 100;
+            DevilHealth = 150;
 
             //Ability Cooldown
-            DashCooldown = 40;
-            CleaveCooldown = 40;
-            HealHarmCooldown = 30;
-            ArrowCooldown = 30;
+            DashCooldown = 60;
+            CleaveCooldown = 100;
+            HealHarmCooldown = 50;
+            ArrowCooldown = 60;
             SlashCooldown = 30;
             TrapCooldown = 80;
-            ChargeCooldown = 40;
+            ChargeCooldown = 100;
             DevilCleaveCooldown = 360;
             BlockCooldown = 1000;
+            FlowerPowerCooldown = 800;
           
             //Ability Dmg
-            ArrowDmg = 2;
+            ArrowDmg = 3;
             TrapDmg = 1;
             HealHarmDmg = 1;
             SlashDmg = 2;
-            CleaveDmg = 4;
+            CleaveDmg = 6;
             ChargeDmg = 3;
 
             //Enemy Ability Dmg
-            FireballDmg = 2;
+            FireballDmg = 4;
             WebballDmg = 2;
 
             //Ability Heal
-            HealHarmHeal = 4;
+            HealHarmHeal = 6;
 
             //Ability Speed
-            ArrowSpeed = 7;
-            HealHarmSpeed = 7;
-            FireballSpeed = 7;
+            ArrowSpeed = 10;
+            HealHarmSpeed = 10;
+            FireballSpeed = 10;
             WebballSpeed = 14;
             DashSpeed = 15f;
             ChargeSpeed = 15f;
@@ -124,13 +126,13 @@ namespace Paging_the_devil.Manager
             SmallDevilShootTimer = 40;
             TrapTimer = 2000;
             DashTimer = 200;
-            ChargeTimer = 200;
+            ChargeTimer = 400;
             WebbballTimer = 160f;
             DevilCleaveTimer = 2000;
             TauntTimer = 4000;
             WebRootTimer = 3000;
-            BlockTimer = 3000;
-            RootTimer = 2500;
+            BlockTimer = 4;
+            RootTimer = 2000;
             HitTimerMax = 350;
             TrapNoHitTimer = 4000;
 
@@ -139,7 +141,7 @@ namespace Paging_the_devil.Manager
             SmallDevilIdleMoveSpeed = 1f;
             SlimeSpeed = 1f;
             SpiderMoveSpeed = 2f;
-            DevilSpeed = 2f;
+            DevilSpeed = 3f;
 
             //Player Speed
 

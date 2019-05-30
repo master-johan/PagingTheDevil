@@ -10,8 +10,7 @@ using Paging_the_devil.GameObject.Abilities;
 
 namespace Paging_the_devil.Manager
 {
-    public enum GameState { StoryScreen , MainMenu, Controls, PlayerSelect, InGame, Win, GameOver }
-
+    public enum GameState { StoryScreen, MainMenu, Controls, PlayerSelect, InGame, Win, GameOver, CharacterInfo }
 
     class GameManager
     {
@@ -37,6 +36,7 @@ namespace Paging_the_devil.Manager
 
         List<Enemy> enemyList;
 
+        InfoBox infoBox;
 
         int nrOfPlayers;
 
@@ -74,6 +74,8 @@ namespace Paging_the_devil.Manager
             ConnectController();
 
             SetWindowSize(graphics);
+
+            infoBox = new InfoBox(TextureBank.hudTextureList[19], new Vector2(768, 0), enemyList);
         }
         public void Update(GameTime gameTime)
         {
@@ -122,11 +124,14 @@ namespace Paging_the_devil.Manager
                     DisconnectController();
 
                     break;
+                case GameState.CharacterInfo:
+                    menuManager.Update(gameTime);
+                    UpdateController();
+                    break;
                 case GameState.InGame:
-
+                    infoBox.Update(gameTime);
                     if (!menuManager.gamePaused)
                     {
-
                         if (HUDManager == null)
                         {
                             HUDManager = menuManager.PlayerSelectManager.HUDManager;
@@ -223,15 +228,21 @@ namespace Paging_the_devil.Manager
                     break;
                 case GameState.MainMenu:
                     menuManager.Draw(spriteBatch);
+
+                    spriteBatch.Draw(TextureBank.menuTextureList[25], new Vector2((ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[25].Width / 2) + 120,
+                    (ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[25].Height / 2) - 250), null, Color.White, 0, Vector2.Zero, 0.8f, SpriteEffects.None, 0.3f);
                     break;
                 case GameState.PlayerSelect:
+                    menuManager.Draw(spriteBatch);
+                    break;
+                case GameState.CharacterInfo:
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.Controls:
                     menuManager.Draw(spriteBatch);
                     break;
                 case GameState.InGame:
-                    
+
                     if (roomManagerCreated)
                     {
                         roomManager.Draw(spriteBatch);
@@ -244,19 +255,32 @@ namespace Paging_the_devil.Manager
                         HUDManager.Draw(spriteBatch);
                     }
 
-                    if(menuManager.gamePaused)
+                    if (menuManager.gamePaused)
                     {
                         menuManager.Draw(spriteBatch);
                     }
+
+                    infoBox.Draw(spriteBatch);
+                    SendEnemyList();
 
                     break;
                 case GameState.Win:
                     graphicsDevice.Clear(Color.Black);
                     menuManager.Draw(spriteBatch);
+
+                    spriteBatch.Draw(TextureBank.menuTextureList[22], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[22].Width / 2,
+                    ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[22].Height / 2), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
+                    spriteBatch.Draw(TextureBank.menuTextureList[23], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[23].Width / 2,
+                    (ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[23].Height / 2) + 300), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
                     break;
                 case GameState.GameOver:
                     graphicsDevice.Clear(Color.Black);
                     menuManager.Draw(spriteBatch);
+
+                    spriteBatch.Draw(TextureBank.menuTextureList[21], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[21].Width / 2,
+                    ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[21].Height / 2), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
+                    spriteBatch.Draw(TextureBank.menuTextureList[23], new Vector2(ValueBank.WindowSizeX / 2 - TextureBank.menuTextureList[23].Width / 2,
+                    (ValueBank.WindowSizeY / 2 - TextureBank.menuTextureList[23].Height / 2) + 200), null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0.3f);
                     break;
             }
         }
@@ -508,15 +532,34 @@ namespace Paging_the_devil.Manager
                     if (a.GetRect.Intersects(e.GetRect))
                     {
                         a.HitCharacter = e;
+                        bool cleaveHit = false;
 
                         if (a is Root)
                         {
                             (a as Root).enemyList.Add(e);
                         }
+                        if (a is Cleave)
+                        {
+                            for (int i = 0; i < (a as Cleave).enemiesHitList.Count; i++)
+                            {
+                                if (e == (a as Cleave).enemiesHitList[i])
+                                {
+                                    cleaveHit = true;
+                                }
+                            }
+                            if (!cleaveHit)
+                            {
+                                (a as Cleave).enemiesHitList.Add(e);
+                            }
+                        }
 
                         if (a is FlowerPower)
                         {
 
+                        }
+                        if (a is Taunt)
+                        {
+                            (a as Taunt).enemyList.Add(e);
                         }
                         else
                         {
@@ -585,7 +628,7 @@ namespace Paging_the_devil.Manager
                         a.HitCharacter = playerArray[i];
                         (a.HitCharacter as Player).Hit = true;
 
-                        if(a.HitCharacter is Player)
+                        if (a.HitCharacter is Player)
                         {
                             for (int j = 0; j < (a.HitCharacter as Player).abilityList.Count; j++)
                             {
@@ -606,9 +649,9 @@ namespace Paging_the_devil.Manager
                         }
                     }
                     blockSound = false;
-                   
+
                 }
-               
+
 
                 foreach (var w in currentRoom.GetWallRectList())
                 {
@@ -624,7 +667,7 @@ namespace Paging_the_devil.Manager
                 }
             }
 
-            
+
 
             if (toRemove != null)
             {
@@ -687,19 +730,25 @@ namespace Paging_the_devil.Manager
         /// </summary>
         private void StartToRestart()
         {
-            for (int i = 0; i < nrOfPlayers; i++)
+            if (controllerArray[0].ButtonPressed(Buttons.Start))
             {
-                if (playerArray[i].Controller.ButtonPressed(Buttons.Start))
+
+                currentState = GameState.MainMenu;
+                menuManager.PlayerSelectManager.Reset();
+                roomManager.Reset();
+
+                for (int j = 0; j < nrOfPlayers; j++)
                 {
-                    currentState = GameState.MainMenu;
-                    menuManager.PlayerSelectManager.Reset();
-                    roomManager.Reset();
-                    HUDManager.playerHudArray[i].Reset();
-                    HUDManager.Reset();
-                    hudManagerCreated = false;
-                    HUDManager = null;
+                    HUDManager.playerHudArray[j].Reset();
                 }
+                HUDManager.Reset();
+                hudManagerCreated = false;
+                HUDManager = null;
             }
+        }
+        private void SendEnemyList()
+        {
+            infoBox.GetEnemyList(enemyList);
         }
     }
 }
