@@ -841,9 +841,9 @@ namespace Paging_the_devil.Manager
                     enemiesSpawned[i, j] = false;
                 }
             }
-            CurrentRoom = currentLevel[3, 0];
+            CurrentRoom = currentLevel[0, 0];
             enemyList.Clear();
-            RoomCoordinateX = 3;
+            RoomCoordinateX = 0;
             RoomCoordinateY = 0;
         }
     }
